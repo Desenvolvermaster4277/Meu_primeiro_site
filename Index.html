@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#12051f">
 <title>Minha Plataforma</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -10,433 +11,1395 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <style>
-*{box-sizing:border-box}
-body{
+*{
+ box-sizing:border-box;
  margin:0;
- font-family:Arial,sans-serif;
- background:linear-gradient(135deg,#090611,#170d2d,#090611);
+ padding:0;
+}
+html,body{
+ min-height:100%;
+ font-family:Arial,Helvetica,sans-serif;
+ background:#09040f;
  color:#fff;
- min-height:100vh;
 }
-button,input,select{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-
-#app{
- max-width:900px;
- margin:auto;
- min-height:100vh;
- padding-bottom:80px;
+body{
+ overflow-x:hidden;
 }
-
-.top{
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:15px;
- background:rgba(10,5,20,.9);
- position:sticky;
- top:0;
- z-index:20;
- border-bottom:1px solid #382052;
+button,input,select{
+ font:inherit;
 }
-
-.logo{
- font-size:21px;
- font-weight:bold;
- color:#cfa7ff;
-}
-
-.avatar{
- width:44px;
- height:44px;
- border-radius:50%;
- background:#34204c;
- display:flex;
- align-items:center;
- justify-content:center;
- overflow:hidden;
- font-weight:bold;
-}
-
-.avatar img{width:100%;height:100%;object-fit:cover}
-
-main{padding:18px}
-
-.card{
- background:rgba(28,17,47,.9);
- border:1px solid #40245e;
- border-radius:18px;
- padding:18px;
- margin-bottom:15px;
- box-shadow:0 8px 30px rgba(0,0,0,.25);
-}
-
-.title{
- font-size:27px;
- font-weight:bold;
- margin-bottom:8px;
-}
-
-.subtitle{color:#aaa}
-
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
- gap:12px;
-}
-
-.game{
- min-height:150px;
- display:flex;
- flex-direction:column;
- justify-content:space-between;
- background:linear-gradient(145deg,#261440,#120b20);
- border:1px solid #563579;
- border-radius:18px;
- padding:17px;
-}
-
-.game .emoji{font-size:40px}
-
-.btn{
+button{
+ cursor:pointer;
  border:0;
- border-radius:12px;
- padding:13px 16px;
- background:#7c3aed;
- color:#fff;
- font-weight:bold;
- margin:4px 0;
 }
-
-.btn:hover{filter:brightness(1.12)}
-.btn.green{background:#16a34a}
-.btn.red{background:#dc2626}
-.btn.gray{background:#40334f}
-.btn.gold{background:#c58b18;color:#fff}
-.btn.full{width:100%}
-
-input,select{
- width:100%;
- padding:14px;
- border-radius:12px;
- border:1px solid #51336e;
- background:#100a1a;
- color:#fff;
- outline:none;
- margin:6px 0;
+.hidden{
+ display:none!important;
 }
-
-.auth{
+.screen{
  min-height:100vh;
+}
+.gradient{
+ background:
+ radial-gradient(circle at 20% 10%,rgba(125,45,210,.25),transparent 35%),
+ radial-gradient(circle at 90% 20%,rgba(220,50,255,.15),transparent 30%),
+ linear-gradient(135deg,#08030d,#160721 55%,#09030e);
+}
+
+/* AUTH */
+#authScreen{
  display:flex;
  align-items:center;
  justify-content:center;
  padding:20px;
+ min-height:100vh;
 }
-
-.authbox{
- width:100%;
- max-width:430px;
- background:rgba(25,14,42,.97);
- border:1px solid #563579;
- padding:25px;
+.authBox{
+ width:min(440px,100%);
+ padding:30px 22px;
+ border-radius:28px;
+ background:rgba(25,10,40,.92);
+ border:1px solid rgba(190,90,255,.25);
+ box-shadow:0 20px 70px rgba(0,0,0,.5);
+}
+.logo{
+ text-align:center;
+ margin-bottom:25px;
+}
+.logoIcon{
+ width:75px;
+ height:75px;
+ margin:auto;
  border-radius:22px;
- box-shadow:0 20px 60px #000;
-}
-
-.authbox h1{text-align:center;color:#cfa7ff}
-
-.tabs{
  display:flex;
- gap:5px;
- margin-bottom:15px;
+ align-items:center;
+ justify-content:center;
+ font-size:38px;
+ background:linear-gradient(135deg,#8c35ff,#d347ff);
+ box-shadow:0 10px 35px rgba(151,45,255,.35);
 }
-
-.tabs button{
+.logo h1{
+ margin-top:15px;
+ font-size:28px;
+}
+.logo p{
+ color:#bdaec8;
+ margin-top:6px;
+}
+.authTabs{
+ display:flex;
+ gap:8px;
+ margin-bottom:20px;
+}
+.authTabs button{
  flex:1;
- background:#241534;
+ padding:12px;
+ border-radius:12px;
+ background:#21102e;
  color:#aaa;
- border:0;
- padding:11px;
- border-radius:10px;
 }
-
-.tabs button.active{
- background:#7c3aed;
+.authTabs button.active{
+ background:#8b32d9;
  color:white;
 }
-
-.nav{
- position:fixed;
- bottom:0;
- left:0;
- right:0;
- background:#0d0716;
- border-top:1px solid #382052;
- display:flex;
- justify-content:center;
- z-index:30;
+.field{
+ margin-bottom:13px;
 }
-
-.navin{
- width:900px;
- display:grid;
- grid-template-columns:repeat(5,1fr);
-}
-
-.nav button{
- background:none;
- color:#aaa;
- border:0;
- padding:10px 3px;
- font-size:12px;
-}
-
-.nav button span{
+.field label{
  display:block;
- font-size:21px;
+ margin-bottom:6px;
+ font-size:13px;
+ color:#cdbdd7;
 }
-
-.nav button.active{color:#cfa7ff}
-
-.stats{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:8px;
+.field input,
+.field select{
+ width:100%;
+ padding:14px;
+ border-radius:13px;
+ border:1px solid #3d2450;
+ outline:none;
+ background:#12091b;
+ color:white;
 }
-
-.stat{
- background:#140c20;
- padding:13px;
- border-radius:12px;
+.field input:focus,
+.field select:focus{
+ border-color:#a849e8;
+}
+.mainBtn{
+ width:100%;
+ padding:14px;
+ border-radius:14px;
+ background:linear-gradient(135deg,#812ce0,#bd42ed);
+ color:white;
+ font-weight:bold;
+ margin-top:5px;
+}
+.mainBtn:active{
+ transform:scale(.98);
+}
+.authMessage{
+ min-height:20px;
  text-align:center;
+ margin-top:13px;
+ color:#ff9dba;
+ font-size:13px;
 }
 
-.stat b{display:block;font-size:20px;color:#d4aaff}
-
-.question{
- font-size:23px;
- line-height:1.35;
- margin:25px 0;
+/* APP */
+#app{
+ min-height:100vh;
+ padding-bottom:78px;
+}
+.topbar{
+ height:66px;
+ padding:10px 14px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ position:sticky;
+ top:0;
+ z-index:50;
+ background:rgba(9,4,15,.9);
+ backdrop-filter:blur(14px);
+ border-bottom:1px solid rgba(255,255,255,.06);
+}
+.brand{
+ display:flex;
+ align-items:center;
+ gap:9px;
+ font-weight:bold;
+}
+.brandMark{
+ width:38px;
+ height:38px;
+ border-radius:11px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:linear-gradient(135deg,#8133e2,#ca45ec);
+}
+.topActions{
+ display:flex;
+ gap:7px;
+}
+.iconBtn{
+ width:40px;
+ height:40px;
+ border-radius:12px;
+ background:#1d0c2b;
+ color:white;
+ position:relative;
+}
+.badge{
+ position:absolute;
+ right:-3px;
+ top:-3px;
+ min-width:17px;
+ height:17px;
+ padding:0 4px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ border-radius:20px;
+ background:#ff3f73;
+ color:white;
+ font-size:10px;
+ font-weight:bold;
 }
 
-.answers{
+main{
+ padding:18px 14px 20px;
+ max-width:1000px;
+ margin:auto;
+}
+.view{
+ display:none;
+}
+.view.active{
+ display:block;
+}
+.pageTitle{
+ font-size:25px;
+ margin-bottom:5px;
+}
+.pageSub{
+ color:#9e8ca9;
+ font-size:13px;
+ margin-bottom:20px;
+}
+
+/* CARDS */
+.card{
+ background:linear-gradient(145deg,rgba(35,14,52,.95),rgba(18,8,28,.95));
+ border:1px solid rgba(195,104,255,.15);
+ border-radius:20px;
+ padding:17px;
+ margin-bottom:14px;
+ box-shadow:0 10px 35px rgba(0,0,0,.2);
+}
+.cardTitle{
+ font-weight:bold;
+ margin-bottom:10px;
+}
+.homeHero{
+ padding:24px 19px;
+ border-radius:24px;
+ margin-bottom:17px;
+ background:
+ radial-gradient(circle at 90% 10%,rgba(224,83,255,.3),transparent 35%),
+ linear-gradient(135deg,#35104e,#160621);
+ border:1px solid rgba(211,92,255,.2);
+}
+.homeHero h2{
+ font-size:28px;
+ margin-bottom:7px;
+}
+.homeHero p{
+ color:#c8b5d1;
+ line-height:1.5;
+ font-size:14px;
+}
+.sectionTitle{
+ font-size:18px;
+ margin:20px 0 12px;
+}
+.gameGrid{
  display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+ gap:13px;
+}
+.gameCard{
+ min-height:180px;
+ padding:18px;
+ border-radius:22px;
+ border:1px solid rgba(255,255,255,.08);
+ background:linear-gradient(145deg,#261036,#12091c);
+ display:flex;
+ flex-direction:column;
+ justify-content:space-between;
+}
+.gameIcon{
+ font-size:40px;
+ margin-bottom:10px;
+}
+.gameCard h3{
+ margin-bottom:6px;
+}
+.gameCard p{
+ color:#a997b2;
+ font-size:13px;
+ line-height:1.4;
+}
+.playBtn{
+ margin-top:16px;
+ padding:12px;
+ border-radius:12px;
+ color:white;
+ background:#8734dc;
+ font-weight:bold;
+}
+
+/* STATS */
+.statsGrid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
  gap:10px;
 }
-
-.answer{
- background:#21122f;
- border:1px solid #563579;
- border-radius:13px;
- padding:15px;
- color:white;
- text-align:left;
+.stat{
+ padding:14px;
+ border-radius:16px;
+ background:#170b22;
+ border:1px solid #2d183a;
 }
-
-.answer.correct{background:#11652d}
-.answer.wrong{background:#7a1717}
-
-.timer{
+.stat small{
+ display:block;
+ color:#9f8da9;
+ margin-bottom:6px;
+}
+.stat strong{
+ font-size:20px;
+}
+.progress{
  height:9px;
- background:#24152f;
+ background:#24152d;
  border-radius:20px;
  overflow:hidden;
- margin:12px 0;
+ margin-top:9px;
 }
-
-.timer div{
+.progress div{
  height:100%;
- width:100%;
- background:#8b5cf6;
- transition:width 1s linear;
+ background:linear-gradient(90deg,#8133dc,#dd4af2);
+ border-radius:20px;
 }
 
-.prize{
- font-size:25px;
- color:#ffd65a;
- font-weight:bold;
+/* PROFILE */
+.profileHead{
+ display:flex;
+ gap:15px;
+ align-items:center;
+}
+.avatar{
+ width:74px;
+ height:74px;
+ border-radius:22px;
+ object-fit:cover;
+ background:#281338;
+ border:2px solid #8f42cf;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:28px;
+ flex-shrink:0;
+}
+.profileInfo h2{
+ font-size:21px;
+}
+.profileInfo p{
+ color:#9f8da9;
+ font-size:13px;
+ margin-top:4px;
+}
+.levelPill{
+ display:inline-block;
+ margin-top:7px;
+ padding:5px 9px;
+ border-radius:20px;
+ background:#33164a;
+ color:#d899ff;
+ font-size:11px;
+}
+.row{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+}
+.smallBtn{
+ padding:9px 12px;
+ border-radius:10px;
+ background:#291236;
+ color:white;
+ border:1px solid #49225e;
+}
+.dangerBtn{
+ background:#5b1830;
+}
+.greenBtn{
+ background:#17613d;
+}
+.redBtn{
+ background:#6b1933;
+}
+
+/* RANK */
+.rankItem{
+ display:flex;
+ align-items:center;
+ gap:11px;
+ padding:12px;
+ border-radius:15px;
+ background:#140a1d;
+ margin-bottom:8px;
+}
+.rankNumber{
+ width:32px;
  text-align:center;
+ font-weight:bold;
+ color:#d5a1ff;
+}
+.rankAvatar{
+ width:44px;
+ height:44px;
+ border-radius:13px;
+ object-fit:cover;
+ background:#281338;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+.rankInfo{
+ flex:1;
+ min-width:0;
+}
+.rankInfo strong{
+ display:block;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ white-space:nowrap;
+}
+.rankInfo small{
+ color:#9e8ca9;
+}
+.onlineDot{
+ width:9px;
+ height:9px;
+ border-radius:50%;
+ background:#555;
+ display:inline-block;
+ margin-right:5px;
+}
+.onlineDot.on{
+ background:#28dc7c;
+ box-shadow:0 0 8px #28dc7c;
 }
 
-.rankrow,.friendrow,.chatrow{
+/* SOCIAL */
+.searchBox{
+ display:flex;
+ gap:8px;
+}
+.searchBox input{
+ flex:1;
+ padding:13px;
+ background:#12091a;
+ color:white;
+ border:1px solid #382044;
+ border-radius:12px;
+ outline:none;
+}
+.searchBox button{
+ padding:0 16px;
+ border-radius:12px;
+ background:#8435d6;
+ color:white;
+}
+.socialTabs{
+ display:flex;
+ gap:7px;
+ overflow-x:auto;
+ margin:15px 0;
+}
+.socialTabs button{
+ white-space:nowrap;
+ padding:10px 13px;
+ border-radius:11px;
+ background:#1c0d27;
+ color:#a998b2;
+}
+.socialTabs button.active{
+ background:#7d2dc6;
+ color:white;
+}
+.friendItem{
  display:flex;
  align-items:center;
  gap:10px;
  padding:12px;
- background:#140c20;
+ border-radius:15px;
+ background:#160a20;
+ margin-bottom:8px;
+}
+.friendItem .avatar{
+ width:47px;
+ height:47px;
+ border-radius:14px;
+ font-size:18px;
+}
+.friendMain{
+ flex:1;
+ min-width:0;
+}
+.friendMain strong{
+ display:block;
+}
+.friendMain small{
+ color:#9f8da9;
+}
+.friendActions{
+ display:flex;
+ gap:5px;
+ flex-wrap:wrap;
+ justify-content:flex-end;
+}
+
+/* CHAT */
+.chatBox{
+ display:flex;
+ flex-direction:column;
+ height:calc(100vh - 170px);
+}
+.chatHeader{
+ padding:12px;
+ background:#180b23;
+ border-radius:16px 16px 0 0;
+ display:flex;
+ align-items:center;
+ gap:10px;
+}
+.messages{
+ flex:1;
+ overflow-y:auto;
+ padding:14px 7px;
+}
+.msg{
+ max-width:78%;
+ padding:10px 12px;
+ border-radius:15px;
+ margin-bottom:8px;
+ background:#24102f;
+ line-height:1.4;
+ font-size:14px;
+}
+.msg.mine{
+ margin-left:auto;
+ background:#7530ad;
+ border-bottom-right-radius:4px;
+}
+.msg.theirs{
+ border-bottom-left-radius:4px;
+}
+.msgTime{
+ display:block;
+ font-size:9px;
+ opacity:.6;
+ margin-top:4px;
+}
+.chatInput{
+ display:flex;
+ gap:7px;
+}
+.chatInput input{
+ flex:1;
+ padding:13px;
  border-radius:13px;
- margin:7px 0;
+ background:#13091b;
+ border:1px solid #3a2048;
+ color:white;
+ outline:none;
+}
+.chatInput button{
+ width:50px;
+ border-radius:13px;
+ background:#8734d7;
+ color:white;
 }
 
-.ranknum{
- width:30px;
- font-weight:bold;
- color:#ffd65a;
+/* NOTIFICATIONS */
+.notification{
+ padding:13px;
+ border-radius:14px;
+ background:#170a20;
+ margin-bottom:8px;
+ border-left:3px solid #8434d7;
+}
+.notification small{
+ display:block;
+ color:#938199;
+ margin-top:5px;
 }
 
-.rowinfo{flex:1}
-.rowinfo b{display:block}
-.rowinfo small{color:#999}
-
-.online{
- width:10px;
- height:10px;
- border-radius:50%;
- background:#555;
- display:inline-block;
-}
-
-.online.on{background:#22c55e}
-
-.badges{
+/* ACHIEVEMENTS */
+.achGrid{
  display:grid;
  grid-template-columns:repeat(2,1fr);
  gap:9px;
 }
-
-.badge{
- padding:12px;
- background:#181020;
- border-radius:12px;
- border:1px solid #392348;
-}
-
-.notification{
- padding:12px;
- border-radius:12px;
- background:#181020;
- margin:7px 0;
-}
-
-.notification.unread{
- border-left:4px solid #8b5cf6;
-}
-
-.chatbox{
- height:390px;
- overflow-y:auto;
- padding:10px;
- background:#0d0714;
- border-radius:14px;
-}
-
-.msg{
- max-width:78%;
- padding:10px 13px;
+.achievement{
+ padding:13px;
  border-radius:15px;
- margin:7px 0;
+ background:#160a20;
+ border:1px solid #2e183a;
+ opacity:.5;
+}
+.achievement.unlocked{
+ opacity:1;
+ border-color:#8734d7;
+}
+.achievementIcon{
+ font-size:28px;
+ margin-bottom:7px;
+}
+.achievement strong{
+ display:block;
+ font-size:13px;
+}
+.achievement small{
+ color:#97849f;
+ line-height:1.3;
 }
 
-.msg.me{
- margin-left:auto;
- background:#6531a8;
-}
-
-.msg.other{
- background:#29202f;
-}
-
-.chatinput{
+/* MILHAO */
+.millionTop{
  display:flex;
- gap:7px;
- margin-top:8px;
+ justify-content:space-between;
+ align-items:center;
+ gap:8px;
+ margin-bottom:13px;
 }
-
-.chatinput input{margin:0}
-
-.preview{
- text-align:center;
- margin:10px 0;
+.questionNumber{
+ color:#bf8ee0;
+ font-size:13px;
 }
-
-.preview img{
- width:100px;
- height:100px;
+.timer{
+ width:52px;
+ height:52px;
  border-radius:50%;
- object-fit:cover;
+ border:3px solid #8735d4;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-weight:bold;
+}
+.prizeBox{
+ padding:15px;
+ border-radius:17px;
+ text-align:center;
+ background:linear-gradient(135deg,#251033,#11071a);
+ border:1px solid #53236e;
+ margin-bottom:12px;
+}
+.prizeBox small{
+ color:#9d8aa8;
+}
+.prizeBox strong{
+ display:block;
+ font-size:24px;
+ color:#e0a3ff;
+ margin-top:4px;
+}
+.difficulty{
+ display:inline-block;
+ padding:5px 10px;
+ border-radius:20px;
+ background:#281139;
+ color:#dca0ff;
+ font-size:11px;
+ margin-bottom:12px;
+}
+.questionCard{
+ padding:20px 15px;
+ text-align:center;
+ border-radius:20px;
+ background:#1b0b27;
+ border:1px solid #3b1d4d;
+ margin-bottom:12px;
+}
+.questionText{
+ font-size:18px;
+ line-height:1.45;
+ font-weight:bold;
+}
+.answers{
+ display:grid;
+ gap:9px;
+}
+.answer{
+ width:100%;
+ padding:14px;
+ border-radius:14px;
+ text-align:left;
+ background:#24102f;
+ color:white;
+ border:1px solid #3b2048;
+ transition:.15s;
+}
+.answer:active{
+ transform:scale(.99);
+}
+.answer.correct{
+ background:#12633f;
+ border-color:#31d78c;
+}
+.answer.wrong{
+ background:#681b38;
+ border-color:#ec4f7e;
+}
+.answer.disabled{
+ opacity:.4;
+ pointer-events:none;
+}
+.lifelines{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:8px;
+ margin-top:12px;
+}
+.life{
+ padding:11px 5px;
+ border-radius:12px;
+ background:#251032;
+ color:#d8a6f2;
+ border:1px solid #48205e;
+}
+.life.used{
+ opacity:.35;
+ text-decoration:line-through;
+}
+.millionMenu{
+ display:grid;
+ gap:10px;
+}
+.topicBtn{
+ padding:15px;
+ border-radius:15px;
+ background:#21102d;
+ color:white;
+ text-align:left;
+ border:1px solid #3b1b4d;
+}
+.topicBtn strong{
+ display:block;
+}
+.topicBtn small{
+ color:#98859f;
+}
+.resultBox{
+ text-align:center;
+ padding:25px 15px;
+}
+.resultPrize{
+ font-size:34px;
+ color:#d996ff;
+ font-weight:bold;
+ margin:13px 0;
 }
 
-.toast{
+/* LOCAL */
+.playerSetup{
+ display:grid;
+ gap:9px;
+}
+.playerSetup input{
+ padding:13px;
+ border-radius:12px;
+ border:1px solid #382044;
+ background:#12091a;
+ color:white;
+}
+.localScore{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:7px;
+}
+.localPlayer{
+ padding:9px;
+ text-align:center;
+ border-radius:12px;
+ background:#190c23;
+}
+.localPlayer.active{
+ border:1px solid #a13de1;
+}
+
+/* ONLINE */
+.roomCode{
+ text-align:center;
+ font-size:34px;
+ letter-spacing:7px;
+ font-weight:bold;
+ color:#da9dff;
+ padding:18px;
+}
+
+/* RACING */
+.race{
+ position:relative;
+ height:400px;
+ border-radius:22px;
+ overflow:hidden;
+ background:#151515;
+ border:2px solid #34203d;
+}
+.road{
+ position:absolute;
+ left:18%;
+ width:64%;
+ height:100%;
+ background:#272727;
+ border-left:6px dashed #777;
+ border-right:6px dashed #777;
+}
+.roadLine{
+ position:absolute;
+ width:7px;
+ height:45px;
+ background:#ddd;
+ left:50%;
+ transform:translateX(-50%);
+ animation:roadMove .7s linear infinite;
+}
+@keyframes roadMove{
+ from{top:-60px}
+ to{top:420px}
+}
+.car{
+ position:absolute;
+ bottom:25px;
+ width:45px;
+ height:75px;
+ border-radius:12px 12px 8px 8px;
+ background:linear-gradient(#ee4c64,#921d3d);
+ left:calc(50% - 22px);
+ z-index:3;
+ box-shadow:0 0 15px rgba(255,70,100,.4);
+}
+.car:before,
+.car:after{
+ content:"";
+ position:absolute;
+ width:7px;
+ height:16px;
+ background:#111;
+ border-radius:5px;
+ top:15px;
+}
+.car:before{left:-5px}
+.car:after{right:-5px}
+.enemy{
+ position:absolute;
+ width:43px;
+ height:70px;
+ border-radius:12px;
+ background:#3c6bd8;
+ top:-90px;
+ z-index:2;
+}
+.raceControls{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+ margin-top:10px;
+}
+.raceControls button{
+ padding:15px;
+ border-radius:13px;
+ background:#25102f;
+ color:white;
+}
+
+/* SETTINGS */
+.settingRow{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ padding:14px 0;
+ border-bottom:1px solid #2a1735;
+}
+.settingRow:last-child{
+ border-bottom:0;
+}
+.switch{
+ width:50px;
+ height:28px;
+ border-radius:20px;
+ background:#36223f;
+ position:relative;
+}
+.switch span{
+ position:absolute;
+ width:22px;
+ height:22px;
+ border-radius:50%;
+ background:#aaa;
+ top:3px;
+ left:3px;
+ transition:.2s;
+}
+.switch.on{
+ background:#7930b8;
+}
+.switch.on span{
+ left:25px;
+ background:white;
+}
+
+/* BOTTOM NAV */
+.bottomNav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ z-index:100;
+ height:68px;
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ background:rgba(12,5,18,.96);
+ backdrop-filter:blur(15px);
+ border-top:1px solid rgba(255,255,255,.07);
+}
+.navBtn{
+ color:#887691;
+ background:transparent;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:3px;
+ font-size:10px;
+ position:relative;
+}
+.navBtn span{
+ font-size:21px;
+}
+.navBtn.active{
+ color:#d98fff;
+}
+.navDot{
+ position:absolute;
+ top:9px;
+ margin-left:22px;
+ width:7px;
+ height:7px;
+ background:#ff3e75;
+ border-radius:50%;
+}
+
+/* MODAL */
+.modal{
+ position:fixed;
+ inset:0;
+ z-index:200;
+ display:none;
+ align-items:flex-end;
+ justify-content:center;
+ background:rgba(0,0,0,.7);
+ padding:10px;
+}
+.modal.show{
+ display:flex;
+}
+.modalBox{
+ width:min(600px,100%);
+ max-height:90vh;
+ overflow-y:auto;
+ border-radius:25px 25px 15px 15px;
+ padding:19px;
+ background:#170a21;
+ border:1px solid #48205b;
+}
+.modalTitle{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:15px;
+}
+.closeBtn{
+ width:34px;
+ height:34px;
+ border-radius:10px;
+ background:#291233;
+ color:white;
+}
+
+/* TOAST */
+#toast{
  position:fixed;
  left:50%;
- bottom:75px;
- transform:translateX(-50%);
- background:#111;
- border:1px solid #65418b;
- padding:13px 18px;
- border-radius:13px;
- z-index:100;
- box-shadow:0 10px 30px #000;
+ bottom:85px;
+ transform:translateX(-50%) translateY(20px);
+ z-index:500;
+ background:#271132;
+ border:1px solid #73329a;
+ padding:11px 15px;
+ border-radius:12px;
+ opacity:0;
+ pointer-events:none;
+ transition:.25s;
+ font-size:13px;
+ max-width:90%;
+ text-align:center;
+}
+#toast.show{
+ opacity:1;
+ transform:translateX(-50%) translateY(0);
 }
 
-.small{font-size:12px;color:#999}
-.center{text-align:center}
-hr{border:0;border-top:1px solid #382052;margin:18px 0}
+/* LIGHT THEME */
+body.light{
+ background:#f5eff8;
+ color:#201526;
+}
+body.light .topbar,
+body.light .bottomNav{
+ background:rgba(255,255,255,.95);
+ color:#201526;
+}
+body.light .card,
+body.light .gameCard,
+body.light .stat,
+body.light .rankItem,
+body.light .friendItem,
+body.light .notification,
+body.light .achievement,
+body.light .questionCard,
+body.light .answer,
+body.light .topicBtn,
+body.light .settingRow,
+body.light .modalBox{
+ background:#fff;
+ color:#201526;
+}
+body.light .answer,
+body.light .topicBtn{
+ border-color:#ddd;
+}
+body.light .pageSub,
+body.light .gameCard p,
+body.light .friendMain small,
+body.light .rankInfo small{
+ color:#74687b;
+}
 
-@media(max-width:500px){
- main{padding:12px}
- .question{font-size:20px}
- .stats{grid-template-columns:repeat(2,1fr)}
+/* RESPONSIVE */
+@media(max-width:430px){
+ .gameGrid{
+  grid-template-columns:1fr;
+ }
+ .achGrid{
+  grid-template-columns:1fr 1fr;
+ }
+ .questionText{
+  font-size:17px;
+ }
+ .statsGrid{
+  grid-template-columns:1fr 1fr;
+ }
 }
 </style>
 </head>
 
-<body>
+<body class="gradient">
 
-<div id="auth">
- <div class="auth">
-  <div class="authbox">
-
-   <h1>🎮 Minha Plataforma</h1>
-   <p class="center subtitle">Jogos, ranking e desafios</p>
-
-   <div class="tabs">
-    <button id="loginTab" class="active" onclick="mostrarLogin()">Entrar</button>
-    <button id="signupTab" onclick="mostrarCadastro()">Criar conta</button>
-   </div>
-
-   <div id="loginBox">
-    <input id="loginEmail" type="email" placeholder="E-mail">
-    <input id="loginPassword" type="password" placeholder="Senha">
-    <button class="btn full" onclick="login()">Entrar</button>
-   </div>
-
-   <div id="signupBox" class="hidden">
-    <input id="signupName" placeholder="Nome de usuário">
-    <input id="signupEmail" type="email" placeholder="E-mail">
-    <input id="signupPassword" type="password" placeholder="Senha">
-    <button class="btn green full" onclick="cadastro()">Criar conta</button>
-   </div>
-
+<!-- AUTH -->
+<section id="authScreen" class="screen">
+ <div class="authBox">
+  <div class="logo">
+   <div class="logoIcon">🎮</div>
+   <h1>Minha Plataforma</h1>
+   <p>Jogos, desafios e competição.</p>
   </div>
+
+  <div class="authTabs">
+   <button id="loginTab" class="active" onclick="trocarAuth('login')">Entrar</button>
+   <button id="signupTab" onclick="trocarAuth('signup')">Criar conta</button>
+  </div>
+
+  <div id="loginForm">
+   <div class="field">
+    <label>E-mail</label>
+    <input id="loginEmail" type="email" placeholder="seu@email.com">
+   </div>
+   <div class="field">
+    <label>Senha</label>
+    <input id="loginPassword" type="password" placeholder="Sua senha">
+   </div>
+   <button class="mainBtn" onclick="login()">ENTRAR</button>
+  </div>
+
+  <div id="signupForm" class="hidden">
+   <div class="field">
+    <label>Nome de usuário</label>
+    <input id="signupName" maxlength="20" placeholder="Seu nome">
+   </div>
+   <div class="field">
+    <label>E-mail</label>
+    <input id="signupEmail" type="email" placeholder="seu@email.com">
+   </div>
+   <div class="field">
+    <label>Senha</label>
+    <input id="signupPassword" type="password" placeholder="Mínimo 6 caracteres">
+   </div>
+   <button class="mainBtn" onclick="cadastro()">CRIAR CONTA</button>
+  </div>
+
+  <div id="authMessage" class="authMessage"></div>
  </div>
+</section>
+
+<!-- APP -->
+<section id="app" class="hidden">
+
+ <header class="topbar">
+  <div class="brand">
+   <div class="brandMark">🎮</div>
+   <span>Minha Plataforma</span>
+  </div>
+  <div class="topActions">
+   <button class="iconBtn" onclick="abrirNotificacoes()">
+    🔔
+    <span id="notificationBadge" class="badge hidden">0</span>
+   </button>
+   <button class="iconBtn" onclick="abrirPerfil()">👤</button>
+  </div>
+ </header>
+
+ <main>
+
+  <!-- HOME -->
+  <section id="viewHome" class="view active">
+   <div class="homeHero">
+    <h2>Olá, <span id="homeName">jogador</span>! 👋</h2>
+    <p>Escolha um jogo, acumule XP, conquiste títulos e suba no ranking.</p>
+   </div>
+
+   <div class="card">
+    <div class="row">
+     <div>
+      <small style="color:#9e8ca9">Seu nível</small>
+      <h2 id="homeLevel">Nível 1</h2>
+     </div>
+     <div style="text-align:right">
+      <strong id="homeXP">0 XP</strong>
+      <div style="font-size:12px;color:#9e8ca9">⚡ experiência</div>
+     </div>
+    </div>
+    <div class="progress">
+     <div id="homeProgress" style="width:0%"></div>
+    </div>
+   </div>
+
+   <h3 class="sectionTitle">🎮 Jogos</h3>
+
+   <div class="gameGrid">
+    <div class="gameCard">
+     <div>
+      <div class="gameIcon">💰</div>
+      <h3>Desafio do Milhão</h3>
+      <p>Responda 15 perguntas, use suas ajudas e tente chegar ao prêmio máximo.</p>
+     </div>
+     <button class="playBtn" onclick="menuMilhao()">JOGAR</button>
+    </div>
+
+    <div class="gameCard">
+     <div>
+      <div class="gameIcon">🏎️</div>
+      <h3>Corrida do Milhão</h3>
+      <p>Corra, desvie dos adversários e tente conquistar a maior pontuação.</p>
+     </div>
+     <button class="playBtn" onclick="abrirCorrida()">JOGAR</button>
+    </div>
+   </div>
+
+   <h3 class="sectionTitle">🔥 Atalhos</h3>
+
+   <div class="gameGrid">
+    <div class="gameCard" style="min-height:140px">
+     <div>
+      <div class="gameIcon">📅</div>
+      <h3>Desafio diário</h3>
+      <p>Uma pergunta especial por dia.</p>
+     </div>
+     <button class="playBtn" onclick="desafioDiario()">ABRIR</button>
+    </div>
+
+    <div class="gameCard" style="min-height:140px">
+     <div>
+      <div class="gameIcon">🏆</div>
+      <h3>Ranking</h3>
+      <p>Veja sua posição e a dos outros jogadores.</p>
+     </div>
+     <button class="playBtn" onclick="abrirView('ranking')">VER RANKING</button>
+    </div>
+   </div>
+  </section>
+
+  <!-- RANKING -->
+  <section id="viewRanking" class="view">
+   <h1 class="pageTitle">🏆 Ranking</h1>
+   <p class="pageSub">Os jogadores da plataforma.</p>
+
+   <div class="card">
+    <div class="row">
+     <div>
+      <strong>Seu desempenho</strong>
+      <div id="myRankText" style="color:#9e8ca9;font-size:13px;margin-top:5px">Carregando...</div>
+     </div>
+     <button class="smallBtn" onclick="carregarRanking()">↻ Atualizar</button>
+    </div>
+   </div>
+
+   <div id="rankingList"></div>
+  </section>
+
+  <!-- SOCIAL -->
+  <section id="viewSocial" class="view">
+   <h1 class="pageTitle">👥 Social</h1>
+   <p class="pageSub">Encontre jogadores e converse com seus amigos.</p>
+
+   <div class="searchBox">
+    <input id="playerSearch" placeholder="Pesquisar jogador...">
+    <button onclick="buscarJogadores()">Buscar</button>
+   </div>
+
+   <div class="socialTabs">
+    <button class="active" onclick="socialTab('friends',this)">Amigos</button>
+    <button onclick="socialTab('requests',this)">Solicitações</button>
+    <button onclick="socialTab('search',this)">Busca</button>
+   </div>
+
+   <div id="socialFriends"></div>
+   <div id="socialRequests" class="hidden"></div>
+   <div id="socialSearch" class="hidden"></div>
+  </section>
+
+  <!-- PROFILE -->
+  <section id="viewProfile" class="view">
+   <h1 class="pageTitle">👤 Perfil</h1>
+   <p class="pageSub">Seu progresso na plataforma.</p>
+
+   <div class="card">
+    <div class="profileHead">
+     <div id="profileAvatar" class="avatar">👤</div>
+     <div class="profileInfo">
+      <h2 id="profileName">Jogador</h2>
+      <p id="profileEmail">email</p>
+      <span id="profileTitle" class="levelPill">Novato</span>
+     </div>
+    </div>
+
+    <div style="margin-top:15px">
+     <input id="photoInput" type="file" accept="image/*" class="hidden" onchange="trocarFoto(event)">
+     <button class="smallBtn" onclick="document.getElementById('photoInput').click()">📷 Alterar foto</button>
+     <button class="smallBtn" onclick="editarNome()">✏️ Alterar nome</button>
+    </div>
+   </div>
+
+   <div class="card">
+    <div class="cardTitle">⚡ Experiência</div>
+    <div class="row">
+     <strong id="profileLevel">Nível 1</strong>
+     <strong id="profileXP">0 XP</strong>
+    </div>
+    <div class="progress">
+     <div id="profileProgress" style="width:0%"></div>
+    </div>
+   </div>
+
+   <div class="card">
+    <div class="cardTitle">📊 Estatísticas</div>
+    <div class="statsGrid">
+     <div class="stat">
+      <small>Partidas</small>
+      <strong id="statGames">0</strong>
+     </div>
+     <div class="stat">
+      <small>Vitórias</small>
+      <strong id="statWins">0</strong>
+     </div>
+     <div class="stat">
+      <small>Acertos</small>
+      <strong id="statCorrect">0</strong>
+     </div>
+     <div class="stat">
+      <small>Erros</small>
+      <strong id="statWrong">0</strong>
+     </div>
+     <div class="stat">
+      <small>Maior prêmio</small>
+      <strong id="statPrize">R$ 0</strong>
+     </div>
+     <div class="stat">
+      <small>Moedas</small>
+      <strong id="statCoins">0 🪙</strong>
+     </div>
+    </div>
+   </div>
+
+   <div class="card">
+    <div class="cardTitle">🏅 Conquistas</div>
+    <div id="achievementGrid" class="achGrid"></div>
+   </div>
+
+   <div class="card">
+    <div class="cardTitle">🎖️ Títulos</div>
+    <div id="titlesList"></div>
+   </div>
+
+   <button class="mainBtn dangerBtn" onclick="logout()">SAIR DA CONTA</button>
+  </section>
+
+  <!-- NOTIFICATIONS -->
+  <section id="viewNotifications" class="view">
+   <h1 class="pageTitle">🔔 Notificações</h1>
+   <p class="pageSub">Solicitações, mensagens e novidades.</p>
+   <div id="notificationsList"></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="viewSettings" class="view">
+   <h1 class="pageTitle">⚙️ Configurações</h1>
+   <p class="pageSub">Personalize sua experiência.</p>
+
+   <div class="card">
+    <div class="settingRow">
+     <div>
+      <strong>🎵 Música</strong>
+      <div style="font-size:12px;color:#9e8ca9">Música de fundo dos jogos</div>
+     </div>
+     <button id="musicSwitch" class="switch on" onclick="alternarMusica()"><span></span></button>
+    </div>
+
+    <div class="settingRow">
+     <div>
+      <strong>🌙 Tema</strong>
+      <div style="font-size:12px;color:#9e8ca9">Alternar entre escuro e claro</div>
+     </div>
+     <button id="themeSwitch" class="switch" onclick="alternarTema()"><span></span></button>
+    </div>
+   </div>
+
+   <div class="card">
+    <div class="cardTitle">ℹ️ Sobre</div>
+    <p style="color:#9e8ca9;line-height:1.6;font-size:13px">
+     Minha Plataforma é uma central de jogos com perfil,
+     ranking, amigos, conquistas, XP e partidas.
+    </p>
+   </div>
+  </section>
+
+  <!-- CHAT -->
+  <section id="viewChat" class="view">
+   <div class="chatBox">
+    <div id="chatHeader" class="chatHeader">
+     <button class="closeBtn" onclick="abrirView('social')">‹</button>
+     <div id="chatFriendAvatar" class="avatar" style="width:42px;height:42px;border-radius:13px;font-size:17px">👤</div>
+     <div>
+      <strong id="chatFriendName">Amigo</strong>
+      <div id="chatFriendStatus" style="font-size:11px;color:#9e8ca9">offline</div>
+     </div>
+    </div>
+
+    <div id="messages" class="messages"></div>
+
+    <div class="chatInput">
+     <input id="messageInput" placeholder="Digite uma mensagem..." onkeydown="if(event.key==='Enter')enviarMensagem()">
+     <button onclick="enviarMensagem()">➤</button>
+    </div>
+   </div>
+  </section>
+
+ </main>
+
+ <nav class="bottomNav">
+  <button class="navBtn active" data-view="home" onclick="abrirView('home')">
+   <span>🏠</span>Início
+  </button>
+  <button class="navBtn" data-view="ranking" onclick="abrirView('ranking')">
+   <span>🏆</span>Ranking
+  </button>
+  <button class="navBtn" data-view="social" onclick="abrirView('social')">
+   <span>👥</span>Amigos
+  </button>
+  <button class="navBtn" data-view="profile" onclick="abrirView('profile')">
+   <span>👤</span>Perfil
+  </button>
+  <button class="navBtn" data-view="settings" onclick="abrirView('settings')">
+   <span>⚙️</span>Config.
+  </button>
+ </nav>
+</section>
+
+<!-- MODAL -->
+<div id="modal" class="modal" onclick="if(event.target===this)fecharModal()">
+ <div id="modalBox" class="modalBox"></div>
 </div>
 
-<div id="app" class="hidden">
-
- <div class="top">
-  <div class="logo">🎮 Minha Plataforma</div>
-  <button class="btn gray" onclick="abrirPerfil()" id="topUser">👤</button>
- </div>
-
- <main id="conteudo"></main>
-
- <div class="nav">
-  <div class="navin">
-   <button onclick="central()"><span>🏠</span>Início</button>
-   <button onclick="abrirRanking()"><span>🏆</span>Ranking</button>
-   <button onclick="abrirAmigos()"><span>👥</span>Amigos</button>
-   <button onclick="abrirNotificacoes()"><span>🔔</span>Alertas</button>
-   <button onclick="abrirPerfil()"><span>👤</span>Perfil</button>
-  </div>
- </div>
-
-</div>
+<div id="toast"></div>
 
 <script>
-/* ================= FIREBASE ================= */
+/* ============================================================
+   FIREBASE
+============================================================ */
 
 const firebaseConfig={
  apiKey:"AIzaSyB-0j37BKkr0jt3B6NCl6-fNe3bqeQia08",
@@ -452,141 +1415,196 @@ firebase.initializeApp(firebaseConfig);
 
 const auth=firebase.auth();
 const db=firebase.firestore();
-const FV=firebase.firestore.FieldValue;
 
 let usuario=null;
 let perfil=null;
-let timer=null;
-let perguntaAtual=null;
-let musicaLigada=true;
-let efeitosLigados=true;
-let audioCtx=null;
-let chatUnsub=null;
-let notifUnsub=null;
+let unsubscribeFriends=null;
+let unsubscribeRequests=null;
+let unsubscribeNotifications=null;
+let unsubscribeMessages=null;
+let presenceTimer=null;
 
-/* ================= UTIL ================= */
+const $=id=>document.getElementById(id);
 
-function toast(t){
- const x=document.createElement("div");
- x.className="toast";
- x.textContent=t;
- document.body.appendChild(x);
- setTimeout(()=>x.remove(),2800);
+function esc(v){
+ return String(v??"")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 }
 
-function dinheiro(n){
- return "R$ "+Number(n||0).toLocaleString("pt-BR");
+function moeda(v){
+ return Number(v||0).toLocaleString("pt-BR",{
+  style:"currency",
+  currency:"BRL",
+  maximumFractionDigits:0
+ });
 }
 
-function esc(s){
- return String(s||"").replace(/[&<>"']/g,m=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",
- '"':"&quot;","'":"&#039;"
- }[m]));
+function agora(){
+ return firebase.firestore.FieldValue.serverTimestamp();
 }
 
-function avatarHtml(data,size="44px"){
- if(data&&data.avatar){
-  return `<div class="avatar" style="width:${size};height:${size}">
-  <img src="${data.avatar}"></div>`;
+function toast(text){
+ $("toast").textContent=text;
+ $("toast").classList.add("show");
+ clearTimeout(window.toastTimer);
+ window.toastTimer=setTimeout(()=>$("toast").classList.remove("show"),2600);
+}
+
+function abrirModal(html){
+ $("modalBox").innerHTML=html;
+ $("modal").classList.add("show");
+}
+
+function fecharModal(){
+ $("modal").classList.remove("show");
+}
+
+function erroAuth(msg){
+ $("authMessage").textContent=msg;
+}
+
+/* ============================================================
+   AUTH
+============================================================ */
+
+function trocarAuth(tipo){
+ $("loginForm").classList.toggle("hidden",tipo!=="login");
+ $("signupForm").classList.toggle("hidden",tipo!=="signup");
+ $("loginTab").classList.toggle("active",tipo==="login");
+ $("signupTab").classList.toggle("active",tipo==="signup");
+ $("authMessage").textContent="";
+}
+
+async function login(){
+ const email=$("loginEmail").value.trim();
+ const senha=$("loginPassword").value;
+
+ if(!email||!senha){
+  erroAuth("Preencha e-mail e senha.");
+  return;
  }
- return `<div class="avatar" style="width:${size};height:${size}">
- ${esc((data&&data.nome||"J").charAt(0).toUpperCase())}</div>`;
-}
 
-function getNome(){
- return perfil?.nome||"Jogador";
-}
-
-/* ================= AUTH ================= */
-
-function mostrarLogin(){
- loginBox.classList.remove("hidden");
- signupBox.classList.add("hidden");
- loginTab.classList.add("active");
- signupTab.classList.remove("active");
-}
-
-function mostrarCadastro(){
- loginBox.classList.add("hidden");
- signupBox.classList.remove("hidden");
- loginTab.classList.remove("active");
- signupTab.classList.add("active");
+ try{
+  await auth.signInWithEmailAndPassword(email,senha);
+ }catch(e){
+  erroAuth(traduzErro(e.code));
+ }
 }
 
 async function cadastro(){
+ const nome=$("signupName").value.trim();
+ const email=$("signupEmail").value.trim();
+ const senha=$("signupPassword").value;
+
+ if(nome.length<2){
+  erroAuth("Digite um nome válido.");
+  return;
+ }
+
+ if(!email||!senha){
+  erroAuth("Preencha todos os campos.");
+  return;
+ }
+
+ if(senha.length<6){
+  erroAuth("A senha precisa ter pelo menos 6 caracteres.");
+  return;
+ }
+
  try{
-  const nome=signupName.value.trim();
-  const email=signupEmail.value.trim();
-  const senha=signupPassword.value;
-
-  if(!nome||!email||!senha)return toast("Preencha todos os campos.");
-  if(senha.length<6)return toast("A senha precisa ter pelo menos 6 caracteres.");
-
   const cred=await auth.createUserWithEmailAndPassword(email,senha);
 
-  perfil={
-   nome,
-   nomeBusca:nome.toLowerCase(),
-   email,
-   avatar:"",
+  const novo={
+   uid:cred.user.uid,
+   nome:nome,
+   email:email,
+   foto:"",
    xp:0,
    nivel:1,
    moedas:0,
-   recorde:0,
-   maiorPremio:0,
+   titulo:"Novato",
    partidas:0,
    vitorias:0,
    acertos:0,
    erros:0,
-   titulo:"Novato",
-   criadoEm:FV.serverTimestamp()
+   maiorPremio:0,
+   conquistas:[],
+   temas:[],
+   criadoEm:agora(),
+   atualizadoEm:agora()
   };
 
-  await db.collection("Usuarios").doc(cred.user.uid).set(perfil);
+  await db.collection("Usuarios").doc(cred.user.uid).set(novo);
+  await publicarRanking(novo);
+  await salvarPresenca(novo);
 
-  await publicarRanking();
-
-  toast("Conta criada!");
+  toast("Conta criada com sucesso!");
  }catch(e){
-  toast(traduzirErro(e));
+  erroAuth(traduzErro(e.code));
  }
 }
 
-async function login(){
- try{
-  await auth.signInWithEmailAndPassword(
-   loginEmail.value.trim(),
-   loginPassword.value
-  );
- }catch(e){
-  toast(traduzirErro(e));
- }
+function traduzErro(code){
+ const mapa={
+  "auth/invalid-email":"E-mail inválido.",
+  "auth/user-not-found":"Usuário não encontrado.",
+  "auth/wrong-password":"Senha incorreta.",
+  "auth/invalid-credential":"E-mail ou senha incorretos.",
+  "auth/email-already-in-use":"Esse e-mail já está cadastrado.",
+  "auth/weak-password":"A senha é muito fraca.",
+  "auth/network-request-failed":"Problema de conexão.",
+  "auth/too-many-requests":"Muitas tentativas. Aguarde um pouco."
+ };
+ return mapa[code]||"Não foi possível realizar a operação.";
 }
 
-function logout(){
+async function logout(){
  if(usuario){
-  db.collection("Partidas")
-   .doc("presenca_"+usuario.uid)
-   .set({
-    uid:usuario.uid,
-    nome:getNome(),
-    avatar:perfil?.avatar||"",
-    online:false,
-    ultimaAtividade:FV.serverTimestamp()
-   },{merge:true}).catch(()=>{});
+  try{
+   await salvarPresenca({...perfil,online:false});
+  }catch(e){}
  }
- auth.signOut();
+
+ if(presenceTimer)clearInterval(presenceTimer);
+
+ if(unsubscribeFriends)unsubscribeFriends();
+ if(unsubscribeRequests)unsubscribeRequests();
+ if(unsubscribeNotifications)unsubscribeNotifications();
+ if(unsubscribeMessages)unsubscribeMessages();
+
+ await auth.signOut();
 }
 
-function traduzirErro(e){
- if(e.code==="auth/invalid-credential")return "E-mail ou senha incorretos.";
- if(e.code==="auth/email-already-in-use")return "Esse e-mail já está cadastrado.";
- if(e.code==="auth/weak-password")return "A senha é muito fraca.";
- return e.message||"Ocorreu um erro.";
-}
+auth.onAuthStateChanged(async user=>{
+ usuario=user;
 
-/* ================= PERFIL ================= */
+ if(!user){
+  $("authScreen").classList.remove("hidden");
+  $("app").classList.add("hidden");
+  return;
+ }
+
+ $("authScreen").classList.add("hidden");
+ $("app").classList.remove("hidden");
+
+ await carregarPerfil();
+ await publicarRanking(perfil);
+ await salvarPresenca(perfil);
+
+ iniciarPresenca();
+ iniciarListeners();
+ atualizarInterface();
+
+ abrirView("home");
+});
+
+/* ============================================================
+   PROFILE / PUBLIC DATA
+============================================================ */
 
 async function carregarPerfil(){
  const ref=db.collection("Usuarios").doc(usuario.uid);
@@ -596,1266 +1614,230 @@ async function carregarPerfil(){
   perfil=snap.data();
  }else{
   perfil={
-   nome:"Jogador",
-   nomeBusca:"jogador",
-   email:usuario.email,
-   avatar:"",
-   xp:0,nivel:1,moedas:0,
-   recorde:0,maiorPremio:0,
-   partidas:0,vitorias:0,
-   acertos:0,erros:0,
-   titulo:"Novato"
-  };
-  await ref.set(perfil);
- }
-
- document.getElementById("topUser").innerHTML=
-  avatarHtml(perfil,"40px");
-
- await publicarRanking();
-}
-
-async function salvarPerfil(){
- if(!usuario)return;
- await db.collection("Usuarios")
-  .doc(usuario.uid)
-  .set(perfil,{merge:true});
- await publicarRanking();
-}
-
-async function publicarRanking(){
- if(!usuario||!perfil)return;
-
- await db.collection("Partidas")
-  .doc("ranking_"+usuario.uid)
-  .set({
-   tipo:"ranking",
    uid:usuario.uid,
-   nome:perfil.nome||"Jogador",
-   nomeBusca:(perfil.nome||"jogador").toLowerCase(),
-   avatar:perfil.avatar||"",
-   recorde:Number(perfil.recorde||0),
-   maiorPremio:Number(perfil.maiorPremio||0),
-   nivel:Number(perfil.nivel||1),
-   xp:Number(perfil.xp||0),
-   vitorias:Number(perfil.vitorias||0),
-   partidas:Number(perfil.partidas||0),
-   atualizadoEm:FV.serverTimestamp()
-  },{merge:true});
-}
-
-async function salvarPresenca(online=true){
- if(!usuario)return;
-
- await db.collection("Partidas")
- .doc("presenca_"+usuario.uid)
- .set({
-  tipo:"presenca",
-  uid:usuario.uid,
-  nome:getNome(),
-  avatar:perfil?.avatar||"",
-  online,
-  ultimaAtividade:FV.serverTimestamp()
- },{merge:true});
-}
-
-/* ================= CENTRAL ================= */
-
-function central(){
- conteudo.innerHTML=`
- <div class="card">
-  <div class="title">Olá, ${esc(getNome())}! 👋</div>
-  <div class="subtitle">Escolha um jogo para começar.</div>
- </div>
-
- <div class="grid">
-
-  <div class="game">
-   <div>
-    <div class="emoji">💰</div>
-    <h2>Desafio do Milhão</h2>
-    <p class="small">15 perguntas • até R$ 1 milhão</p>
-   </div>
-   <button class="btn" onclick="menuMilhao()">Jogar</button>
-  </div>
-
-  <div class="game">
-   <div>
-    <div class="emoji">🏎️</div>
-    <h2>Corrida do Milhão</h2>
-    <p class="small">Corrida competitiva</p>
-   </div>
-   <button class="btn gold" onclick="corrida()">Jogar</button>
-  </div>
-
- </div>
-
- <div class="card">
-  <h3>📅 Desafio diário</h3>
-  <p>Uma pergunta especial todos os dias.</p>
-  <button class="btn full" onclick="desafioDiario()">Começar</button>
- </div>
-
- <div class="card">
-  <h3>📊 Sua conta</h3>
-  <div class="stats">
-   <div class="stat"><b>${perfil?.nivel||1}</b>Nível</div>
-   <div class="stat"><b>${perfil?.xp||0}</b>XP</div>
-   <div class="stat"><b>${perfil?.moedas||0}</b>Moedas</div>
-   <div class="stat"><b>${dinheiro(perfil?.recorde)}</b>Recorde</div>
-  </div>
- </div>
- `;
- iniciarMusica("menu");
-}
-
-/* ================= MÚSICA ================= */
-
-function iniciarAudio(){
- if(audioCtx)return;
- try{
-  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
- }catch(e){}
-}
-
-function som(freq,dur=.15){
- if(!efeitosLigados)return;
- iniciarAudio();
- if(!audioCtx)return;
-
- const o=audioCtx.createOscillator();
- const g=audioCtx.createGain();
-
- o.frequency.value=freq;
- o.type="triangle";
- g.gain.setValueAtTime(.035,audioCtx.currentTime);
- g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);
-
- o.connect(g);
- g.connect(audioCtx.destination);
- o.start();
- o.stop(audioCtx.currentTime+dur);
-}
-
-function tocarMusica(){
- if(!musicaLigada)return;
- iniciarAudio();
- if(!audioCtx)return;
-
- const notas=[196,247,294,392,294,247,220,294];
- let i=0;
-
- clearInterval(window.musicLoop);
-
- window.musicLoop=setInterval(()=>{
-  if(!musicaLigada)return;
-  somMusical(notas[i%notas.length]);
-  i++;
- },420);
-}
-
-function somMusical(freq){
- if(!audioCtx)return;
-
- const o=audioCtx.createOscillator();
- const g=audioCtx.createGain();
-
- o.type="sine";
- o.frequency.value=freq;
-
- g.gain.setValueAtTime(.018,audioCtx.currentTime);
- g.gain.exponentialRampToValueAtTime(
-  .001,audioCtx.currentTime+.38
- );
-
- o.connect(g);
- g.connect(audioCtx.destination);
- o.start();
- o.stop(audioCtx.currentTime+.38);
-}
-
-function iniciarMusica(){
- if(musicaLigada)tocarMusica();
-}
-
-function alternarMusica(){
- musicaLigada=!musicaLigada;
-
- if(!musicaLigada){
-  clearInterval(window.musicLoop);
- }else{
-  tocarMusica();
- }
-
- toast(musicaLigada?"🎵 Música ligada":"🔇 Música desligada");
-}
-
-/* ================= PERGUNTAS ================= */
-
-const perguntas={
-
- ciencia:[
- ["Qual planeta é conhecido como Planeta Vermelho?","Marte",["Vênus","Júpiter","Saturno"]],
- ["Qual é o maior órgão do corpo humano?","Pele",["Coração","Fígado","Pulmão"]],
- ["Qual gás é essencial para a respiração humana?","Oxigênio",["Hélio","Hidrogênio","Neônio"]],
- ["Quantos ossos tem aproximadamente um adulto?","206",["106","306","406"]],
- ["Qual é a estrela mais próxima da Terra?","Sol",["Sirius","Lua","Betelgeuse"]]
- ],
-
- geografia:[
- ["Qual é o maior país do mundo em território?","Rússia",["Brasil","China","Canadá"]],
- ["Qual é a capital do Brasil?","Brasília",["São Paulo","Rio de Janeiro","Salvador"]],
- ["Qual oceano banha a costa brasileira?","Atlântico",["Pacífico","Índico","Ártico"]],
- ["Qual é o maior continente?","Ásia",["Europa","África","Oceania"]],
- ["Qual país é conhecido pelo formato de uma bota?","Itália",["Espanha","Portugal","Grécia"]]
- ],
-
- historia:[
- ["Quem proclamou a Independência do Brasil?","Dom Pedro I",["Tiradentes","Getúlio Vargas","Dom Pedro II"]],
- ["Em que ano ocorreu a Independência do Brasil?","1822",["1500","1889","1808"]],
- ["Quem foi o primeiro presidente do Brasil?","Deodoro da Fonseca",["Dom Pedro II","Getúlio Vargas","Juscelino Kubitschek"]],
- ["Qual civilização construiu Machu Picchu?","Incas",["Romanos","Egípcios","Gregos"]],
- ["Onde começaram os Jogos Olímpicos antigos?","Grécia",["Roma","Egito","China"]]
- ],
-
- tecnologia:[
- ["O que significa CPU?","Unidade Central de Processamento",["Controle Principal Universal","Central de Programa Único","Código Principal de Usuário"]],
- ["Qual empresa criou o Android?","Google",["Microsoft","Intel","IBM"]],
- ["HTML é usado principalmente para quê?","Estruturar páginas web",["Editar fotos","Criar bancos","Compactar arquivos"]],
- ["CSS é usado principalmente para quê?","Estilizar páginas",["Hospedar sites","Criar senhas","Armazenar vídeos"]],
- ["Qual linguagem é executada diretamente no navegador?","JavaScript",["C++","Java","Assembly"]]
- ],
-
- portugues:[
- ["Qual é o plural de cidadão?","Cidadãos",["Cidadões","Cidadães","Cidadans"]],
- ["Qual palavra é um verbo?","Correr",["Casa","Azul","Mesa"]],
- ["Qual é o antônimo de feliz?","Triste",["Alegre","Contente","Satisfeito"]],
- ["Qual é o sinônimo de rápido?","Veloz",["Lento","Parado","Fraco"]],
- ["Qual sinal indica uma pergunta?","?",["!",";","."]]
- ],
-
- geral:[
- ["Quantos dias tem um ano comum?","365",["300","360","400"]],
- ["Qual é o maior animal do planeta?","Baleia-azul",["Elefante","Girafa","Tubarão-branco"]],
- ["Qual é a moeda oficial do Brasil?","Real",["Peso","Dólar","Euro"]],
- ["Quantos lados tem um hexágono?","6",["5","7","8"]],
- ["Qual é o satélite natural da Terra?","Lua",["Marte","Sol","Vênus"]]
- ],
-
- matematica:[
- ["Quanto é 15 × 4?","60",["45","50","70"]],
- ["Quanto é 144 ÷ 12?","12",["10","14","16"]],
- ["Quanto é 25% de 200?","50",["25","40","75"]],
- ["Quanto é 17 + 28?","45",["35","40","55"]],
- ["Quanto é 9²?","81",["18","72","90"]]
- ]
-
-};
-
-/* ================= JOGO ================= */
-
-const premios=[
-1000,2000,5000,10000,20000,
-30000,50000,100000,150000,200000,
-300000,400000,500000,750000,1000000
-];
-
-let jogo={
- categoria:"geral",
- perguntas:[],
- indice:0,
- premio:0,
- acertos:0,
- respondida:false,
- usadas:[],
- pular:1,
- dica:1,
- cinquenta:1
-};
-
-function menuMilhao(){
- conteudo.innerHTML=`
- <div class="card">
-  <div class="title">💰 Desafio do Milhão</div>
-  <p>Escolha uma categoria.</p>
-
-  <select id="categoria">
-   <option value="geral">Conhecimentos Gerais</option>
-   <option value="ciencia">Ciência</option>
-   <option value="geografia">Geografia</option>
-   <option value="historia">História</option>
-   <option value="tecnologia">Tecnologia</option>
-   <option value="portugues">Português</option>
-   <option value="matematica">Matemática</option>
-  </select>
-
-  <button class="btn full" onclick="iniciarMilhao()">🎮 Começar</button>
-
-  <hr>
-
-  <h3>👥 Jogar com amigo</h3>
-  <button class="btn green full" onclick="modoAmigo()">Jogar no mesmo aparelho</button>
-
-  <h3>🌐 Online</h3>
-  <button class="btn gold full" onclick="criarSala()">Criar partida online</button>
- </div>
- `;
-}
-
-function embaralhar(a){
- return a.sort(()=>Math.random()-.5);
-}
-
-function prepararPerguntas(cat){
- let banco=[...(perguntas[cat]||perguntas.geral)];
-
- while(banco.length<15){
-  banco.push(...(perguntas.geral||[]));
- }
-
- return embaralhar(banco).slice(0,15);
-}
-
-function iniciarMilhao(){
- const cat=document.getElementById("categoria")?.value||"geral";
-
- jogo={
-  categoria:cat,
-  perguntas:prepararPerguntas(cat),
-  indice:0,
-  premio:0,
-  acertos:0,
-  respondida:false,
-  usadas:[],
-  pular:1,
-  dica:1,
-  cinquenta:1
- };
-
- mostrarPergunta();
- tocarMusica();
-}
-
-function mostrarPergunta(){
- clearInterval(timer);
-
- if(jogo.indice>=15){
-  finalizarJogo(true);
-  return;
- }
-
- jogo.respondida=false;
-
- const p=jogo.perguntas[jogo.indice];
- const correta=p[1];
- const opcoes=embaralhar([correta,...p[2]]);
-
- perguntaAtual={correta,opcoes};
-
- conteudo.innerHTML=`
- <div class="card">
-
-  <div class="prize">${dinheiro(premios[jogo.indice])}</div>
-
-  <div class="small center">
-   Pergunta ${jogo.indice+1} de 15
-  </div>
-
-  <div class="timer"><div id="timerBar"></div></div>
-
-  <div class="question">${esc(p[0])}</div>
-
-  <div class="answers">
-   ${opcoes.map((x,i)=>
-    `<button class="answer" id="a${i}"
-     onclick="responder(${i})">
-     ${String.fromCharCode(65+i)}) ${esc(x)}
-    </button>`
-   ).join("")}
-  </div>
-
-  <hr>
-
-  <div class="grid">
-   <button class="btn gold" onclick="usar5050()">50/50</button>
-   <button class="btn gray" onclick="pular()">Pular</button>
-   <button class="btn gray" onclick="dica()">💡 Dica</button>
-  </div>
-
-  <p class="center small">
-   Acertos: ${jogo.acertos}
-  </p>
-
- </div>
- `;
-
- let segundos=15;
-
- timer=setInterval(()=>{
-  segundos--;
-
-  const bar=document.getElementById("timerBar");
-  if(bar)bar.style.width=(segundos/15*100)+"%";
-
-  if(segundos<=0){
-   clearInterval(timer);
-   responder(-1);
-  }
- },1000);
-}
-
-function responder(i){
- if(jogo.respondida)return;
- jogo.respondida=true;
- clearInterval(timer);
-
- const correta=perguntaAtual.correta;
- const escolhido=i>=0?perguntaAtual.opcoes[i]:null;
-
- if(i>=0){
-  const b=document.getElementById("a"+i);
-  if(b)b.classList.add(escolhido===correta?"correct":"wrong");
- }
-
- if(escolhido!==correta){
-  perguntaAtual.opcoes.forEach((x,n)=>{
-   if(x===correta){
-    document.getElementById("a"+n)?.classList.add("correct");
-   }
-  });
-
-  jogo.erros=(jogo.erros||0)+1;
-  som(130,.25);
-
-  toast(i<0?"⏰ Tempo esgotado!":"❌ Resposta errada!");
-
-  setTimeout(()=>finalizarJogo(false),1300);
-  return;
- }
-
- /* SÓ AQUI o jogador recebe ponto/prêmio */
- jogo.acertos++;
- jogo.premio=premios[jogo.indice];
-
- som(600,.18);
- setTimeout(()=>som(800,.18),100);
-
- toast("✅ Resposta correta!");
-
- setTimeout(()=>{
-  jogo.indice++;
-  mostrarPergunta();
- },1000);
-}
-
-function usar5050(){
- if(!jogo.cinquenta||jogo.respondida)return;
- jogo.cinquenta=0;
-
- const erradas=perguntaAtual.opcoes
-  .map((x,i)=>x!==perguntaAtual.correta?i:null)
-  .filter(x=>x!==null);
-
- embaralhar(erradas).slice(0,2).forEach(i=>{
-  const b=document.getElementById("a"+i);
-  if(b){
-   b.disabled=true;
-   b.style.opacity=".2";
-  }
- });
-}
-
-function pular(){
- if(!jogo.pular||jogo.respondida)return;
- jogo.pular=0;
- clearInterval(timer);
- jogo.indice++;
- mostrarPergunta();
-}
-
-function dica(){
- if(!jogo.dica||jogo.respondida)return;
- jogo.dica=0;
- toast("💡 Dica: pense na alternativa que melhor corresponde ao enunciado.");
-}
-
-async function finalizarJogo(vitoria){
- clearInterval(timer);
-
- const premioFinal=vitoria?1000000:jogo.premio;
-
- if(vitoria){
-  jogo.premio=1000000;
- }
-
- const acertos=jogo.acertos;
-
- perfil.partidas=(perfil.partidas||0)+1;
- perfil.acertos=(perfil.acertos||0)+acertos;
- perfil.erros=(perfil.erros||0)+(15-acertos);
-
- /* NÃO soma prêmio em resposta errada */
- if(vitoria){
-  perfil.vitorias=(perfil.vitorias||0)+1;
-  perfil.maiorPremio=Math.max(
-   perfil.maiorPremio||0,
-   1000000
-  );
- }
-
- /* Recorde somente baseado em prêmio realmente conquistado */
- if(premioFinal>(perfil.recorde||0)){
-  perfil.recorde=premioFinal;
- }
-
- perfil.xp=(perfil.xp||0)+(acertos*100);
-
- perfil.nivel=Math.floor((perfil.xp||0)/1000)+1;
-
- perfil.moedas=(perfil.moedas||0)+acertos*10;
-
- await salvarPerfil();
-
- conteudo.innerHTML=`
- <div class="card center">
-
-  <div style="font-size:70px">
-   ${vitoria?"🏆":"🎮"}
-  </div>
-
-  <div class="title">
-   ${vitoria?"VOCÊ VENCEU!":"Fim da partida"}
-  </div>
-
-  <p>${vitoria?
-   "Parabéns! Você chegou ao milhão!":
-   "Você respondeu uma pergunta incorretamente."
-  }</p>
-
-  <div class="prize">${dinheiro(premioFinal)}</div>
-
-  <div class="stats">
-   <div class="stat"><b>${acertos}</b>Acertos</div>
-   <div class="stat"><b>${15-acertos}</b>Erros</div>
-   <div class="stat"><b>${perfil.xp}</b>XP</div>
-  </div>
-
-  <hr>
-
-  <button class="btn full" onclick="menuMilhao()">Jogar novamente</button>
-  <button class="btn gray full" onclick="central()">Voltar</button>
-
- </div>
- `;
-
- iniciarMusica();
-}
-
-/* ================= MODO AMIGO ================= */
-
-let modoLocal={
- jogadores:[],
- atual:0,
- resultados:{}
-};
-
-function modoAmigo(){
- conteudo.innerHTML=`
- <div class="card">
-  <div class="title">👥 Jogar com amigo</div>
-  <p>Escolha quantos jogadores vão participar.</p>
-
-  <button class="btn full" onclick="configLocal(2)">2 jogadores</button>
-  <button class="btn full" onclick="configLocal(3)">3 jogadores</button>
- </div>
- `;
-}
-
-function configLocal(n){
- modoLocal={
-  jogadores:Array.from({length:n},(_,i)=>"Jogador "+(i+1)),
-  atual:0,
-  resultados:{}
- };
-
- conteudo.innerHTML=`
- <div class="card">
-  <h2>👥 Nomes dos jogadores</h2>
-  ${modoLocal.jogadores.map((x,i)=>
-   `<input id="p${i}" value="${x}">`
-  ).join("")}
-  <button class="btn green full" onclick="iniciarLocal()">Começar</button>
- </div>
- `;
-}
-
-function iniciarLocal(){
- modoLocal.jogadores=modoLocal.jogadores.map((_,i)=>
-  document.getElementById("p"+i).value.trim()||"Jogador "+(i+1)
- );
-
- modoLocal.atual=0;
- modoLocal.resultados={};
-
- rodadaLocal();
-}
-
-function rodadaLocal(){
- const jogador=modoLocal.jogadores[modoLocal.atual];
-
- jogo={
-  categoria:"geral",
-  perguntas:prepararPerguntas("geral"),
-  indice:0,
-  premio:0,
-  acertos:0,
-  respondida:false,
-  pular:0,dica:0,cinquenta:0
- };
-
- conteudo.innerHTML=`
- <div class="card center">
-  <h2>🎮 Vez de ${esc(jogador)}</h2>
-  <p>Prepare-se.</p>
-  <button class="btn full" onclick="mostrarPerguntaLocal()">Começar</button>
- </div>
- `;
-}
-
-function mostrarPerguntaLocal(){
- mostrarPergunta();
-}
-
-function finalizarLocal(){
-}
-
-/* ================= DESAFIO DIÁRIO ================= */
-
-function desafioDiario(){
- const hoje=new Date().toISOString().slice(0,10);
- const p=perguntas.geral[
-  hoje.split("-").reduce((a,b)=>a+Number(b),0)%perguntas.geral.length
- ];
-
- conteudo.innerHTML=`
- <div class="card">
-  <h2>📅 Desafio diário</h2>
-  <p>${esc(p[0])}</p>
-  ${[p[1],...p[2]].sort(()=>Math.random()-.5).map(x=>
-   `<button class="answer full"
-    onclick="respostaDiaria(this,'${esc(p[1])}')">
-    ${esc(x)}
-   </button>`
-  ).join("")}
- </div>
- `;
-}
-
-function respostaDiaria(btn,correta){
- if(btn.textContent.trim()===correta){
-  btn.classList.add("correct");
-  toast("🎉 Acertou!");
-  perfil.xp=(perfil.xp||0)+100;
-  salvarPerfil();
- }else{
-  btn.classList.add("wrong");
-  toast("❌ Errou!");
- }
-}
-
-/* ================= RANKING ================= */
-
-async function abrirRanking(){
- conteudo.innerHTML=`
- <div class="card">
-  <div class="title">🏆 Ranking</div>
-  <p class="subtitle">Os melhores jogadores da plataforma</p>
-  <div id="rankingLista">Carregando...</div>
- </div>
- `;
-
- try{
-  const snap=await db.collection("Partidas")
-   .where("tipo","==","ranking")
-   .limit(100)
-   .get();
-
-  let jogadores=[];
-
-  snap.forEach(d=>{
-   const x=d.data();
-   if(x.uid)jogadores.push(x);
-  });
-
-  jogadores.sort((a,b)=>
-   Number(b.recorde||0)-Number(a.recorde||0)
-  );
-
-  if(!jogadores.length){
-   rankingLista.innerHTML="<p>Nenhum jogador encontrado.</p>";
-   return;
-  }
-
-  rankingLista.innerHTML=jogadores.map((x,i)=>`
-   <div class="rankrow"
-    onclick="verPerfilPublico('${x.uid}')">
-
-    <div class="ranknum">#${i+1}</div>
-
-    ${avatarHtml(x,"42px")}
-
-    <div class="rowinfo">
-     <b>${esc(x.nome)}</b>
-     <small>Nível ${x.nivel||1} • ${x.xp||0} XP</small>
-    </div>
-
-    <strong>${dinheiro(x.recorde)}</strong>
-   </div>
-  `).join("");
-
- }catch(e){
-  rankingLista.innerHTML=
-   "<p>Não foi possível carregar o ranking.</p>";
- }
-}
-
-async function verPerfilPublico(uid){
- const snap=await db.collection("Partidas")
-  .doc("ranking_"+uid).get();
-
- if(!snap.exists)return;
-
- const x=snap.data();
-
- conteudo.innerHTML=`
- <div class="card center">
-
-  ${avatarHtml(x,"90px")}
-
-  <h2>${esc(x.nome)}</h2>
-
-  <p>Nível ${x.nivel||1}</p>
-
-  <div class="stats">
-   <div class="stat"><b>${x.xp||0}</b>XP</div>
-   <div class="stat"><b>${x.partidas||0}</b>Partidas</div>
-   <div class="stat"><b>${x.vitorias||0}</b>Vitórias</div>
-   <div class="stat"><b>${dinheiro(x.recorde)}</b>Recorde</div>
-  </div>
-
-  ${uid!==usuario.uid?
-   `<button class="btn green full"
-    onclick="enviarAmizade('${uid}','${esc(x.nome)}')">
-    🤝 Adicionar amigo
-   </button>`:""
-  }
-
- </div>
- `;
-}
-
-/* ================= AMIZADES ================= */
-
-function abrirAmigos(){
- conteudo.innerHTML=`
- <div class="card">
-  <div class="title">👥 Amigos</div>
-
-  <input id="busca"
-   placeholder="Pesquisar jogador..."
-   oninput="buscarJogadores()">
-
-  <div id="resultadosBusca"></div>
- </div>
-
- <div class="card">
-  <h3>🤝 Meus amigos</h3>
-  <div id="listaAmigos">Carregando...</div>
- </div>
-
- <div class="card">
-  <h3>📨 Pedidos recebidos</h3>
-  <div id="pedidos">Carregando...</div>
- </div>
- `;
-
- carregarAmigos();
- carregarPedidos();
-}
-
-async function buscarJogadores(){
- const termo=document.getElementById("busca")?.value
-  .trim().toLowerCase();
-
- if(!termo||termo.length<2){
-  resultadosBusca.innerHTML="";
-  return;
- }
-
- try{
-  const snap=await db.collection("Partidas")
-   .where("tipo","==","ranking")
-   .limit(100)
-   .get();
-
-  const arr=[];
-
-  snap.forEach(d=>{
-   const x=d.data();
-
-   if(
-    x.uid!==usuario.uid &&
-    String(x.nomeBusca||x.nome||"")
-     .toLowerCase().includes(termo)
-   ){
-    arr.push(x);
-   }
-  });
-
-  resultadosBusca.innerHTML=arr.map(x=>`
-   <div class="friendrow">
-
-    ${avatarHtml(x,"40px")}
-
-    <div class="rowinfo">
-     <b>${esc(x.nome)}</b>
-     <small>Nível ${x.nivel||1}</small>
-    </div>
-
-    <button class="btn"
-     onclick="enviarAmizade('${x.uid}','${esc(x.nome)}')">
-     + Amigo
-    </button>
-
-   </div>
-  `).join("")||"<p>Nenhum jogador encontrado.</p>";
-
- }catch(e){
-  resultadosBusca.innerHTML=
-   "<p>Erro ao pesquisar jogadores.</p>";
- }
-}
-
-async function enviarAmizade(uid,nome){
- if(uid===usuario.uid)return;
-
- const id=[usuario.uid,uid].sort().join("_");
-
- const ref=db.collection("Amizades").doc(id);
- const snap=await ref.get();
-
- if(snap.exists){
-  toast("Esse pedido já existe ou vocês já são amigos.");
-  return;
- }
-
- await ref.set({
-  usuarios:[usuario.uid,uid],
-  remetente:usuario.uid,
-  remetenteNome:getNome(),
-  remetenteAvatar:perfil.avatar||"",
-  destinatario:uid,
-  status:"pendente",
-  criadoEm:FV.serverTimestamp()
- });
-
- await criarNotificacao(uid,"amizade",{
-  texto:`${getNome()} enviou uma solicitação de amizade.`
- });
-
- toast("Pedido enviado!");
-}
-
-async function carregarPedidos(){
- const el=document.getElementById("pedidos");
- if(!el)return;
-
- const snap=await db.collection("Amizades")
-  .where("destinatario","==",usuario.uid)
-  .where("status","==","pendente")
-  .get();
-
- if(snap.empty){
-  el.innerHTML="<p class='small'>Nenhum pedido.</p>";
-  return;
- }
-
- el.innerHTML="";
-
- snap.forEach(d=>{
-  const x=d.data();
-
-  el.innerHTML+=`
-   <div class="friendrow">
-
-    ${avatarHtml({
-     nome:x.remetenteNome,
-     avatar:x.remetenteAvatar
-    },"42px")}
-
-    <div class="rowinfo">
-     <b>${esc(x.remetenteNome)}</b>
-     <small>Quer ser seu amigo</small>
-    </div>
-
-    <button class="btn green"
-     onclick="responderAmizade('${d.id}',true)">
-     ✓
-    </button>
-
-    <button class="btn red"
-     onclick="responderAmizade('${d.id}',false)">
-     ✕
-    </button>
-
-   </div>
-  `;
- });
-}
-
-async function responderAmizade(id,aceitar){
- const ref=db.collection("Amizades").doc(id);
- const snap=await ref.get();
-
- if(!snap.exists)return;
-
- const x=snap.data();
-
- if(aceitar){
-  await ref.update({
-   status:"aceita",
-   aceitoEm:FV.serverTimestamp()
-  });
-
-  await criarNotificacao(
-   x.remetente,
-   "amizade_aceita",
-   {texto:`${getNome()} aceitou sua solicitação de amizade.`}
-  );
-
-  toast("Amizade aceita!");
- }else{
-  await ref.update({status:"recusada"});
-  toast("Pedido recusado.");
- }
-
- carregarPedidos();
- carregarAmigos();
-}
-
-async function carregarAmigos(){
- const el=document.getElementById("listaAmigos");
- if(!el)return;
-
- const snap=await db.collection("Amizades")
-  .where("usuarios","array-contains",usuario.uid)
-  .get();
-
- const amigos=snap.docs
-  .map(d=>({id:d.id,...d.data()}))
-  .filter(x=>x.status==="aceita");
-
- if(!amigos.length){
-  el.innerHTML="<p class='small'>Você ainda não possui amigos.</p>";
-  return;
- }
-
- el.innerHTML="";
-
- for(const a of amigos){
-  const uid=a.usuarios.find(x=>x!==usuario.uid);
-
-  const r=await db.collection("Partidas")
-   .doc("ranking_"+uid).get();
-
-  const p=await db.collection("Partidas")
-   .doc("presenca_"+uid).get();
-
-  const x=r.exists?r.data():{
-   nome:"Jogador",
-   avatar:""
+   nome:usuario.email.split("@")[0],
+   email:usuario.email,
+   foto:"",
+   xp:0,
+   nivel:1,
+   moedas:0,
+   titulo:"Novato",
+   partidas:0,
+   vitorias:0,
+   acertos:0,
+   erros:0,
+   maiorPremio:0,
+   conquistas:[]
   };
-
-  const online=p.exists&&p.data().online;
-
-  el.innerHTML+=`
-   <div class="friendrow">
-
-    ${avatarHtml(x,"43px")}
-
-    <div class="rowinfo">
-     <b>${esc(x.nome)}</b>
-     <small>
-      <span class="online ${online?"on":""}"></span>
-      ${online?" Online":" Offline"}
-     </small>
-    </div>
-
-    <button class="btn"
-     onclick="abrirChat('${uid}','${esc(x.nome)}')">
-     💬
-    </button>
-
-    <button class="btn gray"
-     onclick="verPerfilPublico('${uid}')">
-     👤
-    </button>
-
-   </div>
-  `;
+  await ref.set(perfil,{merge:true});
  }
+
+ perfil.uid=usuario.uid;
+ perfil.email=perfil.email||usuario.email;
+ perfil.nome=perfil.nome||"Jogador";
+ perfil.xp=Number(perfil.xp||0);
+ perfil.nivel=Number(perfil.nivel||1);
+ perfil.moedas=Number(perfil.moedas||0);
+ perfil.partidas=Number(perfil.partidas||0);
+ perfil.vitorias=Number(perfil.vitorias||0);
+ perfil.acertos=Number(perfil.acertos||0);
+ perfil.erros=Number(perfil.erros||0);
+ perfil.maiorPremio=Number(perfil.maiorPremio||0);
+ perfil.conquistas=perfil.conquistas||[];
 }
 
-/* ================= CHAT PRIVADO ================= */
+async function publicarRanking(dados){
+ if(!dados||!dados.uid)return;
 
-function chatId(a,b){
- return [a,b].sort().join("_");
+ const publico={
+  uid:dados.uid,
+  nome:dados.nome||"Jogador",
+  foto:dados.foto||"",
+  xp:Number(dados.xp||0),
+  nivel:Number(dados.nivel||1),
+  moedas:Number(dados.moedas||0),
+  titulo:dados.titulo||"Novato",
+  partidas:Number(dados.partidas||0),
+  vitorias:Number(dados.vitorias||0),
+  acertos:Number(dados.acertos||0),
+  maiorPremio:Number(dados.maiorPremio||0),
+  tipo:"ranking",
+  atualizadoEm:agora()
+ };
+
+ await db.collection("Partidas").doc("ranking_"+dados.uid).set(publico,{merge:true});
 }
 
-async function abrirChat(uid,nome){
- const id=chatId(usuario.uid,uid);
+async function salvarPresenca(dados){
+ if(!dados||!dados.uid)return;
 
- conteudo.innerHTML=`
- <div class="card">
-
-  <div class="title">💬 ${esc(nome)}</div>
-
-  <div id="mensagens" class="chatbox">
-   Carregando mensagens...
-  </div>
-
-  <div class="chatinput">
-   <input id="textoChat"
-    placeholder="Digite sua mensagem..."
-    onkeydown="if(event.key==='Enter')enviarMensagem('${uid}')">
-   <button class="btn" onclick="enviarMensagem('${uid}')">➤</button>
-  </div>
-
- </div>
- `;
-
- if(chatUnsub)chatUnsub();
-
- chatUnsub=db.collection("Chats")
-  .doc(id)
-  .collection("Mensagens")
-  .orderBy("criadoEm","asc")
-  .onSnapshot(snap=>{
-
-   const el=document.getElementById("mensagens");
-   if(!el)return;
-
-   el.innerHTML="";
-
-   snap.forEach(d=>{
-    const x=d.data();
-
-    el.innerHTML+=`
-     <div class="msg ${x.remetente===usuario.uid?"me":"other"}">
-      ${esc(x.texto)}
-     </div>
-    `;
-   });
-
-   el.scrollTop=el.scrollHeight;
-  },()=>{});
-}
-
-async function enviarMensagem(uid){
- const input=document.getElementById("textoChat");
- if(!input)return;
-
- const texto=input.value.trim();
- if(!texto)return;
-
- const id=chatId(usuario.uid,uid);
-
- await db.collection("Chats").doc(id).set({
-  participantes:[usuario.uid,uid]
+ await db.collection("Partidas").doc("presenca_"+dados.uid).set({
+  uid:dados.uid,
+  nome:dados.nome||"Jogador",
+  online:dados.online!==false,
+  ultimaAtividade:agora(),
+  tipo:"presenca"
  },{merge:true});
-
- await db.collection("Chats")
-  .doc(id)
-  .collection("Mensagens")
-  .add({
-   remetente:usuario.uid,
-   destinatario:uid,
-   texto,
-   criadoEm:FV.serverTimestamp()
-  });
-
- await criarNotificacao(uid,"mensagem",{
-  texto:`${getNome()} enviou uma mensagem.`
- });
-
- input.value="";
 }
 
-/* ================= NOTIFICAÇÕES ================= */
+function iniciarPresenca(){
+ if(presenceTimer)clearInterval(presenceTimer);
 
-async function criarNotificacao(destinatario,tipo,dados={}){
- if(!usuario||!destinatario)return;
+ salvarPresenca(perfil);
 
- await db.collection("Notificacoes").add({
-  destinatario,
-  remetente:usuario.uid,
-  remetenteNome:getNome(),
-  remetenteAvatar:perfil.avatar||"",
-  tipo,
-  ...dados,
-  lida:false,
-  criadoEm:FV.serverTimestamp()
- });
-}
+ presenceTimer=setInterval(()=>{
+  if(usuario&&perfil)salvarPresenca(perfil);
+ },60000);
 
-async function abrirNotificacoes(){
- conteudo.innerHTML=`
- <div class="card">
-  <div class="title">🔔 Notificações</div>
-  <div id="notificacoes">Carregando...</div>
- </div>
- `;
+ document.addEventListener("visibilitychange",()=>{
+  if(!usuario||!perfil)return;
 
- const snap=await db.collection("Notificacoes")
-  .where("destinatario","==",usuario.uid)
-  .limit(50)
-  .get();
-
- const arr=snap.docs.map(d=>({
-  id:d.id,...d.data()
- }));
-
- arr.sort((a,b)=>{
-  const aa=a.criadoEm?.seconds||0;
-  const bb=b.criadoEm?.seconds||0;
-  return bb-aa;
- });
-
- if(!arr.length){
-  notificacoes.innerHTML="<p>Nenhuma notificação.</p>";
-  return;
- }
-
- notificacoes.innerHTML=arr.map(x=>`
-  <div class="notification ${x.lida?"":"unread"}">
-   <b>${esc(x.remetenteNome||"Sistema")}</b>
-   <p>${esc(x.texto||"Nova notificação")}</p>
-  </div>
- `).join("");
-
- for(const x of arr){
-  if(!x.lida){
-   db.collection("Notificacoes")
-    .doc(x.id)
-    .update({lida:true})
-    .catch(()=>{});
+  if(document.visibilityState==="visible"){
+   salvarPresenca(perfil);
   }
+ });
+}
+
+/* ============================================================
+   NAVIGATION
+============================================================ */
+
+function abrirView(nome){
+ document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+
+ const target=$("view"+nome.charAt(0).toUpperCase()+nome.slice(1));
+
+ if(target)target.classList.add("active");
+
+ document.querySelectorAll(".navBtn").forEach(b=>{
+  b.classList.toggle("active",b.dataset.view===nome);
+ });
+
+ if(nome==="home")atualizarInterface();
+ if(nome==="ranking")carregarRanking();
+ if(nome==="social")carregarListaAmigos();
+ if(nome==="profile")renderPerfil();
+ if(nome==="notifications")carregarNotificacoes();
+}
+
+/* ============================================================
+   INTERFACE
+============================================================ */
+
+function atualizarInterface(){
+ if(!perfil)return;
+
+ $("homeName").textContent=perfil.nome;
+ $("homeLevel").textContent="Nível "+perfil.nivel;
+ $("homeXP").textContent=perfil.xp+" XP";
+
+ const xpBase=(perfil.nivel-1)*500;
+ const xpNext=perfil.nivel*500;
+ const pct=Math.max(0,Math.min(100,((perfil.xp-xpBase)/(xpNext-xpBase))*100));
+
+ $("homeProgress").style.width=pct+"%";
+
+ renderPerfil();
+}
+
+function renderPerfil(){
+ if(!perfil)return;
+
+ $("profileName").textContent=perfil.nome;
+ $("profileEmail").textContent=perfil.email;
+ $("profileTitle").textContent=perfil.titulo||"Novato";
+ $("profileLevel").textContent="Nível "+perfil.nivel;
+ $("profileXP").textContent=perfil.xp+" XP";
+ $("statGames").textContent=perfil.partidas;
+ $("statWins").textContent=perfil.vitorias;
+ $("statCorrect").textContent=perfil.acertos;
+ $("statWrong").textContent=perfil.erros;
+ $("statPrize").textContent=moeda(perfil.maiorPremio);
+ $("statCoins").textContent=perfil.moedas+" 🪙";
+
+ const xpBase=(perfil.nivel-1)*500;
+ const xpNext=perfil.nivel*500;
+ const pct=Math.max(0,Math.min(100,((perfil.xp-xpBase)/(xpNext-xpBase))*100));
+
+ $("profileProgress").style.width=pct+"%";
+
+ renderAvatar($("profileAvatar"),perfil);
+
+ renderConquistas();
+ renderTitulos();
+}
+
+function renderAvatar(element,dados){
+ if(!element)return;
+
+ if(dados.foto){
+  element.innerHTML='<img src="'+esc(dados.foto)+'" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">';
+ }else{
+  element.textContent=(dados.nome||"J").charAt(0).toUpperCase();
  }
 }
 
-/* ================= PERFIL ================= */
+async function editarNome(){
+ const nome=prompt("Digite seu novo nome:",perfil.nome);
 
-function abrirPerfil(){
- conteudo.innerHTML=`
- <div class="card center">
+ if(!nome||nome.trim().length<2)return;
 
-  ${avatarHtml(perfil,"90px")}
+ perfil.nome=nome.trim().slice(0,20);
 
-  <h2>${esc(getNome())}</h2>
-  <p class="subtitle">${esc(perfil.titulo||"Novato")}</p>
+ await db.collection("Usuarios").doc(usuario.uid).update({
+  nome:perfil.nome,
+  atualizadoEm:agora()
+ });
 
-  <div class="stats">
-   <div class="stat"><b>${perfil.nivel||1}</b>Nível</div>
-   <div class="stat"><b>${perfil.xp||0}</b>XP</div>
-   <div class="stat"><b>${perfil.moedas||0}</b>Moedas</div>
-   <div class="stat"><b>${perfil.partidas||0}</b>Partidas</div>
-   <div class="stat"><b>${perfil.vitorias||0}</b>Vitórias</div>
-   <div class="stat"><b>${dinheiro(perfil.recorde)}</b>Recorde</div>
-  </div>
+ await publicarRanking(perfil);
+ await salvarPresenca(perfil);
 
- </div>
-
- <div class="card">
-  <h3>📸 Foto de perfil</h3>
-
-  <input type="file"
-   accept="image/*"
-   onchange="trocarFoto(event)">
-
-  <p class="small">
-   A foto será reduzida para não ocupar muito espaço.
-  </p>
- </div>
-
- <div class="card">
-  <h3>🏅 Conquistas</h3>
-
-  <div class="badges">
-   <div class="badge">🎮 Primeiro jogo</div>
-   <div class="badge">⭐ 100 XP</div>
-   <div class="badge">💰 Primeiro prêmio</div>
-   <div class="badge">🏆 Subiu no ranking</div>
-   <div class="badge">🔥 Jogador ativo</div>
-   <div class="badge">👥 Primeiro amigo</div>
-  </div>
- </div>
-
- <div class="card">
-  <h3>⚙️ Configurações</h3>
-
-  <button class="btn gray full" onclick="alternarMusica()">
-   🎵 Música: ${musicaLigada?"Ligada":"Desligada"}
-  </button>
-
-  <button class="btn red full" onclick="logout()">
-   Sair da conta
-  </button>
- </div>
- `;
+ atualizarInterface();
+ toast("Nome alterado!");
 }
 
-function trocarFoto(event){
+async function trocarFoto(event){
  const file=event.target.files[0];
  if(!file)return;
+
+ if(!file.type.startsWith("image/")){
+  toast("Escolha uma imagem.");
+  return;
+ }
 
  const reader=new FileReader();
 
  reader.onload=e=>{
   const img=new Image();
 
-  img.onload=()=>{
+  img.onload=async()=>{
    const canvas=document.createElement("canvas");
-   canvas.width=256;
-   canvas.height=256;
+   const tamanho=256;
 
-   const c=canvas.getContext("2d");
+   canvas.width=tamanho;
+   canvas.height=tamanho;
 
-   const escala=Math.max(
-    256/img.width,
-    256/img.height
-   );
+   const ctx=canvas.getContext("2d");
 
-   const w=img.width*escala;
-   const h=img.height*escala;
+   const lado=Math.min(img.width,img.height);
+   const sx=(img.width-lado)/2;
+   const sy=(img.height-lado)/2;
 
-   c.drawImage(
-    img,
-    (256-w)/2,
-    (256-h)/2,
-    w,h
-   );
+   ctx.drawImage(img,sx,sy,lado,lado,0,0,tamanho,tamanho);
 
-   perfil.avatar=canvas.toDataURL(
-    "image/jpeg",.7
-   );
+   const foto=canvas.toDataURL("image/jpeg",.72);
 
-   salvarPerfil().then(()=>{
-    document.getElementById("topUser").innerHTML=
-     avatarHtml(perfil,"40px");
+   perfil.foto=foto;
 
-    toast("Foto atualizada!");
-    abrirPerfil();
+   await db.collection("Usuarios").doc(usuario.uid).update({
+    foto:foto,
+    atualizadoEm:agora()
    });
+
+   await publicarRanking(perfil);
+
+   renderPerfil();
+   toast("Foto atualizada!");
   };
 
   img.src=e.target.result;
@@ -1864,307 +1846,2593 @@ function trocarFoto(event){
  reader.readAsDataURL(file);
 }
 
-/* ================= CORRIDA ================= */
+/* ============================================================
+   XP / LEVEL / ACHIEVEMENTS
+============================================================ */
 
-function corrida(){
- conteudo.innerHTML=`
- <div class="card center">
+const CONQUISTAS=[
+ {id:"primeira",icon:"🎮",nome:"Primeira partida",desc:"Jogue sua primeira partida."},
+ {id:"dez",icon:"🔥",nome:"Persistente",desc:"Jogue 10 partidas."},
+ {id:"cem",icon:"💯",nome:"Centenário",desc:"Acumule 100 acertos."},
+ {id:"milhao",icon:"💰",nome:"Milionário",desc:"Alcance R$ 1.000.000."},
+ {id:"nivel5",icon:"⚡",nome:"Evoluindo",desc:"Chegue ao nível 5."},
+ {id:"nivel10",icon:"👑",nome:"Elite",desc:"Chegue ao nível 10."},
+ {id:"vencedor",icon:"🏆",nome:"Vencedor",desc:"Vença 5 partidas."},
+ {id:"amigos",icon:"👥",nome:"Social",desc:"Tenha um amigo."},
+ {id:"diario",icon:"📅",nome:"Comprometido",desc:"Complete um desafio diário."},
+ {id:"recorde",icon:"🚀",nome:"Novo recorde",desc:"Bata seu maior prêmio."}
+];
 
-  <div style="font-size:70px">🏎️</div>
+const TITULOS=[
+ {nivel:1,nome:"Novato"},
+ {nivel:3,nome:"Aspirante"},
+ {nivel:5,nome:"Competidor"},
+ {nivel:8,nome:"Veterano"},
+ {nivel:10,nome:"Especialista"},
+ {nivel:15,nome:"Mestre"},
+ {nivel:20,nome:"Lenda"},
+ {nivel:30,nome:"Imortal"}
+];
 
-  <h1>Corrida do Milhão</h1>
+function calcularNivel(xp){
+ return Math.max(1,Math.floor(Number(xp||0)/500)+1);
+}
 
-  <p>
-   Jogo de corrida competitivo da plataforma.
+function tituloPorNivel(nivel){
+ let titulo="Novato";
+
+ TITULOS.forEach(t=>{
+  if(nivel>=t.nivel)titulo=t.nome;
+ });
+
+ return titulo;
+}
+
+async function adicionarXP(valor){
+ if(!perfil)return;
+
+ perfil.xp+=Number(valor||0);
+
+ const novoNivel=calcularNivel(perfil.xp);
+ const subiu=novoNivel>perfil.nivel;
+
+ perfil.nivel=novoNivel;
+ perfil.titulo=tituloPorNivel(novoNivel);
+
+ await db.collection("Usuarios").doc(usuario.uid).update({
+  xp:perfil.xp,
+  nivel:perfil.nivel,
+  titulo:perfil.titulo,
+  atualizadoEm:agora()
+ });
+
+ await publicarRanking(perfil);
+
+ if(subiu){
+  toast("🎉 Você chegou ao nível "+perfil.nivel+"!");
+  tocarSom("level");
+ }
+
+ atualizarInterface();
+ await verificarConquistas();
+}
+
+async function adicionarMoedas(valor){
+ perfil.moedas+=Number(valor||0);
+
+ await db.collection("Usuarios").doc(usuario.uid).update({
+  moedas:perfil.moedas
+ });
+
+ atualizarInterface();
+}
+
+async function verificarConquistas(){
+ const desbloqueadas=[...(perfil.conquistas||[])];
+
+ function add(id){
+  if(!desbloqueadas.includes(id)){
+   desbloqueadas.push(id);
+   const c=CONQUISTAS.find(x=>x.id===id);
+   if(c)toast("🏅 Conquista: "+c.nome);
+  }
+ }
+
+ if(perfil.partidas>=1)add("primeira");
+ if(perfil.partidas>=10)add("dez");
+ if(perfil.acertos>=100)add("cem");
+ if(perfil.maiorPremio>=1000000)add("milhao");
+ if(perfil.nivel>=5)add("nivel5");
+ if(perfil.nivel>=10)add("nivel10");
+ if(perfil.vitorias>=5)add("vencedor");
+
+ const amigos=await obterAmigos();
+ if(amigos.length>0)add("amigos");
+
+ if(perfil.maiorPremio>0)add("recorde");
+
+ if(desbloqueadas.length!==(perfil.conquistas||[]).length){
+  perfil.conquistas=desbloqueadas;
+
+  await db.collection("Usuarios").doc(usuario.uid).update({
+   conquistas:desbloqueadas
+  });
+ }
+
+ renderConquistas();
+}
+
+function renderConquistas(){
+ if(!$("achievementGrid"))return;
+
+ $("achievementGrid").innerHTML=CONQUISTAS.map(c=>{
+  const ok=(perfil.conquistas||[]).includes(c.id);
+
+  return `
+   <div class="achievement ${ok?"unlocked":""}">
+    <div class="achievementIcon">${c.icon}</div>
+    <strong>${c.nome}</strong>
+    <small>${c.desc}</small>
+   </div>
+  `;
+ }).join("");
+}
+
+function renderTitulos(){
+ if(!$("titlesList"))return;
+
+ $("titlesList").innerHTML=TITULOS.map(t=>{
+  const ok=perfil.nivel>=t.nivel;
+
+  return `
+   <div class="row" style="padding:9px 0;opacity:${ok?1:.4}">
+    <span>${ok?"🏅":"🔒"} ${t.nome}</span>
+    <small>Nível ${t.nivel}</small>
+   </div>
+  `;
+ }).join("");
+}
+
+/* ============================================================
+   MUSIC
+============================================================ */
+
+let audioCtx=null;
+let musicOn=true;
+let musicTimer=null;
+let musicStep=0;
+
+const musicTracks={
+ menu:{
+  notes:[220,277,330,277,247,330,392,330],
+  tempo:420
+ },
+ game:{
+  notes:[196,247,294,247,220,294,330,294],
+  tempo:330
+ },
+ race:{
+  notes:[147,185,220,185,165,220,247,220],
+  tempo:190
+ }
+};
+
+let currentTrack="menu";
+
+function iniciarAudio(){
+ if(audioCtx){
+  if(audioCtx.state==="suspended")audioCtx.resume();
+  return;
+ }
+
+ const Ctx=window.AudioContext||window.webkitAudioContext;
+
+ if(!Ctx)return;
+
+ audioCtx=new Ctx();
+
+ if(musicOn)tocarMusica();
+}
+
+function tocarNota(freq,dur=.12,volume=.035){
+ if(!audioCtx||!musicOn)return;
+
+ const osc=audioCtx.createOscillator();
+ const gain=audioCtx.createGain();
+
+ osc.type="triangle";
+ osc.frequency.value=freq;
+
+ gain.gain.setValueAtTime(0,audioCtx.currentTime);
+ gain.gain.linearRampToValueAtTime(volume,audioCtx.currentTime+.015);
+ gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);
+
+ osc.connect(gain);
+ gain.connect(audioCtx.destination);
+
+ osc.start();
+ osc.stop(audioCtx.currentTime+dur+.02);
+}
+
+function tocarMusica(){
+ if(!audioCtx||!musicOn)return;
+
+ clearInterval(musicTimer);
+
+ const track=musicTracks[currentTrack];
+
+ musicStep=0;
+
+ musicTimer=setInterval(()=>{
+  if(!musicOn)return;
+
+  tocarNota(track.notes[musicStep%track.notes.length],.18,.025);
+
+  if(musicStep%4===0){
+   tocarNota(track.notes[(musicStep+2)%track.notes.length]/2,.25,.018);
+  }
+
+  musicStep++;
+ },track.tempo);
+}
+
+function trocarMusicaFaixa(nome){
+ currentTrack=nome;
+ if(audioCtx&&musicOn)tocarMusica();
+}
+
+function alternarMusica(){
+ musicOn=!musicOn;
+
+ $("musicSwitch").classList.toggle("on",musicOn);
+
+ if(musicOn){
+  iniciarAudio();
+  tocarMusica();
+ }else{
+  clearInterval(musicTimer);
+ }
+
+ localStorage.setItem("musicOn",musicOn?"1":"0");
+}
+
+function tocarSom(tipo){
+ if(!audioCtx||!musicOn)return;
+
+ const sets={
+  correct:[660,880],
+  wrong:[180,130],
+  win:[523,659,784,1046],
+  level:[392,523,659,784]
+ };
+
+ const notas=sets[tipo]||sets.correct;
+
+ notas.forEach((n,i)=>{
+  setTimeout(()=>tocarNota(n,.18,.05),i*100);
+ });
+}
+
+document.addEventListener("click",iniciarAudio,{once:true});
+document.addEventListener("touchstart",iniciarAudio,{once:true});
+
+/* ============================================================
+   QUESTIONS
+============================================================ */
+
+const perguntas={
+
+ ciencia:[
+  ["Qual planeta é conhecido como planeta vermelho?",["Marte","Vênus","Júpiter","Saturno"],0],
+  ["Qual é o maior órgão do corpo humano?",["Coração","Pele","Fígado","Pulmão"],1],
+  ["Qual gás é essencial para a respiração humana?",["Oxigênio","Hélio","Neônio","Hidrogênio"],0],
+  ["Qual é o centro do Sistema Solar?",["Terra","Lua","Sol","Marte"],2],
+  ["Qual animal é conhecido por mudar de cor?",["Camaleão","Cavalo","Golfinho","Pinguim"],0],
+  ["Qual força nos mantém presos à Terra?",["Magnetismo","Gravidade","Eletricidade","Pressão"],1],
+  ["Quantos dentes normalmente tem um adulto?",["28","30","32","36"],2],
+  ["A água ferve, ao nível do mar, a aproximadamente quantos graus Celsius?",["50","75","100","150"],2],
+  ["Qual é o satélite natural da Terra?",["Sol","Lua","Marte","Vênus"],1],
+  ["Qual órgão bombeia o sangue?",["Pulmão","Cérebro","Coração","Rim"],2],
+  ["Qual vitamina é produzida pela exposição ao sol?",["Vitamina A","Vitamina B12","Vitamina C","Vitamina D"],3],
+  ["Qual é o animal terrestre mais rápido?",["Leão","Guepardo","Cavalo","Lobo"],1],
+  ["Qual elemento químico tem símbolo O?",["Ouro","Oxigênio","Ósmio","Ozônio"],1],
+  ["Quantos ossos aproximadamente possui um adulto?",["106","206","306","406"],1],
+  ["Qual é a unidade básica da vida?",["Átomo","Célula","Molécula","Tecido"],1],
+  ["Qual planeta é famoso por seus anéis?",["Mercúrio","Saturno","Terra","Marte"],1],
+  ["Qual mamífero põe ovos?",["Baleia","Ornitorrinco","Golfinho","Morcego"],1],
+  ["Qual é o maior animal conhecido?",["Elefante","Baleia-azul","Girafa","Tubarão"],1],
+  ["O que as plantas absorvem da atmosfera para realizar fotossíntese?",["Oxigênio","Nitrogênio","Gás carbônico","Hélio"],2],
+  ["Qual é a fórmula química da água?",["CO2","O2","H2O","NaCl"],2],
+  ["Qual órgão é responsável por grande parte da filtragem do sangue?",["Rins","Estômago","Coração","Pulmões"],0],
+  ["Qual ciência estuda os seres vivos?",["Geologia","Biologia","Astronomia","Física"],1],
+  ["Qual é a velocidade aproximada da luz no vácuo?",["300 km/s","3.000 km/s","300.000 km/s","3.000.000 km/s"],2],
+  ["Qual parte da célula contém o material genético?",["Núcleo","Parede","Membrana","Citoplasma"],0],
+  ["Qual fenômeno ocorre quando a Lua fica entre a Terra e o Sol?",["Eclipse solar","Eclipse lunar","Aurora","Maré"],0]
+ ],
+
+ geografia:[
+  ["Qual é o maior país do mundo em território?",["Brasil","Canadá","Rússia","China"],2],
+  ["Qual é a capital do Brasil?",["Rio de Janeiro","Brasília","São Paulo","Salvador"],1],
+  ["Qual é o maior oceano?",["Atlântico","Índico","Pacífico","Ártico"],2],
+  ["Em qual continente fica o Egito?",["Ásia","Europa","África","Oceania"],2],
+  ["Qual é o maior deserto quente do mundo?",["Saara","Gobi","Atacama","Kalahari"],0],
+  ["Qual país tem formato de bota?",["Espanha","Itália","Grécia","Portugal"],1],
+  ["Qual é a capital da França?",["Paris","Roma","Madrid","Lisboa"],0],
+  ["Qual rio é tradicionalmente considerado o mais extenso do mundo?",["Amazonas","Nilo","Danúbio","Mississipi"],0],
+  ["Qual é o menor país do mundo?",["Mônaco","Vaticano","Luxemburgo","Malta"],1],
+  ["Qual continente é conhecido como continente gelado?",["África","Ásia","Antártida","Europa"],2],
+  ["Qual país possui a cidade de Tóquio?",["China","Japão","Coreia do Sul","Tailândia"],1],
+  ["Qual é a capital da Argentina?",["Lima","Buenos Aires","Montevidéu","Santiago"],1],
+  ["Qual estado brasileiro é famoso pelo Encontro das Águas?",["Amazonas","Paraná","Bahia","Goiás"],0],
+  ["Qual é a maior floresta tropical do mundo?",["Amazônia","Congo","Taiga","Mata Atlântica"],0],
+  ["Qual país é conhecido pelas pirâmides de Gizé?",["México","Egito","Peru","Índia"],1],
+  ["Qual é a capital de Portugal?",["Porto","Lisboa","Coimbra","Braga"],1],
+  ["Qual continente possui mais países?",["Europa","África","Ásia","América"],1],
+  ["Qual é a capital do Japão?",["Kyoto","Osaka","Tóquio","Hiroshima"],2],
+  ["Qual país tem a maior população da América do Sul?",["Argentina","Brasil","Colômbia","Peru"],1],
+  ["Qual é o maior estado brasileiro em território?",["Amazonas","Minas Gerais","Pará","Mato Grosso"],0],
+  ["Qual é a capital de Minas Gerais?",["Uberlândia","Belo Horizonte","Juiz de Fora","Montes Claros"],1],
+  ["Qual oceano banha a costa leste do Brasil?",["Pacífico","Atlântico","Índico","Ártico"],1],
+  ["Qual país faz fronteira com o Brasil e não possui litoral?",["Chile","Bolívia","Colômbia","Guiana"],1],
+  ["Qual é a capital do Chile?",["Santiago","Lima","Quito","La Paz"],0],
+  ["Qual é a capital do Canadá?",["Toronto","Vancouver","Ottawa","Montreal"],2]
+ ],
+
+ historia:[
+  ["Quem proclamou a Independência do Brasil?",["Dom Pedro I","Dom Pedro II","Tiradentes","Getúlio Vargas"],0],
+  ["Em que ano ocorreu a Independência do Brasil?",["1500","1822","1889","1930"],1],
+  ["Quem foi o primeiro imperador do Brasil?",["Dom Pedro I","Dom Pedro II","Juscelino","Deodoro"],0],
+  ["Em que ano foi proclamada a República do Brasil?",["1822","1850","1889","1901"],2],
+  ["Quem foi Tiradentes?",["Militar e ativista da Inconfidência Mineira","Imperador","Presidente","Explorador"],0],
+  ["Qual civilização construiu Machu Picchu?",["Maia","Asteca","Inca","Romana"],2],
+  ["Onde surgiram os Jogos Olímpicos antigos?",["Roma","Grécia","Egito","China"],1],
+  ["Quem foi o primeiro presidente do Brasil?",["Deodoro da Fonseca","Getúlio Vargas","Floriano Peixoto","Juscelino"],0],
+  ["A Revolução Francesa começou em qual século?",["XV","XVI","XVIII","XX"],2],
+  ["Qual acontecimento ocorreu em 1492?",["Queda de Roma","Chegada de Colombo à América","Independência do Brasil","Revolução Industrial"],1],
+  ["Qual império tinha Roma como centro?",["Romano","Asteca","Inca","Persa"],0],
+  ["Quem foi conhecido como Rei do Futebol?",["Pelé","Zico","Romário","Garrincha"],0],
+  ["Qual guerra terminou em 1945?",["Primeira Guerra Mundial","Segunda Guerra Mundial","Guerra do Vietnã","Guerra Civil"],1],
+  ["Qual foi a primeira capital do Brasil?",["Brasília","Rio de Janeiro","Salvador","São Paulo"],2],
+  ["Quem assinou a Lei Áurea?",["Princesa Isabel","Dona Leopoldina","Maria I","Carlota Joaquina"],0],
+  ["Em que ano ocorreu a abolição da escravidão no Brasil?",["1822","1850","1888","1889"],2],
+  ["Qual civilização criou o Coliseu?",["Romana","Maia","Inca","Egípcia"],0],
+  ["Qual era a principal cidade do Império Asteca?",["Tenochtitlán","Cuzco","Atenas","Esparta"],0],
+  ["Quem foi Getúlio Vargas?",["Presidente brasileiro","Imperador","Navegador","Artista"],0],
+  ["A Guerra Fria envolveu principalmente EUA e qual país?",["Brasil","União Soviética","Japão","França"],1],
+  ["Qual acontecimento marcou o início da Idade Moderna?",["Queda de Constantinopla","Descobrimento do Brasil","Revolução Francesa","Primeira Guerra"],0],
+  ["Qual país foi governado por faraós na Antiguidade?",["Egito","Brasil","Portugal","Japão"],0],
+  ["Qual cidade era o centro político dos incas?",["Cuzco","Roma","Paris","Alexandria"],0],
+  ["Quem foi Napoleão Bonaparte?",["Militar e imperador francês","Presidente americano","Rei inglês","Explorador português"],0],
+  ["A escrita cuneiforme está associada a qual região antiga?",["Mesopotâmia","Oceania","América do Sul","Escandinávia"],0]
+ ],
+
+ tecnologia:[
+  ["O que significa CPU?",["Unidade Central de Processamento","Controle Principal Universal","Central de Programas","Código Principal"],0],
+  ["Qual linguagem é usada para estruturar páginas web?",["HTML","CSS","SQL","Python"],0],
+  ["Qual linguagem é usada principalmente para estilizar páginas web?",["HTML","CSS","Java","C++"],1],
+  ["Qual linguagem permite adicionar interatividade em páginas web?",["JavaScript","HTML","CSS","XML"],0],
+  ["O que é Wi-Fi?",["Tecnologia de conexão sem fio","Um antivírus","Um processador","Um sistema operacional"],0],
+  ["O que significa URL?",["Endereço de recurso na internet","Unidade de rede local","Código de usuário","Registro universal"],0],
+  ["Qual empresa desenvolve o Android?",["Google","Microsoft","Apple","Sony"],0],
+  ["Qual sistema operacional é desenvolvido pela Apple para iPhone?",["Android","iOS","Windows","Linux"],1],
+  ["O que é um navegador?",["Programa para acessar páginas da internet","Um antivírus","Um cabo","Uma placa"],0],
+  ["Qual destes é um navegador?",["Chrome","Photoshop","Excel","Firebase"],0],
+  ["O que é HTML?",["Linguagem de marcação","Banco de dados","Sistema operacional","Editor de vídeo"],0],
+  ["O que é CSS?",["Folhas de estilo","Banco de dados","Servidor","Antivírus"],0],
+  ["O que é JavaScript?",["Linguagem de programação","Sistema operacional","Navegador","Banco de imagens"],0],
+  ["O que é um aplicativo?",["Programa desenvolvido para realizar funções","Um cabo","Uma tela","Um processador"],0],
+  ["O que significa IA?",["Inteligência Artificial","Internet Avançada","Interface Automática","Informação Aplicada"],0],
+  ["Qual serviço do Google é usado para autenticação e banco de dados em muitos projetos?",["Firebase","YouTube","Maps","Drive"],0],
+  ["O que é armazenamento em nuvem?",["Guardar dados em servidores acessíveis pela internet","Guardar dados apenas no papel","Um tipo de monitor","Uma placa"],0],
+  ["Qual é uma extensão comum de arquivo HTML?",[".html",".jpg",".mp3",".exe"],0],
+  ["Qual extensão normalmente representa uma folha de estilos CSS?",[".css",".html",".png",".zip"],0],
+  ["Qual extensão normalmente representa um arquivo JavaScript?",[".js",".css",".doc",".jpg"],0],
+  ["O que é código-fonte?",["Conjunto de instruções de um programa","Uma imagem","Um cabo","Uma senha"],0],
+  ["O que é um servidor?",["Computador ou serviço que fornece recursos","Um teclado","Um mouse","Uma tela"],0],
+  ["O que é um banco de dados?",["Sistema organizado para armazenar informações","Um navegador","Um processador","Uma câmera"],0],
+  ["O que significa app?",["Aplicativo","Arquivo público","Acesso privado","Atualização programada"],0],
+  ["O que é programação?",["Processo de criar instruções para computadores","Montagem de computador","Instalação de internet","Criação de imagens"],0]
+ ],
+
+ portugues:[
+  ["Qual é o plural de cidadão?",["Cidadãos","Cidadões","Cidadães","Cidadans"],0],
+  ["Qual palavra é um substantivo?",["Casa","Correr","Bonito","Rapidamente"],0],
+  ["Qual palavra é um verbo?",["Correr","Casa","Azul","Muito"],0],
+  ["Qual palavra é um adjetivo?",["Bonito","Correr","Casa","Ontem"],0],
+  ["Qual é o antônimo de grande?",["Pequeno","Alto","Largo","Forte"],0],
+  ["Qual é o sinônimo de feliz?",["Contente","Triste","Bravo","Fraco"],0],
+  ["Qual palavra está corretamente acentuada?",["Árvore","Arvore","Árvôre","Árvoré"],0],
+  ["Qual é o plural de pão?",["Pães","Pãos","Pãoses","Pãis"],0],
+  ["Qual palavra é um pronome?",["Ele","Casa","Correr","Azul"],0],
+  ["Qual sinal termina normalmente uma pergunta?",["?","!",".",":"],0],
+  ["Qual sinal indica uma exclamação?",["!","?",";",","],0],
+  ["Qual é o feminino de ator?",["Atriz","Atora","Atrizta","Atores"],0],
+  ["Qual é o aumentativo de casa?",["Casarão","Casinha","Caseta","Casal"],0],
+  ["Qual é o diminutivo de casa?",["Casinha","Casarão","Casão","Casaço"],0],
+  ["Qual palavra apresenta encontro vocálico?",["Pai","Prato","Flor","Três"],0],
+  ["Qual é o coletivo de peixes?",["Cardume","Matilha","Alcateia","Rebanho"],0],
+  ["Qual é o coletivo de lobos?",["Alcateia","Cardume","Colmeia","Manada"],0],
+  ["Qual é o coletivo de abelhas?",["Enxame","Matilha","Rebanho","Cardume"],0],
+  ["Qual palavra é paroxítona?",["Casa","Café","Também","Você"],0],
+  ["Qual é o plural de papel?",["Papéis","Papeis","Papels","Papéis"],0],
+  ["Qual é a função principal de um verbo?",["Indicar ação, estado ou fenômeno","Nomear objetos","Caracterizar nomes","Substituir nomes"],0],
+  ["Qual palavra é um advérbio?",["Rapidamente","Casa","Bonito","Correr"],0],
+  ["Qual é o antônimo de escuro?",["Claro","Preto","Baixo","Frio"],0],
+  ["Qual é o sinônimo de rápido?",["Veloz","Lento","Fraco","Pequeno"],0],
+  ["Qual é a língua oficial do Brasil?",["Português","Espanhol","Inglês","Francês"],0]
+ ],
+
+ geral:[
+  ["Qual é a capital da Itália?",["Roma","Paris","Lisboa","Berlim"],0],
+  ["Quantos dias tem uma semana?",["5","6","7","8"],2],
+  ["Quantos meses tem um ano?",["10","11","12","13"],2],
+  ["Qual é o maior planeta do Sistema Solar?",["Terra","Marte","Júpiter","Mercúrio"],2],
+  ["Qual é a moeda oficial do Brasil?",["Real","Peso","Dólar","Euro"],0],
+  ["Quantos lados tem um triângulo?",["2","3","4","5"],1],
+  ["Qual é a cor resultante da mistura de azul e amarelo?",["Verde","Roxo","Laranja","Rosa"],0],
+  ["Qual esporte utiliza uma cesta?",["Basquete","Tênis","Natação","Golfe"],0],
+  ["Qual animal é conhecido como rei da selva?",["Leão","Tigre","Urso","Lobo"],0],
+  ["Qual é o idioma mais falado no Brasil?",["Português","Inglês","Espanhol","Francês"],0],
+  ["Qual instrumento possui teclas brancas e pretas?",["Piano","Violino","Flauta","Tambor"],0],
+  ["Qual é o maior mamífero terrestre?",["Elefante","Girafa","Rinoceronte","Hipopótamo"],0],
+  ["Qual é o formato aproximado da Terra?",["Esférico","Quadrado","Triangular","Plano"],0],
+  ["Quantas horas tem um dia?",["12","18","24","48"],2],
+  ["Qual é o primeiro mês do ano?",["Janeiro","Fevereiro","Março","Abril"],0],
+  ["Qual é o último mês do ano?",["Outubro","Novembro","Dezembro","Janeiro"],2],
+  ["Qual planeta é chamado de planeta azul?",["Terra","Marte","Júpiter","Saturno"],0],
+  ["Qual esporte é jogado com uma bola e duas traves?",["Futebol","Tênis","Vôlei","Golfe"],0],
+  ["Qual país é famoso pela Torre Eiffel?",["França","Itália","Alemanha","Espanha"],0],
+  ["Qual é a capital da Espanha?",["Madrid","Barcelona","Sevilha","Valência"],0],
+  ["Qual é a capital da Alemanha?",["Berlim","Munique","Hamburgo","Frankfurt"],0],
+  ["Qual é a capital do México?",["Cidade do México","Cancún","Guadalajara","Monterrey"],0],
+  ["Quantos minutos tem uma hora?",["30","45","60","90"],2],
+  ["Qual é o número que vem depois de 99?",["98","100","101","109"],1],
+  ["Qual é a estrela mais próxima da Terra?",["Sol","Sirius","Vega","Polaris"],0]
+ ],
+
+ matematica:[
+  ["Quanto é 7 + 8?",["13","14","15","16"],2],
+  ["Quanto é 12 × 4?",["36","48","52","56"],1],
+  ["Quanto é 100 ÷ 5?",["10","15","20","25"],2],
+  ["Quanto é 25 + 37?",["52","62","72","82"],1],
+  ["Quanto é 9 × 9?",["72","81","90","99"],1]
+ ]
+};
+
+/* gera 500 questões matemáticas */
+function gerarMatematica(){
+ const b=[...perguntas.matematica];
+
+ for(let i=0;i<500;i++){
+  const tipo=i%4;
+  let a,bn,res,op;
+
+  if(tipo===0){
+   a=10+(i*7)%90;
+   bn=5+(i*11)%80;
+   res=a+bn;
+   op="+";
+  }else if(tipo===1){
+   a=50+(i*13)%450;
+   bn=1+(i*5)%a;
+   res=a-bn;
+   op="-";
+  }else if(tipo===2){
+   a=2+(i*3)%25;
+   bn=2+(i*5)%20;
+   res=a*bn;
+   op="×";
+  }else{
+   bn=2+(i*3)%15;
+   res=2+(i*7)%40;
+   a=bn*res;
+   op="÷";
+  }
+
+  const respostas=new Set([res]);
+
+  while(respostas.size<4){
+   const variacao=1+Math.floor(Math.random()*12);
+   const sinal=Math.random()<.5?-1:1;
+   respostas.add(Math.max(0,res+variacao*sinal));
+  }
+
+  const arr=[...respostas].sort(()=>Math.random()-.5);
+
+  b.push([
+   `Quanto é ${a} ${op} ${bn}?`,
+   arr.map(String),
+   arr.indexOf(res)
+  ]);
+ }
+
+ return b;
+}
+
+perguntas.matematica=gerarMatematica();
+
+/* ============================================================
+   MILHÃO
+============================================================ */
+
+const premios=[
+  1000,
+  2000,
+  5000,
+  10000,
+  20000,
+  30000,
+  50000,
+  100000,
+  150000,
+  200000,
+  300000,
+  400000,
+  500000,
+  750000,
+  1000000
+];
+
+let jogo={
+ perguntas:[],
+ indice:0,
+ premio:0,
+ acertos:0,
+ erros:0,
+ timer:null,
+ tempo:15,
+ usadas:{},
+ ajudas:{
+  cinquenta:false,
+  pular:false,
+  dica:false
+ },
+ respondendo:false,
+ modo:"solo"
+};
+
+const dificuldades=[
+ "Fácil",
+ "Fácil",
+ "Fácil",
+ "Médio",
+ "Médio",
+ "Médio",
+ "Difícil",
+ "Difícil",
+ "Difícil",
+ "Muito difícil",
+ "Muito difícil",
+ "Muito difícil",
+ "Especialista",
+ "Especialista",
+ "Especialista"
+];
+
+function menuMilhao(){
+ trocarMusicaFaixa("menu");
+
+ abrirModal(`
+  <div class="modalTitle">
+   <h2>💰 Desafio do Milhão</h2>
+   <button class="closeBtn" onclick="fecharModal()">×</button>
+  </div>
+
+  <p style="color:#9e8ca9;line-height:1.5;margin-bottom:15px">
+   15 perguntas. Cada resposta certa aumenta seu prêmio.
+   Se errar ou o tempo acabar, você perde a partida.
   </p>
 
-  <div class="card">
-   🏁 Velocidade<br>
-   💰 Moedas<br>
-   🏆 Ranking<br>
-   👥 Amigos
+  <div class="millionMenu">
+   <button class="topicBtn" onclick="prepararMilhao('geral','solo')">
+    <strong>🌎 Conhecimentos gerais</strong>
+    <small>15 perguntas variadas</small>
+   </button>
+
+   <button class="topicBtn" onclick="prepararMilhao('ciencia','solo')">
+    <strong>🔬 Ciência</strong>
+    <small>25 perguntas disponíveis</small>
+   </button>
+
+   <button class="topicBtn" onclick="prepararMilhao('geografia','solo')">
+    <strong>🌎 Geografia</strong>
+    <small>25 perguntas disponíveis</small>
+   </button>
+
+   <button class="topicBtn" onclick="prepararMilhao('historia','solo')">
+    <strong>📜 História</strong>
+    <small>25 perguntas disponíveis</small>
+   </button>
+
+   <button class="topicBtn" onclick="prepararMilhao('tecnologia','solo')">
+    <strong>💻 Tecnologia</strong>
+    <small>25 perguntas disponíveis</small>
+   </button>
+
+   <button class="topicBtn" onclick="prepararMilhao('portugues','solo')">
+    <strong>📚 Português</strong>
+    <small>25 perguntas disponíveis</small>
+   </button>
+
+   <button class="topicBtn" onclick="prepararMilhao('matematica','solo')">
+    <strong>➗ Matemática</strong>
+    <small>500 questões geradas</small>
+   </button>
+
+   <button class="topicBtn" onclick="menuLocal()">
+    <strong>👥 Jogar com amigo perto</strong>
+    <small>2 ou 3 jogadores no mesmo aparelho</small>
+   </button>
+
+   <button class="topicBtn" onclick="menuOnline()">
+    <strong>🌐 Jogar online</strong>
+    <small>Crie ou entre em uma sala</small>
+   </button>
   </div>
-
-  <button class="btn full"
-   onclick="iniciarCorrida()">
-   🏎️ Começar corrida
-  </button>
-
- </div>
- `;
+ `);
 }
 
-function iniciarCorrida(){
- let progresso=0;
- let moedas=0;
+function prepararMilhao(topico,modo="solo"){
+ const banco=[...(perguntas[topico]||perguntas.geral)];
 
- conteudo.innerHTML=`
- <div class="card center">
-  <h2>🏎️ Corrida do Milhão</h2>
-  <div style="font-size:70px">🚗</div>
-  <div class="timer">
-   <div id="corridaBar"></div>
-  </div>
-  <p>Toque rapidamente para acelerar!</p>
-  <button class="btn green"
-   style="font-size:25px;width:100%"
-   onclick="acelerar()">
-   🚀 ACELERAR
-  </button>
-  <h2 id="corridaValor">0%</h2>
- </div>
- `;
+ const embaralhado=banco.sort(()=>Math.random()-.5);
 
- window.corridaDados={
-  progresso:0,
-  moedas:0,
-  inicio:Date.now()
+ jogo.perguntas=embaralhado.slice(0,15);
+ jogo.indice=0;
+ jogo.premio=0;
+ jogo.acertos=0;
+ jogo.erros=0;
+ jogo.usadas={};
+ jogo.ajudas={
+  cinquenta:false,
+  pular:false,
+  dica:false
  };
+ jogo.respondendo=false;
+ jogo.modo=modo;
+ jogo.topico=topico;
+
+ fecharModal();
+ iniciarMilhao();
 }
 
-function acelerar(){
- if(!window.corridaDados)return;
+function iniciarMilhao(){
+ trocarMusicaFaixa("game");
 
- window.corridaDados.progresso+=
-  Math.floor(Math.random()*8)+3;
+ abrirView("home");
 
- window.corridaDados.moedas+=
-  Math.floor(Math.random()*5)+1;
+ $("viewHome").classList.remove("active");
 
- const p=Math.min(
-  100,
-  window.corridaDados.progresso
- );
+ document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
 
- corridaBar.style.width=p+"%";
- corridaValor.textContent=p+"%";
+ let old=$("millionGame");
 
- som(400+p*3,.08);
+ if(old)old.remove();
 
- if(p>=100){
-  finalizarCorrida();
+ const div=document.createElement("section");
+ div.id="millionGame";
+ div.className="view active";
+
+ div.innerHTML=`
+  <div class="millionTop">
+   <button class="smallBtn" onclick="sairDoMilhao()">← Sair</button>
+   <div class="questionNumber" id="questionNumber">Pergunta 1/15</div>
+   <div class="timer" id="gameTimer">15</div>
+  </div>
+
+  <div class="prizeBox">
+   <small>PRÊMIO ATUAL</small>
+   <strong id="currentPrize">R$ 0</strong>
+  </div>
+
+  <div id="difficulty" class="difficulty">Fácil</div>
+
+  <div class="questionCard">
+   <div id="questionText" class="questionText"></div>
+  </div>
+
+  <div id="answers" class="answers"></div>
+
+  <div class="lifelines">
+   <button id="life5050" class="life" onclick="usar5050()">50/50</button>
+   <button id="lifeSkip" class="life" onclick="usarPular()">⏭ Pular</button>
+   <button id="lifeHint" class="life" onclick="usarDica()">💡 Dica</button>
+  </div>
+ `;
+
+ $("app").querySelector("main").prepend(div);
+
+ mostrarPergunta();
+}
+
+function mostrarPergunta(){
+ clearInterval(jogo.timer);
+
+ jogo.respondendo=false;
+
+ const q=jogo.perguntas[jogo.indice];
+
+ if(!q){
+  finalizarJogo(true);
+  return;
+ }
+
+ $("questionNumber").textContent=`Pergunta ${jogo.indice+1}/15`;
+ $("currentPrize").textContent=moeda(jogo.premio);
+ $("difficulty").textContent=dificuldades[jogo.indice];
+ $("questionText").textContent=q[0];
+
+ const respostas=[...q[1]];
+
+ $("answers").innerHTML=respostas.map((r,i)=>`
+  <button class="answer" onclick="responder(${i})">${esc(r)}</button>
+ `).join("");
+
+ $("life5050").classList.toggle("used",jogo.ajudas.cinquenta);
+ $("lifeSkip").classList.toggle("used",jogo.ajudas.pular);
+ $("lifeHint").classList.toggle("used",jogo.ajudas.dica);
+
+ jogo.tempo=15;
+ $("gameTimer").textContent=jogo.tempo;
+
+ jogo.timer=setInterval(()=>{
+  jogo.tempo--;
+  $("gameTimer").textContent=jogo.tempo;
+
+  if(jogo.tempo<=0){
+   clearInterval(jogo.timer);
+   responder(-1);
+  }
+ },1000);
+}
+
+async function responder(index){
+ if(jogo.respondendo)return;
+
+ jogo.respondendo=true;
+ clearInterval(jogo.timer);
+
+ const q=jogo.perguntas[jogo.indice];
+ const botoes=[...document.querySelectorAll("#answers .answer")];
+
+ botoes.forEach(b=>b.disabled=true);
+
+ const correta=q[2];
+
+ if(index===correta){
+  botoes[index]?.classList.add("correct");
+
+  jogo.acertos++;
+  jogo.premio=premios[jogo.indice];
+
+  tocarSom("correct");
+
+  await esperar(650);
+
+  jogo.indice++;
+
+  if(jogo.indice>=15){
+   await finalizarJogo(true);
+  }else{
+   mostrarPergunta();
+  }
+
+ }else{
+  if(index>=0)botoes[index]?.classList.add("wrong");
+  if(correta>=0)botoes[correta]?.classList.add("correct");
+
+  jogo.erros++;
+
+  tocarSom("wrong");
+
+  await esperar(900);
+
+  finalizarJogo(false);
  }
 }
 
-async function finalizarCorrida(){
- const moedas=window.corridaDados.moedas;
-
- perfil.moedas=(perfil.moedas||0)+moedas;
- perfil.xp=(perfil.xp||0)+200;
-
- await salvarPerfil();
-
- conteudo.innerHTML=`
- <div class="card center">
-  <div style="font-size:70px">🏆</div>
-  <h1>Você terminou!</h1>
-  <p>Moedas ganhas</p>
-  <div class="prize">🪙 ${moedas}</div>
-  <button class="btn full" onclick="central()">Continuar</button>
- </div>
- `;
-
- window.corridaDados=null;
+function esperar(ms){
+ return new Promise(resolve=>setTimeout(resolve,ms));
 }
 
-/* ================= SALA ONLINE ================= */
+async function finalizarJogo(vitoria){
+ clearInterval(jogo.timer);
 
-async function criarSala(){
- if(!usuario)return;
+ const premioFinal=vitoria?jogo.premio:0;
 
- const codigo=Math.random()
-  .toString(36)
-  .substring(2,7)
-  .toUpperCase();
+ perfil.partidas++;
+ perfil.acertos+=jogo.acertos;
+ perfil.erros+=jogo.erros;
 
- await db.collection("Partidas")
-  .doc("sala_"+codigo)
-  .set({
-   tipo:"sala",
-   codigo,
-   criador:usuario.uid,
-   jogadores:[{
-    uid:usuario.uid,
-    nome:getNome()
-   }],
-   status:"aguardando",
-   criadoEm:FV.serverTimestamp()
-  });
+ if(vitoria){
+  perfil.vitorias++;
 
- conteudo.innerHTML=`
- <div class="card center">
+  if(premioFinal>perfil.maiorPremio){
+   perfil.maiorPremio=premioFinal;
+  }
+ }
 
-  <div style="font-size:60px">🌐</div>
+ await db.collection("Usuarios").doc(usuario.uid).update({
+  partidas:perfil.partidas,
+  vitorias:perfil.vitorias,
+  acertos:perfil.acertos,
+  erros:perfil.erros,
+  maiorPremio:perfil.maiorPremio,
+  atualizadoEm:agora()
+ });
 
-  <h2>Sala criada!</h2>
+ await publicarRanking(perfil);
 
-  <p>Envie este código para seu amigo:</p>
+ const xp=Math.max(10,jogo.acertos*20);
 
-  <div class="prize">${codigo}</div>
+ await adicionarXP(xp);
 
-  <button class="btn green full"
-   onclick="navigator.share?
-   navigator.share({text:'Entre na minha partida: '+codigo}):
-   navigator.clipboard.writeText('${codigo}')">
-   📤 Compartilhar código
-  </button>
+ if(vitoria){
+  await adicionarMoedas(Math.max(10,Math.floor(premioFinal/10000)));
+  tocarSom("win");
+ }
 
-  <hr>
+ await verificarConquistas();
 
-  <input id="entrarCodigo"
-   placeholder="Ou digite código de outra sala">
+ const ganhou=moeda(premioFinal);
 
-  <button class="btn full"
-   onclick="entrarSala()">
-   Entrar em uma sala
-  </button>
+ document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
 
-  <p class="small">
-   Quando o amigo entrar, a partida poderá ser iniciada.
-  </p>
+ let old=$("millionResult");
+ if(old)old.remove();
 
- </div>
+ const result=document.createElement("section");
+ result.id="millionResult";
+ result.className="view active";
+
+ result.innerHTML=`
+  <div class="card resultBox">
+   <div style="font-size:60px">${vitoria?"🏆":"💥"}</div>
+   <h1>${vitoria?"MILHÃO CONQUISTADO!":"Fim de jogo"}</h1>
+
+   <div class="resultPrize">${ganhou}</div>
+
+   <p style="color:#9e8ca9;line-height:1.6">
+    ${vitoria
+      ?"Você respondeu as 15 perguntas corretamente!"
+      :"Uma resposta incorreta ou o tempo esgotado encerrou a partida."
+    }
+   </p>
+
+   <div class="statsGrid" style="margin-top:17px;text-align:left">
+    <div class="stat">
+     <small>Acertos</small>
+     <strong>${jogo.acertos}</strong>
+    </div>
+    <div class="stat">
+     <small>Erros</small>
+     <strong>${jogo.erros}</strong>
+    </div>
+    <div class="stat">
+     <small>XP ganho</small>
+     <strong>+${xp}</strong>
+    </div>
+    <div class="stat">
+     <small>Maior prêmio</small>
+     <strong>${moeda(perfil.maiorPremio)}</strong>
+    </div>
+   </div>
+
+   <button class="mainBtn" style="margin-top:18px" onclick="menuMilhao()">JOGAR NOVAMENTE</button>
+   <button class="smallBtn" style="width:100%;margin-top:8px" onclick="abrirView('home')">VOLTAR À HOME</button>
+  </div>
  `;
 
- ouvirSala(codigo);
+ $("app").querySelector("main").prepend(result);
 }
 
-async function entrarSala(){
- const codigo=document.getElementById("entrarCodigo")
-  ?.value.trim().toUpperCase();
+function sairDoMilhao(){
+ clearInterval(jogo.timer);
 
- if(!codigo)return toast("Digite o código.");
+ const m=$("millionGame");
+ if(m)m.remove();
 
- const ref=db.collection("Partidas")
-  .doc("sala_"+codigo);
+ const r=$("millionResult");
+ if(r)r.remove();
 
+ abrirView("home");
+}
+
+/* LIFELINES */
+
+function usar5050(){
+ if(jogo.ajudas.cinquenta||jogo.respondendo)return;
+
+ jogo.ajudas.cinquenta=true;
+
+ const q=jogo.perguntas[jogo.indice];
+ const botoes=[...document.querySelectorAll("#answers .answer")];
+
+ const erradas=botoes
+  .map((_,i)=>i)
+  .filter(i=>i!==q[2])
+  .sort(()=>Math.random()-.5);
+
+ erradas.slice(0,2).forEach(i=>{
+  botoes[i].classList.add("disabled");
+ });
+
+ $("life5050").classList.add("used");
+ adicionarXP(1);
+}
+
+function usarPular(){
+ if(jogo.ajudas.pular||jogo.respondendo)return;
+
+ jogo.ajudas.pular=true;
+ $("lifeSkip").classList.add("used");
+
+ clearInterval(jogo.timer);
+
+ jogo.indice++;
+
+ if(jogo.indice>=15){
+  finalizarJogo(true);
+ }else{
+  mostrarPergunta();
+ }
+}
+
+function usarDica(){
+ if(jogo.ajudas.dica||jogo.respondendo)return;
+
+ jogo.ajudas.dica=true;
+ $("lifeHint").classList.add("used");
+
+ const q=jogo.perguntas[jogo.indice];
+
+ const dica=q[1][q[2]];
+
+ toast("💡 Dica: pense em «"+dica+"»");
+}
+
+/* ============================================================
+   MODO AMIGO PERTO
+============================================================ */
+
+let localGame={
+ players:[],
+ topic:"geral",
+ player:0,
+ scores:[],
+ prizes:[],
+ questions:[],
+ index:0,
+ turnAnswered:false
+};
+
+function menuLocal(){
+ abrirModal(`
+  <div class="modalTitle">
+   <h2>👥 Jogar com amigo perto</h2>
+   <button class="closeBtn" onclick="fecharModal()">×</button>
+  </div>
+
+  <div class="playerSetup">
+   <div class="field">
+    <label>Jogador 1</label>
+    <input id="p1name" value="${esc(perfil.nome)}">
+   </div>
+
+   <div class="field">
+    <label>Jogador 2</label>
+    <input id="p2name" placeholder="Nome do jogador 2">
+   </div>
+
+   <div class="field">
+    <label>Jogador 3 (opcional)</label>
+    <input id="p3name" placeholder="Nome do jogador 3">
+   </div>
+
+   <div class="field">
+    <label>Tema</label>
+    <select id="localTopic">
+     <option value="geral">Conhecimentos gerais</option>
+     <option value="ciencia">Ciência</option>
+     <option value="geografia">Geografia</option>
+     <option value="historia">História</option>
+     <option value="tecnologia">Tecnologia</option>
+     <option value="portugues">Português</option>
+     <option value="matematica">Matemática</option>
+    </select>
+   </div>
+
+   <button class="mainBtn" onclick="iniciarLocal()">COMEÇAR</button>
+  </div>
+ `);
+}
+
+function iniciarLocal(){
+ const p1=$("p1name").value.trim()||"Jogador 1";
+ const p2=$("p2name").value.trim()||"Jogador 2";
+ const p3=$("p3name").value.trim();
+
+ localGame.players=[p1,p2];
+
+ if(p3)localGame.players.push(p3);
+
+ localGame.topic=$("localTopic").value;
+ localGame.player=0;
+ localGame.scores=localGame.players.map(()=>0);
+ localGame.prizes=localGame.players.map(()=>0);
+ localGame.index=0;
+
+ const banco=[...(perguntas[localGame.topic]||perguntas.geral)]
+  .sort(()=>Math.random()-.5);
+
+ localGame.questions=banco.slice(0,15);
+
+ fecharModal();
+
+ renderLocalGame();
+}
+
+function renderLocalGame(){
+ document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+
+ let old=$("localGame");
+ if(old)old.remove();
+
+ const div=document.createElement("section");
+ div.id="localGame";
+ div.className="view active";
+
+ const p=localGame.players[localGame.player];
+ const q=localGame.questions[localGame.index];
+
+ div.innerHTML=`
+  <div class="millionTop">
+   <button class="smallBtn" onclick="sairLocal()">← Sair</button>
+   <div class="questionNumber">
+    Rodada ${localGame.index+1}/15
+   </div>
+   <div>👤 ${esc(p)}</div>
+  </div>
+
+  <div class="localScore">
+   ${localGame.players.map((n,i)=>`
+    <div class="localPlayer ${i===localGame.player?"active":""}">
+     <strong>${esc(n)}</strong>
+     <div style="font-size:11px;color:#9e8ca9">${localGame.scores[i]} acertos</div>
+    </div>
+   `).join("")}
+  </div>
+
+  <div class="questionCard" style="margin-top:15px">
+   <div class="questionText">${esc(q[0])}</div>
+  </div>
+
+  <div class="answers">
+   ${q[1].map((r,i)=>`
+    <button class="answer" onclick="responderLocal(${i})">${esc(r)}</button>
+   `).join("")}
+  </div>
+ `;
+
+ $("app").querySelector("main").prepend(div);
+}
+
+function responderLocal(index){
+ const q=localGame.questions[localGame.index];
+ const buttons=[...document.querySelectorAll("#localGame .answer")];
+
+ buttons.forEach(b=>b.disabled=true);
+
+ if(index===q[2]){
+  buttons[index].classList.add("correct");
+  localGame.scores[localGame.player]++;
+  localGame.prizes[localGame.player]=premios[localGame.index];
+  tocarSom("correct");
+ }else{
+  buttons[index]?.classList.add("wrong");
+  buttons[q[2]]?.classList.add("correct");
+  tocarSom("wrong");
+ }
+
+ setTimeout(()=>{
+  localGame.player++;
+
+  if(localGame.player>=localGame.players.length){
+   localGame.player=0;
+   localGame.index++;
+  }
+
+  if(localGame.index>=15){
+   finalizarLocal();
+  }else{
+   renderLocalGame();
+  }
+ },800);
+}
+
+function finalizarLocal(){
+ const maior=Math.max(...localGame.scores);
+ const vencedores=localGame.players
+  .map((n,i)=>({n,s:localGame.scores[i],p:localGame.prizes[i]}))
+  .filter(x=>x.s===maior);
+
+ document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+
+ let old=$("localResult");
+ if(old)old.remove();
+
+ const result=document.createElement("section");
+ result.id="localResult";
+ result.className="view active";
+
+ result.innerHTML=`
+  <div class="card resultBox">
+   <div style="font-size:60px">🏆</div>
+   <h1>Resultado</h1>
+
+   <div style="margin:18px 0">
+    ${vencedores.map(v=>`
+     <div style="font-size:20px;color:#e0a3ff">
+      🥇 ${esc(v.n)}
+     </div>
+    `).join("")}
+   </div>
+
+   ${localGame.players.map((n,i)=>`
+    <div class="rankItem">
+     <div class="rankNumber">${i+1}</div>
+     <div class="rankInfo">
+      <strong>${esc(n)}</strong>
+      <small>${localGame.scores[i]} acertos</small>
+     </div>
+     <strong>${moeda(localGame.prizes[i])}</strong>
+    </div>
+   `).join("")}
+
+   <button class="mainBtn" onclick="menuMilhao()">NOVO JOGO</button>
+   <button class="smallBtn" style="width:100%;margin-top:8px" onclick="abrirView('home')">VOLTAR</button>
+  </div>
+ `;
+
+ $("app").querySelector("main").prepend(result);
+}
+
+function sairLocal(){
+ const a=$("localGame");
+ if(a)a.remove();
+
+ abrirView("home");
+}
+
+/* ============================================================
+   ONLINE ROOMS
+============================================================ */
+
+let onlineRoomId=null;
+let onlineUnsub=null;
+
+function menuOnline(){
+ abrirModal(`
+  <div class="modalTitle">
+   <h2>🌐 Jogo online</h2>
+   <button class="closeBtn" onclick="fecharModal()">×</button>
+  </div>
+
+  <button class="topicBtn" onclick="criarSalaOnline()">
+   <strong>➕ Criar sala</strong>
+   <small>Crie uma sala e envie o código para seu amigo.</small>
+  </button>
+
+  <div style="height:10px"></div>
+
+  <div class="searchBox">
+   <input id="joinRoomCode" maxlength="6" placeholder="Código da sala">
+   <button onclick="entrarSalaOnline()">Entrar</button>
+  </div>
+ `);
+}
+
+function gerarCodigo(){
+ return Math.random().toString(36).substring(2,8).toUpperCase();
+}
+
+async function criarSalaOnline(){
+ const codigo=gerarCodigo();
+
+ const sala={
+  codigo,
+  criador:usuario.uid,
+  jogadores:[{
+   uid:usuario.uid,
+   nome:perfil.nome,
+   foto:perfil.foto||""
+  }],
+  status:"aguardando",
+  tema:"geral",
+  rodada:0,
+  criadoEm:agora(),
+  atualizadoEm:agora()
+ };
+
+ await db.collection("Partidas").doc("sala_"+codigo).set(sala);
+
+ onlineRoomId=codigo;
+
+ abrirSalaOnline(sala);
+}
+
+async function entrarSalaOnline(){
+ const codigo=$("joinRoomCode").value.trim().toUpperCase();
+
+ if(!codigo){
+  toast("Digite o código.");
+  return;
+ }
+
+ const ref=db.collection("Partidas").doc("sala_"+codigo);
  const snap=await ref.get();
 
- if(!snap.exists)return toast("Sala não encontrada.");
+ if(!snap.exists){
+  toast("Sala não encontrada.");
+  return;
+ }
 
  const sala=snap.data();
 
- if((sala.jogadores||[]).some(x=>x.uid===usuario.uid))
-  return toast("Você já está nessa sala.");
+ if(sala.jogadores.length>=3){
+  toast("A sala está cheia.");
+  return;
+ }
 
- if((sala.jogadores||[]).length>=3)
-  return toast("Sala cheia.");
+ if(!sala.jogadores.some(p=>p.uid===usuario.uid)){
+  sala.jogadores.push({
+   uid:usuario.uid,
+   nome:perfil.nome,
+   foto:perfil.foto||""
+  });
+ }
 
  await ref.update({
-  jogadores:FV.arrayUnion({
-   uid:usuario.uid,
-   nome:getNome()
-  })
+  jogadores:sala.jogadores,
+  atualizadoEm:agora()
  });
 
- toast("Você entrou na sala!");
+ onlineRoomId=codigo;
 
- ouvirSala(codigo);
+ abrirSalaOnline(sala);
 }
 
-function ouvirSala(codigo){
- const ref=db.collection("Partidas")
-  .doc("sala_"+codigo);
+function abrirSalaOnline(sala){
+ fecharModal();
 
- if(window.salaUnsub)window.salaUnsub();
+ document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
 
- window.salaUnsub=ref.onSnapshot(snap=>{
-  if(!snap.exists)return;
+ let old=$("onlineRoom");
+ if(old)old.remove();
 
-  const sala=snap.data();
+ const div=document.createElement("section");
+ div.id="onlineRoom";
+ div.className="view active";
 
-  conteudo.innerHTML=`
-   <div class="card center">
-
-    <h2>🌐 Sala ${codigo}</h2>
-
-    <h3>Jogadores</h3>
-
-    ${(sala.jogadores||[]).map(x=>
-     `<div class="friendrow">
-      <div class="rowinfo">
-       <b>${esc(x.nome)}</b>
-      </div>
-     </div>`
-    ).join("")}
-
-    ${sala.criador===usuario.uid?
-     `<button class="btn green full"
-      onclick="iniciarSala('${codigo}')">
-      🎮 Iniciar partida
-     </button>`:
-     `<p>Esperando o criador iniciar...</p>`
-    }
-
+ div.innerHTML=`
+  <div class="card">
+   <div class="row">
+    <h2>🌐 Sala online</h2>
+    <button class="smallBtn" onclick="sairSalaOnline()">Sair</button>
    </div>
-  `;
- });
+
+   <div class="roomCode">${esc(sala.codigo)}</div>
+
+   <p style="text-align:center;color:#9e8ca9">
+    Compartilhe esse código com seu amigo.
+   </p>
+
+   <button class="mainBtn" onclick="compartilharSala('${esc(sala.codigo)}')">
+    📤 COMPARTILHAR CÓDIGO
+   </button>
+  </div>
+
+  <div class="card">
+   <div class="cardTitle">👥 Jogadores</div>
+   <div id="onlinePlayers"></div>
+  </div>
+
+  <div class="card">
+   <div class="field">
+    <label>Tema da partida</label>
+    <select id="onlineTopic">
+     <option value="geral">Conhecimentos gerais</option>
+     <option value="ciencia">Ciência</option>
+     <option value="geografia">Geografia</option>
+     <option value="historia">História</option>
+     <option value="tecnologia">Tecnologia</option>
+     <option value="portugues">Português</option>
+     <option value="matematica">Matemática</option>
+    </select>
+   </div>
+
+   <button class="mainBtn" onclick="iniciarSalaOnline()">
+    ▶️ INICIAR PARTIDA
+   </button>
+  </div>
+ `;
+
+ $("app").querySelector("main").prepend(div);
+
+ acompanharSala();
 }
 
-async function iniciarSala(codigo){
- await db.collection("Partidas")
-  .doc("sala_"+codigo)
-  .update({
-   status:"iniciada",
-   iniciadaEm:FV.serverTimestamp()
+function acompanharSala(){
+ if(onlineUnsub)onlineUnsub();
+
+ if(!onlineRoomId)return;
+
+ onlineUnsub=db.collection("Partidas")
+  .doc("sala_"+onlineRoomId)
+  .onSnapshot(snap=>{
+   if(!snap.exists)return;
+
+   const sala=snap.data();
+
+   const box=$("onlinePlayers");
+   if(box){
+    box.innerHTML=sala.jogadores.map(p=>`
+     <div class="friendItem">
+      <div class="avatar" style="width:45px;height:45px;border-radius:13px">
+       ${p.foto
+        ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
+        :esc((p.nome||"J").charAt(0).toUpperCase())}
+      </div>
+      <div class="friendMain">
+       <strong>${esc(p.nome)}</strong>
+       <small>${p.uid===sala.criador?"Criador":"Jogador"}</small>
+      </div>
+     </div>
+    `).join("");
+   }
+
+   if(sala.status==="jogando"){
+    if(!$("onlineGame")){
+     iniciarPartidaOnlineLocal(sala);
+    }
+   }
   });
+}
+
+async function iniciarSalaOnline(){
+ if(!onlineRoomId)return;
+
+ const tema=$("onlineTopic").value;
+
+ await db.collection("Partidas")
+  .doc("sala_"+onlineRoomId)
+  .update({
+   status:"jogando",
+   tema,
+   rodada:0,
+   atualizadoEm:agora()
+  });
+
+ toast("Partida iniciada!");
+}
+
+function iniciarPartidaOnlineLocal(sala){
+ const banco=[...(perguntas[sala.tema]||perguntas.geral)]
+  .sort(()=>Math.random()-.5)
+  .slice(0,15);
+
+ jogo.perguntas=banco;
+ jogo.indice=0;
+ jogo.premio=0;
+ jogo.acertos=0;
+ jogo.erros=0;
+ jogo.ajudas={
+  cinquenta:false,
+  pular:false,
+  dica:false
+ };
+ jogo.respondendo=false;
+ jogo.modo="online";
 
  iniciarMilhao();
 }
 
-/* ================= PRESENÇA ================= */
+async function sairSalaOnline(){
+ if(onlineUnsub)onlineUnsub();
 
-setInterval(()=>{
- if(usuario)salvarPresenca(true).catch(()=>{});
-},60000);
+ onlineRoomId=null;
 
-document.addEventListener("visibilitychange",()=>{
- if(usuario){
-  salvarPresenca(!document.hidden).catch(()=>{});
+ abrirView("home");
+}
+
+function compartilharSala(codigo){
+ const texto="Entre na minha sala do Desafio do Milhão! Código: "+codigo;
+
+ if(navigator.share){
+  navigator.share({
+   title:"Desafio do Milhão",
+   text:texto
+  }).catch(()=>{});
+ }else{
+  navigator.clipboard?.writeText(texto);
+  toast("Código copiado!");
  }
-});
+}
 
-/* ================= AUTH STATE ================= */
+/* ============================================================
+   RANKING
+============================================================ */
 
-auth.onAuthStateChanged(async user=>{
- usuario=user;
+async function carregarRanking(){
+ const box=$("rankingList");
 
- if(!user){
-  document.getElementById("auth").classList.remove("hidden");
-  document.getElementById("app").classList.add("hidden");
-  return;
- }
+ if(!box)return;
+
+ box.innerHTML='<div class="card">Carregando ranking...</div>';
 
  try{
-  await carregarPerfil();
-  await salvarPresenca(true);
+  const snap=await db.collection("Partidas")
+   .where("tipo","==","ranking")
+   .orderBy("xp","desc")
+   .limit(50)
+   .get();
 
-  document.getElementById("auth").classList.add("hidden");
-  document.getElementById("app").classList.remove("hidden");
+  const jogadores=[];
 
-  central();
-  iniciarAudio();
-  tocarMusica();
+  snap.forEach(doc=>{
+   const d=doc.data();
+
+   if(d.uid)jogadores.push(d);
+  });
+
+  if(!jogadores.length){
+   box.innerHTML=`
+    <div class="card">
+     Ainda não existem jogadores suficientes no ranking.
+    </div>
+   `;
+   $("myRankText").textContent="Você está começando agora.";
+   return;
+  }
+
+  const minhaPos=jogadores.findIndex(x=>x.uid===usuario.uid)+1;
+
+  $("myRankText").textContent=minhaPos
+   ?`Você está em ${minhaPos}º lugar.`
+   :"Seu perfil ainda está entrando no ranking.";
+
+  box.innerHTML=jogadores.map((p,i)=>`
+   <div class="rankItem" onclick="abrirPerfilPublico('${esc(p.uid)}')">
+    <div class="rankNumber">${i+1}</div>
+
+    <div class="rankAvatar">
+     ${p.foto
+      ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:13px">`
+      :esc((p.nome||"J").charAt(0).toUpperCase())}
+    </div>
+
+    <div class="rankInfo">
+     <strong>${esc(p.nome)}</strong>
+     <small>${esc(p.titulo||"Novato")} • Nível ${p.nivel||1}</small>
+    </div>
+
+    <div style="text-align:right">
+     <strong>${p.xp||0}</strong>
+     <small style="display:block;color:#9e8ca9">XP</small>
+    </div>
+   </div>
+  `).join("");
 
  }catch(e){
   console.error(e);
-  toast("Erro ao carregar seu perfil.");
+  box.innerHTML=`
+   <div class="card">
+    Não foi possível carregar o ranking agora.
+   </div>
+  `;
+ }
+}
+
+async function abrirPerfilPublico(uid){
+ if(uid===usuario.uid){
+  abrirView("profile");
+  return;
+ }
+
+ const snap=await db.collection("Partidas")
+  .doc("ranking_"+uid)
+  .get();
+
+ if(!snap.exists){
+  toast("Perfil não encontrado.");
+  return;
+ }
+
+ const p=snap.data();
+
+ abrirModal(`
+  <div class="modalTitle">
+   <h2>👤 Perfil</h2>
+   <button class="closeBtn" onclick="fecharModal()">×</button>
+  </div>
+
+  <div style="text-align:center">
+   <div class="avatar" style="margin:auto;width:90px;height:90px">
+    ${p.foto
+     ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
+     :esc((p.nome||"J").charAt(0).toUpperCase())}
+   </div>
+
+   <h2 style="margin-top:10px">${esc(p.nome)}</h2>
+   <div class="levelPill">${esc(p.titulo||"Novato")} • Nível ${p.nivel||1}</div>
+  </div>
+
+  <div class="statsGrid" style="margin-top:18px">
+   <div class="stat">
+    <small>XP</small>
+    <strong>${p.xp||0}</strong>
+   </div>
+   <div class="stat">
+    <small>Partidas</small>
+    <strong>${p.partidas||0}</strong>
+   </div>
+   <div class="stat">
+    <small>Vitórias</small>
+    <strong>${p.vitorias||0}</strong>
+   </div>
+   <div class="stat">
+    <small>Maior prêmio</small>
+    <strong>${moeda(p.maiorPremio)}</strong>
+   </div>
+  </div>
+
+  <button class="mainBtn" style="margin-top:15px" onclick="enviarSolicitacao('${esc(uid)}','${esc(p.nome)}')">
+   👥 ADICIONAR AMIGO
+  </button>
+ `);
+}
+
+/* ============================================================
+   FRIENDS
+============================================================ */
+
+function iniciarListeners(){
+ carregarListaAmigos();
+ carregarSolicitacoes();
+ carregarNotificacoes();
+}
+
+function socialTab(tab,btn){
+ document.querySelectorAll(".socialTabs button").forEach(b=>b.classList.remove("active"));
+ btn.classList.add("active");
+
+ $("socialFriends").classList.toggle("hidden",tab!=="friends");
+ $("socialRequests").classList.toggle("hidden",tab!=="requests");
+ $("socialSearch").classList.toggle("hidden",tab!=="search");
+
+ if(tab==="friends")carregarListaAmigos();
+ if(tab==="requests")carregarSolicitacoes();
+}
+
+async function obterAmigos(){
+ if(!usuario)return[];
+
+ const snap=await db.collection("Amizades")
+  .where("usuarios","array-contains",usuario.uid)
+  .where("status","==","aceita")
+  .get();
+
+ return snap.docs.map(d=>d.data());
+}
+
+async function carregarListaAmigos(){
+ const box=$("socialFriends");
+
+ if(!box)return;
+
+ box.innerHTML='<div class="card">Carregando amigos...</div>';
+
+ try{
+  const snap=await db.collection("Amizades")
+   .where("usuarios","array-contains",usuario.uid)
+   .where("status","==","aceita")
+   .get();
+
+  if(snap.empty){
+   box.innerHTML=`
+    <div class="card">
+     <div style="font-size:40px;text-align:center">👥</div>
+     <p style="text-align:center;color:#9e8ca9;margin-top:8px">
+      Você ainda não possui amigos.
+     </p>
+     <p style="text-align:center;color:#75647d;font-size:12px;margin-top:5px">
+      Pesquise jogadores na aba de busca para adicionar.
+     </p>
+    </div>
+   `;
+   return;
+  }
+
+  const amigos=[];
+
+  for(const doc of snap.docs){
+   const a=doc.data();
+
+   const outro=a.usuarios.find(x=>x!==usuario.uid);
+
+   if(!outro)continue;
+
+   const pSnap=await db.collection("Partidas")
+    .doc("ranking_"+outro)
+    .get();
+
+   const presSnap=await db.collection("Partidas")
+    .doc("presenca_"+outro)
+    .get();
+
+   const p=pSnap.exists?pSnap.data():{
+    uid:outro,
+    nome:a.nomes?.[outro]||"Jogador",
+    foto:""
+   };
+
+   const pres=presSnap.exists?presSnap.data():{online:false};
+
+   amigos.push({
+    ...p,
+    online:!!pres.online,
+    amizadeId:doc.id
+   });
+  }
+
+  box.innerHTML=amigos.map(p=>`
+   <div class="friendItem">
+    <div class="avatar">
+     ${p.foto
+      ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
+      :esc((p.nome||"J").charAt(0).toUpperCase())}
+    </div>
+
+    <div class="friendMain">
+     <strong>${esc(p.nome)}</strong>
+     <small>
+      <span class="onlineDot ${p.online?"on":""}"></span>
+      ${p.online?"online":"offline"}
+     </small>
+    </div>
+
+    <div class="friendActions">
+     <button class="smallBtn" onclick="abrirChat('${esc(p.uid)}','${esc(p.nome)}','${esc(p.foto||"")}')">💬</button>
+     <button class="smallBtn" onclick="abrirPerfilPublico('${esc(p.uid)}')">👤</button>
+    </div>
+   </div>
+  `).join("");
+
+ }catch(e){
+  console.error(e);
+  box.innerHTML='<div class="card">Não foi possível carregar seus amigos.</div>';
+ }
+}
+
+async function buscarJogadores(){
+ const termo=$("playerSearch").value.trim().toLowerCase();
+
+ $("socialFriends").classList.add("hidden");
+ $("socialRequests").classList.add("hidden");
+ $("socialSearch").classList.remove("hidden");
+
+ if(!termo){
+  $("socialSearch").innerHTML='<div class="card">Digite um nome para pesquisar.</div>';
+  return;
+ }
+
+ $("socialSearch").innerHTML='<div class="card">Pesquisando...</div>';
+
+ try{
+  const snap=await db.collection("Partidas")
+   .where("tipo","==","ranking")
+   .limit(100)
+   .get();
+
+  const resultados=[];
+
+  snap.forEach(doc=>{
+   const p=doc.data();
+
+   if(
+    p.uid!==usuario.uid &&
+    String(p.nome||"").toLowerCase().includes(termo)
+   ){
+    resultados.push(p);
+   }
+  });
+
+  if(!resultados.length){
+   $("socialSearch").innerHTML=`
+    <div class="card">Nenhum jogador encontrado.</div>
+   `;
+   return;
+  }
+
+  $("socialSearch").innerHTML=resultados.map(p=>`
+   <div class="friendItem">
+    <div class="avatar">
+     ${p.foto
+      ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
+      :esc((p.nome||"J").charAt(0).toUpperCase())}
+    </div>
+
+    <div class="friendMain">
+     <strong>${esc(p.nome)}</strong>
+     <small>${esc(p.titulo||"Novato")} • Nível ${p.nivel||1}</small>
+    </div>
+
+    <button class="smallBtn" onclick="enviarSolicitacao('${esc(p.uid)}','${esc(p.nome)}')">
+     ➕
+    </button>
+   </div>
+  `).join("");
+
+ }catch(e){
+  console.error(e);
+  $("socialSearch").innerHTML='<div class="card">Erro na pesquisa.</div>';
+ }
+}
+
+async function enviarSolicitacao(destinoUid,destinoNome){
+ if(destinoUid===usuario.uid)return;
+
+ const existing=await localizarAmizade(usuario.uid,destinoUid);
+
+ if(existing){
+  if(existing.status==="aceita"){
+   toast("Vocês já são amigos.");
+  }else if(existing.status==="pendente"){
+   toast("Já existe uma solicitação.");
+  }
+  return;
+ }
+
+ const id=[usuario.uid,destinoUid].sort().join("_");
+
+ await db.collection("Amizades").doc(id).set({
+  usuarios:[usuario.uid,destinoUid],
+  status:"pendente",
+  solicitante:usuario.uid,
+  destinatario:destinoUid,
+  nomes:{
+   [usuario.uid]:perfil.nome,
+   [destinoUid]:destinoNome
+  },
+  fotos:{
+   [usuario.uid]:perfil.foto||""
+  },
+  criadoEm:agora(),
+  atualizadoEm:agora()
+ });
+
+ await criarNotificacao(
+  destinoUid,
+  "friend_request",
+  perfil.nome+" enviou uma solicitação de amizade.",
+  usuario.uid
+ );
+
+ toast("Solicitação enviada!");
+}
+
+async function localizarAmizade(a,b){
+ const id=[a,b].sort().join("_");
+
+ const snap=await db.collection("Amizades")
+  .doc(id)
+  .get();
+
+ return snap.exists?snap.data():null;
+}
+
+async function carregarSolicitacoes(){
+ const box=$("socialRequests");
+
+ if(!box)return;
+
+ try{
+  const snap=await db.collection("Amizades")
+   .where("destinatario","==",usuario.uid)
+   .where("status","==","pendente")
+   .get();
+
+  if(snap.empty){
+   box.innerHTML='<div class="card">Nenhuma solicitação pendente.</div>';
+   return;
+  }
+
+  box.innerHTML=snap.docs.map(doc=>{
+   const a=doc.data();
+
+   const nome=a.nomes?.[a.solicitante]||"Jogador";
+   const foto=a.fotos?.[a.solicitante]||"";
+
+   return `
+    <div class="friendItem">
+     <div class="avatar">
+      ${foto
+       ?`<img src="${esc(foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
+       :esc(nome.charAt(0).toUpperCase())}
+     </div>
+
+     <div class="friendMain">
+      <strong>${esc(nome)}</strong>
+      <small>Quer ser seu amigo.</small>
+     </div>
+
+     <div class="friendActions">
+      <button class="smallBtn greenBtn" onclick="responderAmizade('${esc(doc.id)}',true)">✓</button>
+      <button class="smallBtn redBtn" onclick="responderAmizade('${esc(doc.id)}',false)">×</button>
+     </div>
+    </div>
+   `;
+  }).join("");
+
+ }catch(e){
+  console.error(e);
+ }
+}
+
+async function responderAmizade(id,aceitar){
+ const ref=db.collection("Amizades").doc(id);
+ const snap=await ref.get();
+
+ if(!snap.exists)return;
+
+ const a=snap.data();
+
+ if(aceitar){
+  await ref.update({
+   status:"aceita",
+   atualizadoEm:agora()
+  });
+
+  await criarNotificacao(
+   a.solicitante,
+   "friend_accept",
+   perfil.nome+" aceitou sua solicitação de amizade.",
+   usuario.uid
+  );
+
+  toast("Amizade aceita!");
+ }else{
+  await ref.delete();
+
+  await criarNotificacao(
+   a.solicitante,
+   "friend_reject",
+   perfil.nome+" recusou sua solicitação.",
+   usuario.uid
+  );
+
+  toast("Solicitação recusada.");
+ }
+
+ carregarSolicitacoes();
+ carregarListaAmigos();
+ await verificarConquistas();
+}
+
+/* ============================================================
+   CHAT PRIVADO
+============================================================ */
+
+let chatFriendUid=null;
+let chatFriendName="";
+
+function chatId(a,b){
+ return [a,b].sort().join("_");
+}
+
+async function abrirChat(uid,nome,foto=""){
+ const amizade=await localizarAmizade(usuario.uid,uid);
+
+ if(!amizade||amizade.status!=="aceita"){
+  toast("Você precisa ser amigo dessa pessoa.");
+  return;
+ }
+
+ chatFriendUid=uid;
+ chatFriendName=nome;
+
+ document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+ $("viewChat").classList.add("active");
+
+ $("chatFriendName").textContent=nome;
+
+ if(foto){
+  $("chatFriendAvatar").innerHTML=
+   `<img src="${esc(foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`;
+ }else{
+  $("chatFriendAvatar").textContent=nome.charAt(0).toUpperCase();
+ }
+
+ const pres=await db.collection("Partidas")
+  .doc("presenca_"+uid)
+  .get();
+
+ $("chatFriendStatus").textContent=
+  pres.exists&&pres.data().online?"online":"offline";
+
+ ouvirMensagens();
+}
+
+function ouvirMensagens(){
+ if(unsubscribeMessages)unsubscribeMessages();
+
+ if(!chatFriendUid)return;
+
+ const id=chatId(usuario.uid,chatFriendUid);
+
+ unsubscribeMessages=db.collection("Chats")
+  .doc(id)
+  .collection("Mensagens")
+  .orderBy("criadoEm","asc")
+  .limit(100)
+  .onSnapshot(snap=>{
+   const box=$("messages");
+
+   box.innerHTML="";
+
+   snap.forEach(doc=>{
+    const m=doc.data();
+
+    const mine=m.remetente===usuario.uid;
+
+    const div=document.createElement("div");
+    div.className="msg "+(mine?"mine":"theirs");
+
+    div.innerHTML=`
+     ${esc(m.texto)}
+     <span class="msgTime">${formatarHora(m.criadoEm)}</span>
+    `;
+
+    box.appendChild(div);
+   });
+
+   box.scrollTop=box.scrollHeight;
+  });
+}
+
+function formatarHora(timestamp){
+ if(!timestamp||!timestamp.toDate)return"";
+ return timestamp.toDate().toLocaleTimeString("pt-BR",{
+  hour:"2-digit",
+  minute:"2-digit"
+ });
+}
+
+async function garantirChat(){
+ const id=chatId(usuario.uid,chatFriendUid);
+
+ const ref=db.collection("Chats").doc(id);
+ const snap=await ref.get();
+
+ if(!snap.exists){
+  await ref.set({
+   participantes:[usuario.uid,chatFriendUid],
+   criadoEm:agora(),
+   atualizadoEm:agora()
+  });
+ }
+}
+
+async function enviarMensagem(){
+ const input=$("messageInput");
+ const texto=input.value.trim();
+
+ if(!texto||!chatFriendUid)return;
+
+ await garantirChat();
+
+ const id=chatId(usuario.uid,chatFriendUid);
+
+ await db.collection("Chats")
+  .doc(id)
+  .collection("Mensagens")
+  .add({
+   remetente:usuario.uid,
+   destinatario:chatFriendUid,
+   texto:texto.slice(0,500),
+   criadoEm:agora()
+  });
+
+ await db.collection("Chats")
+  .doc(id)
+  .update({
+   ultimaMensagem:texto.slice(0,100),
+   atualizadoEm:agora()
+  });
+
+ await criarNotificacao(
+  chatFriendUid,
+  "message",
+  perfil.nome+" enviou uma mensagem.",
+  usuario.uid
+ );
+
+ input.value="";
+}
+
+/* ============================================================
+   NOTIFICATIONS
+============================================================ */
+
+async function criarNotificacao(destinatario,tipo,mensagem,origem){
+ await db.collection("Notificacoes").add({
+  destinatario,
+  tipo,
+  mensagem,
+  origem:origem||"",
+  lida:false,
+  criadoEm:agora()
+ });
+}
+
+function carregarNotificacoes(){
+ if(unsubscribeNotifications)unsubscribeNotifications();
+
+ unsubscribeNotifications=db.collection("Notificacoes")
+  .where("destinatario","==",usuario.uid)
+  .orderBy("criadoEm","desc")
+  .limit(50)
+  .onSnapshot(snap=>{
+   const box=$("notificationsList");
+
+   let naoLidas=0;
+   let html="";
+
+   snap.forEach(doc=>{
+    const n=doc.data();
+
+    if(!n.lida)naoLidas++;
+
+    html+=`
+     <div class="notification" style="opacity:${n.lida?.65:1}">
+      <strong>${iconNotificacao(n.tipo)} ${esc(n.mensagem)}</strong>
+      <small>${formatarData(n.criadoEm)}</small>
+     </div>
+    `;
+   });
+
+   box.innerHTML=html||
+    '<div class="card">Nenhuma notificação.</div>';
+
+   atualizarBadge(naoLidas);
+  });
+}
+
+function iconNotificacao(tipo){
+ const mapa={
+  friend_request:"👥",
+  friend_accept:"✅",
+  friend_reject:"❌",
+  message:"💬",
+  system:"🔔"
+ };
+
+ return mapa[tipo]||"🔔";
+}
+
+function formatarData(timestamp){
+ if(!timestamp||!timestamp.toDate)return"Agora";
+
+ return timestamp.toDate().toLocaleString("pt-BR",{
+  day:"2-digit",
+  month:"2-digit",
+  hour:"2-digit",
+  minute:"2-digit"
+ });
+}
+
+async function marcarNotificacoesLidas(){
+ const snap=await db.collection("Notificacoes")
+  .where("destinatario","==",usuario.uid)
+  .where("lida","==",false)
+  .limit(50)
+  .get();
+
+ const batch=db.batch();
+
+ snap.forEach(doc=>{
+  batch.update(doc.ref,{lida:true});
+ });
+
+ await batch.commit();
+}
+
+function atualizarBadge(n){
+ const badge=$("notificationBadge");
+
+ if(n>0){
+  badge.classList.remove("hidden");
+  badge.textContent=n>99?"99+":n;
+ }else{
+  badge.classList.add("hidden");
+ }
+}
+
+async function abrirNotificacoes(){
+ abrirView("notifications");
+ await marcarNotificacoesLidas();
+}
+
+/* ============================================================
+   DAILY CHALLENGE
+============================================================ */
+
+const desafiosDiarios=[
+ ["Qual é o maior planeta do Sistema Solar?",["Terra","Júpiter","Marte","Saturno"],1],
+ ["Qual é a capital do Brasil?",["Rio de Janeiro","Brasília","São Paulo","Salvador"],1],
+ ["Quanto é 12 × 8?",["86","96","108","116"],1],
+ ["Qual planeta é conhecido como planeta vermelho?",["Marte","Vênus","Mercúrio","Netuno"],0],
+ ["Qual é o maior oceano da Terra?",["Atlântico","Índico","Pacífico","Ártico"],2],
+ ["Quem proclamou a Independência do Brasil?",["Dom Pedro I","Dom Pedro II","Tiradentes","Deodoro"],0],
+ ["Qual linguagem estrutura uma página web?",["CSS","HTML","SQL","Python"],1]
+];
+
+function indiceDia(){
+ const d=new Date();
+ return (d.getFullYear()+d.getMonth()+d.getDate())%desafiosDiarios.length;
+}
+
+function chaveDiaria(){
+ const d=new Date();
+
+ return "desafio_"+d.getFullYear()+"_"+d.getMonth()+"_"+d.getDate();
+}
+
+function desafioDiario(){
+ const q=desafiosDiarios[indiceDia()];
+ const concluido=localStorage.getItem(chaveDiaria())==="1";
+
+ abrirModal(`
+  <div class="modalTitle">
+   <h2>📅 Desafio diário</h2>
+   <button class="closeBtn" onclick="fecharModal()">×</button>
+  </div>
+
+  <div class="questionCard">
+   <div class="questionText">${esc(q[0])}</div>
+  </div>
+
+  <div class="answers">
+   ${q[1].map((r,i)=>`
+    <button
+     class="answer ${concluido?"disabled":""}"
+     onclick="responderDiario(${i})">
+     ${esc(r)}
+    </button>
+   `).join("")}
+  </div>
+
+  ${concluido
+   ?`<p style="text-align:center;color:#55dc9a;margin-top:15px">✓ Você já completou o desafio de hoje.</p>`
+   :""
+  }
+ `);
+}
+
+async function responderDiario(index){
+ if(localStorage.getItem(chaveDiaria())==="1"){
+  toast("Você já completou o desafio de hoje.");
+  return;
+ }
+
+ const q=desafiosDiarios[indiceDia()];
+ const buttons=[...document.querySelectorAll("#modalBox .answer")];
+
+ buttons.forEach(b=>b.disabled=true);
+
+ if(index===q[2]){
+  buttons[index].classList.add("correct");
+
+  localStorage.setItem(chaveDiaria(),"1");
+
+  await adicionarXP(50);
+  await adicionarMoedas(10);
+
+  toast("🎉 Desafio concluído! +50 XP");
+  await verificarConquistas();
+
+  setTimeout(fecharModal,900);
+ }else{
+  buttons[index]?.classList.add("wrong");
+  buttons[q[2]]?.classList.add("correct");
+
+  toast("Resposta incorreta.");
+ }
+}
+
+/* ============================================================
+   RACING
+============================================================ */
+
+let race={
+ running:false,
+ x:50,
+ score:0,
+ speed:2.2,
+ interval:null,
+ enemyInterval:null
+};
+
+function abrirCorrida(){
+ abrirModal(`
+  <div class="modalTitle">
+   <h2>🏎️ Corrida do Milhão</h2>
+   <button class="closeBtn" onclick="fecharModal()">×</button>
+  </div>
+
+  <p style="color:#9e8ca9;line-height:1.5">
+   Desvie dos carros, sobreviva o máximo possível e aumente sua pontuação.
+  </p>
+
+  <button class="mainBtn" onclick="iniciarCorrida()">COMEÇAR CORRIDA</button>
+ `);
+}
+
+function iniciarCorrida(){
+ fecharModal();
+ trocarMusicaFaixa("race");
+
+ document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+
+ let old=$("raceGame");
+ if(old)old.remove();
+
+ const div=document.createElement("section");
+ div.id="raceGame";
+ div.className="view active";
+
+ div.innerHTML=`
+  <div class="millionTop">
+   <button class="smallBtn" onclick="pararCorrida()">← Sair</button>
+   <div>🏎️ Corrida</div>
+   <strong id="raceScore">0</strong>
+  </div>
+
+  <div class="race">
+   <div class="road"></div>
+   <div class="roadLine" style="animation-delay:0s"></div>
+   <div class="roadLine" style="animation-delay:.35s"></div>
+   <div id="raceEnemies"></div>
+   <div id="raceCar" class="car"></div>
+  </div>
+
+  <div class="raceControls">
+   <button onclick="moverCarro(-1)">⬅️ ESQUERDA</button>
+   <button onclick="moverCarro(1)">DIREITA ➡️</button>
+  </div>
+
+  <button class="mainBtn" onclick="ativarControlesTouch()">
+   🎮 CONTROLES
+  </button>
+ `;
+
+ $("app").querySelector("main").prepend(div);
+
+ race.running=true;
+ race.x=50;
+ race.score=0;
+ race.speed=2.2;
+
+ clearInterval(race.interval);
+ clearInterval(race.enemyInterval);
+
+ race.interval=setInterval(()=>{
+  if(!race.running)return;
+
+  race.score++;
+  $("raceScore").textContent=race.score;
+
+  if(race.score%100===0){
+   race.speed+=.15;
+  }
+ },100);
+
+ race.enemyInterval=setInterval(criarInimigo,900);
+}
+
+function moverCarro(dir){
+ if(!race.running)return;
+
+ race.x+=dir*8;
+
+ race.x=Math.max(22,Math.min(78,race.x));
+
+ const car=$("raceCar");
+
+ if(car){
+  car.style.left=`calc(${race.x}% - 22px)`;
+ }
+}
+
+function criarInimigo(){
+ if(!race.running)return;
+
+ const area=$("raceEnemies");
+ const car=$("raceCar");
+
+ if(!area||!car)return;
+
+ const enemy=document.createElement("div");
+ enemy.className="enemy";
+
+ const lane=[30,50,70][Math.floor(Math.random()*3)];
+
+ enemy.style.left=`calc(${lane}% - 21px)`;
+ enemy.style.top="-90px";
+
+ area.appendChild(enemy);
+
+ let y=-90;
+
+ const timer=setInterval(()=>{
+  if(!race.running){
+   clearInterval(timer);
+   enemy.remove();
+   return;
+  }
+
+  y+=race.speed*3;
+  enemy.style.top=y+"px";
+
+  const ex=parseFloat(enemy.style.left)||0;
+  const cx=parseFloat(car.style.left)||0;
+
+  if(y>300&&y<380&&Math.abs(ex-cx)<45){
+   clearInterval(timer);
+   enemy.remove();
+   fimCorrida();
+   return;
+  }
+
+  if(y>430){
+   clearInterval(timer);
+   enemy.remove();
+  }
+ },30);
+}
+
+function fimCorrida(){
+ if(!race.running)return;
+
+ race.running=false;
+
+ clearInterval(race.interval);
+ clearInterval(race.enemyInterval);
+
+ tocarSom("wrong");
+
+ const pontos=race.score;
+ const xp=Math.max(5,Math.floor(pontos/10));
+
+ adicionarXP(xp);
+
+ abrirModal(`
+  <div class="resultBox">
+   <div style="font-size:60px">🏁</div>
+   <h2>Fim da corrida!</h2>
+
+   <div class="resultPrize">${pontos}</div>
+
+   <p style="color:#9e8ca9">pontos</p>
+   <p style="margin-top:10px;color:#d79aff">+${xp} XP</p>
+
+   <button class="mainBtn" onclick="fecharModal();iniciarCorrida()">
+    CORRER NOVAMENTE
+   </button>
+
+   <button class="smallBtn" style="width:100%;margin-top:8px" onclick="fecharModal();abrirView('home')">
+    VOLTAR
+   </button>
+  </div>
+ `);
+}
+
+function pararCorrida(){
+ race.running=false;
+ clearInterval(race.interval);
+ clearInterval(race.enemyInterval);
+
+ const r=$("raceGame");
+ if(r)r.remove();
+
+ abrirView("home");
+}
+
+function ativarControlesTouch(){
+ toast("Use os botões esquerda e direita para dirigir.");
+}
+
+/* ============================================================
+   THEME
+============================================================ */
+
+function alternarTema(){
+ const light=!document.body.classList.contains("light");
+
+ document.body.classList.toggle("light",light);
+
+ $("themeSwitch").classList.toggle("on",light);
+
+ localStorage.setItem("theme",light?"light":"dark");
+}
+
+function carregarTema(){
+ const theme=localStorage.getItem("theme");
+
+ if(theme==="light"){
+  document.body.classList.add("light");
+
+  if($("themeSwitch")){
+   $("themeSwitch").classList.add("on");
+  }
+ }
+
+ const m=localStorage.getItem("musicOn");
+
+ if(m==="0"){
+  musicOn=false;
+
+  if($("musicSwitch")){
+   $("musicSwitch").classList.remove("on");
+  }
+ }
+}
+
+carregarTema();
+
+/* ============================================================
+   MODAL / HOME
+============================================================ */
+
+function central(){
+ abrirView("home");
+}
+
+function configurarApp(){
+ carregarTema();
+ atualizarInterface();
+}
+
+/* ============================================================
+   ONLINE FRIEND INVITE
+============================================================ */
+
+async function convidarAmigoParaJogar(uid,nome){
+ const amizade=await localizarAmizade(usuario.uid,uid);
+
+ if(!amizade||amizade.status!=="aceita"){
+  toast("Esse jogador não é seu amigo.");
+  return;
+ }
+
+ const codigo=gerarCodigo();
+
+ await db.collection("Partidas")
+  .doc("sala_"+codigo)
+  .set({
+   codigo,
+   criador:usuario.uid,
+   jogadores:[
+    {
+     uid:usuario.uid,
+     nome:perfil.nome,
+     foto:perfil.foto||""
+    }
+   ],
+   convidado:uid,
+   status:"aguardando",
+   tema:"geral",
+   criadoEm:agora()
+  });
+
+ await criarNotificacao(
+  uid,
+  "system",
+  perfil.nome+" convidou você para jogar online. Código: "+codigo,
+  usuario.uid
+ );
+
+ toast("Convite enviado!");
+}
+
+/* ============================================================
+   PROFILE PUBLIC + FRIEND PLAY
+============================================================ */
+
+async function abrirPerfilEJogar(uid){
+ const snap=await db.collection("Partidas")
+  .doc("ranking_"+uid)
+  .get();
+
+ if(!snap.exists)return;
+
+ const p=snap.data();
+
+ abrirModal(`
+  <div class="modalTitle">
+   <h2>${esc(p.nome)}</h2>
+   <button class="closeBtn" onclick="fecharModal()">×</button>
+  </div>
+
+  <div class="profileHead">
+   <div class="avatar">
+    ${p.foto
+     ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
+     :esc((p.nome||"J").charAt(0))}
+   </div>
+
+   <div class="profileInfo">
+    <h2>${esc(p.nome)}</h2>
+    <p>${esc(p.titulo||"Novato")}</p>
+   </div>
+  </div>
+
+  <div class="statsGrid" style="margin-top:15px">
+   <div class="stat">
+    <small>Nível</small>
+    <strong>${p.nivel||1}</strong>
+   </div>
+   <div class="stat">
+    <small>XP</small>
+    <strong>${p.xp||0}</strong>
+   </div>
+   <div class="stat">
+    <small>Vitórias</small>
+    <strong>${p.vitorias||0}</strong>
+   </div>
+   <div class="stat">
+    <small>Recorde</small>
+    <strong>${moeda(p.maiorPremio)}</strong>
+   </div>
+  </div>
+
+  <button class="mainBtn" style="margin-top:15px" onclick="convidarAmigoParaJogar('${esc(uid)}','${esc(p.nome)}')">
+   🎮 CONVIDAR PARA JOGAR
+  </button>
+ `);
+}
+
+/* ============================================================
+   HELPERS
+============================================================ */
+
+window.addEventListener("beforeunload",()=>{
+ if(usuario&&perfil){
+  try{
+   salvarPresenca({...perfil,online:false});
+  }catch(e){}
  }
 });
 
-/* ================= PRIMEIRO TOQUE NO IPHONE ================= */
+function limparJanelasDeJogo(){
+ [
+  "millionGame",
+  "millionResult",
+  "localGame",
+  "localResult",
+  "onlineRoom",
+  "raceGame"
+ ].forEach(id=>{
+  const e=$(id);
+  if(e)e.remove();
+ });
+}
 
-document.addEventListener("touchstart",()=>{
- iniciarAudio();
- if(musicaLigada)tocarMusica();
-},{once:true});
+/* ============================================================
+   START
+============================================================ */
 
-document.addEventListener("click",()=>{
- iniciarAudio();
- if(audioCtx&&audioCtx.state==="suspended"){
-  audioCtx.resume();
- }
-},{once:true});
+configurarApp();
 
 </script>
 </body>
