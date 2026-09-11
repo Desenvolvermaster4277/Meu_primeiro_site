@@ -2,45 +2,49 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>CifraFácil 🎸</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Biblioteca da Mente</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
-font-family:Arial,sans-serif;
-background:#0b1220;
-color:#fff
+font-family:Arial,Helvetica,sans-serif;
+background:#080b12;
+color:#f8fafc;
 }
 
 header{
-background:linear-gradient(135deg,#111827,#1e3a8a);
-padding:30px 20px;
-text-align:center
+background:linear-gradient(135deg,#111827,#312e81);
+padding:35px 20px;
+text-align:center;
 }
 
 header h1{
-font-size:34px;
-margin:0 0 8px
+font-size:36px;
+margin:0 0 10px;
 }
 
 header p{
 color:#cbd5e1;
-margin:0
+margin:0;
 }
 
 .container{
-max-width:900px;
+max-width:1000px;
 margin:auto;
-padding:20px
+padding:20px;
 }
 
 .search{
 display:flex;
 gap:10px;
-margin:20px 0
+margin:25px 0;
 }
 
 .search input{
@@ -50,224 +54,606 @@ border-radius:12px;
 border:1px solid #334155;
 background:#111827;
 color:white;
-font-size:16px
+font-size:16px;
 }
 
 button{
 border:0;
 border-radius:12px;
-padding:14px 18px;
-background:#2563eb;
+padding:13px 18px;
+background:#6366f1;
 color:white;
 font-weight:bold;
-cursor:pointer
+cursor:pointer;
 }
 
 button:hover{
-background:#1d4ed8
+background:#4f46e5;
 }
 
 .categories{
 display:flex;
 gap:8px;
 flex-wrap:wrap;
-margin-bottom:20px
+margin-bottom:25px;
 }
 
 .categories button{
-background:#1e293b
+background:#1e293b;
 }
 
-.card{
+.books{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:15px;
+}
+
+.book{
 background:#111827;
 border:1px solid #263244;
-border-radius:15px;
-padding:18px;
-margin:12px 0;
-cursor:pointer
-}
-
-.card:hover{
-border-color:#3b82f6
-}
-
-.card h3{
-margin:0 0 7px
-}
-
-.card p{
-margin:0;
-color:#94a3b8
-}
-
-#results{
-margin-top:15px
-}
-
-.cifra{
-display:none;
-background:#111827;
-border-radius:15px;
+border-radius:16px;
 padding:20px;
-margin-top:20px
+transition:.2s;
 }
 
-.cifra h2{
-margin-top:0
+.book:hover{
+transform:translateY(-3px);
+border-color:#6366f1;
 }
 
-.chords{
-white-space:pre-wrap;
-font-family:monospace;
-font-size:17px;
-line-height:1.7;
-color:#e2e8f0
-}
-
-.chord{
-color:#60a5fa;
-font-weight:bold
-}
-
-.controls{
+.cover{
+height:150px;
+border-radius:12px;
+background:linear-gradient(135deg,#312e81,#6366f1);
 display:flex;
+align-items:center;
+justify-content:center;
+font-size:55px;
+margin-bottom:15px;
+}
+
+.book h3{
+margin:5px 0 8px;
+}
+
+.book p{
+color:#94a3b8;
+line-height:1.5;
+}
+
+.tag{
+display:inline-block;
+padding:5px 9px;
+background:#1e293b;
+border-radius:20px;
+font-size:12px;
+color:#a5b4fc;
+margin-bottom:10px;
+}
+
+.reader{
+display:none;
+position:fixed;
+inset:0;
+background:#0f172a;
+z-index:10;
+overflow-y:auto;
+}
+
+.reader-content{
+max-width:800px;
+margin:auto;
+padding:25px 20px 60px;
+}
+
+.reader-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
 gap:10px;
-flex-wrap:wrap;
-margin-bottom:20px
+position:sticky;
+top:0;
+background:#0f172a;
+padding:12px 0;
+}
+
+.reader h2{
+font-size:32px;
+margin-top:35px;
+}
+
+.reader h3{
+font-size:22px;
+margin-top:35px;
+color:#a5b4fc;
+}
+
+.reader p{
+font-family:Georgia,serif;
+font-size:20px;
+line-height:1.9;
+color:#e2e8f0;
+}
+
+.progress{
+height:5px;
+background:#1e293b;
+position:fixed;
+top:0;
+left:0;
+right:0;
+z-index:20;
+}
+
+.progress-bar{
+height:100%;
+width:0%;
+background:#818cf8;
 }
 
 .empty{
 text-align:center;
-padding:30px;
-color:#94a3b8
+padding:40px;
+color:#94a3b8;
 }
+
+.stats{
+display:flex;
+gap:10px;
+margin:20px 0;
+flex-wrap:wrap;
+}
+
+.stat{
+background:#111827;
+border:1px solid #263244;
+padding:12px 15px;
+border-radius:12px;
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>🎸 CifraFácil</h1>
-<p>Pesquise suas cifras de violão</p>
+
+<h1>🧠 Biblioteca da Mente</h1>
+
+<p>
+Leia, aprenda e explore o funcionamento da mente humana
+</p>
+
 </header>
 
 <div class="container">
 
+<div class="stats">
+
+<div class="stat">
+📚 <strong id="total">0</strong> livros
+</div>
+
+<div class="stat">
+🧠 Psicologia e mente
+</div>
+
+<div class="stat">
+📖 Leitura gratuita
+</div>
+
+</div>
+
 <div class="search">
+
 <input
 id="search"
-placeholder="Digite o nome da música ou artista..."
+placeholder="Pesquisar livro ou assunto..."
 onkeydown="if(event.key==='Enter')pesquisar()"
 >
-<button onclick="pesquisar()">🔎 Buscar</button>
+
+<button onclick="pesquisar()">
+🔎 Buscar
+</button>
+
 </div>
 
 <div class="categories">
-<button onclick="mostrarCategoria('Todas')">Todas</button>
-<button onclick="mostrarCategoria('Pop')">Pop</button>
-<button onclick="mostrarCategoria('Rock')">Rock</button>
-<button onclick="mostrarCategoria('Sertanejo')">Sertanejo</button>
-<button onclick="mostrarCategoria('MPB')">MPB</button>
+
+<button onclick="filtrar('Todos')">
+Todos
+</button>
+
+<button onclick="filtrar('Mente')">
+🧠 Mente
+</button>
+
+<button onclick="filtrar('Hábitos')">
+🔄 Hábitos
+</button>
+
+<button onclick="filtrar('Foco')">
+🎯 Foco
+</button>
+
+<button onclick="filtrar('Emoções')">
+❤️ Emoções
+</button>
+
+<button onclick="filtrar('Autoconhecimento')">
+🔍 Autoconhecimento
+</button>
+
 </div>
 
-<div id="results"></div>
-
-<div id="cifra" class="cifra">
-
-<h2 id="titulo"></h2>
-
-<div class="controls">
-<button onclick="transpor(-1)">⬇️ Tom -</button>
-<button onclick="transpor(1)">⬆️ Tom +</button>
-<button onclick="fechar()">✖ Fechar</button>
-</div>
-
-<div id="conteudo" class="chords"></div>
+<div id="books" class="books"></div>
 
 </div>
 
+
+<!-- LEITOR -->
+
+<div id="reader" class="reader">
+
+<div class="progress">
+<div id="progressBar" class="progress-bar"></div>
 </div>
+
+<div class="reader-content">
+
+<div class="reader-top">
+
+<button onclick="fecharLivro()">
+← Biblioteca
+</button>
+
+<button onclick="aumentarFonte()">
+A+
+</button>
+
+</div>
+
+<h2 id="readerTitle"></h2>
+
+<div id="readerText"></div>
+
+</div>
+
+</div>
+
 
 <script>
 
-const musicas=[
+const livros=[
 
 {
-titulo:"Exemplo de Música",
-artista:"Artista Exemplo",
-categoria:"Pop",
-cifra:
-`Tom: G
 
-G              D
-Esta é uma cifra de exemplo
-Em             C
-Para você testar o site
+titulo:"A Arquitetura da Mente",
 
-G                 D
-Troque este conteúdo
-Em                C
-Pelas cifras que você possui`
+autor:"Biblioteca da Mente",
+
+categoria:"Mente",
+
+descricao:
+"Uma introdução ao funcionamento dos pensamentos, percepções e decisões.",
+
+capitulos:[
+
+["O pensamento",
+`A mente humana está constantemente construindo interpretações sobre o mundo.
+
+Quando observamos uma situação, não recebemos apenas informações. Nosso cérebro compara aquilo que está acontecendo com experiências anteriores, expectativas e conhecimentos.
+
+Por isso, duas pessoas podem observar o mesmo acontecimento e chegar a conclusões completamente diferentes.
+
+Compreender essa característica é um dos primeiros passos para desenvolver maior consciência sobre os próprios pensamentos.`],
+
+["Pensamentos automáticos",
+`Muitos pensamentos aparecem sem que tenhamos planejado conscientemente.
+
+Eles podem surgir quando encontramos uma pessoa, lembramos de uma situação ou enfrentamos um problema.
+
+Observar esses pensamentos sem imediatamente aceitá-los como verdades pode ajudar a criar uma distância entre aquilo que pensamos e aquilo que realmente está acontecendo.`],
+
+["Consciência",
+`A consciência permite perceber o que está acontecendo dentro e fora de nós.
+
+Aprender a observar pensamentos, emoções e comportamentos pode transformar a maneira como lidamos com decisões.
+
+Quanto mais conseguimos observar nossos próprios padrões, maior tende a ser nossa capacidade de escolher como responder às situações.`]
+
+]
+
 },
 
 {
-titulo:"Outra Música",
-artista:"Banda Exemplo",
-categoria:"Rock",
-cifra:
-`Tom: C
 
-C             G
-Aqui começa a música
-Am            F
-Com os acordes no violão
+titulo:"O Poder dos Hábitos",
 
-C             G
-Você pode pesquisar
-Am             F
-E abrir esta cifra`
+autor:"Biblioteca da Mente",
+
+categoria:"Hábitos",
+
+descricao:
+"Uma leitura sobre como comportamentos repetidos podem construir resultados.",
+
+capitulos:[
+
+["Como nasce um hábito",
+`Um hábito começa como um comportamento que é repetido em determinado contexto.
+
+Com o tempo, o cérebro passa a reconhecer padrões e pode executar determinadas ações com menos esforço consciente.
+
+Isso significa que pequenas ações repetidas podem se tornar parte importante da rotina.`],
+
+["Pequenas mudanças",
+`Grandes transformações nem sempre começam com grandes decisões.
+
+Uma pequena mudança repetida diariamente pode produzir efeitos importantes ao longo do tempo.
+
+O objetivo não precisa ser transformar toda a vida de uma vez. Muitas vezes é mais eficiente escolher uma ação simples e torná-la consistente.`],
+
+["Construindo consistência",
+`Consistência não significa nunca falhar.
+
+Significa retornar ao comportamento desejado depois de uma interrupção.
+
+Uma pessoa pode perder um dia, uma semana ou enfrentar dificuldades. O ponto importante é não transformar uma falha temporária em abandono permanente.`]
+
+]
+
 },
 
 {
-titulo:"Canção Sertaneja",
-artista:"Artista Sertanejo",
-categoria:"Sertanejo",
-cifra:
-`Tom: D
 
-D             A
-Cifra de exemplo
-Bm            G
-Para seu violão
+titulo:"A Arte do Foco",
 
-D             A
-Você pode alterar
-Bm             G
-O tom da música`
+autor:"Biblioteca da Mente",
+
+categoria:"Foco",
+
+descricao:
+"Como atenção, ambiente e prioridades influenciam nossa capacidade de concentração.",
+
+capitulos:[
+
+["A atenção é limitada",
+`Nossa atenção não consegue processar tudo ao mesmo tempo com a mesma qualidade.
+
+Quando várias tarefas competem pela atenção, é comum que o desempenho diminua.
+
+Escolher conscientemente aquilo que merece nossa atenção é uma habilidade importante.`],
+
+["Ambiente",
+`O ambiente influencia nosso comportamento.
+
+Notificações, televisão, conversas e outras interrupções podem tornar uma tarefa mais difícil.
+
+Modificar o ambiente para reduzir distrações pode ser mais eficiente do que simplesmente tentar aumentar a força de vontade.`],
+
+["Trabalho profundo",
+`Algumas tarefas exigem períodos de concentração sem interrupções.
+
+Durante esses períodos, desligar notificações e estabelecer uma meta clara pode ajudar a manter a atenção.
+
+O foco melhora quando sabemos exatamente qual problema estamos tentando resolver.`]
+
+]
+
 },
 
 {
-titulo:"Canção MPB",
-artista:"Artista MPB",
-categoria:"MPB",
-cifra:
-`Tom: Am
 
-Am             F
-Uma canção de exemplo
-C              G
-Para testar o sistema
+titulo:"Inteligência Emocional",
 
-Am             F
-Pesquise pelo nome
-C               G
-E abra a cifra`
+autor:"Biblioteca da Mente",
+
+categoria:"Emoções",
+
+descricao:
+"Uma introdução ao reconhecimento e gerenciamento das emoções.",
+
+capitulos:[
+
+["Reconhecendo emoções",
+`Emoções fornecem informações sobre nossas experiências.
+
+Medo, raiva, tristeza, alegria e outras emoções podem influenciar pensamentos e comportamentos.
+
+Reconhecer uma emoção é diferente de ser controlado por ela.`],
+
+["Pausa antes da reação",
+`Em determinadas situações, existe um pequeno espaço entre sentir algo e agir.
+
+Aprender a perceber esse espaço pode permitir respostas mais conscientes.
+
+Uma pausa simples para respirar e observar a situação pode mudar completamente uma reação impulsiva.`],
+
+["Relacionamentos",
+`Entender as próprias emoções também influencia os relacionamentos.
+
+Quando conseguimos comunicar aquilo que sentimos com clareza, aumentamos as chances de compreensão.
+
+Escutar também é uma parte importante da inteligência emocional.`]
+
+]
+
+},
+
+{
+
+titulo:"Conhecendo a Si Mesmo",
+
+autor:"Biblioteca da Mente",
+
+categoria:"Autoconhecimento",
+
+descricao:
+"Reflexões sobre identidade, valores, escolhas e crescimento pessoal.",
+
+capitulos:[
+
+["Quem sou eu?",
+`A identidade não é formada por uma única característica.
+
+Ela envolve experiências, valores, relações, escolhas e objetivos.
+
+Conhecer a si mesmo é um processo contínuo de observação e reflexão.`],
+
+["Valores",
+`Valores são princípios que ajudam a orientar decisões.
+
+Quando nossas ações entram em conflito constante com aquilo que consideramos importante, podemos experimentar insatisfação.
+
+Identificar valores pessoais pode ajudar a tomar decisões mais coerentes.`],
+
+["Mudança",
+`As pessoas mudam ao longo da vida.
+
+Novas experiências podem modificar opiniões, objetivos e comportamentos.
+
+Reconhecer essa possibilidade permite enxergar o desenvolvimento pessoal como um processo contínuo.`]
+
+]
+
+},
+
+{
+
+titulo:"O Cérebro e as Decisões",
+
+autor:"Biblioteca da Mente",
+
+categoria:"Mente",
+
+descricao:
+"Uma introdução aos fatores que influenciam nossas escolhas.",
+
+capitulos:[
+
+["Escolhas",
+`Tomamos decisões constantemente.
+
+Algumas são planejadas cuidadosamente, enquanto outras acontecem quase automaticamente.
+
+Experiências anteriores, emoções, informações disponíveis e contexto podem influenciar nossas escolhas.`],
+
+["Erros de julgamento",
+`Nossa percepção nem sempre corresponde perfeitamente à realidade.
+
+Podemos interpretar informações de maneira incompleta ou dar importância excessiva a determinados detalhes.
+
+Reconhecer essa possibilidade ajuda a analisar decisões com maior cuidado.`],
+
+["Pensar melhor",
+`Pensar melhor não significa eliminar completamente os erros.
+
+Significa criar processos que aumentem a qualidade das decisões.
+
+Pesquisar informações, considerar alternativas e questionar nossas próprias conclusões são algumas possibilidades.`]
+
+]
+
 }
 
 ];
 
-let cifraAtual=null;
-let tomAtual=0;
+document.getElementById("total").textContent=livros.length;
+
+function mostrarLivros(lista){
+
+const area=document.getElementById("books");
+
+area.innerHTML="";
+
+if(lista.length===0){
+
+area.innerHTML=`
+<div class="empty">
+<h2>🔎 Nenhum livro encontrado</h2>
+<p>Tente pesquisar outro assunto.</p>
+</div>
+`;
+
+return;
+
+}
+
+lista.forEach((livro,index)=>{
+
+const card=document.createElement("div");
+
+card.className="book";
+
+card.innerHTML=`
+
+<div class="cover">
+🧠
+</div>
+
+<span class="tag">
+${livro.categoria}
+</span>
+
+<h3>
+${livro.titulo}
+</h3>
+
+<p>
+${livro.descricao}
+</p>
+
+<button onclick="abrirLivro(${livros.indexOf(livro)})">
+📖 Ler livro
+</button>
+
+`;
+
+area.appendChild(card);
+
+});
+
+}
+
+function abrirLivro(index){
+
+const livro=livros[index];
+
+document.getElementById("readerTitle").textContent=
+livro.titulo;
+
+const area=document.getElementById("readerText");
+
+area.innerHTML="";
+
+livro.capitulos.forEach((capitulo,index)=>{
+
+const h=document.createElement("h3");
+
+h.textContent=
+(index+1)+". "+capitulo[0];
+
+const p=document.createElement("p");
+
+p.textContent=capitulo[1];
+
+area.appendChild(h);
+
+area.appendChild(p);
+
+});
+
+document.getElementById("reader").style.display="block";
+
+window.scrollTo(0,0);
+
+}
+
+function fecharLivro(){
+
+document.getElementById("reader").style.display="none";
+
+}
 
 function pesquisar(){
 
@@ -277,182 +663,68 @@ document.getElementById("search")
 .toLowerCase()
 .trim();
 
-const resultados=
-musicas.filter(m=>
-m.titulo.toLowerCase().includes(termo) ||
-m.artista.toLowerCase().includes(termo)
+const resultado=livros.filter(livro=>
+
+livro.titulo.toLowerCase().includes(termo) ||
+
+livro.autor.toLowerCase().includes(termo) ||
+
+livro.categoria.toLowerCase().includes(termo) ||
+
+livro.descricao.toLowerCase().includes(termo)
+
 );
 
-mostrarResultados(resultados);
-}
-
-function mostrarResultados(lista){
-
-const area=
-document.getElementById("results");
-
-area.innerHTML="";
-
-if(lista.length===0){
-
-area.innerHTML=
-`<div class="empty">
-🎸 Nenhuma cifra encontrada.<br><br>
-Tente pesquisar outro nome.
-</div>`;
-
-return;
-}
-
-lista.forEach((musica,index)=>{
-
-const card=document.createElement("div");
-
-card.className="card";
-
-card.innerHTML=`
-<h3>🎵 ${musica.titulo}</h3>
-<p>${musica.artista} • ${musica.categoria}</p>
-`;
-
-card.onclick=()=>abrirCifra(musica);
-
-area.appendChild(card);
-
-});
+mostrarLivros(resultado);
 
 }
 
-function mostrarCategoria(categoria){
+function filtrar(categoria){
 
-if(categoria==="Todas"){
+if(categoria==="Todos"){
 
-mostrarResultados(musicas);
+mostrarLivros(livros);
+
 return;
 
 }
 
-const lista=
-musicas.filter(
-m=>m.categoria===categoria
+mostrarLivros(
+livros.filter(
+livro=>livro.categoria===categoria
+)
 );
 
-mostrarResultados(lista);
 }
 
-function abrirCifra(musica){
+let tamanhoFonte=20;
 
-cifraAtual=musica;
-tomAtual=0;
+function aumentarFonte(){
 
-document.getElementById("titulo").textContent=
-"🎵 "+musica.titulo+
-" — "+musica.artista;
+tamanhoFonte+=2;
 
-document.getElementById("cifra").style.display="block";
-
-renderizarCifra();
-
-window.scrollTo({
-top:document.getElementById("cifra").offsetTop-20,
-behavior:"smooth"
+document.querySelectorAll(".reader p")
+.forEach(p=>{
+p.style.fontSize=tamanhoFonte+"px";
 });
 
 }
 
-const notas=[
-"C","C#","D","D#","E","F",
-"F#","G","G#","A","A#","B"
-];
+document.getElementById("reader")
+.addEventListener("scroll",function(){
 
-function transpor(direcao){
+const altura=
+this.scrollHeight-this.clientHeight;
 
-if(!cifraAtual)return;
+const porcentagem=
+(this.scrollTop/altura)*100;
 
-tomAtual+=direcao;
-
-renderizarCifra();
-
-}
-
-function renderizarCifra(){
-
-let texto=cifraAtual.cifra;
-
-const acordes=
-texto.match(/\b[A-G](#|b)?(m|maj|dim|aug|sus|7|9|11|13)?\b/g);
-
-if(acordes){
-
-acordes.forEach(acorde=>{
-
-const novo=transporAcorde(
-acorde,
-tomAtual
-);
-
-texto=texto.replace(
-new RegExp("\\b"+escapeRegExp(acorde)+"\\b"),
-novo
-);
+document.getElementById("progressBar")
+.style.width=porcentagem+"%";
 
 });
 
-}
-
-document.getElementById("conteudo").textContent=
-texto;
-
-}
-
-function transporAcorde(acorde,semitons){
-
-const match=
-acorde.match(/^([A-G](#|b)?)(.*)$/);
-
-if(!match)return acorde;
-
-let nota=match[1];
-let resto=match[3];
-
-let indice=notas.indexOf(nota);
-
-if(indice===-1){
-
-if(nota==="Db")indice=1;
-if(nota==="Eb")indice=3;
-if(nota==="Gb")indice=6;
-if(nota==="Ab")indice=8;
-if(nota==="Bb")indice=10;
-
-}
-
-if(indice===-1)return acorde;
-
-indice=
-(indice+semitons+12)%12;
-
-return notas[indice]+resto;
-
-}
-
-function escapeRegExp(text){
-
-return text.replace(
-/[.*+?^${}()|[\]\\]/g,
-"\\$&"
-);
-
-}
-
-function fechar(){
-
-document.getElementById("cifra")
-.style.display="none";
-
-}
-
-mostrarResultados(musicas);
+mostrarLivros(livros);
 
 </script>
 
