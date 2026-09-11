@@ -2,2360 +2,2280 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#12051f">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Minha Plataforma</title>
+
+<style>
+:root{
+  --bg:#090612;
+  --bg2:#120b20;
+  --card:#171025;
+  --card2:#201532;
+  --primary:#8b5cf6;
+  --primary2:#a78bfa;
+  --green:#22c55e;
+  --red:#ef4444;
+  --yellow:#facc15;
+  --blue:#38bdf8;
+  --text:#fff;
+  --muted:#a9a2b8;
+  --border:#302343;
+  --shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at top,#24113d 0,#090612 45%);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,input,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#auth{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.auth-box{
+  width:100%;
+  max-width:430px;
+  background:rgba(23,16,37,.96);
+  border:1px solid var(--border);
+  border-radius:25px;
+  padding:28px;
+  box-shadow:var(--shadow);
+}
+
+.logo{
+  text-align:center;
+  font-size:30px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.logo span{
+  color:var(--primary2);
+}
+
+.subtitle{
+  text-align:center;
+  color:var(--muted);
+  margin-bottom:25px;
+}
+
+.auth-box input{
+  width:100%;
+  padding:15px;
+  margin-bottom:12px;
+  border-radius:13px;
+  border:1px solid var(--border);
+  background:#0e0918;
+  color:#fff;
+  outline:none;
+}
+
+.auth-box input:focus{
+  border-color:var(--primary);
+}
+
+.main-btn{
+  width:100%;
+  border:0;
+  border-radius:13px;
+  padding:15px;
+  background:linear-gradient(135deg,var(--primary),#6d28d9);
+  color:white;
+  font-weight:800;
+  margin-top:5px;
+}
+
+.link-btn{
+  background:none;
+  border:0;
+  color:var(--primary2);
+  margin-top:18px;
+  width:100%;
+}
+
+/* =========================
+   APP
+========================= */
+
+#app{
+  min-height:100vh;
+  padding-bottom:85px;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:20;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 18px;
+  background:rgba(9,6,18,.92);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--border);
+}
+
+.user-mini{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+  background:var(--card2);
+  border:2px solid var(--primary);
+}
+
+.user-mini-name{
+  font-weight:800;
+}
+
+.user-level{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.top-actions{
+  display:flex;
+  gap:8px;
+}
+
+.icon-btn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:white;
+}
+
+.page{
+  width:100%;
+  max-width:1100px;
+  margin:auto;
+  padding:22px 16px;
+}
+
+.hero{
+  background:
+    linear-gradient(135deg,rgba(139,92,246,.28),rgba(56,189,248,.08)),
+    var(--card);
+  border:1px solid var(--border);
+  border-radius:25px;
+  padding:25px;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.hero p{
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+
+.stat{
+  background:rgba(0,0,0,.2);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:14px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:20px;
+}
+
+.stat small{
+  color:var(--muted);
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.section-title{
+  margin:25px 0 12px;
+  font-size:21px;
+}
+
+.game-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.game-card{
+  position:relative;
+  overflow:hidden;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
+  min-height:190px;
+  transition:.2s;
+}
+
+.game-card:hover{
+  transform:translateY(-3px);
+  border-color:var(--primary);
+}
+
+.game-icon{
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+.game-card h3{
+  margin-bottom:8px;
+}
+
+.game-card p{
+  color:var(--muted);
+  line-height:1.4;
+  margin-bottom:17px;
+}
+
+.card-btn{
+  border:0;
+  padding:11px 15px;
+  border-radius:11px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:bold;
+}
+
+.card-btn.secondary{
+  background:var(--card2);
+  border:1px solid var(--border);
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.panel{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:15px;
+}
+
+.panel h3{
+  margin-bottom:12px;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+.success{
+  color:var(--green);
+}
+
+.danger{
+  color:var(--red);
+}
+
+.gold{
+  color:var(--yellow);
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:30;
+  display:flex;
+  justify-content:space-around;
+  background:rgba(15,9,24,.96);
+  backdrop-filter:blur(15px);
+  border-top:1px solid var(--border);
+  padding:9px 5px;
+}
+
+.bottom-nav button{
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-size:11px;
+  min-width:60px;
+}
+
+.bottom-nav button.active{
+  color:var(--primary2);
+}
+
+.bottom-nav .nav-icon{
+  display:block;
+  font-size:21px;
+  margin-bottom:3px;
+}
+
+/* =========================
+   MILHÃO
+========================= */
+
+.milhao-box{
+  background:
+    radial-gradient(circle at center,#24113e,#0b0713 70%);
+  border:1px solid #3b2558;
+  border-radius:25px;
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+
+.money{
+  text-align:center;
+  font-size:30px;
+  font-weight:900;
+  color:var(--yellow);
+  margin:10px 0 18px;
+}
+
+.progress{
+  height:8px;
+  background:#261a35;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.progress div{
+  height:100%;
+  background:linear-gradient(90deg,var(--primary),var(--blue));
+  width:0%;
+  transition:.3s;
+}
+
+.question-number{
+  color:var(--primary2);
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.question{
+  font-size:22px;
+  line-height:1.35;
+  margin-bottom:20px;
+}
+
+.timer{
+  text-align:center;
+  font-size:34px;
+  font-weight:900;
+  margin-bottom:15px;
+}
+
+.timer.warning{
+  color:var(--red);
+}
+
+.answers{
+  display:grid;
+  gap:10px;
+}
+
+.answer{
+  width:100%;
+  text-align:left;
+  border:1px solid var(--border);
+  background:#171025;
+  color:#fff;
+  border-radius:14px;
+  padding:15px;
+  transition:.15s;
+}
+
+.answer:hover{
+  border-color:var(--primary);
+}
+
+.answer.correct{
+  background:#064e2a;
+  border-color:var(--green);
+}
+
+.answer.wrong{
+  background:#581c1c;
+  border-color:var(--red);
+}
+
+.lifelines{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:15px;
+}
+
+.life{
+  border:1px solid var(--border);
+  background:var(--card2);
+  color:#fff;
+  border-radius:12px;
+  padding:11px 5px;
+}
+
+.life:disabled{
+  opacity:.35;
+}
+
+.difficulty{
+  display:inline-block;
+  background:#26183b;
+  border:1px solid #493267;
+  color:var(--primary2);
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:12px;
+  margin-bottom:12px;
+}
+
+/* =========================
+   RANKING
+========================= */
+
+.rank-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px;
+  border-bottom:1px solid var(--border);
+}
+
+.rank-item:last-child{
+  border-bottom:0;
+}
+
+.rank-position{
+  width:35px;
+  font-weight:900;
+  text-align:center;
+}
+
+.rank-info{
+  flex:1;
+}
+
+.rank-name{
+  font-weight:800;
+}
+
+.rank-xp{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* =========================
+   FRIENDS / CHAT
+========================= */
+
+.friend{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  border-bottom:1px solid var(--border);
+}
+
+.friend:last-child{
+  border-bottom:0;
+}
+
+.friend-info{
+  flex:1;
+}
+
+.online-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#666;
+  display:inline-block;
+  margin-right:5px;
+}
+
+.online-dot.on{
+  background:var(--green);
+}
+
+.chat-messages{
+  height:400px;
+  overflow:auto;
+  background:#0d0815;
+  border-radius:15px;
+  padding:14px;
+  margin-bottom:12px;
+}
+
+.message{
+  max-width:80%;
+  padding:10px 13px;
+  border-radius:15px;
+  margin-bottom:9px;
+  background:#211532;
+}
+
+.message.me{
+  margin-left:auto;
+  background:#5b21b6;
+}
+
+.chat-input{
+  display:flex;
+  gap:8px;
+}
+
+.chat-input input{
+  flex:1;
+  background:#0d0815;
+  color:white;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:13px;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-header{
+  text-align:center;
+  padding:25px;
+}
+
+.profile-big-avatar{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid var(--primary);
+  margin-bottom:10px;
+}
+
+.level-bar{
+  height:10px;
+  background:#281c37;
+  border-radius:20px;
+  overflow:hidden;
+  margin:10px 0;
+}
+
+.level-bar div{
+  height:100%;
+  background:linear-gradient(90deg,var(--primary),var(--blue));
+}
+
+/* =========================
+   ACHIEVEMENTS
+========================= */
+
+.achievement-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.achievement{
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:14px;
+  background:#120c1d;
+}
+
+.achievement.locked{
+  opacity:.4;
+}
+
+.achievement-icon{
+  font-size:28px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  background:rgba(0,0,0,.72);
+}
+
+.modal-box{
+  width:100%;
+  max-width:550px;
+  max-height:90vh;
+  overflow:auto;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:20px;
+}
+
+.modal-close{
+  float:right;
+  border:0;
+  background:none;
+  color:white;
+  font-size:25px;
+}
+
+/* =========================
+   RACE
+========================= */
+
+.race-track{
+  position:relative;
+  height:430px;
+  overflow:hidden;
+  border-radius:20px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #111 0,
+      #111 35px,
+      #181818 35px,
+      #181818 70px
+    );
+  border:2px solid #333;
+}
+
+.car{
+  position:absolute;
+  bottom:20px;
+  left:45%;
+  font-size:42px;
+  transition:.08s;
+}
+
+.race-score{
+  text-align:center;
+  font-size:25px;
+  margin:15px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:650px){
+  .stats-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .game-grid{
+    grid-template-columns:1fr;
+  }
+
+  .question{
+    font-size:19px;
+  }
+
+  .hero h1{
+    font-size:25px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     AUTH
+========================= -->
+
+<section id="auth">
+
+  <div class="auth-box">
+
+    <div class="logo">
+      Minha <span>Plataforma</span>
+    </div>
+
+    <div class="subtitle">
+      Jogos, desafios, amigos e competição.
+    </div>
+
+    <div id="login-form">
+
+      <input id="login-email"
+             type="email"
+             placeholder="Seu e-mail">
+
+      <input id="login-password"
+             type="password"
+             placeholder="Sua senha">
+
+      <button class="main-btn" onclick="entrar()">
+        Entrar
+      </button>
+
+      <button class="link-btn" onclick="mostrarCadastro()">
+        Criar uma conta
+      </button>
+
+      <button class="link-btn" onclick="recuperarSenha()">
+        Esqueci minha senha
+      </button>
+
+    </div>
+
+    <div id="cadastro-form" class="hidden">
+
+      <input id="cadastro-nome"
+             type="text"
+             placeholder="Nome de usuário">
+
+      <input id="cadastro-email"
+             type="email"
+             placeholder="E-mail">
+
+      <input id="cadastro-password"
+             type="password"
+             placeholder="Senha">
+
+      <button class="main-btn" onclick="cadastrar()">
+        Criar conta
+      </button>
+
+      <button class="link-btn" onclick="mostrarLogin()">
+        Já tenho uma conta
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     APP
+========================= -->
+
+<section id="app" class="hidden">
+
+  <header class="topbar">
+
+    <div class="user-mini">
+
+      <img id="top-avatar"
+           class="avatar"
+           src=""
+           alt="Avatar">
+
+      <div>
+        <div id="top-name" class="user-mini-name">
+          Jogador
+        </div>
+
+        <div id="top-level" class="user-level">
+          Nível 1
+        </div>
+      </div>
+
+    </div>
+
+    <div class="top-actions">
+
+      <button class="icon-btn"
+              onclick="abrirNotificacoes()">
+        🔔
+      </button>
+
+      <button class="icon-btn"
+              onclick="abrirPerfil()">
+        👤
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       HOME
+  ========================= -->
+
+  <main id="home-page" class="page">
+
+    <div class="hero">
+
+      <h1>Olá, <span id="home-name">Jogador</span>! 👋</h1>
+
+      <p>
+        Escolha um jogo, aumente seu nível,
+        conquiste medalhas e dispute com outros jogadores.
+      </p>
+
+      <div class="stats-grid">
+
+        <div class="stat">
+          <strong id="home-xp">0</strong>
+          <small>XP</small>
+        </div>
+
+        <div class="stat">
+          <strong id="home-coins">0</strong>
+          <small>Moedas</small>
+        </div>
+
+        <div class="stat">
+          <strong id="home-record">R$ 0</strong>
+          <small>Recorde</small>
+        </div>
+
+        <div class="stat">
+          <strong id="home-level">1</strong>
+          <small>Nível</small>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <h2 class="section-title">
+      🎮 Jogos
+    </h2>
+
+    <div class="game-grid">
+
+      <div class="game-card">
+
+        <div class="game-icon">💰</div>
+
+        <h3>Desafio do Milhão</h3>
+
+        <p>
+          15 perguntas. Acerte todas e tente chegar
+          ao prêmio de R$ 1.000.000.
+        </p>
+
+        <button class="card-btn"
+                onclick="abrirMilhao()">
+          Jogar
+        </button>
+
+      </div>
+
+
+      <div class="game-card">
+
+        <div class="game-icon">🏎️</div>
+
+        <h3>Corrida do Milhão</h3>
+
+        <p>
+          Corra, desvie dos obstáculos e faça
+          a maior pontuação possível.
+        </p>
+
+        <button class="card-btn"
+                onclick="abrirCorrida()">
+          Jogar
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <h2 class="section-title">
+      📅 Desafio diário
+    </h2>
+
+    <div class="panel">
+
+      <h3>Uma pergunta por dia</h3>
+
+      <p class="muted">
+        Complete o desafio diário para ganhar XP extra.
+      </p>
+
+      <br>
+
+      <button class="card-btn"
+              onclick="abrirDesafioDiario()">
+        Fazer desafio
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       RANKING
+  ========================= -->
+
+  <main id="ranking-page" class="page hidden">
+
+    <div class="hero">
+
+      <h1>🏆 Ranking</h1>
+
+      <p>
+        Veja quem está no topo da plataforma.
+      </p>
+
+    </div>
+
+    <div class="panel">
+
+      <h3>Ranking geral</h3>
+
+      <div id="ranking-list">
+        Carregando...
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       FRIENDS
+  ========================= -->
+
+  <main id="friends-page" class="page hidden">
+
+    <div class="hero">
+
+      <h1>👥 Amigos</h1>
+
+      <p>
+        Encontre jogadores e adicione novos amigos.
+      </p>
+
+    </div>
+
+
+    <div class="panel">
+
+      <h3>🔎 Procurar jogador</h3>
+
+      <input id="friend-search"
+             style="width:100%;padding:13px;background:#0d0815;color:#fff;border:1px solid var(--border);border-radius:12px"
+             placeholder="Digite o nome do jogador">
+
+      <br><br>
+
+      <button class="card-btn"
+              onclick="buscarJogadores()">
+        Procurar
+      </button>
+
+      <div id="search-results"></div>
+
+    </div>
+
+
+    <div class="panel">
+
+      <h3>📨 Solicitações</h3>
+
+      <div id="friend-requests">
+        Nenhuma solicitação.
+      </div>
+
+    </div>
+
+
+    <div class="panel">
+
+      <h3>🟢 Meus amigos</h3>
+
+      <div id="friends-list">
+        Carregando...
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       PROFILE
+  ========================= -->
+
+  <main id="profile-page" class="page hidden">
+
+    <div class="panel profile-header">
+
+      <img id="profile-avatar"
+           class="profile-big-avatar"
+           src=""
+           alt="Avatar">
+
+      <h2 id="profile-name">
+        Jogador
+      </h2>
+
+      <p id="profile-title" class="muted">
+        Novato
+      </p>
+
+      <br>
+
+      <label class="card-btn"
+             style="display:inline-block">
+        📷 Alterar foto
+        <input id="photo-input"
+               type="file"
+               accept="image/*"
+               style="display:none"
+               onchange="alterarFoto(event)">
+      </label>
+
+    </div>
+
+
+    <div class="panel">
+
+      <h3>⭐ Progresso</h3>
+
+      <div>
+        Nível <strong id="profile-level">1</strong>
+      </div>
+
+      <div class="level-bar">
+        <div id="profile-level-bar"></div>
+      </div>
+
+      <div class="muted">
+        <span id="profile-xp">0</span> XP
+      </div>
+
+    </div>
+
+
+    <div class="panel">
+
+      <h3>📊 Estatísticas</h3>
+
+      <div class="stats-grid">
+
+        <div class="stat">
+          <strong id="stat-games">0</strong>
+          <small>Partidas</small>
+        </div>
+
+        <div class="stat">
+          <strong id="stat-correct">0</strong>
+          <small>Acertos</small>
+        </div>
+
+        <div class="stat">
+          <strong id="stat-wrong">0</strong>
+          <small>Erros</small>
+        </div>
+
+        <div class="stat">
+          <strong id="stat-best">R$ 0</strong>
+          <small>Maior prêmio</small>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="panel">
+
+      <h3>🏅 Conquistas</h3>
+
+      <div id="achievements"
+           class="achievement-grid">
+      </div>
+
+    </div>
+
+
+    <div class="panel">
+
+      <h3>⚙️ Configurações</h3>
+
+      <button class="card-btn secondary"
+              onclick="alternarMusica()">
+        🎵 Música
+      </button>
+
+      <button class="card-btn secondary"
+              onclick="alternarTema()">
+        🎨 Tema
+      </button>
+
+      <button class="card-btn secondary"
+              onclick="sair()">
+        🚪 Sair da conta
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       MILHÃO
+  ========================= -->
+
+  <main id="milhao-page" class="page hidden">
+
+    <div class="milhao-box">
+
+      <button class="card-btn secondary"
+              onclick="voltarHome()">
+        ← Voltar
+      </button>
+
+      <div id="milhao-menu">
+
+        <h1 style="margin:25px 0 10px">
+          💰 Desafio do Milhão
+        </h1>
+
+        <p class="muted">
+          Escolha como deseja jogar.
+        </p>
+
+        <br>
+
+        <div class="row">
+
+          <button class="card-btn"
+                  onclick="iniciarMilhao('solo')">
+            👤 Solo
+          </button>
+
+          <button class="card-btn"
+                  onclick="abrirLocal()">
+            👥 2/3 jogadores
+          </button>
+
+          <button class="card-btn"
+                  onclick="abrirOnline()">
+            🌐 Online
+          </button>
+
+        </div>
+
+        <br>
+
+        <div class="panel">
+
+          <h3>Como funciona?</h3>
+
+          <p class="muted">
+            São 15 perguntas. Cada acerto aumenta seu
+            prêmio. Se errar ou o tempo acabar,
+            você não recebe o valor daquela pergunta.
+          </p>
+
+          <br>
+
+          <p>
+            ⏱️ 15 segundos<br>
+            🎯 15 perguntas<br>
+            💰 Até R$ 1.000.000
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div id="milhao-game"
+           class="hidden">
+
+        <div class="money"
+             id="current-prize">
+          R$ 0
+        </div>
+
+        <div class="progress">
+          <div id="game-progress"></div>
+        </div>
+
+        <div id="question-number"
+             class="question-number">
+        </div>
+
+        <div id="difficulty"
+             class="difficulty">
+        </div>
+
+        <div id="question"
+             class="question">
+        </div>
+
+        <div id="timer"
+             class="timer">
+          15
+        </div>
+
+        <div id="answers"
+             class="answers">
+        </div>
+
+        <div class="lifelines">
+
+          <button id="life5050"
+                  class="life"
+                  onclick="usar5050()">
+            50/50
+          </button>
+
+          <button id="lifeSkip"
+                  class="life"
+                  onclick="usarPular()">
+            ⏭️ Pular
+          </button>
+
+          <button id="lifeHint"
+                  class="life"
+                  onclick="usarDica()">
+            💡 Dica
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div id="milhao-result"
+           class="hidden"
+           style="text-align:center">
+
+        <div style="font-size:65px">
+          🏆
+        </div>
+
+        <h1 id="result-title">
+          Fim de jogo
+        </h1>
+
+        <p id="result-text"
+           class="muted"
+           style="margin:15px 0">
+        </p>
+
+        <div class="money"
+             id="result-prize">
+          R$ 0
+        </div>
+
+        <button class="card-btn"
+                onclick="abrirMilhao()">
+          Jogar novamente
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       RACE
+  ========================= -->
+
+  <main id="race-page" class="page hidden">
+
+    <div class="hero">
+
+      <button class="card-btn secondary"
+              onclick="voltarHome()">
+        ← Voltar
+      </button>
+
+      <h1 style="margin-top:20px">
+        🏎️ Corrida do Milhão
+      </h1>
+
+      <p>
+        Use os controles para desviar dos obstáculos.
+      </p>
+
+    </div>
+
+    <div class="panel">
+
+      <div class="race-score">
+        Pontos: <strong id="race-score">0</strong>
+      </div>
+
+      <div class="race-track"
+           id="race-track">
+
+        <div class="car"
+             id="car">
+          🏎️
+        </div>
+
+      </div>
+
+      <br>
+
+      <div class="row"
+           style="justify-content:center">
+
+        <button class="card-btn"
+                onclick="moverCarro(-35)">
+          ◀️
+        </button>
+
+        <button class="card-btn"
+                onclick="moverCarro(35)">
+          ▶️
+        </button>
+
+      </div>
+
+      <br>
+
+      <button class="main-btn"
+              onclick="iniciarCorrida()">
+        Iniciar corrida
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       CHAT
+  ========================= -->
+
+  <main id="chat-page" class="page hidden">
+
+    <div class="hero">
+
+      <button class="card-btn secondary"
+              onclick="mostrarPagina('friends-page')">
+        ← Amigos
+      </button>
+
+      <h1 style="margin-top:20px">
+        💬 <span id="chat-name">Chat</span>
+      </h1>
+
+    </div>
+
+    <div class="panel">
+
+      <div id="chat-messages"
+           class="chat-messages">
+      </div>
+
+      <div class="chat-input">
+
+        <input id="chat-input"
+               placeholder="Digite sua mensagem..."
+               onkeydown="if(event.key==='Enter') enviarMensagem()">
+
+        <button class="card-btn"
+                onclick="enviarMensagem()">
+          Enviar
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       DAILY
+  ========================= -->
+
+  <main id="daily-page" class="page hidden">
+
+    <div class="hero">
+
+      <button class="card-btn secondary"
+              onclick="voltarHome()">
+        ← Voltar
+      </button>
+
+      <h1 style="margin-top:20px">
+        📅 Desafio Diário
+      </h1>
+
+    </div>
+
+    <div class="panel">
+
+      <div id="daily-question"
+           class="question">
+      </div>
+
+      <div id="daily-answers"
+           class="answers">
+      </div>
+
+      <div id="daily-result"
+           style="margin-top:15px">
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       MODAL
+  ========================= -->
+
+  <div id="modal"
+       class="modal hidden">
+
+    <div class="modal-box">
+
+      <button class="modal-close"
+              onclick="fecharModal()">
+        ×
+      </button>
+
+      <div id="modal-content"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       NAV
+  ========================= -->
+
+  <nav class="bottom-nav">
+
+    <button id="nav-home"
+            class="active"
+            onclick="mostrarPagina('home-page')">
+      <span class="nav-icon">🏠</span>
+      Início
+    </button>
+
+    <button id="nav-ranking"
+            onclick="mostrarPagina('ranking-page');carregarRanking()">
+      <span class="nav-icon">🏆</span>
+      Ranking
+    </button>
+
+    <button id="nav-friends"
+            onclick="mostrarPagina('friends-page');carregarSocial()">
+      <span class="nav-icon">👥</span>
+      Amigos
+    </button>
+
+    <button id="nav-profile"
+            onclick="abrirPerfil()">
+      <span class="nav-icon">👤</span>
+      Perfil
+    </button>
+
+  </nav>
+
+</section>
+
+
+<!-- =========================
+     FIREBASE
+========================= -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-<style>
-*{
- box-sizing:border-box;
- margin:0;
- padding:0;
-}
-html,body{
- min-height:100%;
- font-family:Arial,Helvetica,sans-serif;
- background:#09040f;
- color:#fff;
-}
-body{
- overflow-x:hidden;
-}
-button,input,select{
- font:inherit;
-}
-button{
- cursor:pointer;
- border:0;
-}
-.hidden{
- display:none!important;
-}
-.screen{
- min-height:100vh;
-}
-.gradient{
- background:
- radial-gradient(circle at 20% 10%,rgba(125,45,210,.25),transparent 35%),
- radial-gradient(circle at 90% 20%,rgba(220,50,255,.15),transparent 30%),
- linear-gradient(135deg,#08030d,#160721 55%,#09030e);
-}
-
-/* AUTH */
-#authScreen{
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
- min-height:100vh;
-}
-.authBox{
- width:min(440px,100%);
- padding:30px 22px;
- border-radius:28px;
- background:rgba(25,10,40,.92);
- border:1px solid rgba(190,90,255,.25);
- box-shadow:0 20px 70px rgba(0,0,0,.5);
-}
-.logo{
- text-align:center;
- margin-bottom:25px;
-}
-.logoIcon{
- width:75px;
- height:75px;
- margin:auto;
- border-radius:22px;
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:38px;
- background:linear-gradient(135deg,#8c35ff,#d347ff);
- box-shadow:0 10px 35px rgba(151,45,255,.35);
-}
-.logo h1{
- margin-top:15px;
- font-size:28px;
-}
-.logo p{
- color:#bdaec8;
- margin-top:6px;
-}
-.authTabs{
- display:flex;
- gap:8px;
- margin-bottom:20px;
-}
-.authTabs button{
- flex:1;
- padding:12px;
- border-radius:12px;
- background:#21102e;
- color:#aaa;
-}
-.authTabs button.active{
- background:#8b32d9;
- color:white;
-}
-.field{
- margin-bottom:13px;
-}
-.field label{
- display:block;
- margin-bottom:6px;
- font-size:13px;
- color:#cdbdd7;
-}
-.field input,
-.field select{
- width:100%;
- padding:14px;
- border-radius:13px;
- border:1px solid #3d2450;
- outline:none;
- background:#12091b;
- color:white;
-}
-.field input:focus,
-.field select:focus{
- border-color:#a849e8;
-}
-.mainBtn{
- width:100%;
- padding:14px;
- border-radius:14px;
- background:linear-gradient(135deg,#812ce0,#bd42ed);
- color:white;
- font-weight:bold;
- margin-top:5px;
-}
-.mainBtn:active{
- transform:scale(.98);
-}
-.authMessage{
- min-height:20px;
- text-align:center;
- margin-top:13px;
- color:#ff9dba;
- font-size:13px;
-}
-
-/* APP */
-#app{
- min-height:100vh;
- padding-bottom:78px;
-}
-.topbar{
- height:66px;
- padding:10px 14px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- position:sticky;
- top:0;
- z-index:50;
- background:rgba(9,4,15,.9);
- backdrop-filter:blur(14px);
- border-bottom:1px solid rgba(255,255,255,.06);
-}
-.brand{
- display:flex;
- align-items:center;
- gap:9px;
- font-weight:bold;
-}
-.brandMark{
- width:38px;
- height:38px;
- border-radius:11px;
- display:flex;
- align-items:center;
- justify-content:center;
- background:linear-gradient(135deg,#8133e2,#ca45ec);
-}
-.topActions{
- display:flex;
- gap:7px;
-}
-.iconBtn{
- width:40px;
- height:40px;
- border-radius:12px;
- background:#1d0c2b;
- color:white;
- position:relative;
-}
-.badge{
- position:absolute;
- right:-3px;
- top:-3px;
- min-width:17px;
- height:17px;
- padding:0 4px;
- display:flex;
- align-items:center;
- justify-content:center;
- border-radius:20px;
- background:#ff3f73;
- color:white;
- font-size:10px;
- font-weight:bold;
-}
-
-main{
- padding:18px 14px 20px;
- max-width:1000px;
- margin:auto;
-}
-.view{
- display:none;
-}
-.view.active{
- display:block;
-}
-.pageTitle{
- font-size:25px;
- margin-bottom:5px;
-}
-.pageSub{
- color:#9e8ca9;
- font-size:13px;
- margin-bottom:20px;
-}
-
-/* CARDS */
-.card{
- background:linear-gradient(145deg,rgba(35,14,52,.95),rgba(18,8,28,.95));
- border:1px solid rgba(195,104,255,.15);
- border-radius:20px;
- padding:17px;
- margin-bottom:14px;
- box-shadow:0 10px 35px rgba(0,0,0,.2);
-}
-.cardTitle{
- font-weight:bold;
- margin-bottom:10px;
-}
-.homeHero{
- padding:24px 19px;
- border-radius:24px;
- margin-bottom:17px;
- background:
- radial-gradient(circle at 90% 10%,rgba(224,83,255,.3),transparent 35%),
- linear-gradient(135deg,#35104e,#160621);
- border:1px solid rgba(211,92,255,.2);
-}
-.homeHero h2{
- font-size:28px;
- margin-bottom:7px;
-}
-.homeHero p{
- color:#c8b5d1;
- line-height:1.5;
- font-size:14px;
-}
-.sectionTitle{
- font-size:18px;
- margin:20px 0 12px;
-}
-.gameGrid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
- gap:13px;
-}
-.gameCard{
- min-height:180px;
- padding:18px;
- border-radius:22px;
- border:1px solid rgba(255,255,255,.08);
- background:linear-gradient(145deg,#261036,#12091c);
- display:flex;
- flex-direction:column;
- justify-content:space-between;
-}
-.gameIcon{
- font-size:40px;
- margin-bottom:10px;
-}
-.gameCard h3{
- margin-bottom:6px;
-}
-.gameCard p{
- color:#a997b2;
- font-size:13px;
- line-height:1.4;
-}
-.playBtn{
- margin-top:16px;
- padding:12px;
- border-radius:12px;
- color:white;
- background:#8734dc;
- font-weight:bold;
-}
-
-/* STATS */
-.statsGrid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:10px;
-}
-.stat{
- padding:14px;
- border-radius:16px;
- background:#170b22;
- border:1px solid #2d183a;
-}
-.stat small{
- display:block;
- color:#9f8da9;
- margin-bottom:6px;
-}
-.stat strong{
- font-size:20px;
-}
-.progress{
- height:9px;
- background:#24152d;
- border-radius:20px;
- overflow:hidden;
- margin-top:9px;
-}
-.progress div{
- height:100%;
- background:linear-gradient(90deg,#8133dc,#dd4af2);
- border-radius:20px;
-}
-
-/* PROFILE */
-.profileHead{
- display:flex;
- gap:15px;
- align-items:center;
-}
-.avatar{
- width:74px;
- height:74px;
- border-radius:22px;
- object-fit:cover;
- background:#281338;
- border:2px solid #8f42cf;
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:28px;
- flex-shrink:0;
-}
-.profileInfo h2{
- font-size:21px;
-}
-.profileInfo p{
- color:#9f8da9;
- font-size:13px;
- margin-top:4px;
-}
-.levelPill{
- display:inline-block;
- margin-top:7px;
- padding:5px 9px;
- border-radius:20px;
- background:#33164a;
- color:#d899ff;
- font-size:11px;
-}
-.row{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:10px;
-}
-.smallBtn{
- padding:9px 12px;
- border-radius:10px;
- background:#291236;
- color:white;
- border:1px solid #49225e;
-}
-.dangerBtn{
- background:#5b1830;
-}
-.greenBtn{
- background:#17613d;
-}
-.redBtn{
- background:#6b1933;
-}
-
-/* RANK */
-.rankItem{
- display:flex;
- align-items:center;
- gap:11px;
- padding:12px;
- border-radius:15px;
- background:#140a1d;
- margin-bottom:8px;
-}
-.rankNumber{
- width:32px;
- text-align:center;
- font-weight:bold;
- color:#d5a1ff;
-}
-.rankAvatar{
- width:44px;
- height:44px;
- border-radius:13px;
- object-fit:cover;
- background:#281338;
- display:flex;
- align-items:center;
- justify-content:center;
-}
-.rankInfo{
- flex:1;
- min-width:0;
-}
-.rankInfo strong{
- display:block;
- overflow:hidden;
- text-overflow:ellipsis;
- white-space:nowrap;
-}
-.rankInfo small{
- color:#9e8ca9;
-}
-.onlineDot{
- width:9px;
- height:9px;
- border-radius:50%;
- background:#555;
- display:inline-block;
- margin-right:5px;
-}
-.onlineDot.on{
- background:#28dc7c;
- box-shadow:0 0 8px #28dc7c;
-}
-
-/* SOCIAL */
-.searchBox{
- display:flex;
- gap:8px;
-}
-.searchBox input{
- flex:1;
- padding:13px;
- background:#12091a;
- color:white;
- border:1px solid #382044;
- border-radius:12px;
- outline:none;
-}
-.searchBox button{
- padding:0 16px;
- border-radius:12px;
- background:#8435d6;
- color:white;
-}
-.socialTabs{
- display:flex;
- gap:7px;
- overflow-x:auto;
- margin:15px 0;
-}
-.socialTabs button{
- white-space:nowrap;
- padding:10px 13px;
- border-radius:11px;
- background:#1c0d27;
- color:#a998b2;
-}
-.socialTabs button.active{
- background:#7d2dc6;
- color:white;
-}
-.friendItem{
- display:flex;
- align-items:center;
- gap:10px;
- padding:12px;
- border-radius:15px;
- background:#160a20;
- margin-bottom:8px;
-}
-.friendItem .avatar{
- width:47px;
- height:47px;
- border-radius:14px;
- font-size:18px;
-}
-.friendMain{
- flex:1;
- min-width:0;
-}
-.friendMain strong{
- display:block;
-}
-.friendMain small{
- color:#9f8da9;
-}
-.friendActions{
- display:flex;
- gap:5px;
- flex-wrap:wrap;
- justify-content:flex-end;
-}
-
-/* CHAT */
-.chatBox{
- display:flex;
- flex-direction:column;
- height:calc(100vh - 170px);
-}
-.chatHeader{
- padding:12px;
- background:#180b23;
- border-radius:16px 16px 0 0;
- display:flex;
- align-items:center;
- gap:10px;
-}
-.messages{
- flex:1;
- overflow-y:auto;
- padding:14px 7px;
-}
-.msg{
- max-width:78%;
- padding:10px 12px;
- border-radius:15px;
- margin-bottom:8px;
- background:#24102f;
- line-height:1.4;
- font-size:14px;
-}
-.msg.mine{
- margin-left:auto;
- background:#7530ad;
- border-bottom-right-radius:4px;
-}
-.msg.theirs{
- border-bottom-left-radius:4px;
-}
-.msgTime{
- display:block;
- font-size:9px;
- opacity:.6;
- margin-top:4px;
-}
-.chatInput{
- display:flex;
- gap:7px;
-}
-.chatInput input{
- flex:1;
- padding:13px;
- border-radius:13px;
- background:#13091b;
- border:1px solid #3a2048;
- color:white;
- outline:none;
-}
-.chatInput button{
- width:50px;
- border-radius:13px;
- background:#8734d7;
- color:white;
-}
-
-/* NOTIFICATIONS */
-.notification{
- padding:13px;
- border-radius:14px;
- background:#170a20;
- margin-bottom:8px;
- border-left:3px solid #8434d7;
-}
-.notification small{
- display:block;
- color:#938199;
- margin-top:5px;
-}
-
-/* ACHIEVEMENTS */
-.achGrid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:9px;
-}
-.achievement{
- padding:13px;
- border-radius:15px;
- background:#160a20;
- border:1px solid #2e183a;
- opacity:.5;
-}
-.achievement.unlocked{
- opacity:1;
- border-color:#8734d7;
-}
-.achievementIcon{
- font-size:28px;
- margin-bottom:7px;
-}
-.achievement strong{
- display:block;
- font-size:13px;
-}
-.achievement small{
- color:#97849f;
- line-height:1.3;
-}
-
-/* MILHAO */
-.millionTop{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:8px;
- margin-bottom:13px;
-}
-.questionNumber{
- color:#bf8ee0;
- font-size:13px;
-}
-.timer{
- width:52px;
- height:52px;
- border-radius:50%;
- border:3px solid #8735d4;
- display:flex;
- align-items:center;
- justify-content:center;
- font-weight:bold;
-}
-.prizeBox{
- padding:15px;
- border-radius:17px;
- text-align:center;
- background:linear-gradient(135deg,#251033,#11071a);
- border:1px solid #53236e;
- margin-bottom:12px;
-}
-.prizeBox small{
- color:#9d8aa8;
-}
-.prizeBox strong{
- display:block;
- font-size:24px;
- color:#e0a3ff;
- margin-top:4px;
-}
-.difficulty{
- display:inline-block;
- padding:5px 10px;
- border-radius:20px;
- background:#281139;
- color:#dca0ff;
- font-size:11px;
- margin-bottom:12px;
-}
-.questionCard{
- padding:20px 15px;
- text-align:center;
- border-radius:20px;
- background:#1b0b27;
- border:1px solid #3b1d4d;
- margin-bottom:12px;
-}
-.questionText{
- font-size:18px;
- line-height:1.45;
- font-weight:bold;
-}
-.answers{
- display:grid;
- gap:9px;
-}
-.answer{
- width:100%;
- padding:14px;
- border-radius:14px;
- text-align:left;
- background:#24102f;
- color:white;
- border:1px solid #3b2048;
- transition:.15s;
-}
-.answer:active{
- transform:scale(.99);
-}
-.answer.correct{
- background:#12633f;
- border-color:#31d78c;
-}
-.answer.wrong{
- background:#681b38;
- border-color:#ec4f7e;
-}
-.answer.disabled{
- opacity:.4;
- pointer-events:none;
-}
-.lifelines{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:8px;
- margin-top:12px;
-}
-.life{
- padding:11px 5px;
- border-radius:12px;
- background:#251032;
- color:#d8a6f2;
- border:1px solid #48205e;
-}
-.life.used{
- opacity:.35;
- text-decoration:line-through;
-}
-.millionMenu{
- display:grid;
- gap:10px;
-}
-.topicBtn{
- padding:15px;
- border-radius:15px;
- background:#21102d;
- color:white;
- text-align:left;
- border:1px solid #3b1b4d;
-}
-.topicBtn strong{
- display:block;
-}
-.topicBtn small{
- color:#98859f;
-}
-.resultBox{
- text-align:center;
- padding:25px 15px;
-}
-.resultPrize{
- font-size:34px;
- color:#d996ff;
- font-weight:bold;
- margin:13px 0;
-}
-
-/* LOCAL */
-.playerSetup{
- display:grid;
- gap:9px;
-}
-.playerSetup input{
- padding:13px;
- border-radius:12px;
- border:1px solid #382044;
- background:#12091a;
- color:white;
-}
-.localScore{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:7px;
-}
-.localPlayer{
- padding:9px;
- text-align:center;
- border-radius:12px;
- background:#190c23;
-}
-.localPlayer.active{
- border:1px solid #a13de1;
-}
-
-/* ONLINE */
-.roomCode{
- text-align:center;
- font-size:34px;
- letter-spacing:7px;
- font-weight:bold;
- color:#da9dff;
- padding:18px;
-}
-
-/* RACING */
-.race{
- position:relative;
- height:400px;
- border-radius:22px;
- overflow:hidden;
- background:#151515;
- border:2px solid #34203d;
-}
-.road{
- position:absolute;
- left:18%;
- width:64%;
- height:100%;
- background:#272727;
- border-left:6px dashed #777;
- border-right:6px dashed #777;
-}
-.roadLine{
- position:absolute;
- width:7px;
- height:45px;
- background:#ddd;
- left:50%;
- transform:translateX(-50%);
- animation:roadMove .7s linear infinite;
-}
-@keyframes roadMove{
- from{top:-60px}
- to{top:420px}
-}
-.car{
- position:absolute;
- bottom:25px;
- width:45px;
- height:75px;
- border-radius:12px 12px 8px 8px;
- background:linear-gradient(#ee4c64,#921d3d);
- left:calc(50% - 22px);
- z-index:3;
- box-shadow:0 0 15px rgba(255,70,100,.4);
-}
-.car:before,
-.car:after{
- content:"";
- position:absolute;
- width:7px;
- height:16px;
- background:#111;
- border-radius:5px;
- top:15px;
-}
-.car:before{left:-5px}
-.car:after{right:-5px}
-.enemy{
- position:absolute;
- width:43px;
- height:70px;
- border-radius:12px;
- background:#3c6bd8;
- top:-90px;
- z-index:2;
-}
-.raceControls{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:8px;
- margin-top:10px;
-}
-.raceControls button{
- padding:15px;
- border-radius:13px;
- background:#25102f;
- color:white;
-}
-
-/* SETTINGS */
-.settingRow{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
- padding:14px 0;
- border-bottom:1px solid #2a1735;
-}
-.settingRow:last-child{
- border-bottom:0;
-}
-.switch{
- width:50px;
- height:28px;
- border-radius:20px;
- background:#36223f;
- position:relative;
-}
-.switch span{
- position:absolute;
- width:22px;
- height:22px;
- border-radius:50%;
- background:#aaa;
- top:3px;
- left:3px;
- transition:.2s;
-}
-.switch.on{
- background:#7930b8;
-}
-.switch.on span{
- left:25px;
- background:white;
-}
-
-/* BOTTOM NAV */
-.bottomNav{
- position:fixed;
- bottom:0;
- left:0;
- right:0;
- z-index:100;
- height:68px;
- display:grid;
- grid-template-columns:repeat(5,1fr);
- background:rgba(12,5,18,.96);
- backdrop-filter:blur(15px);
- border-top:1px solid rgba(255,255,255,.07);
-}
-.navBtn{
- color:#887691;
- background:transparent;
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
- gap:3px;
- font-size:10px;
- position:relative;
-}
-.navBtn span{
- font-size:21px;
-}
-.navBtn.active{
- color:#d98fff;
-}
-.navDot{
- position:absolute;
- top:9px;
- margin-left:22px;
- width:7px;
- height:7px;
- background:#ff3e75;
- border-radius:50%;
-}
-
-/* MODAL */
-.modal{
- position:fixed;
- inset:0;
- z-index:200;
- display:none;
- align-items:flex-end;
- justify-content:center;
- background:rgba(0,0,0,.7);
- padding:10px;
-}
-.modal.show{
- display:flex;
-}
-.modalBox{
- width:min(600px,100%);
- max-height:90vh;
- overflow-y:auto;
- border-radius:25px 25px 15px 15px;
- padding:19px;
- background:#170a21;
- border:1px solid #48205b;
-}
-.modalTitle{
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin-bottom:15px;
-}
-.closeBtn{
- width:34px;
- height:34px;
- border-radius:10px;
- background:#291233;
- color:white;
-}
-
-/* TOAST */
-#toast{
- position:fixed;
- left:50%;
- bottom:85px;
- transform:translateX(-50%) translateY(20px);
- z-index:500;
- background:#271132;
- border:1px solid #73329a;
- padding:11px 15px;
- border-radius:12px;
- opacity:0;
- pointer-events:none;
- transition:.25s;
- font-size:13px;
- max-width:90%;
- text-align:center;
-}
-#toast.show{
- opacity:1;
- transform:translateX(-50%) translateY(0);
-}
-
-/* LIGHT THEME */
-body.light{
- background:#f5eff8;
- color:#201526;
-}
-body.light .topbar,
-body.light .bottomNav{
- background:rgba(255,255,255,.95);
- color:#201526;
-}
-body.light .card,
-body.light .gameCard,
-body.light .stat,
-body.light .rankItem,
-body.light .friendItem,
-body.light .notification,
-body.light .achievement,
-body.light .questionCard,
-body.light .answer,
-body.light .topicBtn,
-body.light .settingRow,
-body.light .modalBox{
- background:#fff;
- color:#201526;
-}
-body.light .answer,
-body.light .topicBtn{
- border-color:#ddd;
-}
-body.light .pageSub,
-body.light .gameCard p,
-body.light .friendMain small,
-body.light .rankInfo small{
- color:#74687b;
-}
-
-/* RESPONSIVE */
-@media(max-width:430px){
- .gameGrid{
-  grid-template-columns:1fr;
- }
- .achGrid{
-  grid-template-columns:1fr 1fr;
- }
- .questionText{
-  font-size:17px;
- }
- .statsGrid{
-  grid-template-columns:1fr 1fr;
- }
-}
-</style>
-</head>
-
-<body class="gradient">
-
-<!-- AUTH -->
-<section id="authScreen" class="screen">
- <div class="authBox">
-  <div class="logo">
-   <div class="logoIcon">🎮</div>
-   <h1>Minha Plataforma</h1>
-   <p>Jogos, desafios e competição.</p>
-  </div>
-
-  <div class="authTabs">
-   <button id="loginTab" class="active" onclick="trocarAuth('login')">Entrar</button>
-   <button id="signupTab" onclick="trocarAuth('signup')">Criar conta</button>
-  </div>
-
-  <div id="loginForm">
-   <div class="field">
-    <label>E-mail</label>
-    <input id="loginEmail" type="email" placeholder="seu@email.com">
-   </div>
-   <div class="field">
-    <label>Senha</label>
-    <input id="loginPassword" type="password" placeholder="Sua senha">
-   </div>
-   <button class="mainBtn" onclick="login()">ENTRAR</button>
-  </div>
-
-  <div id="signupForm" class="hidden">
-   <div class="field">
-    <label>Nome de usuário</label>
-    <input id="signupName" maxlength="20" placeholder="Seu nome">
-   </div>
-   <div class="field">
-    <label>E-mail</label>
-    <input id="signupEmail" type="email" placeholder="seu@email.com">
-   </div>
-   <div class="field">
-    <label>Senha</label>
-    <input id="signupPassword" type="password" placeholder="Mínimo 6 caracteres">
-   </div>
-   <button class="mainBtn" onclick="cadastro()">CRIAR CONTA</button>
-  </div>
-
-  <div id="authMessage" class="authMessage"></div>
- </div>
-</section>
-
-<!-- APP -->
-<section id="app" class="hidden">
-
- <header class="topbar">
-  <div class="brand">
-   <div class="brandMark">🎮</div>
-   <span>Minha Plataforma</span>
-  </div>
-  <div class="topActions">
-   <button class="iconBtn" onclick="abrirNotificacoes()">
-    🔔
-    <span id="notificationBadge" class="badge hidden">0</span>
-   </button>
-   <button class="iconBtn" onclick="abrirPerfil()">👤</button>
-  </div>
- </header>
-
- <main>
-
-  <!-- HOME -->
-  <section id="viewHome" class="view active">
-   <div class="homeHero">
-    <h2>Olá, <span id="homeName">jogador</span>! 👋</h2>
-    <p>Escolha um jogo, acumule XP, conquiste títulos e suba no ranking.</p>
-   </div>
-
-   <div class="card">
-    <div class="row">
-     <div>
-      <small style="color:#9e8ca9">Seu nível</small>
-      <h2 id="homeLevel">Nível 1</h2>
-     </div>
-     <div style="text-align:right">
-      <strong id="homeXP">0 XP</strong>
-      <div style="font-size:12px;color:#9e8ca9">⚡ experiência</div>
-     </div>
-    </div>
-    <div class="progress">
-     <div id="homeProgress" style="width:0%"></div>
-    </div>
-   </div>
-
-   <h3 class="sectionTitle">🎮 Jogos</h3>
-
-   <div class="gameGrid">
-    <div class="gameCard">
-     <div>
-      <div class="gameIcon">💰</div>
-      <h3>Desafio do Milhão</h3>
-      <p>Responda 15 perguntas, use suas ajudas e tente chegar ao prêmio máximo.</p>
-     </div>
-     <button class="playBtn" onclick="menuMilhao()">JOGAR</button>
-    </div>
-
-    <div class="gameCard">
-     <div>
-      <div class="gameIcon">🏎️</div>
-      <h3>Corrida do Milhão</h3>
-      <p>Corra, desvie dos adversários e tente conquistar a maior pontuação.</p>
-     </div>
-     <button class="playBtn" onclick="abrirCorrida()">JOGAR</button>
-    </div>
-   </div>
-
-   <h3 class="sectionTitle">🔥 Atalhos</h3>
-
-   <div class="gameGrid">
-    <div class="gameCard" style="min-height:140px">
-     <div>
-      <div class="gameIcon">📅</div>
-      <h3>Desafio diário</h3>
-      <p>Uma pergunta especial por dia.</p>
-     </div>
-     <button class="playBtn" onclick="desafioDiario()">ABRIR</button>
-    </div>
-
-    <div class="gameCard" style="min-height:140px">
-     <div>
-      <div class="gameIcon">🏆</div>
-      <h3>Ranking</h3>
-      <p>Veja sua posição e a dos outros jogadores.</p>
-     </div>
-     <button class="playBtn" onclick="abrirView('ranking')">VER RANKING</button>
-    </div>
-   </div>
-  </section>
-
-  <!-- RANKING -->
-  <section id="viewRanking" class="view">
-   <h1 class="pageTitle">🏆 Ranking</h1>
-   <p class="pageSub">Os jogadores da plataforma.</p>
-
-   <div class="card">
-    <div class="row">
-     <div>
-      <strong>Seu desempenho</strong>
-      <div id="myRankText" style="color:#9e8ca9;font-size:13px;margin-top:5px">Carregando...</div>
-     </div>
-     <button class="smallBtn" onclick="carregarRanking()">↻ Atualizar</button>
-    </div>
-   </div>
-
-   <div id="rankingList"></div>
-  </section>
-
-  <!-- SOCIAL -->
-  <section id="viewSocial" class="view">
-   <h1 class="pageTitle">👥 Social</h1>
-   <p class="pageSub">Encontre jogadores e converse com seus amigos.</p>
-
-   <div class="searchBox">
-    <input id="playerSearch" placeholder="Pesquisar jogador...">
-    <button onclick="buscarJogadores()">Buscar</button>
-   </div>
-
-   <div class="socialTabs">
-    <button class="active" onclick="socialTab('friends',this)">Amigos</button>
-    <button onclick="socialTab('requests',this)">Solicitações</button>
-    <button onclick="socialTab('search',this)">Busca</button>
-   </div>
-
-   <div id="socialFriends"></div>
-   <div id="socialRequests" class="hidden"></div>
-   <div id="socialSearch" class="hidden"></div>
-  </section>
-
-  <!-- PROFILE -->
-  <section id="viewProfile" class="view">
-   <h1 class="pageTitle">👤 Perfil</h1>
-   <p class="pageSub">Seu progresso na plataforma.</p>
-
-   <div class="card">
-    <div class="profileHead">
-     <div id="profileAvatar" class="avatar">👤</div>
-     <div class="profileInfo">
-      <h2 id="profileName">Jogador</h2>
-      <p id="profileEmail">email</p>
-      <span id="profileTitle" class="levelPill">Novato</span>
-     </div>
-    </div>
-
-    <div style="margin-top:15px">
-     <input id="photoInput" type="file" accept="image/*" class="hidden" onchange="trocarFoto(event)">
-     <button class="smallBtn" onclick="document.getElementById('photoInput').click()">📷 Alterar foto</button>
-     <button class="smallBtn" onclick="editarNome()">✏️ Alterar nome</button>
-    </div>
-   </div>
-
-   <div class="card">
-    <div class="cardTitle">⚡ Experiência</div>
-    <div class="row">
-     <strong id="profileLevel">Nível 1</strong>
-     <strong id="profileXP">0 XP</strong>
-    </div>
-    <div class="progress">
-     <div id="profileProgress" style="width:0%"></div>
-    </div>
-   </div>
-
-   <div class="card">
-    <div class="cardTitle">📊 Estatísticas</div>
-    <div class="statsGrid">
-     <div class="stat">
-      <small>Partidas</small>
-      <strong id="statGames">0</strong>
-     </div>
-     <div class="stat">
-      <small>Vitórias</small>
-      <strong id="statWins">0</strong>
-     </div>
-     <div class="stat">
-      <small>Acertos</small>
-      <strong id="statCorrect">0</strong>
-     </div>
-     <div class="stat">
-      <small>Erros</small>
-      <strong id="statWrong">0</strong>
-     </div>
-     <div class="stat">
-      <small>Maior prêmio</small>
-      <strong id="statPrize">R$ 0</strong>
-     </div>
-     <div class="stat">
-      <small>Moedas</small>
-      <strong id="statCoins">0 🪙</strong>
-     </div>
-    </div>
-   </div>
-
-   <div class="card">
-    <div class="cardTitle">🏅 Conquistas</div>
-    <div id="achievementGrid" class="achGrid"></div>
-   </div>
-
-   <div class="card">
-    <div class="cardTitle">🎖️ Títulos</div>
-    <div id="titlesList"></div>
-   </div>
-
-   <button class="mainBtn dangerBtn" onclick="logout()">SAIR DA CONTA</button>
-  </section>
-
-  <!-- NOTIFICATIONS -->
-  <section id="viewNotifications" class="view">
-   <h1 class="pageTitle">🔔 Notificações</h1>
-   <p class="pageSub">Solicitações, mensagens e novidades.</p>
-   <div id="notificationsList"></div>
-  </section>
-
-  <!-- SETTINGS -->
-  <section id="viewSettings" class="view">
-   <h1 class="pageTitle">⚙️ Configurações</h1>
-   <p class="pageSub">Personalize sua experiência.</p>
-
-   <div class="card">
-    <div class="settingRow">
-     <div>
-      <strong>🎵 Música</strong>
-      <div style="font-size:12px;color:#9e8ca9">Música de fundo dos jogos</div>
-     </div>
-     <button id="musicSwitch" class="switch on" onclick="alternarMusica()"><span></span></button>
-    </div>
-
-    <div class="settingRow">
-     <div>
-      <strong>🌙 Tema</strong>
-      <div style="font-size:12px;color:#9e8ca9">Alternar entre escuro e claro</div>
-     </div>
-     <button id="themeSwitch" class="switch" onclick="alternarTema()"><span></span></button>
-    </div>
-   </div>
-
-   <div class="card">
-    <div class="cardTitle">ℹ️ Sobre</div>
-    <p style="color:#9e8ca9;line-height:1.6;font-size:13px">
-     Minha Plataforma é uma central de jogos com perfil,
-     ranking, amigos, conquistas, XP e partidas.
-    </p>
-   </div>
-  </section>
-
-  <!-- CHAT -->
-  <section id="viewChat" class="view">
-   <div class="chatBox">
-    <div id="chatHeader" class="chatHeader">
-     <button class="closeBtn" onclick="abrirView('social')">‹</button>
-     <div id="chatFriendAvatar" class="avatar" style="width:42px;height:42px;border-radius:13px;font-size:17px">👤</div>
-     <div>
-      <strong id="chatFriendName">Amigo</strong>
-      <div id="chatFriendStatus" style="font-size:11px;color:#9e8ca9">offline</div>
-     </div>
-    </div>
-
-    <div id="messages" class="messages"></div>
-
-    <div class="chatInput">
-     <input id="messageInput" placeholder="Digite uma mensagem..." onkeydown="if(event.key==='Enter')enviarMensagem()">
-     <button onclick="enviarMensagem()">➤</button>
-    </div>
-   </div>
-  </section>
-
- </main>
-
- <nav class="bottomNav">
-  <button class="navBtn active" data-view="home" onclick="abrirView('home')">
-   <span>🏠</span>Início
-  </button>
-  <button class="navBtn" data-view="ranking" onclick="abrirView('ranking')">
-   <span>🏆</span>Ranking
-  </button>
-  <button class="navBtn" data-view="social" onclick="abrirView('social')">
-   <span>👥</span>Amigos
-  </button>
-  <button class="navBtn" data-view="profile" onclick="abrirView('profile')">
-   <span>👤</span>Perfil
-  </button>
-  <button class="navBtn" data-view="settings" onclick="abrirView('settings')">
-   <span>⚙️</span>Config.
-  </button>
- </nav>
-</section>
-
-<!-- MODAL -->
-<div id="modal" class="modal" onclick="if(event.target===this)fecharModal()">
- <div id="modalBox" class="modalBox"></div>
-</div>
-
-<div id="toast"></div>
-
 <script>
-/* ============================================================
-   FIREBASE
-============================================================ */
 
-const firebaseConfig={
- apiKey:"AIzaSyB-0j37BKkr0jt3B6NCl6-fNe3bqeQia08",
- authDomain:"desafio-do-milhao.firebaseapp.com",
- projectId:"desafio-do-milhao",
- storageBucket:"desafio-do-milhao.firebasestorage.app",
- messagingSenderId:"303629660012",
- appId:"1:303629660012:web:61bf5af93d9824e8100d49",
- measurementId:"G-0TZ68JLKJR"
+/* =========================================
+   FIREBASE
+========================================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB-0j37BKkr0jt3B6NCl6-fNe3bqeQia08",
+  authDomain: "desafio-do-milhao.firebaseapp.com",
+  projectId: "desafio-do-milhao",
+  storageBucket: "desafio-do-milhao.firebasestorage.app",
+  messagingSenderId: "303629660012",
+  appId: "1:303629660012:web:61bf5af93d9824e8100d49",
+  measurementId: "G-0TZ68JLKJR"
 };
 
 firebase.initializeApp(firebaseConfig);
 
-const auth=firebase.auth();
-const db=firebase.firestore();
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-let usuario=null;
-let perfil=null;
-let unsubscribeFriends=null;
-let unsubscribeRequests=null;
-let unsubscribeNotifications=null;
-let unsubscribeMessages=null;
-let presenceTimer=null;
 
-const $=id=>document.getElementById(id);
+/* =========================================
+   ESTADO
+========================================= */
 
-function esc(v){
- return String(v??"")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-}
+let usuario = null;
+let perfil = null;
 
-function moeda(v){
- return Number(v||0).toLocaleString("pt-BR",{
-  style:"currency",
-  currency:"BRL",
-  maximumFractionDigits:0
- });
-}
+let amigoAtual = null;
+let chatUnsubscribe = null;
 
-function agora(){
- return firebase.firestore.FieldValue.serverTimestamp();
-}
+let jogo = null;
+let timerInterval = null;
 
-function toast(text){
- $("toast").textContent=text;
- $("toast").classList.add("show");
- clearTimeout(window.toastTimer);
- window.toastTimer=setTimeout(()=>$("toast").classList.remove("show"),2600);
-}
+let musicaLigada = true;
+let audioContext = null;
+let musicInterval = null;
 
-function abrirModal(html){
- $("modalBox").innerHTML=html;
- $("modal").classList.add("show");
-}
+let corrida = null;
 
-function fecharModal(){
- $("modal").classList.remove("show");
-}
 
-function erroAuth(msg){
- $("authMessage").textContent=msg;
-}
+/* =========================================
+   PERFIL PADRÃO
+========================================= */
 
-/* ============================================================
-   AUTH
-============================================================ */
+function perfilPadrao(nome,email){
 
-function trocarAuth(tipo){
- $("loginForm").classList.toggle("hidden",tipo!=="login");
- $("signupForm").classList.toggle("hidden",tipo!=="signup");
- $("loginTab").classList.toggle("active",tipo==="login");
- $("signupTab").classList.toggle("active",tipo==="signup");
- $("authMessage").textContent="";
-}
+  return {
 
-async function login(){
- const email=$("loginEmail").value.trim();
- const senha=$("loginPassword").value;
+    nome: nome || "Jogador",
 
- if(!email||!senha){
-  erroAuth("Preencha e-mail e senha.");
-  return;
- }
+    email: email || "",
 
- try{
-  await auth.signInWithEmailAndPassword(email,senha);
- }catch(e){
-  erroAuth(traduzErro(e.code));
- }
-}
+    avatar: "",
 
-async function cadastro(){
- const nome=$("signupName").value.trim();
- const email=$("signupEmail").value.trim();
- const senha=$("signupPassword").value;
+    xp: 0,
 
- if(nome.length<2){
-  erroAuth("Digite um nome válido.");
-  return;
- }
+    moedas: 0,
 
- if(!email||!senha){
-  erroAuth("Preencha todos os campos.");
-  return;
- }
+    nivel: 1,
 
- if(senha.length<6){
-  erroAuth("A senha precisa ter pelo menos 6 caracteres.");
-  return;
- }
+    titulo: "Novato",
 
- try{
-  const cred=await auth.createUserWithEmailAndPassword(email,senha);
+    recorde: 0,
 
-  const novo={
-   uid:cred.user.uid,
-   nome:nome,
-   email:email,
-   foto:"",
-   xp:0,
-   nivel:1,
-   moedas:0,
-   titulo:"Novato",
-   partidas:0,
-   vitorias:0,
-   acertos:0,
-   erros:0,
-   maiorPremio:0,
-   conquistas:[],
-   temas:[],
-   criadoEm:agora(),
-   atualizadoEm:agora()
+    partidas: 0,
+
+    acertos: 0,
+
+    erros: 0,
+
+    melhorSequencia: 0,
+
+    conquistas: [],
+
+    criacao: firebase.firestore.FieldValue.serverTimestamp(),
+
+    atualizado: firebase.firestore.FieldValue.serverTimestamp()
+
   };
 
-  await db.collection("Usuarios").doc(cred.user.uid).set(novo);
-  await publicarRanking(novo);
-  await salvarPresenca(novo);
-
-  toast("Conta criada com sucesso!");
- }catch(e){
-  erroAuth(traduzErro(e.code));
- }
 }
 
-function traduzErro(code){
- const mapa={
-  "auth/invalid-email":"E-mail inválido.",
-  "auth/user-not-found":"Usuário não encontrado.",
-  "auth/wrong-password":"Senha incorreta.",
-  "auth/invalid-credential":"E-mail ou senha incorretos.",
-  "auth/email-already-in-use":"Esse e-mail já está cadastrado.",
-  "auth/weak-password":"A senha é muito fraca.",
-  "auth/network-request-failed":"Problema de conexão.",
-  "auth/too-many-requests":"Muitas tentativas. Aguarde um pouco."
- };
- return mapa[code]||"Não foi possível realizar a operação.";
+
+/* =========================================
+   AUTH
+========================================= */
+
+function mostrarCadastro(){
+
+  document.getElementById("login-form").classList.add("hidden");
+
+  document.getElementById("cadastro-form").classList.remove("hidden");
+
 }
 
-async function logout(){
- if(usuario){
+function mostrarLogin(){
+
+  document.getElementById("cadastro-form").classList.add("hidden");
+
+  document.getElementById("login-form").classList.remove("hidden");
+
+}
+
+
+async function cadastrar(){
+
+  const nome =
+    document.getElementById("cadastro-nome").value.trim();
+
+  const email =
+    document.getElementById("cadastro-email").value.trim();
+
+  const senha =
+    document.getElementById("cadastro-password").value;
+
+  if(!nome || !email || !senha){
+
+    alert("Preencha todos os campos.");
+
+    return;
+  }
+
+  if(senha.length < 6){
+
+    alert("A senha precisa ter pelo menos 6 caracteres.");
+
+    return;
+  }
+
   try{
-   await salvarPresenca({...perfil,online:false});
-  }catch(e){}
- }
 
- if(presenceTimer)clearInterval(presenceTimer);
+    const cred =
+      await auth.createUserWithEmailAndPassword(email,senha);
 
- if(unsubscribeFriends)unsubscribeFriends();
- if(unsubscribeRequests)unsubscribeRequests();
- if(unsubscribeNotifications)unsubscribeNotifications();
- if(unsubscribeMessages)unsubscribeMessages();
+    const novoPerfil =
+      perfilPadrao(nome,email);
 
- await auth.signOut();
+    await db
+      .collection("Usuarios")
+      .doc(cred.user.uid)
+      .set(novoPerfil);
+
+    await publicarRanking(novoPerfil);
+
+    alert("Conta criada com sucesso!");
+
+  }catch(e){
+
+    alert(traduzirErro(e));
+
+  }
+
 }
+
+
+async function entrar(){
+
+  const email =
+    document.getElementById("login-email").value.trim();
+
+  const senha =
+    document.getElementById("login-password").value;
+
+  if(!email || !senha){
+
+    alert("Digite seu e-mail e sua senha.");
+
+    return;
+  }
+
+  try{
+
+    await auth.signInWithEmailAndPassword(email,senha);
+
+  }catch(e){
+
+    alert(traduzirErro(e));
+
+  }
+
+}
+
+
+async function recuperarSenha(){
+
+  const email =
+    document.getElementById("login-email").value.trim();
+
+  if(!email){
+
+    alert("Digite seu e-mail primeiro.");
+
+    return;
+  }
+
+  try{
+
+    await auth.sendPasswordResetEmail(email);
+
+    alert("Enviamos as instruções para seu e-mail.");
+
+  }catch(e){
+
+    alert(traduzirErro(e));
+
+  }
+
+}
+
+
+function traduzirErro(e){
+
+  if(e.code==="auth/email-already-in-use")
+    return "Esse e-mail já está cadastrado.";
+
+  if(e.code==="auth/invalid-email")
+    return "E-mail inválido.";
+
+  if(e.code==="auth/wrong-password")
+    return "Senha incorreta.";
+
+  if(e.code==="auth/user-not-found")
+    return "Usuário não encontrado.";
+
+  if(e.code==="auth/invalid-credential")
+    return "E-mail ou senha incorretos.";
+
+  return e.message || "Ocorreu um erro.";
+
+}
+
+
+async function sair(){
+
+  if(usuario){
+
+    await salvarPresenca(false);
+
+  }
+
+  await auth.signOut();
+
+}
+
+
+/* =========================================
+   AUTH STATE
+========================================= */
 
 auth.onAuthStateChanged(async user=>{
- usuario=user;
 
- if(!user){
-  $("authScreen").classList.remove("hidden");
-  $("app").classList.add("hidden");
-  return;
- }
+  usuario = user;
 
- $("authScreen").classList.add("hidden");
- $("app").classList.remove("hidden");
+  if(!user){
 
- await carregarPerfil();
- await publicarRanking(perfil);
- await salvarPresenca(perfil);
+    document.getElementById("auth").classList.remove("hidden");
 
- iniciarPresenca();
- iniciarListeners();
- atualizarInterface();
+    document.getElementById("app").classList.add("hidden");
 
- abrirView("home");
+    return;
+
+  }
+
+  document.getElementById("auth").classList.add("hidden");
+
+  document.getElementById("app").classList.remove("hidden");
+
+  await carregarPerfil();
+
+  await garantirRanking();
+
+  await salvarPresenca(true);
+
+  atualizarInterface();
+
+  carregarRanking();
+
+  carregarSocial();
+
+  iniciarAudio();
+
 });
 
-/* ============================================================
-   PROFILE / PUBLIC DATA
-============================================================ */
+
+/* =========================================
+   PERFIL
+========================================= */
 
 async function carregarPerfil(){
- const ref=db.collection("Usuarios").doc(usuario.uid);
- const snap=await ref.get();
 
- if(snap.exists){
-  perfil=snap.data();
- }else{
-  perfil={
-   uid:usuario.uid,
-   nome:usuario.email.split("@")[0],
-   email:usuario.email,
-   foto:"",
-   xp:0,
-   nivel:1,
-   moedas:0,
-   titulo:"Novato",
-   partidas:0,
-   vitorias:0,
-   acertos:0,
-   erros:0,
-   maiorPremio:0,
-   conquistas:[]
-  };
-  await ref.set(perfil,{merge:true});
- }
+  const ref =
+    db.collection("Usuarios").doc(usuario.uid);
 
- perfil.uid=usuario.uid;
- perfil.email=perfil.email||usuario.email;
- perfil.nome=perfil.nome||"Jogador";
- perfil.xp=Number(perfil.xp||0);
- perfil.nivel=Number(perfil.nivel||1);
- perfil.moedas=Number(perfil.moedas||0);
- perfil.partidas=Number(perfil.partidas||0);
- perfil.vitorias=Number(perfil.vitorias||0);
- perfil.acertos=Number(perfil.acertos||0);
- perfil.erros=Number(perfil.erros||0);
- perfil.maiorPremio=Number(perfil.maiorPremio||0);
- perfil.conquistas=perfil.conquistas||[];
+  const snap = await ref.get();
+
+  if(snap.exists){
+
+    perfil = snap.data();
+
+  }else{
+
+    perfil =
+      perfilPadrao(
+        usuario.displayName || "Jogador",
+        usuario.email
+      );
+
+    await ref.set(perfil);
+
+  }
+
+  perfil.xp = Number(perfil.xp || 0);
+  perfil.moedas = Number(perfil.moedas || 0);
+  perfil.nivel = Number(perfil.nivel || 1);
+  perfil.recorde = Number(perfil.recorde || 0);
+  perfil.partidas = Number(perfil.partidas || 0);
+  perfil.acertos = Number(perfil.acertos || 0);
+  perfil.erros = Number(perfil.erros || 0);
+  perfil.conquistas = perfil.conquistas || [];
+
 }
+
+
+async function garantirRanking(){
+
+  const ref =
+    db.collection("Partidas")
+      .doc("ranking_"+usuario.uid);
+
+  const snap = await ref.get();
+
+  if(!snap.exists){
+
+    await publicarRanking(perfil);
+
+  }else{
+
+    await publicarRanking(perfil);
+
+  }
+
+}
+
 
 async function publicarRanking(dados){
- if(!dados||!dados.uid)return;
 
- const publico={
-  uid:dados.uid,
-  nome:dados.nome||"Jogador",
-  foto:dados.foto||"",
-  xp:Number(dados.xp||0),
-  nivel:Number(dados.nivel||1),
-  moedas:Number(dados.moedas||0),
-  titulo:dados.titulo||"Novato",
-  partidas:Number(dados.partidas||0),
-  vitorias:Number(dados.vitorias||0),
-  acertos:Number(dados.acertos||0),
-  maiorPremio:Number(dados.maiorPremio||0),
-  tipo:"ranking",
-  atualizadoEm:agora()
- };
+  if(!usuario) return;
 
- await db.collection("Partidas").doc("ranking_"+dados.uid).set(publico,{merge:true});
+  await db
+    .collection("Partidas")
+    .doc("ranking_"+usuario.uid)
+    .set({
+
+      tipo:"ranking",
+
+      uid:usuario.uid,
+
+      nome:dados.nome || "Jogador",
+
+      avatar:dados.avatar || "",
+
+      xp:Number(dados.xp || 0),
+
+      moedas:Number(dados.moedas || 0),
+
+      nivel:Number(dados.nivel || 1),
+
+      titulo:dados.titulo || "Novato",
+
+      recorde:Number(dados.recorde || 0),
+
+      partidas:Number(dados.partidas || 0),
+
+      acertos:Number(dados.acertos || 0),
+
+      atualizadoEm:firebase.firestore.FieldValue.serverTimestamp()
+
+    });
+
 }
 
-async function salvarPresenca(dados){
- if(!dados||!dados.uid)return;
 
- await db.collection("Partidas").doc("presenca_"+dados.uid).set({
-  uid:dados.uid,
-  nome:dados.nome||"Jogador",
-  online:dados.online!==false,
-  ultimaAtividade:agora(),
-  tipo:"presenca"
- },{merge:true});
-}
-
-function iniciarPresenca(){
- if(presenceTimer)clearInterval(presenceTimer);
-
- salvarPresenca(perfil);
-
- presenceTimer=setInterval(()=>{
-  if(usuario&&perfil)salvarPresenca(perfil);
- },60000);
-
- document.addEventListener("visibilitychange",()=>{
-  if(!usuario||!perfil)return;
-
-  if(document.visibilityState==="visible"){
-   salvarPresenca(perfil);
-  }
- });
-}
-
-/* ============================================================
-   NAVIGATION
-============================================================ */
-
-function abrirView(nome){
- document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-
- const target=$("view"+nome.charAt(0).toUpperCase()+nome.slice(1));
-
- if(target)target.classList.add("active");
-
- document.querySelectorAll(".navBtn").forEach(b=>{
-  b.classList.toggle("active",b.dataset.view===nome);
- });
-
- if(nome==="home")atualizarInterface();
- if(nome==="ranking")carregarRanking();
- if(nome==="social")carregarListaAmigos();
- if(nome==="profile")renderPerfil();
- if(nome==="notifications")carregarNotificacoes();
-}
-
-/* ============================================================
+/* =========================================
    INTERFACE
-============================================================ */
+========================================= */
 
 function atualizarInterface(){
- if(!perfil)return;
 
- $("homeName").textContent=perfil.nome;
- $("homeLevel").textContent="Nível "+perfil.nivel;
- $("homeXP").textContent=perfil.xp+" XP";
+  if(!perfil) return;
 
- const xpBase=(perfil.nivel-1)*500;
- const xpNext=perfil.nivel*500;
- const pct=Math.max(0,Math.min(100,((perfil.xp-xpBase)/(xpNext-xpBase))*100));
+  const avatar =
+    perfil.avatar ||
+    "https://ui-avatars.com/api/?name="+
+    encodeURIComponent(perfil.nome)+
+    "&background=8b5cf6&color=fff";
 
- $("homeProgress").style.width=pct+"%";
+  document.getElementById("top-avatar").src = avatar;
 
- renderPerfil();
+  document.getElementById("profile-avatar").src = avatar;
+
+  document.getElementById("top-name").textContent =
+    perfil.nome;
+
+  document.getElementById("home-name").textContent =
+    perfil.nome;
+
+  document.getElementById("top-level").textContent =
+    "Nível "+perfil.nivel;
+
+  document.getElementById("home-xp").textContent =
+    perfil.xp;
+
+  document.getElementById("home-coins").textContent =
+    perfil.moedas;
+
+  document.getElementById("home-record").textContent =
+    dinheiro(perfil.recorde);
+
+  document.getElementById("home-level").textContent =
+    perfil.nivel;
+
+  document.getElementById("profile-name").textContent =
+    perfil.nome;
+
+  document.getElementById("profile-title").textContent =
+    perfil.titulo;
+
+  document.getElementById("profile-level").textContent =
+    perfil.nivel;
+
+  document.getElementById("profile-xp").textContent =
+    perfil.xp;
+
+  document.getElementById("stat-games").textContent =
+    perfil.partidas;
+
+  document.getElementById("stat-correct").textContent =
+    perfil.acertos;
+
+  document.getElementById("stat-wrong").textContent =
+    perfil.erros;
+
+  document.getElementById("stat-best").textContent =
+    dinheiro(perfil.recorde);
+
+  const xpAtual =
+    perfil.xp % 1000;
+
+  document.getElementById("profile-level-bar").style.width =
+    (xpAtual/10)+"%";
+
+  carregarConquistas();
+
 }
 
-function renderPerfil(){
- if(!perfil)return;
 
- $("profileName").textContent=perfil.nome;
- $("profileEmail").textContent=perfil.email;
- $("profileTitle").textContent=perfil.titulo||"Novato";
- $("profileLevel").textContent="Nível "+perfil.nivel;
- $("profileXP").textContent=perfil.xp+" XP";
- $("statGames").textContent=perfil.partidas;
- $("statWins").textContent=perfil.vitorias;
- $("statCorrect").textContent=perfil.acertos;
- $("statWrong").textContent=perfil.erros;
- $("statPrize").textContent=moeda(perfil.maiorPremio);
- $("statCoins").textContent=perfil.moedas+" 🪙";
+function dinheiro(valor){
 
- const xpBase=(perfil.nivel-1)*500;
- const xpNext=perfil.nivel*500;
- const pct=Math.max(0,Math.min(100,((perfil.xp-xpBase)/(xpNext-xpBase))*100));
+  return "R$ "+
+    Number(valor || 0).toLocaleString("pt-BR");
 
- $("profileProgress").style.width=pct+"%";
-
- renderAvatar($("profileAvatar"),perfil);
-
- renderConquistas();
- renderTitulos();
 }
 
-function renderAvatar(element,dados){
- if(!element)return;
 
- if(dados.foto){
-  element.innerHTML='<img src="'+esc(dados.foto)+'" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">';
- }else{
-  element.textContent=(dados.nome||"J").charAt(0).toUpperCase();
- }
+/* =========================================
+   NÍVEL / XP
+========================================= */
+
+async function ganharXP(valor){
+
+  if(valor <= 0) return;
+
+  perfil.xp += valor;
+
+  const novoNivel =
+    Math.floor(perfil.xp / 1000)+1;
+
+  if(novoNivel > perfil.nivel){
+
+    perfil.nivel = novoNivel;
+
+    perfil.titulo =
+      calcularTitulo(perfil.nivel);
+
+    alert("🎉 Você subiu para o nível "+novoNivel+"!");
+
+  }
+
+  await salvarPerfil();
+
 }
 
-async function editarNome(){
- const nome=prompt("Digite seu novo nome:",perfil.nome);
 
- if(!nome||nome.trim().length<2)return;
+function calcularTitulo(nivel){
 
- perfil.nome=nome.trim().slice(0,20);
+  if(nivel >= 50) return "Lenda";
 
- await db.collection("Usuarios").doc(usuario.uid).update({
-  nome:perfil.nome,
-  atualizadoEm:agora()
- });
+  if(nivel >= 30) return "Mestre";
 
- await publicarRanking(perfil);
- await salvarPresenca(perfil);
+  if(nivel >= 20) return "Especialista";
 
- atualizarInterface();
- toast("Nome alterado!");
+  if(nivel >= 10) return "Veterano";
+
+  if(nivel >= 5) return "Competidor";
+
+  return "Novato";
+
 }
 
-async function trocarFoto(event){
- const file=event.target.files[0];
- if(!file)return;
 
- if(!file.type.startsWith("image/")){
-  toast("Escolha uma imagem.");
-  return;
- }
+async function ganharMoedas(valor){
 
- const reader=new FileReader();
+  if(valor <= 0) return;
 
- reader.onload=e=>{
-  const img=new Image();
+  perfil.moedas += valor;
 
-  img.onload=async()=>{
-   const canvas=document.createElement("canvas");
-   const tamanho=256;
+  await salvarPerfil();
 
-   canvas.width=tamanho;
-   canvas.height=tamanho;
-
-   const ctx=canvas.getContext("2d");
-
-   const lado=Math.min(img.width,img.height);
-   const sx=(img.width-lado)/2;
-   const sy=(img.height-lado)/2;
-
-   ctx.drawImage(img,sx,sy,lado,lado,0,0,tamanho,tamanho);
-
-   const foto=canvas.toDataURL("image/jpeg",.72);
-
-   perfil.foto=foto;
-
-   await db.collection("Usuarios").doc(usuario.uid).update({
-    foto:foto,
-    atualizadoEm:agora()
-   });
-
-   await publicarRanking(perfil);
-
-   renderPerfil();
-   toast("Foto atualizada!");
-  };
-
-  img.src=e.target.result;
- };
-
- reader.readAsDataURL(file);
 }
 
-/* ============================================================
-   XP / LEVEL / ACHIEVEMENTS
-============================================================ */
 
-const CONQUISTAS=[
- {id:"primeira",icon:"🎮",nome:"Primeira partida",desc:"Jogue sua primeira partida."},
- {id:"dez",icon:"🔥",nome:"Persistente",desc:"Jogue 10 partidas."},
- {id:"cem",icon:"💯",nome:"Centenário",desc:"Acumule 100 acertos."},
- {id:"milhao",icon:"💰",nome:"Milionário",desc:"Alcance R$ 1.000.000."},
- {id:"nivel5",icon:"⚡",nome:"Evoluindo",desc:"Chegue ao nível 5."},
- {id:"nivel10",icon:"👑",nome:"Elite",desc:"Chegue ao nível 10."},
- {id:"vencedor",icon:"🏆",nome:"Vencedor",desc:"Vença 5 partidas."},
- {id:"amigos",icon:"👥",nome:"Social",desc:"Tenha um amigo."},
- {id:"diario",icon:"📅",nome:"Comprometido",desc:"Complete um desafio diário."},
- {id:"recorde",icon:"🚀",nome:"Novo recorde",desc:"Bata seu maior prêmio."}
+async function salvarPerfil(){
+
+  perfil.atualizado =
+    firebase.firestore.FieldValue.serverTimestamp();
+
+  await db
+    .collection("Usuarios")
+    .doc(usuario.uid)
+    .set(perfil,{merge:true});
+
+  await publicarRanking(perfil);
+
+  atualizarInterface();
+
+}
+
+
+/* =========================================
+   CONQUISTAS
+========================================= */
+
+const conquistas = [
+
+  {
+    id:"primeira",
+    icon:"🎯",
+    nome:"Primeiro passo",
+    texto:"Complete sua primeira partida."
+  },
+
+  {
+    id:"dez_acertos",
+    icon:"🧠",
+    nome:"Cérebro afiado",
+    texto:"Faça 10 acertos."
+  },
+
+  {
+    id:"milhao",
+    icon:"💰",
+    nome:"Milionário",
+    texto:"Chegue ao R$ 1.000.000."
+  },
+
+  {
+    id:"nivel10",
+    icon:"🔥",
+    nome:"Veterano",
+    texto:"Chegue ao nível 10."
+  },
+
+  {
+    id:"cinco_jogos",
+    icon:"🎮",
+    nome:"Viciado em jogo",
+    texto:"Jogue 5 partidas."
+  },
+
+  {
+    id:"amigos",
+    icon:"👥",
+    nome:"Social",
+    texto:"Tenha um amigo."
+  }
+
 ];
 
-const TITULOS=[
- {nivel:1,nome:"Novato"},
- {nivel:3,nome:"Aspirante"},
- {nivel:5,nome:"Competidor"},
- {nivel:8,nome:"Veterano"},
- {nivel:10,nome:"Especialista"},
- {nivel:15,nome:"Mestre"},
- {nivel:20,nome:"Lenda"},
- {nivel:30,nome:"Imortal"}
-];
 
-function calcularNivel(xp){
- return Math.max(1,Math.floor(Number(xp||0)/500)+1);
+function temConquista(id){
+
+  return perfil.conquistas.includes(id);
+
 }
 
-function tituloPorNivel(nivel){
- let titulo="Novato";
 
- TITULOS.forEach(t=>{
-  if(nivel>=t.nivel)titulo=t.nome;
- });
+async function desbloquear(id){
 
- return titulo;
+  if(temConquista(id)) return;
+
+  perfil.conquistas.push(id);
+
+  await ganharXP(100);
+
+  alert("🏅 Nova conquista desbloqueada!");
+
 }
 
-async function adicionarXP(valor){
- if(!perfil)return;
-
- perfil.xp+=Number(valor||0);
-
- const novoNivel=calcularNivel(perfil.xp);
- const subiu=novoNivel>perfil.nivel;
-
- perfil.nivel=novoNivel;
- perfil.titulo=tituloPorNivel(novoNivel);
-
- await db.collection("Usuarios").doc(usuario.uid).update({
-  xp:perfil.xp,
-  nivel:perfil.nivel,
-  titulo:perfil.titulo,
-  atualizadoEm:agora()
- });
-
- await publicarRanking(perfil);
-
- if(subiu){
-  toast("🎉 Você chegou ao nível "+perfil.nivel+"!");
-  tocarSom("level");
- }
-
- atualizarInterface();
- await verificarConquistas();
-}
-
-async function adicionarMoedas(valor){
- perfil.moedas+=Number(valor||0);
-
- await db.collection("Usuarios").doc(usuario.uid).update({
-  moedas:perfil.moedas
- });
-
- atualizarInterface();
-}
 
 async function verificarConquistas(){
- const desbloqueadas=[...(perfil.conquistas||[])];
 
- function add(id){
-  if(!desbloqueadas.includes(id)){
-   desbloqueadas.push(id);
-   const c=CONQUISTAS.find(x=>x.id===id);
-   if(c)toast("🏅 Conquista: "+c.nome);
-  }
- }
+  if(perfil.partidas >= 1)
+    await desbloquear("primeira");
 
- if(perfil.partidas>=1)add("primeira");
- if(perfil.partidas>=10)add("dez");
- if(perfil.acertos>=100)add("cem");
- if(perfil.maiorPremio>=1000000)add("milhao");
- if(perfil.nivel>=5)add("nivel5");
- if(perfil.nivel>=10)add("nivel10");
- if(perfil.vitorias>=5)add("vencedor");
+  if(perfil.acertos >= 10)
+    await desbloquear("dez_acertos");
 
- const amigos=await obterAmigos();
- if(amigos.length>0)add("amigos");
+  if(perfil.recorde >= 1000000)
+    await desbloquear("milhao");
 
- if(perfil.maiorPremio>0)add("recorde");
+  if(perfil.nivel >= 10)
+    await desbloquear("nivel10");
 
- if(desbloqueadas.length!==(perfil.conquistas||[]).length){
-  perfil.conquistas=desbloqueadas;
+  if(perfil.partidas >= 5)
+    await desbloquear("cinco_jogos");
 
-  await db.collection("Usuarios").doc(usuario.uid).update({
-   conquistas:desbloqueadas
+}
+
+
+function carregarConquistas(){
+
+  const area =
+    document.getElementById("achievements");
+
+  area.innerHTML = "";
+
+  conquistas.forEach(c=>{
+
+    const liberada =
+      temConquista(c.id);
+
+    area.innerHTML += `
+
+      <div class="achievement ${liberada?"":"locked"}">
+
+        <div class="achievement-icon">
+          ${c.icon}
+        </div>
+
+        <strong>
+          ${c.nome}
+        </strong>
+
+        <p class="muted">
+          ${c.texto}
+        </p>
+
+        <small>
+          ${liberada?"✅ Desbloqueada":"🔒 Bloqueada"}
+        </small>
+
+      </div>
+
+    `;
+
   });
- }
 
- renderConquistas();
 }
 
-function renderConquistas(){
- if(!$("achievementGrid"))return;
 
- $("achievementGrid").innerHTML=CONQUISTAS.map(c=>{
-  const ok=(perfil.conquistas||[]).includes(c.id);
+/* =========================================
+   NAVEGAÇÃO
+========================================= */
 
-  return `
-   <div class="achievement ${ok?"unlocked":""}">
-    <div class="achievementIcon">${c.icon}</div>
-    <strong>${c.nome}</strong>
-    <small>${c.desc}</small>
-   </div>
-  `;
- }).join("");
+function mostrarPagina(id){
+
+  document
+    .querySelectorAll("#app > main")
+    .forEach(p=>p.classList.add("hidden"));
+
+  document
+    .getElementById(id)
+    .classList.remove("hidden");
+
+  document
+    .querySelectorAll(".bottom-nav button")
+    .forEach(b=>b.classList.remove("active"));
+
+  if(id==="home-page")
+    document.getElementById("nav-home").classList.add("active");
+
+  if(id==="ranking-page")
+    document.getElementById("nav-ranking").classList.add("active");
+
+  if(id==="friends-page")
+    document.getElementById("nav-friends").classList.add("active");
+
+  if(id==="profile-page")
+    document.getElementById("nav-profile").classList.add("active");
+
 }
 
-function renderTitulos(){
- if(!$("titlesList"))return;
 
- $("titlesList").innerHTML=TITULOS.map(t=>{
-  const ok=perfil.nivel>=t.nivel;
+function voltarHome(){
 
-  return `
-   <div class="row" style="padding:9px 0;opacity:${ok?1:.4}">
-    <span>${ok?"🏅":"🔒"} ${t.nome}</span>
-    <small>Nível ${t.nivel}</small>
-   </div>
-  `;
- }).join("");
+  pararTimer();
+
+  mostrarPagina("home-page");
+
 }
 
-/* ============================================================
-   MUSIC
-============================================================ */
 
-let audioCtx=null;
-let musicOn=true;
-let musicTimer=null;
-let musicStep=0;
+function abrirPerfil(){
 
-const musicTracks={
- menu:{
-  notes:[220,277,330,277,247,330,392,330],
-  tempo:420
- },
- game:{
-  notes:[196,247,294,247,220,294,330,294],
-  tempo:330
- },
- race:{
-  notes:[147,185,220,185,165,220,247,220],
-  tempo:190
- }
-};
+  atualizarInterface();
 
-let currentTrack="menu";
+  mostrarPagina("profile-page");
 
-function iniciarAudio(){
- if(audioCtx){
-  if(audioCtx.state==="suspended")audioCtx.resume();
-  return;
- }
-
- const Ctx=window.AudioContext||window.webkitAudioContext;
-
- if(!Ctx)return;
-
- audioCtx=new Ctx();
-
- if(musicOn)tocarMusica();
 }
 
-function tocarNota(freq,dur=.12,volume=.035){
- if(!audioCtx||!musicOn)return;
 
- const osc=audioCtx.createOscillator();
- const gain=audioCtx.createGain();
+/* =========================================
+   DESAFIO DO MILHÃO
+========================================= */
 
- osc.type="triangle";
- osc.frequency.value=freq;
+const premios = [
 
- gain.gain.setValueAtTime(0,audioCtx.currentTime);
- gain.gain.linearRampToValueAtTime(volume,audioCtx.currentTime+.015);
- gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);
-
- osc.connect(gain);
- gain.connect(audioCtx.destination);
-
- osc.start();
- osc.stop(audioCtx.currentTime+dur+.02);
-}
-
-function tocarMusica(){
- if(!audioCtx||!musicOn)return;
-
- clearInterval(musicTimer);
-
- const track=musicTracks[currentTrack];
-
- musicStep=0;
-
- musicTimer=setInterval(()=>{
-  if(!musicOn)return;
-
-  tocarNota(track.notes[musicStep%track.notes.length],.18,.025);
-
-  if(musicStep%4===0){
-   tocarNota(track.notes[(musicStep+2)%track.notes.length]/2,.25,.018);
-  }
-
-  musicStep++;
- },track.tempo);
-}
-
-function trocarMusicaFaixa(nome){
- currentTrack=nome;
- if(audioCtx&&musicOn)tocarMusica();
-}
-
-function alternarMusica(){
- musicOn=!musicOn;
-
- $("musicSwitch").classList.toggle("on",musicOn);
-
- if(musicOn){
-  iniciarAudio();
-  tocarMusica();
- }else{
-  clearInterval(musicTimer);
- }
-
- localStorage.setItem("musicOn",musicOn?"1":"0");
-}
-
-function tocarSom(tipo){
- if(!audioCtx||!musicOn)return;
-
- const sets={
-  correct:[660,880],
-  wrong:[180,130],
-  win:[523,659,784,1046],
-  level:[392,523,659,784]
- };
-
- const notas=sets[tipo]||sets.correct;
-
- notas.forEach((n,i)=>{
-  setTimeout(()=>tocarNota(n,.18,.05),i*100);
- });
-}
-
-document.addEventListener("click",iniciarAudio,{once:true});
-document.addEventListener("touchstart",iniciarAudio,{once:true});
-
-/* ============================================================
-   QUESTIONS
-============================================================ */
-
-const perguntas={
-
- ciencia:[
-  ["Qual planeta é conhecido como planeta vermelho?",["Marte","Vênus","Júpiter","Saturno"],0],
-  ["Qual é o maior órgão do corpo humano?",["Coração","Pele","Fígado","Pulmão"],1],
-  ["Qual gás é essencial para a respiração humana?",["Oxigênio","Hélio","Neônio","Hidrogênio"],0],
-  ["Qual é o centro do Sistema Solar?",["Terra","Lua","Sol","Marte"],2],
-  ["Qual animal é conhecido por mudar de cor?",["Camaleão","Cavalo","Golfinho","Pinguim"],0],
-  ["Qual força nos mantém presos à Terra?",["Magnetismo","Gravidade","Eletricidade","Pressão"],1],
-  ["Quantos dentes normalmente tem um adulto?",["28","30","32","36"],2],
-  ["A água ferve, ao nível do mar, a aproximadamente quantos graus Celsius?",["50","75","100","150"],2],
-  ["Qual é o satélite natural da Terra?",["Sol","Lua","Marte","Vênus"],1],
-  ["Qual órgão bombeia o sangue?",["Pulmão","Cérebro","Coração","Rim"],2],
-  ["Qual vitamina é produzida pela exposição ao sol?",["Vitamina A","Vitamina B12","Vitamina C","Vitamina D"],3],
-  ["Qual é o animal terrestre mais rápido?",["Leão","Guepardo","Cavalo","Lobo"],1],
-  ["Qual elemento químico tem símbolo O?",["Ouro","Oxigênio","Ósmio","Ozônio"],1],
-  ["Quantos ossos aproximadamente possui um adulto?",["106","206","306","406"],1],
-  ["Qual é a unidade básica da vida?",["Átomo","Célula","Molécula","Tecido"],1],
-  ["Qual planeta é famoso por seus anéis?",["Mercúrio","Saturno","Terra","Marte"],1],
-  ["Qual mamífero põe ovos?",["Baleia","Ornitorrinco","Golfinho","Morcego"],1],
-  ["Qual é o maior animal conhecido?",["Elefante","Baleia-azul","Girafa","Tubarão"],1],
-  ["O que as plantas absorvem da atmosfera para realizar fotossíntese?",["Oxigênio","Nitrogênio","Gás carbônico","Hélio"],2],
-  ["Qual é a fórmula química da água?",["CO2","O2","H2O","NaCl"],2],
-  ["Qual órgão é responsável por grande parte da filtragem do sangue?",["Rins","Estômago","Coração","Pulmões"],0],
-  ["Qual ciência estuda os seres vivos?",["Geologia","Biologia","Astronomia","Física"],1],
-  ["Qual é a velocidade aproximada da luz no vácuo?",["300 km/s","3.000 km/s","300.000 km/s","3.000.000 km/s"],2],
-  ["Qual parte da célula contém o material genético?",["Núcleo","Parede","Membrana","Citoplasma"],0],
-  ["Qual fenômeno ocorre quando a Lua fica entre a Terra e o Sol?",["Eclipse solar","Eclipse lunar","Aurora","Maré"],0]
- ],
-
- geografia:[
-  ["Qual é o maior país do mundo em território?",["Brasil","Canadá","Rússia","China"],2],
-  ["Qual é a capital do Brasil?",["Rio de Janeiro","Brasília","São Paulo","Salvador"],1],
-  ["Qual é o maior oceano?",["Atlântico","Índico","Pacífico","Ártico"],2],
-  ["Em qual continente fica o Egito?",["Ásia","Europa","África","Oceania"],2],
-  ["Qual é o maior deserto quente do mundo?",["Saara","Gobi","Atacama","Kalahari"],0],
-  ["Qual país tem formato de bota?",["Espanha","Itália","Grécia","Portugal"],1],
-  ["Qual é a capital da França?",["Paris","Roma","Madrid","Lisboa"],0],
-  ["Qual rio é tradicionalmente considerado o mais extenso do mundo?",["Amazonas","Nilo","Danúbio","Mississipi"],0],
-  ["Qual é o menor país do mundo?",["Mônaco","Vaticano","Luxemburgo","Malta"],1],
-  ["Qual continente é conhecido como continente gelado?",["África","Ásia","Antártida","Europa"],2],
-  ["Qual país possui a cidade de Tóquio?",["China","Japão","Coreia do Sul","Tailândia"],1],
-  ["Qual é a capital da Argentina?",["Lima","Buenos Aires","Montevidéu","Santiago"],1],
-  ["Qual estado brasileiro é famoso pelo Encontro das Águas?",["Amazonas","Paraná","Bahia","Goiás"],0],
-  ["Qual é a maior floresta tropical do mundo?",["Amazônia","Congo","Taiga","Mata Atlântica"],0],
-  ["Qual país é conhecido pelas pirâmides de Gizé?",["México","Egito","Peru","Índia"],1],
-  ["Qual é a capital de Portugal?",["Porto","Lisboa","Coimbra","Braga"],1],
-  ["Qual continente possui mais países?",["Europa","África","Ásia","América"],1],
-  ["Qual é a capital do Japão?",["Kyoto","Osaka","Tóquio","Hiroshima"],2],
-  ["Qual país tem a maior população da América do Sul?",["Argentina","Brasil","Colômbia","Peru"],1],
-  ["Qual é o maior estado brasileiro em território?",["Amazonas","Minas Gerais","Pará","Mato Grosso"],0],
-  ["Qual é a capital de Minas Gerais?",["Uberlândia","Belo Horizonte","Juiz de Fora","Montes Claros"],1],
-  ["Qual oceano banha a costa leste do Brasil?",["Pacífico","Atlântico","Índico","Ártico"],1],
-  ["Qual país faz fronteira com o Brasil e não possui litoral?",["Chile","Bolívia","Colômbia","Guiana"],1],
-  ["Qual é a capital do Chile?",["Santiago","Lima","Quito","La Paz"],0],
-  ["Qual é a capital do Canadá?",["Toronto","Vancouver","Ottawa","Montreal"],2]
- ],
-
- historia:[
-  ["Quem proclamou a Independência do Brasil?",["Dom Pedro I","Dom Pedro II","Tiradentes","Getúlio Vargas"],0],
-  ["Em que ano ocorreu a Independência do Brasil?",["1500","1822","1889","1930"],1],
-  ["Quem foi o primeiro imperador do Brasil?",["Dom Pedro I","Dom Pedro II","Juscelino","Deodoro"],0],
-  ["Em que ano foi proclamada a República do Brasil?",["1822","1850","1889","1901"],2],
-  ["Quem foi Tiradentes?",["Militar e ativista da Inconfidência Mineira","Imperador","Presidente","Explorador"],0],
-  ["Qual civilização construiu Machu Picchu?",["Maia","Asteca","Inca","Romana"],2],
-  ["Onde surgiram os Jogos Olímpicos antigos?",["Roma","Grécia","Egito","China"],1],
-  ["Quem foi o primeiro presidente do Brasil?",["Deodoro da Fonseca","Getúlio Vargas","Floriano Peixoto","Juscelino"],0],
-  ["A Revolução Francesa começou em qual século?",["XV","XVI","XVIII","XX"],2],
-  ["Qual acontecimento ocorreu em 1492?",["Queda de Roma","Chegada de Colombo à América","Independência do Brasil","Revolução Industrial"],1],
-  ["Qual império tinha Roma como centro?",["Romano","Asteca","Inca","Persa"],0],
-  ["Quem foi conhecido como Rei do Futebol?",["Pelé","Zico","Romário","Garrincha"],0],
-  ["Qual guerra terminou em 1945?",["Primeira Guerra Mundial","Segunda Guerra Mundial","Guerra do Vietnã","Guerra Civil"],1],
-  ["Qual foi a primeira capital do Brasil?",["Brasília","Rio de Janeiro","Salvador","São Paulo"],2],
-  ["Quem assinou a Lei Áurea?",["Princesa Isabel","Dona Leopoldina","Maria I","Carlota Joaquina"],0],
-  ["Em que ano ocorreu a abolição da escravidão no Brasil?",["1822","1850","1888","1889"],2],
-  ["Qual civilização criou o Coliseu?",["Romana","Maia","Inca","Egípcia"],0],
-  ["Qual era a principal cidade do Império Asteca?",["Tenochtitlán","Cuzco","Atenas","Esparta"],0],
-  ["Quem foi Getúlio Vargas?",["Presidente brasileiro","Imperador","Navegador","Artista"],0],
-  ["A Guerra Fria envolveu principalmente EUA e qual país?",["Brasil","União Soviética","Japão","França"],1],
-  ["Qual acontecimento marcou o início da Idade Moderna?",["Queda de Constantinopla","Descobrimento do Brasil","Revolução Francesa","Primeira Guerra"],0],
-  ["Qual país foi governado por faraós na Antiguidade?",["Egito","Brasil","Portugal","Japão"],0],
-  ["Qual cidade era o centro político dos incas?",["Cuzco","Roma","Paris","Alexandria"],0],
-  ["Quem foi Napoleão Bonaparte?",["Militar e imperador francês","Presidente americano","Rei inglês","Explorador português"],0],
-  ["A escrita cuneiforme está associada a qual região antiga?",["Mesopotâmia","Oceania","América do Sul","Escandinávia"],0]
- ],
-
- tecnologia:[
-  ["O que significa CPU?",["Unidade Central de Processamento","Controle Principal Universal","Central de Programas","Código Principal"],0],
-  ["Qual linguagem é usada para estruturar páginas web?",["HTML","CSS","SQL","Python"],0],
-  ["Qual linguagem é usada principalmente para estilizar páginas web?",["HTML","CSS","Java","C++"],1],
-  ["Qual linguagem permite adicionar interatividade em páginas web?",["JavaScript","HTML","CSS","XML"],0],
-  ["O que é Wi-Fi?",["Tecnologia de conexão sem fio","Um antivírus","Um processador","Um sistema operacional"],0],
-  ["O que significa URL?",["Endereço de recurso na internet","Unidade de rede local","Código de usuário","Registro universal"],0],
-  ["Qual empresa desenvolve o Android?",["Google","Microsoft","Apple","Sony"],0],
-  ["Qual sistema operacional é desenvolvido pela Apple para iPhone?",["Android","iOS","Windows","Linux"],1],
-  ["O que é um navegador?",["Programa para acessar páginas da internet","Um antivírus","Um cabo","Uma placa"],0],
-  ["Qual destes é um navegador?",["Chrome","Photoshop","Excel","Firebase"],0],
-  ["O que é HTML?",["Linguagem de marcação","Banco de dados","Sistema operacional","Editor de vídeo"],0],
-  ["O que é CSS?",["Folhas de estilo","Banco de dados","Servidor","Antivírus"],0],
-  ["O que é JavaScript?",["Linguagem de programação","Sistema operacional","Navegador","Banco de imagens"],0],
-  ["O que é um aplicativo?",["Programa desenvolvido para realizar funções","Um cabo","Uma tela","Um processador"],0],
-  ["O que significa IA?",["Inteligência Artificial","Internet Avançada","Interface Automática","Informação Aplicada"],0],
-  ["Qual serviço do Google é usado para autenticação e banco de dados em muitos projetos?",["Firebase","YouTube","Maps","Drive"],0],
-  ["O que é armazenamento em nuvem?",["Guardar dados em servidores acessíveis pela internet","Guardar dados apenas no papel","Um tipo de monitor","Uma placa"],0],
-  ["Qual é uma extensão comum de arquivo HTML?",[".html",".jpg",".mp3",".exe"],0],
-  ["Qual extensão normalmente representa uma folha de estilos CSS?",[".css",".html",".png",".zip"],0],
-  ["Qual extensão normalmente representa um arquivo JavaScript?",[".js",".css",".doc",".jpg"],0],
-  ["O que é código-fonte?",["Conjunto de instruções de um programa","Uma imagem","Um cabo","Uma senha"],0],
-  ["O que é um servidor?",["Computador ou serviço que fornece recursos","Um teclado","Um mouse","Uma tela"],0],
-  ["O que é um banco de dados?",["Sistema organizado para armazenar informações","Um navegador","Um processador","Uma câmera"],0],
-  ["O que significa app?",["Aplicativo","Arquivo público","Acesso privado","Atualização programada"],0],
-  ["O que é programação?",["Processo de criar instruções para computadores","Montagem de computador","Instalação de internet","Criação de imagens"],0]
- ],
-
- portugues:[
-  ["Qual é o plural de cidadão?",["Cidadãos","Cidadões","Cidadães","Cidadans"],0],
-  ["Qual palavra é um substantivo?",["Casa","Correr","Bonito","Rapidamente"],0],
-  ["Qual palavra é um verbo?",["Correr","Casa","Azul","Muito"],0],
-  ["Qual palavra é um adjetivo?",["Bonito","Correr","Casa","Ontem"],0],
-  ["Qual é o antônimo de grande?",["Pequeno","Alto","Largo","Forte"],0],
-  ["Qual é o sinônimo de feliz?",["Contente","Triste","Bravo","Fraco"],0],
-  ["Qual palavra está corretamente acentuada?",["Árvore","Arvore","Árvôre","Árvoré"],0],
-  ["Qual é o plural de pão?",["Pães","Pãos","Pãoses","Pãis"],0],
-  ["Qual palavra é um pronome?",["Ele","Casa","Correr","Azul"],0],
-  ["Qual sinal termina normalmente uma pergunta?",["?","!",".",":"],0],
-  ["Qual sinal indica uma exclamação?",["!","?",";",","],0],
-  ["Qual é o feminino de ator?",["Atriz","Atora","Atrizta","Atores"],0],
-  ["Qual é o aumentativo de casa?",["Casarão","Casinha","Caseta","Casal"],0],
-  ["Qual é o diminutivo de casa?",["Casinha","Casarão","Casão","Casaço"],0],
-  ["Qual palavra apresenta encontro vocálico?",["Pai","Prato","Flor","Três"],0],
-  ["Qual é o coletivo de peixes?",["Cardume","Matilha","Alcateia","Rebanho"],0],
-  ["Qual é o coletivo de lobos?",["Alcateia","Cardume","Colmeia","Manada"],0],
-  ["Qual é o coletivo de abelhas?",["Enxame","Matilha","Rebanho","Cardume"],0],
-  ["Qual palavra é paroxítona?",["Casa","Café","Também","Você"],0],
-  ["Qual é o plural de papel?",["Papéis","Papeis","Papels","Papéis"],0],
-  ["Qual é a função principal de um verbo?",["Indicar ação, estado ou fenômeno","Nomear objetos","Caracterizar nomes","Substituir nomes"],0],
-  ["Qual palavra é um advérbio?",["Rapidamente","Casa","Bonito","Correr"],0],
-  ["Qual é o antônimo de escuro?",["Claro","Preto","Baixo","Frio"],0],
-  ["Qual é o sinônimo de rápido?",["Veloz","Lento","Fraco","Pequeno"],0],
-  ["Qual é a língua oficial do Brasil?",["Português","Espanhol","Inglês","Francês"],0]
- ],
-
- geral:[
-  ["Qual é a capital da Itália?",["Roma","Paris","Lisboa","Berlim"],0],
-  ["Quantos dias tem uma semana?",["5","6","7","8"],2],
-  ["Quantos meses tem um ano?",["10","11","12","13"],2],
-  ["Qual é o maior planeta do Sistema Solar?",["Terra","Marte","Júpiter","Mercúrio"],2],
-  ["Qual é a moeda oficial do Brasil?",["Real","Peso","Dólar","Euro"],0],
-  ["Quantos lados tem um triângulo?",["2","3","4","5"],1],
-  ["Qual é a cor resultante da mistura de azul e amarelo?",["Verde","Roxo","Laranja","Rosa"],0],
-  ["Qual esporte utiliza uma cesta?",["Basquete","Tênis","Natação","Golfe"],0],
-  ["Qual animal é conhecido como rei da selva?",["Leão","Tigre","Urso","Lobo"],0],
-  ["Qual é o idioma mais falado no Brasil?",["Português","Inglês","Espanhol","Francês"],0],
-  ["Qual instrumento possui teclas brancas e pretas?",["Piano","Violino","Flauta","Tambor"],0],
-  ["Qual é o maior mamífero terrestre?",["Elefante","Girafa","Rinoceronte","Hipopótamo"],0],
-  ["Qual é o formato aproximado da Terra?",["Esférico","Quadrado","Triangular","Plano"],0],
-  ["Quantas horas tem um dia?",["12","18","24","48"],2],
-  ["Qual é o primeiro mês do ano?",["Janeiro","Fevereiro","Março","Abril"],0],
-  ["Qual é o último mês do ano?",["Outubro","Novembro","Dezembro","Janeiro"],2],
-  ["Qual planeta é chamado de planeta azul?",["Terra","Marte","Júpiter","Saturno"],0],
-  ["Qual esporte é jogado com uma bola e duas traves?",["Futebol","Tênis","Vôlei","Golfe"],0],
-  ["Qual país é famoso pela Torre Eiffel?",["França","Itália","Alemanha","Espanha"],0],
-  ["Qual é a capital da Espanha?",["Madrid","Barcelona","Sevilha","Valência"],0],
-  ["Qual é a capital da Alemanha?",["Berlim","Munique","Hamburgo","Frankfurt"],0],
-  ["Qual é a capital do México?",["Cidade do México","Cancún","Guadalajara","Monterrey"],0],
-  ["Quantos minutos tem uma hora?",["30","45","60","90"],2],
-  ["Qual é o número que vem depois de 99?",["98","100","101","109"],1],
-  ["Qual é a estrela mais próxima da Terra?",["Sol","Sirius","Vega","Polaris"],0]
- ],
-
- matematica:[
-  ["Quanto é 7 + 8?",["13","14","15","16"],2],
-  ["Quanto é 12 × 4?",["36","48","52","56"],1],
-  ["Quanto é 100 ÷ 5?",["10","15","20","25"],2],
-  ["Quanto é 25 + 37?",["52","62","72","82"],1],
-  ["Quanto é 9 × 9?",["72","81","90","99"],1]
- ]
-};
-
-/* gera 500 questões matemáticas */
-function gerarMatematica(){
- const b=[...perguntas.matematica];
-
- for(let i=0;i<500;i++){
-  const tipo=i%4;
-  let a,bn,res,op;
-
-  if(tipo===0){
-   a=10+(i*7)%90;
-   bn=5+(i*11)%80;
-   res=a+bn;
-   op="+";
-  }else if(tipo===1){
-   a=50+(i*13)%450;
-   bn=1+(i*5)%a;
-   res=a-bn;
-   op="-";
-  }else if(tipo===2){
-   a=2+(i*3)%25;
-   bn=2+(i*5)%20;
-   res=a*bn;
-   op="×";
-  }else{
-   bn=2+(i*3)%15;
-   res=2+(i*7)%40;
-   a=bn*res;
-   op="÷";
-  }
-
-  const respostas=new Set([res]);
-
-  while(respostas.size<4){
-   const variacao=1+Math.floor(Math.random()*12);
-   const sinal=Math.random()<.5?-1:1;
-   respostas.add(Math.max(0,res+variacao*sinal));
-  }
-
-  const arr=[...respostas].sort(()=>Math.random()-.5);
-
-  b.push([
-   `Quanto é ${a} ${op} ${bn}?`,
-   arr.map(String),
-   arr.indexOf(res)
-  ]);
- }
-
- return b;
-}
-
-perguntas.matematica=gerarMatematica();
-
-/* ============================================================
-   MILHÃO
-============================================================ */
-
-const premios=[
   1000,
   2000,
   5000,
@@ -2371,2069 +2291,2500 @@ const premios=[
   500000,
   750000,
   1000000
+
 ];
 
-let jogo={
- perguntas:[],
- indice:0,
- premio:0,
- acertos:0,
- erros:0,
- timer:null,
- tempo:15,
- usadas:{},
- ajudas:{
-  cinquenta:false,
-  pular:false,
-  dica:false
- },
- respondendo:false,
- modo:"solo"
+
+const perguntas = {
+
+ciencia:[
+["Qual planeta é conhecido como planeta vermelho?",["Terra","Marte","Júpiter","Saturno"],1],
+["Qual é o maior órgão do corpo humano?",["Coração","Fígado","Pele","Pulmão"],2],
+["Qual gás as plantas absorvem?",["Oxigênio","Hélio","Gás carbônico","Hidrogênio"],2],
+["Quantos ossos possui aproximadamente um adulto?",["106","206","306","406"],1],
+["Qual é o símbolo químico do ouro?",["Ag","Au","O","Gd"],1],
+["Qual força nos mantém na superfície da Terra?",["Magnetismo","Gravidade","Pressão","Fricção"],1],
+["Qual é a estrela do Sistema Solar?",["Lua","Sirius","Sol","Vênus"],2],
+["A água ferve normalmente a quantos graus Celsius?",["50","75","100","150"],2],
+["Qual órgão bombeia sangue?",["Pulmão","Coração","Rim","Estômago"],1],
+["Qual vitamina é produzida pela exposição ao Sol?",["A","B12","C","D"],3],
+["Qual animal é mamífero?",["Tubarão","Golfinho","Jacaré","Pinguim"],1],
+["Qual é a unidade básica da vida?",["Átomo","Célula","Tecido","Órgão"],1],
+["Qual planeta é o maior do Sistema Solar?",["Marte","Júpiter","Netuno","Mercúrio"],1],
+["Qual metal é líquido em temperatura ambiente?",["Ferro","Mercúrio","Ouro","Cobre"],1],
+["Qual é o satélite natural da Terra?",["Sol","Marte","Lua","Vênus"],2],
+["Qual parte da planta realiza principalmente fotossíntese?",["Raiz","Folha","Semente","Fruto"],1],
+["Qual é o maior animal conhecido?",["Elefante","Baleia-azul","Girafa","Tubarão"],1],
+["Qual planeta possui anéis famosos?",["Saturno","Terra","Mercúrio","Marte"],0],
+["Qual ciência estuda os seres vivos?",["Física","Biologia","Geologia","Astronomia"],1],
+["Qual é o estado da água no gelo?",["Líquido","Gasoso","Sólido","Plasma"],2],
+["O DNA está relacionado principalmente a quê?",["Hereditariedade","Digestão","Respiração","Visão"],0],
+["Qual órgão é responsável por grande parte da filtragem do sangue?",["Rim","Pulmão","Cérebro","Pâncreas"],0],
+["Qual é o planeta mais próximo do Sol?",["Terra","Marte","Mercúrio","Vênus"],2],
+["Qual fenômeno ocorre quando a Lua fica entre a Terra e o Sol?",["Eclipse solar","Eclipse lunar","Aurora","Tsunami"],0],
+["Qual gás é essencial para a respiração humana?",["Nitrogênio","Oxigênio","Hélio","Metano"],1]
+],
+
+geografia:[
+["Qual é o maior país do mundo em território?",["Brasil","China","Rússia","Canadá"],2],
+["Qual é a capital do Brasil?",["São Paulo","Brasília","Rio de Janeiro","Salvador"],1],
+["Em qual continente fica o Egito?",["Ásia","África","Europa","Oceania"],1],
+["Qual é o maior oceano?",["Atlântico","Índico","Pacífico","Ártico"],2],
+["Qual país possui formato de bota?",["França","Itália","Espanha","Grécia"],1],
+["Qual é a capital da França?",["Paris","Roma","Lisboa","Madri"],0],
+["Qual linha divide a Terra em hemisférios Norte e Sul?",["Trópico de Câncer","Equador","Meridiano de Greenwich","Trópico de Capricórnio"],1],
+["Qual é o maior deserto quente do mundo?",["Saara","Gobi","Atacama","Kalahari"],0],
+["Qual país é conhecido pela Torre Eiffel?",["Itália","França","Alemanha","Bélgica"],1],
+["Qual é a capital da Argentina?",["Córdoba","Buenos Aires","Rosário","Mendoza"],1],
+["Qual continente é conhecido como continente gelado?",["África","Antártida","Europa","Ásia"],1],
+["Qual é o menor continente?",["Europa","Oceania","África","América"],1],
+["Qual país tem Lisboa como capital?",["Portugal","Espanha","Itália","Chile"],0],
+["Qual é a capital do Japão?",["Pequim","Seul","Tóquio","Bangcoc"],2],
+["Qual é o rio mais associado ao Egito?",["Amazonas","Nilo","Mississipi","Danúbio"],1],
+["Qual cordilheira se estende pela América do Sul?",["Alpes","Andes","Himalaia","Rochosas"],1],
+["Qual é a capital dos Estados Unidos?",["Nova York","Washington, D.C.","Los Angeles","Chicago"],1],
+["Qual país é famoso pelos fiordes?",["Noruega","Índia","México","Egito"],0],
+["Qual é a capital do Chile?",["Santiago","Lima","Quito","Bogotá"],0],
+["Qual país tem a maior população da América do Sul?",["Argentina","Brasil","Peru","Colômbia"],1],
+["Qual é a capital do Peru?",["Lima","Cusco","Arequipa","Trujillo"],0],
+["Qual continente possui mais países?",["Europa","África","Oceania","América do Norte"],1],
+["Qual é a capital da Austrália?",["Sydney","Melbourne","Canberra","Perth"],2],
+["Qual país possui o Monte Everest?",["Nepal","Brasil","Egito","Portugal"],0],
+["Qual é a capital da Alemanha?",["Berlim","Munique","Hamburgo","Frankfurt"],0]
+],
+
+historia:[
+["Quem proclamou a Independência do Brasil?",["Dom Pedro I","Dom Pedro II","Tiradentes","Getúlio Vargas"],0],
+["Em que ano ocorreu a Independência do Brasil?",["1500","1822","1889","1922"],1],
+["Quem foi o primeiro presidente do Brasil?",["Getúlio Vargas","Deodoro da Fonseca","Juscelino Kubitschek","Dom Pedro II"],1],
+["Qual civilização construiu as pirâmides de Gizé?",["Romanos","Egípcios","Maias","Gregos"],1],
+["A Segunda Guerra Mundial terminou em qual ano?",["1939","1942","1945","1950"],2],
+["Quem foi conhecido como Tiradentes?",["Joaquim José da Silva Xavier","José Bonifácio","Duque de Caxias","Zumbi"],0],
+["A Revolução Francesa começou em qual século?",["XV","XVI","XVIII","XX"],2],
+["Quem escreveu a teoria da evolução por seleção natural?",["Newton","Darwin","Einstein","Galileu"],1],
+["Qual império tinha Roma como centro?",["Romano","Asteca","Inca","Persa"],0],
+["Quem foi o líder sul-africano que lutou contra o apartheid?",["Nelson Mandela","Martin Luther King","Mahatma Gandhi","Churchill"],0],
+["Qual foi o nome do período de escravidão no Brasil?",["Colonização","Escravidão colonial","República","Império"],1],
+["Quem foi Getúlio Vargas?",["Presidente brasileiro","Rei português","Cientista","Explorador"],0],
+["Qual evento marcou o início simbólico da Idade Moderna?",["Queda de Constantinopla","Descoberta da América","Revolução Industrial","Primeira Guerra"],0],
+["Quem chegou ao Brasil em 1500 segundo a história tradicional?",["Pedro Álvares Cabral","Cristóvão Colombo","Vasco da Gama","Fernão de Magalhães"],0],
+["Qual foi a capital do Brasil antes de Brasília?",["Salvador e Rio","São Paulo","Belo Horizonte","Recife"],0],
+["A Guerra Fria envolveu principalmente EUA e qual potência?",["Japão","União Soviética","Brasil","China antiga"],1],
+["Quem foi conhecido como Rei do Futebol?",["Pelé","Zico","Romário","Garrincha"],0],
+["Em qual país surgiu a democracia ateniense?",["Grécia","Roma","Egito","China"],0],
+["Qual império construiu Machu Picchu?",["Inca","Romano","Asteca","Egípcio"],0],
+["Quem foi Mahatma Gandhi?",["Líder indiano","Presidente americano","Cientista","Imperador romano"],0],
+["A Proclamação da República do Brasil ocorreu em qual ano?",["1822","1889","1900","1930"],1],
+["Qual documento declarou a independência dos EUA?",["Magna Carta","Declaração de Independência","Tratado de Roma","Carta do Brasil"],1],
+["Qual foi a primeira capital do Brasil?",["Salvador","Brasília","Rio de Janeiro","Recife"],0],
+["Quem foi Alexandre, o Grande?",["Rei e conquistador macedônio","Imperador brasileiro","Filósofo romano","Cientista"],0],
+["A Primeira Guerra Mundial começou em qual ano?",["1914","1918","1939","1945"],0]
+],
+
+tecnologia:[
+["O que significa CPU?",["Central Processing Unit","Computer Personal User","Central Program Utility","Control Processing User"],0],
+["Qual empresa criou o Android originalmente?",["Google","Microsoft","Android Inc.","Apple"],2],
+["O que é Wi-Fi?",["Tecnologia de rede sem fio","Programa de edição","Sistema operacional","Antivírus"],0],
+["Qual linguagem é usada para estruturar páginas web?",["HTML","MP3","JPEG","SQL"],0],
+["Qual linguagem é usada para estilizar páginas web?",["CSS","HTML","JSON","XML"],0],
+["Qual linguagem adiciona interatividade a páginas web?",["JavaScript","CSS","HTML","PNG"],0],
+["O que significa URL?",["Uniform Resource Locator","Universal User Link","User Resource Language","Uniform Router Link"],0],
+["Qual empresa criou o Windows?",["Apple","Microsoft","Google","Intel"],1],
+["O que é um navegador?",["Programa para acessar sites","Sistema de som","Banco","Antivírus"],0],
+["Qual destes é um navegador?",["Chrome","Photoshop","Excel","Windows"],0],
+["O que é armazenamento em nuvem?",["Guardar dados em servidores acessíveis pela internet","Guardar apenas no papel","Memória RAM","Placa de vídeo"],0],
+["O que significa AI em inglês?",["Artificial Intelligence","Automatic Internet","Advanced Input","Applied Interface"],0],
+["Qual empresa criou o iPhone?",["Microsoft","Apple","Google","Samsung"],1],
+["O que é um aplicativo?",["Programa desenvolvido para executar funções","Cabo","Processador","Monitor"],0],
+["O que é código-fonte?",["Código usado para construir um programa","Senha do computador","Arquivo de música","Imagem"],0],
+["Qual destes é um sistema operacional?",["Linux","Chrome","HTML","Wi-Fi"],0],
+["O que é um bug?",["Erro em um sistema","Tipo de computador","Rede","Senha"],0],
+["O que significa HTML?",["HyperText Markup Language","High Tech Machine Language","Home Tool Markup Link","Hyper Transfer Main Language"],0],
+["O que significa CSS?",["Cascading Style Sheets","Computer Style System","Central Style Source","Code System Style"],0],
+["O que é banco de dados?",["Sistema para armazenar e organizar informações","Monitor","Teclado","Internet"],0],
+["Qual empresa desenvolve o sistema Android atualmente?",["Google","Nintendo","Adobe","Sony"],0],
+["O que é programação?",["Criação de instruções para computadores","Montagem de móveis","Edição de fotos apenas","Uso de internet"],0],
+["O que é inteligência artificial?",["Tecnologia capaz de realizar tarefas associadas à inteligência humana","Um tipo de cabo","Um navegador","Uma bateria"],0],
+["O que é uma senha forte?",["Senha difícil de adivinhar","Senha 123456","Nome da pessoa","Data de nascimento"],0],
+["O que é phishing?",["Golpe que tenta obter informações por engano","Tipo de processador","Jogo","Linguagem"],0]
+],
+
+portugues:[
+["Qual é o plural de pão?",["Pães","Pãos","Pãeses","Pãesos"],0],
+["Qual palavra é um verbo?",["Correr","Casa","Bonito","Azul"],0],
+["Qual é o contrário de quente?",["Frio","Morno","Seco","Claro"],0],
+["Qual palavra é um substantivo?",["Mesa","Correr","Bonito","Rapidamente"],0],
+["Qual é o plural de cidadão?",["Cidadãos","Cidadões","Cidadães","Cidadans"],0],
+["Qual destas palavras é um adjetivo?",["Bonito","Casa","Correr","Mesa"],0],
+["Qual é o antônimo de feliz?",["Triste","Rápido","Grande","Forte"],0],
+["Qual sinal termina normalmente uma pergunta?",[".","!",",","?"],3],
+["Qual é o feminino de ator?",["Atora","Atriz","Atorae","Atores"],1],
+["Qual palavra está corretamente escrita?",["Exceção","Excessão","Eceção","Exessão"],0],
+["Qual é o coletivo de peixes?",["Cardume","Alcateia","Manada","Rebanho"],0],
+["Qual é o plural de papel?",["Papéis","Papeis","Papels","Papéus"],0],
+["Qual palavra indica ação?",["Estudar","Livro","Azul","Casa"],0],
+["Qual é o aumentativo de casa?",["Casarão","Casinha","Casebre","Casa"],0],
+["Qual é o diminutivo de gato?",["Gatinho","Gatão","Gataria","Gatos"],0],
+["Qual é um pronome pessoal?",["Eu","Casa","Bonito","Correr"],0],
+["Qual destas é uma preposição?",["De","Casa","Muito","Bonito"],0],
+["Qual palavra é oxítona?",["Café","Árvore","Lâmpada","Médico"],0],
+["Qual palavra é paroxítona?",["Mesa","Café","Sofá","Avô"],0],
+["Qual palavra é proparoxítona?",["Médico","Café","Papel","Café"],0],
+["Qual é o plural de animal?",["Animais","Animals","Animalis","Animãos"],0],
+["Qual destas palavras tem acento corretamente?",["Você","Voce","Vocé","Vôce"],0],
+["Qual é o sinônimo de rápido?",["Veloz","Lento","Fraco","Baixo"],0],
+["Qual é o sinônimo de feliz?",["Contente","Triste","Bravo","Frio"],0],
+["Qual é o contrário de grande?",["Pequeno","Alto","Largo","Forte"],0]
+],
+
+geral:[
+["Qual é a capital do Brasil?",["Brasília","São Paulo","Salvador","Recife"],0],
+["Quantos dias tem uma semana?",["5","6","7","8"],2],
+["Quantos meses tem um ano?",["10","11","12","13"],2],
+["Qual é a cor resultante da mistura de azul e amarelo?",["Verde","Roxo","Laranja","Rosa"],0],
+["Qual é o maior planeta do Sistema Solar?",["Terra","Júpiter","Marte","Vênus"],1],
+["Quantos lados tem um triângulo?",["2","3","4","5"],1],
+["Qual animal é conhecido como rei da selva?",["Leão","Tigre","Elefante","Urso"],0],
+["Qual esporte usa uma bola e uma cesta?",["Tênis","Basquete","Natação","Boxe"],1],
+["Qual é o idioma oficial do Brasil?",["Português","Espanhol","Inglês","Francês"],0],
+["Qual é o continente onde fica o Brasil?",["Europa","América do Sul","Ásia","África"],1],
+["Qual instrumento possui teclas brancas e pretas?",["Violão","Piano","Flauta","Bateria"],1],
+["Qual é o resultado de 10 + 5?",["10","15","20","25"],1],
+["Quantas horas tem um dia?",["12","18","24","48"],2],
+["Qual animal produz lã?",["Ovelha","Cachorro","Cavalo","Galinha"],0],
+["Qual é o planeta em que vivemos?",["Marte","Terra","Vênus","Saturno"],1],
+["Qual é a moeda do Brasil?",["Dólar","Real","Euro","Peso"],1],
+["Qual esporte é jogado com raquete?",["Tênis","Futebol","Natação","Atletismo"],0],
+["Qual é o maior oceano?",["Atlântico","Pacífico","Índico","Ártico"],1],
+["Qual é a estrela mais próxima da Terra?",["Sol","Sirius","Vega","Polaris"],0],
+["Quantos minutos tem uma hora?",["30","45","60","90"],2],
+["Qual é o símbolo do coração normalmente usado para amor?",["❤️","⭐","🔥","☀️"],0],
+["Qual animal é famoso por sua tromba?",["Elefante","Leão","Macaco","Cobra"],0],
+["Qual fruta é conhecida por ser amarela e comprida?",["Banana","Maçã","Uva","Melancia"],0],
+["Qual é a estação depois do verão?",["Outono","Inverno","Primavera","Verão"],0],
+["Qual é o oceano que banha a costa brasileira?",["Atlântico","Pacífico","Índico","Ártico"],0]
+]
+
 };
 
-const dificuldades=[
- "Fácil",
- "Fácil",
- "Fácil",
- "Médio",
- "Médio",
- "Médio",
- "Difícil",
- "Difícil",
- "Difícil",
- "Muito difícil",
- "Muito difícil",
- "Muito difícil",
- "Especialista",
- "Especialista",
- "Especialista"
-];
 
-function menuMilhao(){
- trocarMusicaFaixa("menu");
+/* =========================================
+   MATEMÁTICA
+   GERA QUESTÕES
+========================================= */
 
- abrirModal(`
-  <div class="modalTitle">
-   <h2>💰 Desafio do Milhão</h2>
-   <button class="closeBtn" onclick="fecharModal()">×</button>
-  </div>
+function gerarMatematica(){
 
-  <p style="color:#9e8ca9;line-height:1.5;margin-bottom:15px">
-   15 perguntas. Cada resposta certa aumenta seu prêmio.
-   Se errar ou o tempo acabar, você perde a partida.
-  </p>
+  const lista=[];
 
-  <div class="millionMenu">
-   <button class="topicBtn" onclick="prepararMilhao('geral','solo')">
-    <strong>🌎 Conhecimentos gerais</strong>
-    <small>15 perguntas variadas</small>
-   </button>
+  for(let i=0;i<500;i++){
 
-   <button class="topicBtn" onclick="prepararMilhao('ciencia','solo')">
-    <strong>🔬 Ciência</strong>
-    <small>25 perguntas disponíveis</small>
-   </button>
+    const nivel =
+      i<100 ? 1 :
+      i<200 ? 2 :
+      i<300 ? 3 :
+      i<400 ? 4 : 5;
 
-   <button class="topicBtn" onclick="prepararMilhao('geografia','solo')">
-    <strong>🌎 Geografia</strong>
-    <small>25 perguntas disponíveis</small>
-   </button>
+    let a,b,resultado,texto;
 
-   <button class="topicBtn" onclick="prepararMilhao('historia','solo')">
-    <strong>📜 História</strong>
-    <small>25 perguntas disponíveis</small>
-   </button>
+    if(nivel===1){
 
-   <button class="topicBtn" onclick="prepararMilhao('tecnologia','solo')">
-    <strong>💻 Tecnologia</strong>
-    <small>25 perguntas disponíveis</small>
-   </button>
+      a=Math.floor(Math.random()*30)+1;
+      b=Math.floor(Math.random()*30)+1;
 
-   <button class="topicBtn" onclick="prepararMilhao('portugues','solo')">
-    <strong>📚 Português</strong>
-    <small>25 perguntas disponíveis</small>
-   </button>
+      resultado=a+b;
 
-   <button class="topicBtn" onclick="prepararMilhao('matematica','solo')">
-    <strong>➗ Matemática</strong>
-    <small>500 questões geradas</small>
-   </button>
+      texto=`Quanto é ${a} + ${b}?`;
 
-   <button class="topicBtn" onclick="menuLocal()">
-    <strong>👥 Jogar com amigo perto</strong>
-    <small>2 ou 3 jogadores no mesmo aparelho</small>
-   </button>
+    }else if(nivel===2){
 
-   <button class="topicBtn" onclick="menuOnline()">
-    <strong>🌐 Jogar online</strong>
-    <small>Crie ou entre em uma sala</small>
-   </button>
-  </div>
- `);
+      a=Math.floor(Math.random()*50)+10;
+      b=Math.floor(Math.random()*30)+1;
+
+      resultado=a-b;
+
+      texto=`Quanto é ${a} - ${b}?`;
+
+    }else if(nivel===3){
+
+      a=Math.floor(Math.random()*15)+2;
+      b=Math.floor(Math.random()*12)+2;
+
+      resultado=a*b;
+
+      texto=`Quanto é ${a} × ${b}?`;
+
+    }else if(nivel===4){
+
+      b=Math.floor(Math.random()*12)+2;
+      resultado=Math.floor(Math.random()*20)+2;
+      a=b*resultado;
+
+      texto=`Quanto é ${a} ÷ ${b}?`;
+
+    }else{
+
+      a=Math.floor(Math.random()*30)+5;
+      b=Math.floor(Math.random()*15)+2;
+
+      resultado=a*a-b;
+
+      texto=`Quanto é ${a}² - ${b}?`;
+
+    }
+
+    let opcoes=[
+      resultado,
+      resultado+1,
+      resultado-1,
+      resultado+Math.floor(Math.random()*8)+2
+    ];
+
+    opcoes =
+      [...new Set(opcoes)];
+
+    while(opcoes.length<4){
+
+      opcoes.push(
+        resultado+
+        Math.floor(Math.random()*21)-10
+      );
+
+      opcoes=[...new Set(opcoes)];
+
+    }
+
+    opcoes=opcoes.slice(0,4);
+
+    const correta=opcoes.indexOf(resultado);
+
+    lista.push([
+      texto,
+      opcoes.map(String),
+      correta
+    ]);
+
+  }
+
+  return lista;
+
 }
 
-function prepararMilhao(topico,modo="solo"){
- const banco=[...(perguntas[topico]||perguntas.geral)];
 
- const embaralhado=banco.sort(()=>Math.random()-.5);
+perguntas.matematica =
+  gerarMatematica();
 
- jogo.perguntas=embaralhado.slice(0,15);
- jogo.indice=0;
- jogo.premio=0;
- jogo.acertos=0;
- jogo.erros=0;
- jogo.usadas={};
- jogo.ajudas={
-  cinquenta:false,
-  pular:false,
-  dica:false
- };
- jogo.respondendo=false;
- jogo.modo=modo;
- jogo.topico=topico;
 
- fecharModal();
- iniciarMilhao();
+/* =========================================
+   EMBARALHAR
+========================================= */
+
+function embaralhar(array){
+
+  const copia=[...array];
+
+  for(let i=copia.length-1;i>0;i--){
+
+    const j=Math.floor(Math.random()*(i+1));
+
+    [copia[i],copia[j]] =
+      [copia[j],copia[i]];
+
+  }
+
+  return copia;
+
 }
 
-function iniciarMilhao(){
- trocarMusicaFaixa("game");
 
- abrirView("home");
+function prepararPerguntas(){
 
- $("viewHome").classList.remove("active");
+  const categorias =
+    Object.keys(perguntas);
 
- document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  let todas=[];
 
- let old=$("millionGame");
+  categorias.forEach(cat=>{
 
- if(old)old.remove();
+    perguntas[cat].forEach(q=>{
 
- const div=document.createElement("section");
- div.id="millionGame";
- div.className="view active";
+      todas.push({
+        categoria:cat,
+        pergunta:q[0],
+        respostas:q[1],
+        correta:q[2]
+      });
 
- div.innerHTML=`
-  <div class="millionTop">
-   <button class="smallBtn" onclick="sairDoMilhao()">← Sair</button>
-   <div class="questionNumber" id="questionNumber">Pergunta 1/15</div>
-   <div class="timer" id="gameTimer">15</div>
-  </div>
+    });
 
-  <div class="prizeBox">
-   <small>PRÊMIO ATUAL</small>
-   <strong id="currentPrize">R$ 0</strong>
-  </div>
+  });
 
-  <div id="difficulty" class="difficulty">Fácil</div>
+  todas=embaralhar(todas);
 
-  <div class="questionCard">
-   <div id="questionText" class="questionText"></div>
-  </div>
+  const escolhidas=[];
 
-  <div id="answers" class="answers"></div>
+  const usadasCategorias={};
 
-  <div class="lifelines">
-   <button id="life5050" class="life" onclick="usar5050()">50/50</button>
-   <button id="lifeSkip" class="life" onclick="usarPular()">⏭ Pular</button>
-   <button id="lifeHint" class="life" onclick="usarDica()">💡 Dica</button>
-  </div>
- `;
+  while(escolhidas.length<15 && todas.length){
 
- $("app").querySelector("main").prepend(div);
+    const q=todas.shift();
 
- mostrarPergunta();
+    escolhidas.push(q);
+
+  }
+
+  return escolhidas;
+
 }
+
+
+function dificuldade(index){
+
+  if(index<=2) return "Fácil";
+
+  if(index<=5) return "Médio";
+
+  if(index<=8) return "Difícil";
+
+  if(index<=11) return "Muito difícil";
+
+  return "Especialista";
+
+}
+
+
+/* =========================================
+   ABRIR MILHÃO
+========================================= */
+
+function abrirMilhao(){
+
+  pararTimer();
+
+  mostrarPagina("milhao-page");
+
+  document.getElementById("milhao-menu")
+    .classList.remove("hidden");
+
+  document.getElementById("milhao-game")
+    .classList.add("hidden");
+
+  document.getElementById("milhao-result")
+    .classList.add("hidden");
+
+}
+
+
+function iniciarMilhao(modo){
+
+  jogo={
+
+    modo:modo,
+
+    perguntas:prepararPerguntas(),
+
+    indice:0,
+
+    premio:0,
+
+    acertos:0,
+
+    erros:0,
+
+    usadas50:false,
+
+    usadasPular:false,
+
+    usadasDica:false,
+
+    respondendo:false
+
+  };
+
+  document.getElementById("milhao-menu")
+    .classList.add("hidden");
+
+  document.getElementById("milhao-result")
+    .classList.add("hidden");
+
+  document.getElementById("milhao-game")
+    .classList.remove("hidden");
+
+  mostrarPergunta();
+
+  tocarSomInicio();
+
+}
+
 
 function mostrarPergunta(){
- clearInterval(jogo.timer);
 
- jogo.respondendo=false;
+  pararTimer();
 
- const q=jogo.perguntas[jogo.indice];
+  if(!jogo) return;
 
- if(!q){
-  finalizarJogo(true);
-  return;
- }
+  if(jogo.indice>=15){
 
- $("questionNumber").textContent=`Pergunta ${jogo.indice+1}/15`;
- $("currentPrize").textContent=moeda(jogo.premio);
- $("difficulty").textContent=dificuldades[jogo.indice];
- $("questionText").textContent=q[0];
+    finalizarJogo(true);
 
- const respostas=[...q[1]];
+    return;
 
- $("answers").innerHTML=respostas.map((r,i)=>`
-  <button class="answer" onclick="responder(${i})">${esc(r)}</button>
- `).join("");
-
- $("life5050").classList.toggle("used",jogo.ajudas.cinquenta);
- $("lifeSkip").classList.toggle("used",jogo.ajudas.pular);
- $("lifeHint").classList.toggle("used",jogo.ajudas.dica);
-
- jogo.tempo=15;
- $("gameTimer").textContent=jogo.tempo;
-
- jogo.timer=setInterval(()=>{
-  jogo.tempo--;
-  $("gameTimer").textContent=jogo.tempo;
-
-  if(jogo.tempo<=0){
-   clearInterval(jogo.timer);
-   responder(-1);
   }
- },1000);
+
+  jogo.respondendo=true;
+
+  const q=jogo.perguntas[jogo.indice];
+
+  document.getElementById("question-number")
+    .textContent =
+    `Pergunta ${jogo.indice+1} de 15`;
+
+  document.getElementById("difficulty")
+    .textContent =
+    `${dificuldade(jogo.indice+1)} • ${q.categoria}`;
+
+  document.getElementById("question")
+    .textContent=q.pergunta;
+
+  document.getElementById("current-prize")
+    .textContent =
+    dinheiro(
+      jogo.indice>0 ?
+      premios[jogo.indice-1] :
+      0
+    );
+
+  document.getElementById("game-progress")
+    .style.width =
+    ((jogo.indice)/15*100)+"%";
+
+  const area =
+    document.getElementById("answers");
+
+  area.innerHTML="";
+
+  q.respostas.forEach((resposta,i)=>{
+
+    const btn=document.createElement("button");
+
+    btn.className="answer";
+
+    btn.textContent =
+      String.fromCharCode(65+i)+") "+resposta;
+
+    btn.dataset.index=i;
+
+    btn.onclick=()=>responder(i,btn);
+
+    area.appendChild(btn);
+
+  });
+
+  atualizarBotoesAjuda();
+
+  iniciarTimer();
+
 }
 
-async function responder(index){
- if(jogo.respondendo)return;
 
- jogo.respondendo=true;
- clearInterval(jogo.timer);
+function iniciarTimer(){
 
- const q=jogo.perguntas[jogo.indice];
- const botoes=[...document.querySelectorAll("#answers .answer")];
+  let tempo=15;
 
- botoes.forEach(b=>b.disabled=true);
+  const timer =
+    document.getElementById("timer");
 
- const correta=q[2];
+  timer.textContent=tempo;
 
- if(index===correta){
-  botoes[index]?.classList.add("correct");
+  timer.classList.remove("warning");
 
-  jogo.acertos++;
-  jogo.premio=premios[jogo.indice];
+  timerInterval=setInterval(()=>{
 
-  tocarSom("correct");
+    tempo--;
 
-  await esperar(650);
+    timer.textContent=tempo;
+
+    if(tempo<=5)
+      timer.classList.add("warning");
+
+    if(tempo<=0){
+
+      pararTimer();
+
+      responder(null,null,true);
+
+    }
+
+  },1000);
+
+}
+
+
+function pararTimer(){
+
+  if(timerInterval){
+
+    clearInterval(timerInterval);
+
+    timerInterval=null;
+
+  }
+
+}
+
+
+/* =========================================
+   RESPONDER
+========================================= */
+
+function responder(indice,botao,tempoAcabou=false){
+
+  if(!jogo || !jogo.respondendo)
+    return;
+
+  jogo.respondendo=false;
+
+  pararTimer();
+
+  const q=jogo.perguntas[jogo.indice];
+
+  const botoes =
+    document.querySelectorAll(".answer");
+
+  botoes.forEach(b=>b.disabled=true);
+
+  const acertou =
+    !tempoAcabou &&
+    indice===q.correta;
+
+  if(acertou){
+
+    botao.classList.add("correct");
+
+    jogo.acertos++;
+
+    jogo.premio =
+      premios[jogo.indice];
+
+    tocarSomAcerto();
+
+    setTimeout(()=>{
+
+      jogo.indice++;
+
+      mostrarPergunta();
+
+    },700);
+
+  }else{
+
+    if(botao)
+      botao.classList.add("wrong");
+
+    botoes.forEach((b,i)=>{
+
+      if(i===q.correta)
+        b.classList.add("correct");
+
+    });
+
+    jogo.erros++;
+
+    tocarSomErro();
+
+    setTimeout(()=>{
+
+      finalizarJogo(false);
+
+    },1000);
+
+  }
+
+}
+
+
+/* =========================================
+   FINAL DO JOGO
+========================================= */
+
+async function finalizarJogo(completou){
+
+  pararTimer();
+
+  if(!jogo) return;
+
+  const premioFinal =
+    jogo.premio;
+
+  perfil.partidas++;
+
+  perfil.acertos += jogo.acertos;
+
+  perfil.erros += jogo.erros;
+
+  /* 
+     REGRA IMPORTANTE:
+     O prêmio só existe quando houve acerto.
+     Um erro nunca adiciona dinheiro.
+  */
+
+  if(premioFinal > perfil.recorde){
+
+    perfil.recorde=premioFinal;
+
+  }
+
+  const xpGanho =
+    jogo.acertos * 50;
+
+  const moedasGanhas =
+    jogo.acertos * 10;
+
+  perfil.xp += xpGanho;
+
+  perfil.moedas += moedasGanhas;
+
+  const novoNivel =
+    Math.floor(perfil.xp/1000)+1;
+
+  if(novoNivel>perfil.nivel){
+
+    perfil.nivel=novoNivel;
+
+    perfil.titulo =
+      calcularTitulo(novoNivel);
+
+  }
+
+  await salvarPerfil();
+
+  await verificarConquistas();
+
+  await salvarPerfil();
+
+  document.getElementById("milhao-game")
+    .classList.add("hidden");
+
+  document.getElementById("milhao-result")
+    .classList.remove("hidden");
+
+  document.getElementById("result-prize")
+    .textContent =
+    dinheiro(premioFinal);
+
+  if(completou){
+
+    document.getElementById("result-title")
+      .textContent="🏆 MILIONÁRIO!";
+
+    document.getElementById("result-text")
+      .textContent=
+      "Você respondeu as 15 perguntas e chegou ao final!";
+
+  }else{
+
+    document.getElementById("result-title")
+      .textContent="Fim de jogo";
+
+    document.getElementById("result-text")
+      .textContent=
+      `Você acertou ${jogo.acertos} de 15. `+
+      `Seu prêmio conquistado foi ${dinheiro(premioFinal)}.`;
+
+  }
+
+}
+
+
+/* =========================================
+   AJUDAS
+========================================= */
+
+function atualizarBotoesAjuda(){
+
+  document.getElementById("life5050").disabled =
+    jogo.usadas50;
+
+  document.getElementById("lifeSkip").disabled =
+    jogo.usadasPular;
+
+  document.getElementById("lifeHint").disabled =
+    jogo.usadasDica;
+
+}
+
+
+function usar5050(){
+
+  if(!jogo || jogo.usadas50 || !jogo.respondendo)
+    return;
+
+  jogo.usadas50=true;
+
+  const q=jogo.perguntas[jogo.indice];
+
+  const erradas=[];
+
+  q.respostas.forEach((_,i)=>{
+
+    if(i!==q.correta)
+      erradas.push(i);
+
+  });
+
+  embaralhar(erradas)
+    .slice(0,2)
+    .forEach(i=>{
+
+      const botoes =
+        document.querySelectorAll(".answer");
+
+      botoes[i].style.visibility="hidden";
+
+    });
+
+  atualizarBotoesAjuda();
+
+}
+
+
+function usarPular(){
+
+  if(!jogo || jogo.usadasPular || !jogo.respondendo)
+    return;
+
+  jogo.usadasPular=true;
+
+  pararTimer();
+
+  jogo.respondendo=false;
 
   jogo.indice++;
 
-  if(jogo.indice>=15){
-   await finalizarJogo(true);
-  }else{
-   mostrarPergunta();
-  }
-
- }else{
-  if(index>=0)botoes[index]?.classList.add("wrong");
-  if(correta>=0)botoes[correta]?.classList.add("correct");
-
-  jogo.erros++;
-
-  tocarSom("wrong");
-
-  await esperar(900);
-
-  finalizarJogo(false);
- }
-}
-
-function esperar(ms){
- return new Promise(resolve=>setTimeout(resolve,ms));
-}
-
-async function finalizarJogo(vitoria){
- clearInterval(jogo.timer);
-
- const premioFinal=vitoria?jogo.premio:0;
-
- perfil.partidas++;
- perfil.acertos+=jogo.acertos;
- perfil.erros+=jogo.erros;
-
- if(vitoria){
-  perfil.vitorias++;
-
-  if(premioFinal>perfil.maiorPremio){
-   perfil.maiorPremio=premioFinal;
-  }
- }
-
- await db.collection("Usuarios").doc(usuario.uid).update({
-  partidas:perfil.partidas,
-  vitorias:perfil.vitorias,
-  acertos:perfil.acertos,
-  erros:perfil.erros,
-  maiorPremio:perfil.maiorPremio,
-  atualizadoEm:agora()
- });
-
- await publicarRanking(perfil);
-
- const xp=Math.max(10,jogo.acertos*20);
-
- await adicionarXP(xp);
-
- if(vitoria){
-  await adicionarMoedas(Math.max(10,Math.floor(premioFinal/10000)));
-  tocarSom("win");
- }
-
- await verificarConquistas();
-
- const ganhou=moeda(premioFinal);
-
- document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-
- let old=$("millionResult");
- if(old)old.remove();
-
- const result=document.createElement("section");
- result.id="millionResult";
- result.className="view active";
-
- result.innerHTML=`
-  <div class="card resultBox">
-   <div style="font-size:60px">${vitoria?"🏆":"💥"}</div>
-   <h1>${vitoria?"MILHÃO CONQUISTADO!":"Fim de jogo"}</h1>
-
-   <div class="resultPrize">${ganhou}</div>
-
-   <p style="color:#9e8ca9;line-height:1.6">
-    ${vitoria
-      ?"Você respondeu as 15 perguntas corretamente!"
-      :"Uma resposta incorreta ou o tempo esgotado encerrou a partida."
-    }
-   </p>
-
-   <div class="statsGrid" style="margin-top:17px;text-align:left">
-    <div class="stat">
-     <small>Acertos</small>
-     <strong>${jogo.acertos}</strong>
-    </div>
-    <div class="stat">
-     <small>Erros</small>
-     <strong>${jogo.erros}</strong>
-    </div>
-    <div class="stat">
-     <small>XP ganho</small>
-     <strong>+${xp}</strong>
-    </div>
-    <div class="stat">
-     <small>Maior prêmio</small>
-     <strong>${moeda(perfil.maiorPremio)}</strong>
-    </div>
-   </div>
-
-   <button class="mainBtn" style="margin-top:18px" onclick="menuMilhao()">JOGAR NOVAMENTE</button>
-   <button class="smallBtn" style="width:100%;margin-top:8px" onclick="abrirView('home')">VOLTAR À HOME</button>
-  </div>
- `;
-
- $("app").querySelector("main").prepend(result);
-}
-
-function sairDoMilhao(){
- clearInterval(jogo.timer);
-
- const m=$("millionGame");
- if(m)m.remove();
-
- const r=$("millionResult");
- if(r)r.remove();
-
- abrirView("home");
-}
-
-/* LIFELINES */
-
-function usar5050(){
- if(jogo.ajudas.cinquenta||jogo.respondendo)return;
-
- jogo.ajudas.cinquenta=true;
-
- const q=jogo.perguntas[jogo.indice];
- const botoes=[...document.querySelectorAll("#answers .answer")];
-
- const erradas=botoes
-  .map((_,i)=>i)
-  .filter(i=>i!==q[2])
-  .sort(()=>Math.random()-.5);
-
- erradas.slice(0,2).forEach(i=>{
-  botoes[i].classList.add("disabled");
- });
-
- $("life5050").classList.add("used");
- adicionarXP(1);
-}
-
-function usarPular(){
- if(jogo.ajudas.pular||jogo.respondendo)return;
-
- jogo.ajudas.pular=true;
- $("lifeSkip").classList.add("used");
-
- clearInterval(jogo.timer);
-
- jogo.indice++;
-
- if(jogo.indice>=15){
-  finalizarJogo(true);
- }else{
   mostrarPergunta();
- }
+
+  atualizarBotoesAjuda();
+
 }
+
 
 function usarDica(){
- if(jogo.ajudas.dica||jogo.respondendo)return;
 
- jogo.ajudas.dica=true;
- $("lifeHint").classList.add("used");
+  if(!jogo || jogo.usadasDica || !jogo.respondendo)
+    return;
 
- const q=jogo.perguntas[jogo.indice];
+  jogo.usadasDica=true;
 
- const dica=q[1][q[2]];
+  const q=jogo.perguntas[jogo.indice];
 
- toast("💡 Dica: pense em «"+dica+"»");
+  const dica =
+    q.respostas[q.correta];
+
+  alert(
+    "💡 Dica: a resposta correta começa com: "+
+    dica.charAt(0)
+  );
+
+  atualizarBotoesAjuda();
+
 }
 
-/* ============================================================
-   MODO AMIGO PERTO
-============================================================ */
 
-let localGame={
- players:[],
- topic:"geral",
- player:0,
- scores:[],
- prizes:[],
- questions:[],
- index:0,
- turnAnswered:false
-};
+/* =========================================
+   MODO LOCAL
+========================================= */
 
-function menuLocal(){
- abrirModal(`
-  <div class="modalTitle">
-   <h2>👥 Jogar com amigo perto</h2>
-   <button class="closeBtn" onclick="fecharModal()">×</button>
-  </div>
+function abrirLocal(){
 
-  <div class="playerSetup">
-   <div class="field">
-    <label>Jogador 1</label>
-    <input id="p1name" value="${esc(perfil.nome)}">
-   </div>
+  abrirModal(`
 
-   <div class="field">
-    <label>Jogador 2</label>
-    <input id="p2name" placeholder="Nome do jogador 2">
-   </div>
+    <h2>👥 Jogar no mesmo aparelho</h2>
 
-   <div class="field">
-    <label>Jogador 3 (opcional)</label>
-    <input id="p3name" placeholder="Nome do jogador 3">
-   </div>
+    <p class="muted">
+      Em breve esta tela permitirá configurar
+      jogadores e alternar automaticamente os turnos.
+    </p>
 
-   <div class="field">
-    <label>Tema</label>
-    <select id="localTopic">
-     <option value="geral">Conhecimentos gerais</option>
-     <option value="ciencia">Ciência</option>
-     <option value="geografia">Geografia</option>
-     <option value="historia">História</option>
-     <option value="tecnologia">Tecnologia</option>
-     <option value="portugues">Português</option>
-     <option value="matematica">Matemática</option>
-    </select>
-   </div>
+    <br>
 
-   <button class="mainBtn" onclick="iniciarLocal()">COMEÇAR</button>
-  </div>
- `);
+    <input id="local-p1"
+      placeholder="Nome do jogador 1"
+      style="width:100%;padding:13px;background:#0d0815;color:#fff;border:1px solid #302343;border-radius:12px">
+
+    <br><br>
+
+    <input id="local-p2"
+      placeholder="Nome do jogador 2"
+      style="width:100%;padding:13px;background:#0d0815;color:#fff;border:1px solid #302343;border-radius:12px">
+
+    <br><br>
+
+    <input id="local-p3"
+      placeholder="Nome do jogador 3 (opcional)"
+      style="width:100%;padding:13px;background:#0d0815;color:#fff;border:1px solid #302343;border-radius:12px">
+
+    <br><br>
+
+    <button class="main-btn"
+      onclick="iniciarLocalCompleto()">
+      Começar
+    </button>
+
+  `);
+
 }
 
-function iniciarLocal(){
- const p1=$("p1name").value.trim()||"Jogador 1";
- const p2=$("p2name").value.trim()||"Jogador 2";
- const p3=$("p3name").value.trim();
 
- localGame.players=[p1,p2];
+function iniciarLocalCompleto(){
 
- if(p3)localGame.players.push(p3);
+  const p1 =
+    document.getElementById("local-p1").value.trim();
 
- localGame.topic=$("localTopic").value;
- localGame.player=0;
- localGame.scores=localGame.players.map(()=>0);
- localGame.prizes=localGame.players.map(()=>0);
- localGame.index=0;
+  const p2 =
+    document.getElementById("local-p2").value.trim();
 
- const banco=[...(perguntas[localGame.topic]||perguntas.geral)]
-  .sort(()=>Math.random()-.5);
+  const p3 =
+    document.getElementById("local-p3").value.trim();
 
- localGame.questions=banco.slice(0,15);
+  if(!p1 || !p2){
 
- fecharModal();
+    alert("Informe pelo menos dois jogadores.");
 
- renderLocalGame();
-}
+    return;
 
-function renderLocalGame(){
- document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-
- let old=$("localGame");
- if(old)old.remove();
-
- const div=document.createElement("section");
- div.id="localGame";
- div.className="view active";
-
- const p=localGame.players[localGame.player];
- const q=localGame.questions[localGame.index];
-
- div.innerHTML=`
-  <div class="millionTop">
-   <button class="smallBtn" onclick="sairLocal()">← Sair</button>
-   <div class="questionNumber">
-    Rodada ${localGame.index+1}/15
-   </div>
-   <div>👤 ${esc(p)}</div>
-  </div>
-
-  <div class="localScore">
-   ${localGame.players.map((n,i)=>`
-    <div class="localPlayer ${i===localGame.player?"active":""}">
-     <strong>${esc(n)}</strong>
-     <div style="font-size:11px;color:#9e8ca9">${localGame.scores[i]} acertos</div>
-    </div>
-   `).join("")}
-  </div>
-
-  <div class="questionCard" style="margin-top:15px">
-   <div class="questionText">${esc(q[0])}</div>
-  </div>
-
-  <div class="answers">
-   ${q[1].map((r,i)=>`
-    <button class="answer" onclick="responderLocal(${i})">${esc(r)}</button>
-   `).join("")}
-  </div>
- `;
-
- $("app").querySelector("main").prepend(div);
-}
-
-function responderLocal(index){
- const q=localGame.questions[localGame.index];
- const buttons=[...document.querySelectorAll("#localGame .answer")];
-
- buttons.forEach(b=>b.disabled=true);
-
- if(index===q[2]){
-  buttons[index].classList.add("correct");
-  localGame.scores[localGame.player]++;
-  localGame.prizes[localGame.player]=premios[localGame.index];
-  tocarSom("correct");
- }else{
-  buttons[index]?.classList.add("wrong");
-  buttons[q[2]]?.classList.add("correct");
-  tocarSom("wrong");
- }
-
- setTimeout(()=>{
-  localGame.player++;
-
-  if(localGame.player>=localGame.players.length){
-   localGame.player=0;
-   localGame.index++;
   }
 
-  if(localGame.index>=15){
-   finalizarLocal();
-  }else{
-   renderLocalGame();
-  }
- },800);
-}
-
-function finalizarLocal(){
- const maior=Math.max(...localGame.scores);
- const vencedores=localGame.players
-  .map((n,i)=>({n,s:localGame.scores[i],p:localGame.prizes[i]}))
-  .filter(x=>x.s===maior);
-
- document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-
- let old=$("localResult");
- if(old)old.remove();
-
- const result=document.createElement("section");
- result.id="localResult";
- result.className="view active";
-
- result.innerHTML=`
-  <div class="card resultBox">
-   <div style="font-size:60px">🏆</div>
-   <h1>Resultado</h1>
-
-   <div style="margin:18px 0">
-    ${vencedores.map(v=>`
-     <div style="font-size:20px;color:#e0a3ff">
-      🥇 ${esc(v.n)}
-     </div>
-    `).join("")}
-   </div>
-
-   ${localGame.players.map((n,i)=>`
-    <div class="rankItem">
-     <div class="rankNumber">${i+1}</div>
-     <div class="rankInfo">
-      <strong>${esc(n)}</strong>
-      <small>${localGame.scores[i]} acertos</small>
-     </div>
-     <strong>${moeda(localGame.prizes[i])}</strong>
-    </div>
-   `).join("")}
-
-   <button class="mainBtn" onclick="menuMilhao()">NOVO JOGO</button>
-   <button class="smallBtn" style="width:100%;margin-top:8px" onclick="abrirView('home')">VOLTAR</button>
-  </div>
- `;
-
- $("app").querySelector("main").prepend(result);
-}
-
-function sairLocal(){
- const a=$("localGame");
- if(a)a.remove();
-
- abrirView("home");
-}
-
-/* ============================================================
-   ONLINE ROOMS
-============================================================ */
-
-let onlineRoomId=null;
-let onlineUnsub=null;
-
-function menuOnline(){
- abrirModal(`
-  <div class="modalTitle">
-   <h2>🌐 Jogo online</h2>
-   <button class="closeBtn" onclick="fecharModal()">×</button>
-  </div>
-
-  <button class="topicBtn" onclick="criarSalaOnline()">
-   <strong>➕ Criar sala</strong>
-   <small>Crie uma sala e envie o código para seu amigo.</small>
-  </button>
-
-  <div style="height:10px"></div>
-
-  <div class="searchBox">
-   <input id="joinRoomCode" maxlength="6" placeholder="Código da sala">
-   <button onclick="entrarSalaOnline()">Entrar</button>
-  </div>
- `);
-}
-
-function gerarCodigo(){
- return Math.random().toString(36).substring(2,8).toUpperCase();
-}
-
-async function criarSalaOnline(){
- const codigo=gerarCodigo();
-
- const sala={
-  codigo,
-  criador:usuario.uid,
-  jogadores:[{
-   uid:usuario.uid,
-   nome:perfil.nome,
-   foto:perfil.foto||""
-  }],
-  status:"aguardando",
-  tema:"geral",
-  rodada:0,
-  criadoEm:agora(),
-  atualizadoEm:agora()
- };
-
- await db.collection("Partidas").doc("sala_"+codigo).set(sala);
-
- onlineRoomId=codigo;
-
- abrirSalaOnline(sala);
-}
-
-async function entrarSalaOnline(){
- const codigo=$("joinRoomCode").value.trim().toUpperCase();
-
- if(!codigo){
-  toast("Digite o código.");
-  return;
- }
-
- const ref=db.collection("Partidas").doc("sala_"+codigo);
- const snap=await ref.get();
-
- if(!snap.exists){
-  toast("Sala não encontrada.");
-  return;
- }
-
- const sala=snap.data();
-
- if(sala.jogadores.length>=3){
-  toast("A sala está cheia.");
-  return;
- }
-
- if(!sala.jogadores.some(p=>p.uid===usuario.uid)){
-  sala.jogadores.push({
-   uid:usuario.uid,
-   nome:perfil.nome,
-   foto:perfil.foto||""
-  });
- }
-
- await ref.update({
-  jogadores:sala.jogadores,
-  atualizadoEm:agora()
- });
-
- onlineRoomId=codigo;
-
- abrirSalaOnline(sala);
-}
-
-function abrirSalaOnline(sala){
- fecharModal();
-
- document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-
- let old=$("onlineRoom");
- if(old)old.remove();
-
- const div=document.createElement("section");
- div.id="onlineRoom";
- div.className="view active";
-
- div.innerHTML=`
-  <div class="card">
-   <div class="row">
-    <h2>🌐 Sala online</h2>
-    <button class="smallBtn" onclick="sairSalaOnline()">Sair</button>
-   </div>
-
-   <div class="roomCode">${esc(sala.codigo)}</div>
-
-   <p style="text-align:center;color:#9e8ca9">
-    Compartilhe esse código com seu amigo.
-   </p>
-
-   <button class="mainBtn" onclick="compartilharSala('${esc(sala.codigo)}')">
-    📤 COMPARTILHAR CÓDIGO
-   </button>
-  </div>
-
-  <div class="card">
-   <div class="cardTitle">👥 Jogadores</div>
-   <div id="onlinePlayers"></div>
-  </div>
-
-  <div class="card">
-   <div class="field">
-    <label>Tema da partida</label>
-    <select id="onlineTopic">
-     <option value="geral">Conhecimentos gerais</option>
-     <option value="ciencia">Ciência</option>
-     <option value="geografia">Geografia</option>
-     <option value="historia">História</option>
-     <option value="tecnologia">Tecnologia</option>
-     <option value="portugues">Português</option>
-     <option value="matematica">Matemática</option>
-    </select>
-   </div>
-
-   <button class="mainBtn" onclick="iniciarSalaOnline()">
-    ▶️ INICIAR PARTIDA
-   </button>
-  </div>
- `;
-
- $("app").querySelector("main").prepend(div);
-
- acompanharSala();
-}
-
-function acompanharSala(){
- if(onlineUnsub)onlineUnsub();
-
- if(!onlineRoomId)return;
-
- onlineUnsub=db.collection("Partidas")
-  .doc("sala_"+onlineRoomId)
-  .onSnapshot(snap=>{
-   if(!snap.exists)return;
-
-   const sala=snap.data();
-
-   const box=$("onlinePlayers");
-   if(box){
-    box.innerHTML=sala.jogadores.map(p=>`
-     <div class="friendItem">
-      <div class="avatar" style="width:45px;height:45px;border-radius:13px">
-       ${p.foto
-        ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
-        :esc((p.nome||"J").charAt(0).toUpperCase())}
-      </div>
-      <div class="friendMain">
-       <strong>${esc(p.nome)}</strong>
-       <small>${p.uid===sala.criador?"Criador":"Jogador"}</small>
-      </div>
-     </div>
-    `).join("");
-   }
-
-   if(sala.status==="jogando"){
-    if(!$("onlineGame")){
-     iniciarPartidaOnlineLocal(sala);
+  const jogadores=[
+    {
+      nome:p1,
+      pontos:0,
+      acertos:0
+    },
+    {
+      nome:p2,
+      pontos:0,
+      acertos:0
     }
-   }
-  });
+  ];
+
+  if(p3){
+
+    jogadores.push({
+      nome:p3,
+      pontos:0,
+      acertos:0
+    });
+
+  }
+
+  fecharModal();
+
+  iniciarLocalJogo(jogadores);
+
 }
 
-async function iniciarSalaOnline(){
- if(!onlineRoomId)return;
 
- const tema=$("onlineTopic").value;
+let localJogo=null;
 
- await db.collection("Partidas")
-  .doc("sala_"+onlineRoomId)
-  .update({
-   status:"jogando",
-   tema,
-   rodada:0,
-   atualizadoEm:agora()
-  });
 
- toast("Partida iniciada!");
+function iniciarLocalJogo(jogadores){
+
+  localJogo={
+
+    jogadores,
+
+    atual:0,
+
+    rodada:0,
+
+    perguntas:jogadores.map(
+      ()=>prepararPerguntas()
+    ),
+
+    respostas:[]
+
+  };
+
+  abrirModal(`
+
+    <h2>👥 Modo local</h2>
+
+    <p>
+      Jogador atual:
+      <strong>${localJogo.jogadores[0].nome}</strong>
+    </p>
+
+    <br>
+
+    <p class="muted">
+      Cada jogador terá sua própria sequência
+      de perguntas.
+    </p>
+
+    <br>
+
+    <button class="main-btn"
+      onclick="fecharModal();jogarTurnoLocal()">
+      Começar
+    </button>
+
+  `);
+
 }
 
-function iniciarPartidaOnlineLocal(sala){
- const banco=[...(perguntas[sala.tema]||perguntas.geral)]
-  .sort(()=>Math.random()-.5)
-  .slice(0,15);
 
- jogo.perguntas=banco;
- jogo.indice=0;
- jogo.premio=0;
- jogo.acertos=0;
- jogo.erros=0;
- jogo.ajudas={
-  cinquenta:false,
-  pular:false,
-  dica:false
- };
- jogo.respondendo=false;
- jogo.modo="online";
+function jogarTurnoLocal(){
 
- iniciarMilhao();
+  /*
+    Esta base já separa as perguntas por jogador.
+    Nas próximas melhorias podemos colocar a tela
+    completa de turnos sem alterar o sistema principal.
+  */
+
+  const jogador =
+    localJogo.jogadores[localJogo.atual];
+
+  abrirModal(`
+
+    <h2>🎯 ${jogador.nome}</h2>
+
+    <p>
+      Sua vez de jogar!
+    </p>
+
+    <br>
+
+    <button class="main-btn"
+      onclick="fecharModal();iniciarMilhao('solo')">
+      Começar turno
+    </button>
+
+  `);
+
 }
 
-async function sairSalaOnline(){
- if(onlineUnsub)onlineUnsub();
 
- onlineRoomId=null;
+/* =========================================
+   ONLINE
+========================================= */
 
- abrirView("home");
+function abrirOnline(){
+
+  abrirModal(`
+
+    <h2>🌐 Jogo online</h2>
+
+    <p class="muted">
+      Crie uma sala privada e compartilhe o código
+      com seu amigo.
+    </p>
+
+    <br>
+
+    <button class="main-btn"
+      onclick="criarSala()">
+      Criar sala
+    </button>
+
+    <br><br>
+
+    <input id="room-code"
+      placeholder="Código da sala"
+      style="width:100%;padding:13px;background:#0d0815;color:#fff;border:1px solid #302343;border-radius:12px">
+
+    <br><br>
+
+    <button class="card-btn"
+      onclick="entrarSala()">
+      Entrar na sala
+    </button>
+
+  `);
+
 }
+
+
+async function criarSala(){
+
+  const codigo =
+    Math.random()
+      .toString(36)
+      .substring(2,8)
+      .toUpperCase();
+
+  await db
+    .collection("Partidas")
+    .doc("sala_"+codigo)
+    .set({
+
+      tipo:"sala",
+
+      codigo,
+
+      criador:usuario.uid,
+
+      jogadores:[usuario.uid],
+
+      status:"aguardando",
+
+      criadoEm:
+        firebase.firestore.FieldValue.serverTimestamp()
+
+    });
+
+  abrirModal(`
+
+    <h2>🎮 Sala criada!</h2>
+
+    <p>
+      Compartilhe este código:
+    </p>
+
+    <div style="font-size:35px;text-align:center;margin:20px;font-weight:900">
+      ${codigo}
+    </div>
+
+    <button class="main-btn"
+      onclick="compartilharSala('${codigo}')">
+      📤 Compartilhar
+    </button>
+
+  `);
+
+}
+
 
 function compartilharSala(codigo){
- const texto="Entre na minha sala do Desafio do Milhão! Código: "+codigo;
 
- if(navigator.share){
-  navigator.share({
-   title:"Desafio do Milhão",
-   text:texto
-  }).catch(()=>{});
- }else{
-  navigator.clipboard?.writeText(texto);
-  toast("Código copiado!");
- }
+  const texto =
+    "Entre na minha sala do Desafio do Milhão! Código: "+
+    codigo;
+
+  if(navigator.share){
+
+    navigator.share({
+      title:"Desafio do Milhão",
+      text:texto
+    });
+
+  }else{
+
+    navigator.clipboard.writeText(texto);
+
+    alert("Código copiado!");
+
+  }
+
 }
 
-/* ============================================================
+
+async function entrarSala(){
+
+  const codigo =
+    document.getElementById("room-code")
+      .value.trim()
+      .toUpperCase();
+
+  if(!codigo){
+
+    alert("Digite o código.");
+
+    return;
+
+  }
+
+  const ref =
+    db.collection("Partidas")
+      .doc("sala_"+codigo);
+
+  const snap=await ref.get();
+
+  if(!snap.exists){
+
+    alert("Sala não encontrada.");
+
+    return;
+
+  }
+
+  const sala=snap.data();
+
+  if(sala.jogadores.includes(usuario.uid)){
+
+    alert("Você já está nessa sala.");
+
+    return;
+
+  }
+
+  if(sala.jogadores.length>=3){
+
+    alert("A sala está cheia.");
+
+    return;
+
+  }
+
+  await ref.update({
+
+    jogadores:
+      firebase.firestore.FieldValue.arrayUnion(usuario.uid)
+
+  });
+
+  fecharModal();
+
+  alert("Você entrou na sala!");
+
+}
+
+
+/* =========================================
    RANKING
-============================================================ */
+========================================= */
 
 async function carregarRanking(){
- const box=$("rankingList");
 
- if(!box)return;
+  const area =
+    document.getElementById("ranking-list");
 
- box.innerHTML='<div class="card">Carregando ranking...</div>';
+  area.innerHTML="Carregando ranking...";
 
- try{
-  const snap=await db.collection("Partidas")
-   .where("tipo","==","ranking")
-   .orderBy("xp","desc")
-   .limit(50)
-   .get();
+  try{
 
-  const jogadores=[];
+    const snap =
+      await db
+        .collection("Partidas")
+        .where("tipo","==","ranking")
+        .orderBy("xp","desc")
+        .limit(50)
+        .get();
 
-  snap.forEach(doc=>{
-   const d=doc.data();
+    if(snap.empty){
 
-   if(d.uid)jogadores.push(d);
-  });
+      area.innerHTML=
+        "<p class='muted'>Ainda não há jogadores no ranking.</p>";
 
-  if(!jogadores.length){
-   box.innerHTML=`
-    <div class="card">
-     Ainda não existem jogadores suficientes no ranking.
-    </div>
-   `;
-   $("myRankText").textContent="Você está começando agora.";
-   return;
+      return;
+
+    }
+
+    area.innerHTML="";
+
+    let pos=1;
+
+    snap.forEach(doc=>{
+
+      const p=doc.data();
+
+      const avatar =
+        p.avatar ||
+        "https://ui-avatars.com/api/?name="+
+        encodeURIComponent(p.nome || "Jogador")+
+        "&background=8b5cf6&color=fff";
+
+      area.innerHTML+=`
+
+        <div class="rank-item">
+
+          <div class="rank-position">
+            ${pos===1?"🥇":pos===2?"🥈":pos===3?"🥉":pos}
+          </div>
+
+          <img class="avatar"
+            src="${avatar}">
+
+          <div class="rank-info">
+
+            <div class="rank-name">
+              ${esc(p.nome)}
+            </div>
+
+            <div class="rank-xp">
+              Nível ${p.nivel || 1}
+              • ${p.xp || 0} XP
+              • Recorde ${dinheiro(p.recorde || 0)}
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+      pos++;
+
+    });
+
+  }catch(e){
+
+    area.innerHTML=
+      "<p class='danger'>Não foi possível carregar o ranking.</p>";
+
+    console.error(e);
+
   }
 
-  const minhaPos=jogadores.findIndex(x=>x.uid===usuario.uid)+1;
-
-  $("myRankText").textContent=minhaPos
-   ?`Você está em ${minhaPos}º lugar.`
-   :"Seu perfil ainda está entrando no ranking.";
-
-  box.innerHTML=jogadores.map((p,i)=>`
-   <div class="rankItem" onclick="abrirPerfilPublico('${esc(p.uid)}')">
-    <div class="rankNumber">${i+1}</div>
-
-    <div class="rankAvatar">
-     ${p.foto
-      ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:13px">`
-      :esc((p.nome||"J").charAt(0).toUpperCase())}
-    </div>
-
-    <div class="rankInfo">
-     <strong>${esc(p.nome)}</strong>
-     <small>${esc(p.titulo||"Novato")} • Nível ${p.nivel||1}</small>
-    </div>
-
-    <div style="text-align:right">
-     <strong>${p.xp||0}</strong>
-     <small style="display:block;color:#9e8ca9">XP</small>
-    </div>
-   </div>
-  `).join("");
-
- }catch(e){
-  console.error(e);
-  box.innerHTML=`
-   <div class="card">
-    Não foi possível carregar o ranking agora.
-   </div>
-  `;
- }
 }
 
-async function abrirPerfilPublico(uid){
- if(uid===usuario.uid){
-  abrirView("profile");
-  return;
- }
 
- const snap=await db.collection("Partidas")
-  .doc("ranking_"+uid)
-  .get();
-
- if(!snap.exists){
-  toast("Perfil não encontrado.");
-  return;
- }
-
- const p=snap.data();
-
- abrirModal(`
-  <div class="modalTitle">
-   <h2>👤 Perfil</h2>
-   <button class="closeBtn" onclick="fecharModal()">×</button>
-  </div>
-
-  <div style="text-align:center">
-   <div class="avatar" style="margin:auto;width:90px;height:90px">
-    ${p.foto
-     ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
-     :esc((p.nome||"J").charAt(0).toUpperCase())}
-   </div>
-
-   <h2 style="margin-top:10px">${esc(p.nome)}</h2>
-   <div class="levelPill">${esc(p.titulo||"Novato")} • Nível ${p.nivel||1}</div>
-  </div>
-
-  <div class="statsGrid" style="margin-top:18px">
-   <div class="stat">
-    <small>XP</small>
-    <strong>${p.xp||0}</strong>
-   </div>
-   <div class="stat">
-    <small>Partidas</small>
-    <strong>${p.partidas||0}</strong>
-   </div>
-   <div class="stat">
-    <small>Vitórias</small>
-    <strong>${p.vitorias||0}</strong>
-   </div>
-   <div class="stat">
-    <small>Maior prêmio</small>
-    <strong>${moeda(p.maiorPremio)}</strong>
-   </div>
-  </div>
-
-  <button class="mainBtn" style="margin-top:15px" onclick="enviarSolicitacao('${esc(uid)}','${esc(p.nome)}')">
-   👥 ADICIONAR AMIGO
-  </button>
- `);
-}
-
-/* ============================================================
-   FRIENDS
-============================================================ */
-
-function iniciarListeners(){
- carregarListaAmigos();
- carregarSolicitacoes();
- carregarNotificacoes();
-}
-
-function socialTab(tab,btn){
- document.querySelectorAll(".socialTabs button").forEach(b=>b.classList.remove("active"));
- btn.classList.add("active");
-
- $("socialFriends").classList.toggle("hidden",tab!=="friends");
- $("socialRequests").classList.toggle("hidden",tab!=="requests");
- $("socialSearch").classList.toggle("hidden",tab!=="search");
-
- if(tab==="friends")carregarListaAmigos();
- if(tab==="requests")carregarSolicitacoes();
-}
-
-async function obterAmigos(){
- if(!usuario)return[];
-
- const snap=await db.collection("Amizades")
-  .where("usuarios","array-contains",usuario.uid)
-  .where("status","==","aceita")
-  .get();
-
- return snap.docs.map(d=>d.data());
-}
-
-async function carregarListaAmigos(){
- const box=$("socialFriends");
-
- if(!box)return;
-
- box.innerHTML='<div class="card">Carregando amigos...</div>';
-
- try{
-  const snap=await db.collection("Amizades")
-   .where("usuarios","array-contains",usuario.uid)
-   .where("status","==","aceita")
-   .get();
-
-  if(snap.empty){
-   box.innerHTML=`
-    <div class="card">
-     <div style="font-size:40px;text-align:center">👥</div>
-     <p style="text-align:center;color:#9e8ca9;margin-top:8px">
-      Você ainda não possui amigos.
-     </p>
-     <p style="text-align:center;color:#75647d;font-size:12px;margin-top:5px">
-      Pesquise jogadores na aba de busca para adicionar.
-     </p>
-    </div>
-   `;
-   return;
-  }
-
-  const amigos=[];
-
-  for(const doc of snap.docs){
-   const a=doc.data();
-
-   const outro=a.usuarios.find(x=>x!==usuario.uid);
-
-   if(!outro)continue;
-
-   const pSnap=await db.collection("Partidas")
-    .doc("ranking_"+outro)
-    .get();
-
-   const presSnap=await db.collection("Partidas")
-    .doc("presenca_"+outro)
-    .get();
-
-   const p=pSnap.exists?pSnap.data():{
-    uid:outro,
-    nome:a.nomes?.[outro]||"Jogador",
-    foto:""
-   };
-
-   const pres=presSnap.exists?presSnap.data():{online:false};
-
-   amigos.push({
-    ...p,
-    online:!!pres.online,
-    amizadeId:doc.id
-   });
-  }
-
-  box.innerHTML=amigos.map(p=>`
-   <div class="friendItem">
-    <div class="avatar">
-     ${p.foto
-      ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
-      :esc((p.nome||"J").charAt(0).toUpperCase())}
-    </div>
-
-    <div class="friendMain">
-     <strong>${esc(p.nome)}</strong>
-     <small>
-      <span class="onlineDot ${p.online?"on":""}"></span>
-      ${p.online?"online":"offline"}
-     </small>
-    </div>
-
-    <div class="friendActions">
-     <button class="smallBtn" onclick="abrirChat('${esc(p.uid)}','${esc(p.nome)}','${esc(p.foto||"")}')">💬</button>
-     <button class="smallBtn" onclick="abrirPerfilPublico('${esc(p.uid)}')">👤</button>
-    </div>
-   </div>
-  `).join("");
-
- }catch(e){
-  console.error(e);
-  box.innerHTML='<div class="card">Não foi possível carregar seus amigos.</div>';
- }
-}
+/* =========================================
+   BUSCAR JOGADORES
+========================================= */
 
 async function buscarJogadores(){
- const termo=$("playerSearch").value.trim().toLowerCase();
 
- $("socialFriends").classList.add("hidden");
- $("socialRequests").classList.add("hidden");
- $("socialSearch").classList.remove("hidden");
+  const termo =
+    document.getElementById("friend-search")
+      .value.trim()
+      .toLowerCase();
 
- if(!termo){
-  $("socialSearch").innerHTML='<div class="card">Digite um nome para pesquisar.</div>';
-  return;
- }
+  const area =
+    document.getElementById("search-results");
 
- $("socialSearch").innerHTML='<div class="card">Pesquisando...</div>';
+  if(!termo){
 
- try{
-  const snap=await db.collection("Partidas")
-   .where("tipo","==","ranking")
-   .limit(100)
-   .get();
+    area.innerHTML=
+      "<p class='muted'>Digite um nome.</p>";
 
-  const resultados=[];
+    return;
+
+  }
+
+  area.innerHTML="Procurando...";
+
+  const snap =
+    await db
+      .collection("Partidas")
+      .where("tipo","==","ranking")
+      .limit(100)
+      .get();
+
+  area.innerHTML="";
+
+  let encontrou=false;
 
   snap.forEach(doc=>{
-   const p=doc.data();
 
-   if(
-    p.uid!==usuario.uid &&
-    String(p.nome||"").toLowerCase().includes(termo)
-   ){
-    resultados.push(p);
-   }
+    const p=doc.data();
+
+    if(
+      p.uid!==usuario.uid &&
+      String(p.nome||"")
+        .toLowerCase()
+        .includes(termo)
+    ){
+
+      encontrou=true;
+
+      area.innerHTML+=`
+
+        <div class="friend">
+
+          <img class="avatar"
+            src="${p.avatar || avatarURL(p.nome)}">
+
+          <div class="friend-info">
+
+            <strong>${esc(p.nome)}</strong>
+
+            <div class="muted">
+              Nível ${p.nivel || 1}
+            </div>
+
+          </div>
+
+          <button class="card-btn"
+            onclick="enviarAmizade('${p.uid}')">
+            ➕
+          </button>
+
+        </div>
+
+      `;
+
+    }
+
   });
 
-  if(!resultados.length){
-   $("socialSearch").innerHTML=`
-    <div class="card">Nenhum jogador encontrado.</div>
-   `;
-   return;
+  if(!encontrou){
+
+    area.innerHTML=
+      "<p class='muted'>Nenhum jogador encontrado.</p>";
+
   }
 
-  $("socialSearch").innerHTML=resultados.map(p=>`
-   <div class="friendItem">
-    <div class="avatar">
-     ${p.foto
-      ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
-      :esc((p.nome||"J").charAt(0).toUpperCase())}
-    </div>
-
-    <div class="friendMain">
-     <strong>${esc(p.nome)}</strong>
-     <small>${esc(p.titulo||"Novato")} • Nível ${p.nivel||1}</small>
-    </div>
-
-    <button class="smallBtn" onclick="enviarSolicitacao('${esc(p.uid)}','${esc(p.nome)}')">
-     ➕
-    </button>
-   </div>
-  `).join("");
-
- }catch(e){
-  console.error(e);
-  $("socialSearch").innerHTML='<div class="card">Erro na pesquisa.</div>';
- }
 }
 
-async function enviarSolicitacao(destinoUid,destinoNome){
- if(destinoUid===usuario.uid)return;
 
- const existing=await localizarAmizade(usuario.uid,destinoUid);
+function avatarURL(nome){
 
- if(existing){
-  if(existing.status==="aceita"){
-   toast("Vocês já são amigos.");
-  }else if(existing.status==="pendente"){
-   toast("Já existe uma solicitação.");
+  return "https://ui-avatars.com/api/?name="+
+    encodeURIComponent(nome || "Jogador")+
+    "&background=8b5cf6&color=fff";
+
+}
+
+
+/* =========================================
+   AMIZADES
+========================================= */
+
+function idAmizade(uid1,uid2){
+
+  return [uid1,uid2]
+    .sort()
+    .join("_");
+
+}
+
+
+async function enviarAmizade(destinatario){
+
+  if(destinatario===usuario.uid) return;
+
+  const id =
+    idAmizade(usuario.uid,destinatario);
+
+  const ref =
+    db.collection("Amizades").doc(id);
+
+  const snap=await ref.get();
+
+  if(snap.exists){
+
+    alert("Essa amizade já existe ou já foi solicitada.");
+
+    return;
+
   }
-  return;
- }
 
- const id=[usuario.uid,destinoUid].sort().join("_");
+  await ref.set({
 
- await db.collection("Amizades").doc(id).set({
-  usuarios:[usuario.uid,destinoUid],
-  status:"pendente",
-  solicitante:usuario.uid,
-  destinatario:destinoUid,
-  nomes:{
-   [usuario.uid]:perfil.nome,
-   [destinoUid]:destinoNome
-  },
-  fotos:{
-   [usuario.uid]:perfil.foto||""
-  },
-  criadoEm:agora(),
-  atualizadoEm:agora()
- });
+    usuarios:[
+      usuario.uid,
+      destinatario
+    ],
 
- await criarNotificacao(
-  destinoUid,
-  "friend_request",
-  perfil.nome+" enviou uma solicitação de amizade.",
-  usuario.uid
- );
+    status:"pendente",
 
- toast("Solicitação enviada!");
+    solicitante:usuario.uid,
+
+    destinatario,
+
+    nomes:{
+      [usuario.uid]:perfil.nome
+    },
+
+    criadoEm:
+      firebase.firestore.FieldValue.serverTimestamp()
+
+  });
+
+  await criarNotificacao(
+    destinatario,
+    "👥 Nova solicitação de amizade",
+    perfil.nome+" quer ser seu amigo."
+  );
+
+  alert("Solicitação enviada!");
+
 }
 
-async function localizarAmizade(a,b){
- const id=[a,b].sort().join("_");
 
- const snap=await db.collection("Amizades")
-  .doc(id)
-  .get();
+async function carregarSocial(){
 
- return snap.exists?snap.data():null;
+  carregarSolicitacoes();
+
+  carregarListaAmigos();
+
 }
+
 
 async function carregarSolicitacoes(){
- const box=$("socialRequests");
 
- if(!box)return;
+  const area =
+    document.getElementById("friend-requests");
 
- try{
-  const snap=await db.collection("Amizades")
-   .where("destinatario","==",usuario.uid)
-   .where("status","==","pendente")
-   .get();
+  area.innerHTML="Carregando...";
+
+  const snap =
+    await db
+      .collection("Amizades")
+      .where("destinatario","==",usuario.uid)
+      .where("status","==","pendente")
+      .get();
 
   if(snap.empty){
-   box.innerHTML='<div class="card">Nenhuma solicitação pendente.</div>';
-   return;
+
+    area.innerHTML=
+      "<p class='muted'>Nenhuma solicitação.</p>";
+
+    return;
+
   }
 
-  box.innerHTML=snap.docs.map(doc=>{
-   const a=doc.data();
+  area.innerHTML="";
 
-   const nome=a.nomes?.[a.solicitante]||"Jogador";
-   const foto=a.fotos?.[a.solicitante]||"";
+  for(const doc of snap.docs){
 
-   return `
-    <div class="friendItem">
-     <div class="avatar">
-      ${foto
-       ?`<img src="${esc(foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
-       :esc(nome.charAt(0).toUpperCase())}
-     </div>
+    const a=doc.data();
 
-     <div class="friendMain">
-      <strong>${esc(nome)}</strong>
-      <small>Quer ser seu amigo.</small>
-     </div>
+    const uid=a.solicitante;
 
-     <div class="friendActions">
-      <button class="smallBtn greenBtn" onclick="responderAmizade('${esc(doc.id)}',true)">✓</button>
-      <button class="smallBtn redBtn" onclick="responderAmizade('${esc(doc.id)}',false)">×</button>
-     </div>
-    </div>
-   `;
-  }).join("");
+    const jogador =
+      await obterPublico(uid);
 
- }catch(e){
-  console.error(e);
- }
-}
+    if(!jogador) continue;
 
-async function responderAmizade(id,aceitar){
- const ref=db.collection("Amizades").doc(id);
- const snap=await ref.get();
+    area.innerHTML+=`
 
- if(!snap.exists)return;
+      <div class="friend">
 
- const a=snap.data();
+        <img class="avatar"
+          src="${jogador.avatar || avatarURL(jogador.nome)}">
 
- if(aceitar){
-  await ref.update({
-   status:"aceita",
-   atualizadoEm:agora()
-  });
+        <div class="friend-info">
+          <strong>${esc(jogador.nome)}</strong>
+          <div class="muted">
+            quer ser seu amigo
+          </div>
+        </div>
 
-  await criarNotificacao(
-   a.solicitante,
-   "friend_accept",
-   perfil.nome+" aceitou sua solicitação de amizade.",
-   usuario.uid
-  );
+        <button class="card-btn"
+          onclick="aceitarAmizade('${doc.id}')">
+          ✓
+        </button>
 
-  toast("Amizade aceita!");
- }else{
-  await ref.delete();
+        <button class="card-btn secondary"
+          onclick="recusarAmizade('${doc.id}')">
+          ×
+        </button>
 
-  await criarNotificacao(
-   a.solicitante,
-   "friend_reject",
-   perfil.nome+" recusou sua solicitação.",
-   usuario.uid
-  );
+      </div>
 
-  toast("Solicitação recusada.");
- }
-
- carregarSolicitacoes();
- carregarListaAmigos();
- await verificarConquistas();
-}
-
-/* ============================================================
-   CHAT PRIVADO
-============================================================ */
-
-let chatFriendUid=null;
-let chatFriendName="";
-
-function chatId(a,b){
- return [a,b].sort().join("_");
-}
-
-async function abrirChat(uid,nome,foto=""){
- const amizade=await localizarAmizade(usuario.uid,uid);
-
- if(!amizade||amizade.status!=="aceita"){
-  toast("Você precisa ser amigo dessa pessoa.");
-  return;
- }
-
- chatFriendUid=uid;
- chatFriendName=nome;
-
- document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
- $("viewChat").classList.add("active");
-
- $("chatFriendName").textContent=nome;
-
- if(foto){
-  $("chatFriendAvatar").innerHTML=
-   `<img src="${esc(foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`;
- }else{
-  $("chatFriendAvatar").textContent=nome.charAt(0).toUpperCase();
- }
-
- const pres=await db.collection("Partidas")
-  .doc("presenca_"+uid)
-  .get();
-
- $("chatFriendStatus").textContent=
-  pres.exists&&pres.data().online?"online":"offline";
-
- ouvirMensagens();
-}
-
-function ouvirMensagens(){
- if(unsubscribeMessages)unsubscribeMessages();
-
- if(!chatFriendUid)return;
-
- const id=chatId(usuario.uid,chatFriendUid);
-
- unsubscribeMessages=db.collection("Chats")
-  .doc(id)
-  .collection("Mensagens")
-  .orderBy("criadoEm","asc")
-  .limit(100)
-  .onSnapshot(snap=>{
-   const box=$("messages");
-
-   box.innerHTML="";
-
-   snap.forEach(doc=>{
-    const m=doc.data();
-
-    const mine=m.remetente===usuario.uid;
-
-    const div=document.createElement("div");
-    div.className="msg "+(mine?"mine":"theirs");
-
-    div.innerHTML=`
-     ${esc(m.texto)}
-     <span class="msgTime">${formatarHora(m.criadoEm)}</span>
     `;
 
-    box.appendChild(div);
-   });
+  }
 
-   box.scrollTop=box.scrollHeight;
+}
+
+
+async function aceitarAmizade(id){
+
+  const ref =
+    db.collection("Amizades").doc(id);
+
+  const snap=await ref.get();
+
+  if(!snap.exists) return;
+
+  const a=snap.data();
+
+  if(a.destinatario!==usuario.uid) return;
+
+  await ref.update({
+
+    status:"aceita",
+
+    aceitaEm:
+      firebase.firestore.FieldValue.serverTimestamp()
+
   });
+
+  await criarNotificacao(
+    a.solicitante,
+    "🤝 Solicitação aceita",
+    perfil.nome+" aceitou sua solicitação."
+  );
+
+  await carregarSocial();
+
 }
 
-function formatarHora(timestamp){
- if(!timestamp||!timestamp.toDate)return"";
- return timestamp.toDate().toLocaleTimeString("pt-BR",{
-  hour:"2-digit",
-  minute:"2-digit"
- });
-}
 
-async function garantirChat(){
- const id=chatId(usuario.uid,chatFriendUid);
+async function recusarAmizade(id){
 
- const ref=db.collection("Chats").doc(id);
- const snap=await ref.get();
+  const ref =
+    db.collection("Amizades").doc(id);
 
- if(!snap.exists){
-  await ref.set({
-   participantes:[usuario.uid,chatFriendUid],
-   criadoEm:agora(),
-   atualizadoEm:agora()
+  const snap=await ref.get();
+
+  if(!snap.exists) return;
+
+  const a=snap.data();
+
+  if(a.destinatario!==usuario.uid) return;
+
+  await ref.update({
+
+    status:"recusada"
+
   });
- }
+
+  await carregarSocial();
+
 }
+
+
+async function carregarListaAmigos(){
+
+  const area =
+    document.getElementById("friends-list");
+
+  area.innerHTML="Carregando...";
+
+  const snap =
+    await db
+      .collection("Amizades")
+      .where("usuarios","array-contains",usuario.uid)
+      .where("status","==","aceita")
+      .get();
+
+  if(snap.empty){
+
+    area.innerHTML=
+      "<p class='muted'>Você ainda não possui amigos.</p>";
+
+    return;
+
+  }
+
+  area.innerHTML="";
+
+  for(const doc of snap.docs){
+
+    const a=doc.data();
+
+    const outro =
+      a.usuarios.find(u=>u!==usuario.uid);
+
+    const p =
+      await obterPublico(outro);
+
+    if(!p) continue;
+
+    const online =
+      await estaOnline(outro);
+
+    area.innerHTML+=`
+
+      <div class="friend">
+
+        <img class="avatar"
+          src="${p.avatar || avatarURL(p.nome)}">
+
+        <div class="friend-info">
+
+          <strong>
+            ${esc(p.nome)}
+          </strong>
+
+          <div class="muted">
+
+            <span class="online-dot ${online?"on":""}">
+            </span>
+
+            ${online?"Online":"Offline"}
+
+          </div>
+
+        </div>
+
+        <button class="card-btn"
+          onclick='abrirChat(${JSON.stringify({
+            uid:outro,
+            nome:p.nome
+          })})'>
+          💬
+        </button>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================
+   PUBLIC PROFILE
+========================================= */
+
+async function obterPublico(uid){
+
+  const snap =
+    await db
+      .collection("Partidas")
+      .doc("ranking_"+uid)
+      .get();
+
+  if(!snap.exists) return null;
+
+  return snap.data();
+
+}
+
+
+async function estaOnline(uid){
+
+  const snap =
+    await db
+      .collection("Partidas")
+      .doc("presenca_"+uid)
+      .get();
+
+  if(!snap.exists) return false;
+
+  const p=snap.data();
+
+  if(!p.online) return false;
+
+  if(!p.atualizadoEm) return false;
+
+  const tempo =
+    p.atualizadoEm.toDate
+      ? p.atualizadoEm.toDate().getTime()
+      : Date.now();
+
+  return Date.now()-tempo < 120000;
+
+}
+
+
+/* =========================================
+   CHAT PRIVADO
+========================================= */
+
+function chatId(uid1,uid2){
+
+  return [uid1,uid2]
+    .sort()
+    .join("_");
+
+}
+
+
+async function abrirChat(amigo){
+
+  amigoAtual=amigo;
+
+  mostrarPagina("chat-page");
+
+  document.getElementById("chat-name")
+    .textContent=amigo.nome;
+
+  const area =
+    document.getElementById("chat-messages");
+
+  area.innerHTML="Carregando...";
+
+  if(chatUnsubscribe)
+    chatUnsubscribe();
+
+  const id =
+    chatId(usuario.uid,amigo.uid);
+
+  const chatRef =
+    db.collection("Chats").doc(id);
+
+  const chatSnap=await chatRef.get();
+
+  if(!chatSnap.exists){
+
+    await chatRef.set({
+
+      participantes:[
+        usuario.uid,
+        amigo.uid
+      ],
+
+      criadoEm:
+        firebase.firestore.FieldValue.serverTimestamp()
+
+    });
+
+  }
+
+  chatUnsubscribe =
+    chatRef
+      .collection("Mensagens")
+      .orderBy("enviadaEm","asc")
+      .onSnapshot(snap=>{
+
+        area.innerHTML="";
+
+        snap.forEach(doc=>{
+
+          const m=doc.data();
+
+          area.innerHTML+=`
+
+            <div class="message ${m.remetente===usuario.uid?"me":""}">
+
+              ${esc(m.texto)}
+
+            </div>
+
+          `;
+
+        });
+
+        area.scrollTop=area.scrollHeight;
+
+      });
+
+}
+
 
 async function enviarMensagem(){
- const input=$("messageInput");
- const texto=input.value.trim();
 
- if(!texto||!chatFriendUid)return;
+  if(!amigoAtual) return;
 
- await garantirChat();
+  const input =
+    document.getElementById("chat-input");
 
- const id=chatId(usuario.uid,chatFriendUid);
+  const texto=input.value.trim();
 
- await db.collection("Chats")
-  .doc(id)
-  .collection("Mensagens")
-  .add({
-   remetente:usuario.uid,
-   destinatario:chatFriendUid,
-   texto:texto.slice(0,500),
-   criadoEm:agora()
-  });
+  if(!texto) return;
 
- await db.collection("Chats")
-  .doc(id)
-  .update({
-   ultimaMensagem:texto.slice(0,100),
-   atualizadoEm:agora()
-  });
+  const id =
+    chatId(usuario.uid,amigoAtual.uid);
 
- await criarNotificacao(
-  chatFriendUid,
-  "message",
-  perfil.nome+" enviou uma mensagem.",
-  usuario.uid
- );
+  await db
+    .collection("Chats")
+    .doc(id)
+    .collection("Mensagens")
+    .add({
 
- input.value="";
+      remetente:usuario.uid,
+
+      destinatario:amigoAtual.uid,
+
+      texto,
+
+      enviadaEm:
+        firebase.firestore.FieldValue.serverTimestamp()
+
+    });
+
+  await criarNotificacao(
+    amigoAtual.uid,
+    "💬 Nova mensagem",
+    perfil.nome+" enviou uma mensagem."
+  );
+
+  input.value="";
+
 }
 
-/* ============================================================
-   NOTIFICATIONS
-============================================================ */
 
-async function criarNotificacao(destinatario,tipo,mensagem,origem){
- await db.collection("Notificacoes").add({
+/* =========================================
+   NOTIFICAÇÕES
+========================================= */
+
+async function criarNotificacao(
   destinatario,
-  tipo,
-  mensagem,
-  origem:origem||"",
-  lida:false,
-  criadoEm:agora()
- });
+  titulo,
+  texto
+){
+
+  await db
+    .collection("Notificacoes")
+    .add({
+
+      destinatario,
+
+      titulo,
+
+      texto,
+
+      lida:false,
+
+      criadoEm:
+        firebase.firestore.FieldValue.serverTimestamp()
+
+    });
+
 }
 
-function carregarNotificacoes(){
- if(unsubscribeNotifications)unsubscribeNotifications();
-
- unsubscribeNotifications=db.collection("Notificacoes")
-  .where("destinatario","==",usuario.uid)
-  .orderBy("criadoEm","desc")
-  .limit(50)
-  .onSnapshot(snap=>{
-   const box=$("notificationsList");
-
-   let naoLidas=0;
-   let html="";
-
-   snap.forEach(doc=>{
-    const n=doc.data();
-
-    if(!n.lida)naoLidas++;
-
-    html+=`
-     <div class="notification" style="opacity:${n.lida?.65:1}">
-      <strong>${iconNotificacao(n.tipo)} ${esc(n.mensagem)}</strong>
-      <small>${formatarData(n.criadoEm)}</small>
-     </div>
-    `;
-   });
-
-   box.innerHTML=html||
-    '<div class="card">Nenhuma notificação.</div>';
-
-   atualizarBadge(naoLidas);
-  });
-}
-
-function iconNotificacao(tipo){
- const mapa={
-  friend_request:"👥",
-  friend_accept:"✅",
-  friend_reject:"❌",
-  message:"💬",
-  system:"🔔"
- };
-
- return mapa[tipo]||"🔔";
-}
-
-function formatarData(timestamp){
- if(!timestamp||!timestamp.toDate)return"Agora";
-
- return timestamp.toDate().toLocaleString("pt-BR",{
-  day:"2-digit",
-  month:"2-digit",
-  hour:"2-digit",
-  minute:"2-digit"
- });
-}
-
-async function marcarNotificacoesLidas(){
- const snap=await db.collection("Notificacoes")
-  .where("destinatario","==",usuario.uid)
-  .where("lida","==",false)
-  .limit(50)
-  .get();
-
- const batch=db.batch();
-
- snap.forEach(doc=>{
-  batch.update(doc.ref,{lida:true});
- });
-
- await batch.commit();
-}
-
-function atualizarBadge(n){
- const badge=$("notificationBadge");
-
- if(n>0){
-  badge.classList.remove("hidden");
-  badge.textContent=n>99?"99+":n;
- }else{
-  badge.classList.add("hidden");
- }
-}
 
 async function abrirNotificacoes(){
- abrirView("notifications");
- await marcarNotificacoesLidas();
-}
 
-/* ============================================================
-   DAILY CHALLENGE
-============================================================ */
+  const snap =
+    await db
+      .collection("Notificacoes")
+      .where("destinatario","==",usuario.uid)
+      .orderBy("criadoEm","desc")
+      .limit(30)
+      .get();
 
-const desafiosDiarios=[
- ["Qual é o maior planeta do Sistema Solar?",["Terra","Júpiter","Marte","Saturno"],1],
- ["Qual é a capital do Brasil?",["Rio de Janeiro","Brasília","São Paulo","Salvador"],1],
- ["Quanto é 12 × 8?",["86","96","108","116"],1],
- ["Qual planeta é conhecido como planeta vermelho?",["Marte","Vênus","Mercúrio","Netuno"],0],
- ["Qual é o maior oceano da Terra?",["Atlântico","Índico","Pacífico","Ártico"],2],
- ["Quem proclamou a Independência do Brasil?",["Dom Pedro I","Dom Pedro II","Tiradentes","Deodoro"],0],
- ["Qual linguagem estrutura uma página web?",["CSS","HTML","SQL","Python"],1]
-];
+  let html="<h2>🔔 Notificações</h2>";
 
-function indiceDia(){
- const d=new Date();
- return (d.getFullYear()+d.getMonth()+d.getDate())%desafiosDiarios.length;
-}
+  if(snap.empty){
 
-function chaveDiaria(){
- const d=new Date();
+    html+=
+      "<p class='muted'>Nenhuma notificação.</p>";
 
- return "desafio_"+d.getFullYear()+"_"+d.getMonth()+"_"+d.getDate();
-}
+  }else{
 
-function desafioDiario(){
- const q=desafiosDiarios[indiceDia()];
- const concluido=localStorage.getItem(chaveDiaria())==="1";
+    snap.forEach(doc=>{
 
- abrirModal(`
-  <div class="modalTitle">
-   <h2>📅 Desafio diário</h2>
-   <button class="closeBtn" onclick="fecharModal()">×</button>
-  </div>
+      const n=doc.data();
 
-  <div class="questionCard">
-   <div class="questionText">${esc(q[0])}</div>
-  </div>
+      html+=`
 
-  <div class="answers">
-   ${q[1].map((r,i)=>`
-    <button
-     class="answer ${concluido?"disabled":""}"
-     onclick="responderDiario(${i})">
-     ${esc(r)}
-    </button>
-   `).join("")}
-  </div>
+        <div class="panel">
 
-  ${concluido
-   ?`<p style="text-align:center;color:#55dc9a;margin-top:15px">✓ Você já completou o desafio de hoje.</p>`
-   :""
-  }
- `);
-}
+          <strong>
+            ${esc(n.titulo || "")}
+          </strong>
 
-async function responderDiario(index){
- if(localStorage.getItem(chaveDiaria())==="1"){
-  toast("Você já completou o desafio de hoje.");
-  return;
- }
+          <p class="muted">
+            ${esc(n.texto || "")}
+          </p>
 
- const q=desafiosDiarios[indiceDia()];
- const buttons=[...document.querySelectorAll("#modalBox .answer")];
+        </div>
 
- buttons.forEach(b=>b.disabled=true);
+      `;
 
- if(index===q[2]){
-  buttons[index].classList.add("correct");
+    });
 
-  localStorage.setItem(chaveDiaria(),"1");
-
-  await adicionarXP(50);
-  await adicionarMoedas(10);
-
-  toast("🎉 Desafio concluído! +50 XP");
-  await verificarConquistas();
-
-  setTimeout(fecharModal,900);
- }else{
-  buttons[index]?.classList.add("wrong");
-  buttons[q[2]]?.classList.add("correct");
-
-  toast("Resposta incorreta.");
- }
-}
-
-/* ============================================================
-   RACING
-============================================================ */
-
-let race={
- running:false,
- x:50,
- score:0,
- speed:2.2,
- interval:null,
- enemyInterval:null
-};
-
-function abrirCorrida(){
- abrirModal(`
-  <div class="modalTitle">
-   <h2>🏎️ Corrida do Milhão</h2>
-   <button class="closeBtn" onclick="fecharModal()">×</button>
-  </div>
-
-  <p style="color:#9e8ca9;line-height:1.5">
-   Desvie dos carros, sobreviva o máximo possível e aumente sua pontuação.
-  </p>
-
-  <button class="mainBtn" onclick="iniciarCorrida()">COMEÇAR CORRIDA</button>
- `);
-}
-
-function iniciarCorrida(){
- fecharModal();
- trocarMusicaFaixa("race");
-
- document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-
- let old=$("raceGame");
- if(old)old.remove();
-
- const div=document.createElement("section");
- div.id="raceGame";
- div.className="view active";
-
- div.innerHTML=`
-  <div class="millionTop">
-   <button class="smallBtn" onclick="pararCorrida()">← Sair</button>
-   <div>🏎️ Corrida</div>
-   <strong id="raceScore">0</strong>
-  </div>
-
-  <div class="race">
-   <div class="road"></div>
-   <div class="roadLine" style="animation-delay:0s"></div>
-   <div class="roadLine" style="animation-delay:.35s"></div>
-   <div id="raceEnemies"></div>
-   <div id="raceCar" class="car"></div>
-  </div>
-
-  <div class="raceControls">
-   <button onclick="moverCarro(-1)">⬅️ ESQUERDA</button>
-   <button onclick="moverCarro(1)">DIREITA ➡️</button>
-  </div>
-
-  <button class="mainBtn" onclick="ativarControlesTouch()">
-   🎮 CONTROLES
-  </button>
- `;
-
- $("app").querySelector("main").prepend(div);
-
- race.running=true;
- race.x=50;
- race.score=0;
- race.speed=2.2;
-
- clearInterval(race.interval);
- clearInterval(race.enemyInterval);
-
- race.interval=setInterval(()=>{
-  if(!race.running)return;
-
-  race.score++;
-  $("raceScore").textContent=race.score;
-
-  if(race.score%100===0){
-   race.speed+=.15;
-  }
- },100);
-
- race.enemyInterval=setInterval(criarInimigo,900);
-}
-
-function moverCarro(dir){
- if(!race.running)return;
-
- race.x+=dir*8;
-
- race.x=Math.max(22,Math.min(78,race.x));
-
- const car=$("raceCar");
-
- if(car){
-  car.style.left=`calc(${race.x}% - 22px)`;
- }
-}
-
-function criarInimigo(){
- if(!race.running)return;
-
- const area=$("raceEnemies");
- const car=$("raceCar");
-
- if(!area||!car)return;
-
- const enemy=document.createElement("div");
- enemy.className="enemy";
-
- const lane=[30,50,70][Math.floor(Math.random()*3)];
-
- enemy.style.left=`calc(${lane}% - 21px)`;
- enemy.style.top="-90px";
-
- area.appendChild(enemy);
-
- let y=-90;
-
- const timer=setInterval(()=>{
-  if(!race.running){
-   clearInterval(timer);
-   enemy.remove();
-   return;
   }
 
-  y+=race.speed*3;
-  enemy.style.top=y+"px";
+  abrirModal(html);
 
-  const ex=parseFloat(enemy.style.left)||0;
-  const cx=parseFloat(car.style.left)||0;
+}
 
-  if(y>300&&y<380&&Math.abs(ex-cx)<45){
-   clearInterval(timer);
-   enemy.remove();
-   fimCorrida();
-   return;
+
+/* =========================================
+   PRESENÇA
+========================================= */
+
+async function salvarPresenca(online){
+
+  if(!usuario) return;
+
+  await db
+    .collection("Partidas")
+    .doc("presenca_"+usuario.uid)
+    .set({
+
+      tipo:"presenca",
+
+      uid:usuario.uid,
+
+      online,
+
+      atualizadoEm:
+        firebase.firestore.FieldValue.serverTimestamp()
+
+    });
+
+}
+
+
+setInterval(()=>{
+
+  if(usuario)
+    salvarPresenca(true);
+
+},60000);
+
+
+document.addEventListener(
+  "visibilitychange",
+  ()=>{
+
+    if(!usuario) return;
+
+    salvarPresenca(
+      !document.hidden
+    );
+
   }
+);
 
-  if(y>430){
-   clearInterval(timer);
-   enemy.remove();
-  }
- },30);
+
+/* =========================================
+   FOTO
+========================================= */
+
+async function alterarFoto(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file) return;
+
+  const reader=new FileReader();
+
+  reader.onload=e=>{
+
+    const img=new Image();
+
+    img.onload=async()=>{
+
+      const canvas=document.createElement("canvas");
+
+      const tamanho=256;
+
+      canvas.width=tamanho;
+      canvas.height=tamanho;
+
+      const ctx=canvas.getContext("2d");
+
+      const menor =
+        Math.min(img.width,img.height);
+
+      const sx =
+        (img.width-menor)/2;
+
+      const sy =
+        (img.height-menor)/2;
+
+      ctx.drawImage(
+        img,
+        sx,
+        sy,
+        menor,
+        menor,
+        0,
+        0,
+        tamanho,
+        tamanho
+      );
+
+      const base64 =
+        canvas.toDataURL(
+          "image/jpeg",
+          .7
+        );
+
+      perfil.avatar=base64;
+
+      await salvarPerfil();
+
+      alert("Foto atualizada!");
+
+    };
+
+    img.src=e.target.result;
+
+  };
+
+  reader.readAsDataURL(file);
+
 }
 
-function fimCorrida(){
- if(!race.running)return;
 
- race.running=false;
+/* =========================================
+   DESAFIO DIÁRIO
+========================================= */
 
- clearInterval(race.interval);
- clearInterval(race.enemyInterval);
+function perguntaDoDia(){
 
- tocarSom("wrong");
+  const todas=[];
 
- const pontos=race.score;
- const xp=Math.max(5,Math.floor(pontos/10));
+  Object.keys(perguntas).forEach(cat=>{
 
- adicionarXP(xp);
+    perguntas[cat].forEach(q=>{
 
- abrirModal(`
-  <div class="resultBox">
-   <div style="font-size:60px">🏁</div>
-   <h2>Fim da corrida!</h2>
+      todas.push({
+        pergunta:q[0],
+        respostas:q[1],
+        correta:q[2]
+      });
 
-   <div class="resultPrize">${pontos}</div>
+    });
 
-   <p style="color:#9e8ca9">pontos</p>
-   <p style="margin-top:10px;color:#d79aff">+${xp} XP</p>
-
-   <button class="mainBtn" onclick="fecharModal();iniciarCorrida()">
-    CORRER NOVAMENTE
-   </button>
-
-   <button class="smallBtn" style="width:100%;margin-top:8px" onclick="fecharModal();abrirView('home')">
-    VOLTAR
-   </button>
-  </div>
- `);
-}
-
-function pararCorrida(){
- race.running=false;
- clearInterval(race.interval);
- clearInterval(race.enemyInterval);
-
- const r=$("raceGame");
- if(r)r.remove();
-
- abrirView("home");
-}
-
-function ativarControlesTouch(){
- toast("Use os botões esquerda e direita para dirigir.");
-}
-
-/* ============================================================
-   THEME
-============================================================ */
-
-function alternarTema(){
- const light=!document.body.classList.contains("light");
-
- document.body.classList.toggle("light",light);
-
- $("themeSwitch").classList.toggle("on",light);
-
- localStorage.setItem("theme",light?"light":"dark");
-}
-
-function carregarTema(){
- const theme=localStorage.getItem("theme");
-
- if(theme==="light"){
-  document.body.classList.add("light");
-
-  if($("themeSwitch")){
-   $("themeSwitch").classList.add("on");
-  }
- }
-
- const m=localStorage.getItem("musicOn");
-
- if(m==="0"){
-  musicOn=false;
-
-  if($("musicSwitch")){
-   $("musicSwitch").classList.remove("on");
-  }
- }
-}
-
-carregarTema();
-
-/* ============================================================
-   MODAL / HOME
-============================================================ */
-
-function central(){
- abrirView("home");
-}
-
-function configurarApp(){
- carregarTema();
- atualizarInterface();
-}
-
-/* ============================================================
-   ONLINE FRIEND INVITE
-============================================================ */
-
-async function convidarAmigoParaJogar(uid,nome){
- const amizade=await localizarAmizade(usuario.uid,uid);
-
- if(!amizade||amizade.status!=="aceita"){
-  toast("Esse jogador não é seu amigo.");
-  return;
- }
-
- const codigo=gerarCodigo();
-
- await db.collection("Partidas")
-  .doc("sala_"+codigo)
-  .set({
-   codigo,
-   criador:usuario.uid,
-   jogadores:[
-    {
-     uid:usuario.uid,
-     nome:perfil.nome,
-     foto:perfil.foto||""
-    }
-   ],
-   convidado:uid,
-   status:"aguardando",
-   tema:"geral",
-   criadoEm:agora()
   });
 
- await criarNotificacao(
-  uid,
-  "system",
-  perfil.nome+" convidou você para jogar online. Código: "+codigo,
-  usuario.uid
- );
+  const hoje =
+    new Date();
 
- toast("Convite enviado!");
+  const chave =
+    hoje.getFullYear()+
+    ""+
+    (hoje.getMonth()+1)+
+    ""+
+    hoje.getDate();
+
+  let numero=0;
+
+  for(let i=0;i<chave.length;i++)
+    numero+=Number(chave[i]);
+
+  return todas[numero%todas.length];
+
 }
 
-/* ============================================================
-   PROFILE PUBLIC + FRIEND PLAY
-============================================================ */
 
-async function abrirPerfilEJogar(uid){
- const snap=await db.collection("Partidas")
-  .doc("ranking_"+uid)
-  .get();
+function abrirDesafioDiario(){
 
- if(!snap.exists)return;
+  mostrarPagina("daily-page");
 
- const p=snap.data();
+  const q=perguntaDoDia();
 
- abrirModal(`
-  <div class="modalTitle">
-   <h2>${esc(p.nome)}</h2>
-   <button class="closeBtn" onclick="fecharModal()">×</button>
-  </div>
+  const area =
+    document.getElementById("daily-question");
 
-  <div class="profileHead">
-   <div class="avatar">
-    ${p.foto
-     ?`<img src="${esc(p.foto)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`
-     :esc((p.nome||"J").charAt(0))}
-   </div>
+  area.textContent=q.pergunta;
 
-   <div class="profileInfo">
-    <h2>${esc(p.nome)}</h2>
-    <p>${esc(p.titulo||"Novato")}</p>
-   </div>
-  </div>
+  const respostas =
+    document.getElementById("daily-answers");
 
-  <div class="statsGrid" style="margin-top:15px">
-   <div class="stat">
-    <small>Nível</small>
-    <strong>${p.nivel||1}</strong>
-   </div>
-   <div class="stat">
-    <small>XP</small>
-    <strong>${p.xp||0}</strong>
-   </div>
-   <div class="stat">
-    <small>Vitórias</small>
-    <strong>${p.vitorias||0}</strong>
-   </div>
-   <div class="stat">
-    <small>Recorde</small>
-    <strong>${moeda(p.maiorPremio)}</strong>
-   </div>
-  </div>
+  respostas.innerHTML="";
 
-  <button class="mainBtn" style="margin-top:15px" onclick="convidarAmigoParaJogar('${esc(uid)}','${esc(p.nome)}')">
-   🎮 CONVIDAR PARA JOGAR
-  </button>
- `);
+  document.getElementById("daily-result")
+    .innerHTML="";
+
+  const chave =
+    "desafio_diario_"+
+
+    new Date().toISOString().slice(0,10);
+
+  const feito =
+    localStorage.getItem(chave);
+
+  q.respostas.forEach((r,i)=>{
+
+    const b=document.createElement("button");
+
+    b.className="answer";
+
+    b.textContent=
+      String.fromCharCode(65+i)+") "+r;
+
+    if(feito)
+      b.disabled=true;
+
+    b.onclick=async()=>{
+
+      if(localStorage.getItem(chave))
+        return;
+
+      localStorage.setItem(chave,"sim");
+
+      if(i===q.correta){
+
+        b.classList.add("correct");
+
+        perfil.xp+=100;
+        perfil.moedas+=25;
+
+        await salvarPerfil();
+
+        document.getElementById("daily-result")
+          .innerHTML=
+          "<p class='success'>🎉 Correto! +100 XP e +25 moedas.</p>";
+
+      }else{
+
+        b.classList.add("wrong");
+
+        document.getElementById("daily-result")
+          .innerHTML=
+          "<p class='danger'>❌ Resposta incorreta.</p>";
+
+      }
+
+      document
+        .querySelectorAll("#daily-answers button")
+        .forEach(x=>x.disabled=true);
+
+    };
+
+    respostas.appendChild(b);
+
+  });
+
 }
 
-/* ============================================================
-   HELPERS
-============================================================ */
 
-window.addEventListener("beforeunload",()=>{
- if(usuario&&perfil){
+/* =========================================
+   CORRIDA
+========================================= */
+
+function abrirCorrida(){
+
+  mostrarPagina("race-page");
+
+}
+
+
+function iniciarCorrida(){
+
+  corrida={
+
+    pontos:0,
+
+    x:45,
+
+    ativo:true
+
+  };
+
+  document.getElementById("race-score")
+    .textContent="0";
+
+  document.getElementById("car")
+    .style.left="45%";
+
+  tocarSomInicio();
+
+}
+
+
+function moverCarro(valor){
+
+  if(!corrida || !corrida.ativo)
+    iniciarCorrida();
+
+  corrida.x+=valor/10;
+
+  if(corrida.x<5)
+    corrida.x=5;
+
+  if(corrida.x>90)
+    corrida.x=90;
+
+  document.getElementById("car")
+    .style.left=corrida.x+"%";
+
+  corrida.pontos+=10;
+
+  document.getElementById("race-score")
+    .textContent=corrida.pontos;
+
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+function abrirModal(html){
+
+  document
+    .getElementById("modal-content")
+    .innerHTML=html;
+
+  document
+    .getElementById("modal")
+    .classList.remove("hidden");
+
+}
+
+
+function fecharModal(){
+
+  document
+    .getElementById("modal")
+    .classList.add("hidden");
+
+}
+
+
+/* =========================================
+   MÚSICA / SONS
+========================================= */
+
+function iniciarAudio(){
+
   try{
-   salvarPresenca({...perfil,online:false});
-  }catch(e){}
- }
-});
 
-function limparJanelasDeJogo(){
- [
-  "millionGame",
-  "millionResult",
-  "localGame",
-  "localResult",
-  "onlineRoom",
-  "raceGame"
- ].forEach(id=>{
-  const e=$(id);
-  if(e)e.remove();
- });
+    if(!audioContext){
+
+      audioContext =
+        new (
+          window.AudioContext ||
+          window.webkitAudioContext
+        )();
+
+    }
+
+    tocarMusica();
+
+  }catch(e){
+
+    console.log("Áudio indisponível.");
+
+  }
+
 }
 
-/* ============================================================
-   START
-============================================================ */
 
-configurarApp();
+function beep(freq,duracao,tipo="sine",volume=.035){
+
+  if(!musicaLigada || !audioContext)
+    return;
+
+  if(audioContext.state==="suspended")
+    audioContext.resume();
+
+  const osc =
+    audioContext.createOscillator();
+
+  const gain =
+    audioContext.createGain();
+
+  osc.type=tipo;
+
+  osc.frequency.value=freq;
+
+  gain.gain.setValueAtTime(
+    volume,
+    audioContext.currentTime
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+    .001,
+    audioContext.currentTime+duracao
+  );
+
+  osc.connect(gain);
+
+  gain.connect(audioContext.destination);
+
+  osc.start();
+
+  osc.stop(
+    audioContext.currentTime+duracao
+  );
+
+}
+
+
+function tocarMusica(){
+
+  if(!musicaLigada) return;
+
+  if(musicInterval)
+    clearInterval(musicInterval);
+
+  const notas=[
+    261.63,
+    329.63,
+    392,
+    523.25,
+    392,
+    329.63
+  ];
+
+  let i=0;
+
+  musicInterval=setInterval(()=>{
+
+    beep(
+      notas[i%notas.length],
+      .18,
+      "triangle",
+      .018
+    );
+
+    i++;
+
+  },500);
+
+}
+
+
+function alternarMusica(){
+
+  musicaLigada=!musicaLigada;
+
+  if(!musicaLigada){
+
+    if(musicInterval)
+      clearInterval(musicInterval);
+
+  }else{
+
+    iniciarAudio();
+
+  }
+
+}
+
+
+function tocarSomInicio(){
+
+  beep(261,.15,"sine",.05);
+
+  setTimeout(
+    ()=>beep(392,.2,"sine",.05),
+    150
+  );
+
+}
+
+
+function tocarSomAcerto(){
+
+  beep(523,.12,"triangle",.07);
+
+  setTimeout(
+    ()=>beep(784,.18,"triangle",.07),
+    120
+  );
+
+}
+
+
+function tocarSomErro(){
+
+  beep(180,.25,"sawtooth",.06);
+
+}
+
+
+/* =========================================
+   TEMA
+========================================= */
+
+function alternarTema(){
+
+  const atual =
+    localStorage.getItem("tema") || "escuro";
+
+  if(atual==="escuro"){
+
+    document.documentElement.style.setProperty(
+      "--bg",
+      "#eef2ff"
+    );
+
+    document.documentElement.style.setProperty(
+      "--card",
+      "#ffffff"
+    );
+
+    document.documentElement.style.setProperty(
+      "--text",
+      "#111827"
+    );
+
+    document.documentElement.style.setProperty(
+      "--muted",
+      "#64748b"
+    );
+
+    localStorage.setItem("tema","claro");
+
+  }else{
+
+    document.documentElement.style.setProperty(
+      "--bg",
+      "#090612"
+    );
+
+    document.documentElement.style.setProperty(
+      "--card",
+      "#171025"
+    );
+
+    document.documentElement.style.setProperty(
+      "--text",
+      "#fff"
+    );
+
+    document.documentElement.style.setProperty(
+      "--muted",
+      "#a9a2b8"
+    );
+
+    localStorage.setItem("tema","escuro");
+
+  }
+
+}
+
+
+/* =========================================
+   SEGURANÇA DE TEXTO
+========================================= */
+
+function esc(text){
+
+  return String(text ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================
+   CONTROLES DE TECLADO
+========================================= */
+
+document.addEventListener(
+  "keydown",
+  e=>{
+
+    if(
+      document
+        .getElementById("milhao-page")
+        .classList.contains("hidden")
+    )
+      return;
+
+    if(e.key==="1")
+      responder(0,document.querySelectorAll(".answer")[0]);
+
+    if(e.key==="2")
+      responder(1,document.querySelectorAll(".answer")[1]);
+
+    if(e.key==="3")
+      responder(2,document.querySelectorAll(".answer")[2]);
+
+    if(e.key==="4")
+      responder(3,document.querySelectorAll(".answer")[3]);
+
+  }
+);
+
+
+/* =========================================
+   RECUPERAÇÃO DO TEMA
+========================================= */
+
+if(localStorage.getItem("tema")==="claro"){
+
+  document.documentElement.style.setProperty(
+    "--bg",
+    "#eef2ff"
+  );
+
+  document.documentElement.style.setProperty(
+    "--card",
+    "#ffffff"
+  );
+
+  document.documentElement.style.setProperty(
+    "--text",
+    "#111827"
+  );
+
+  document.documentElement.style.setProperty(
+    "--muted",
+    "#64748b"
+  );
+
+}
+
+
+/* =========================================
+   INÍCIO
+========================================= */
+
+mostrarPagina("home-page");
 
 </script>
+
 </body>
 </html>
