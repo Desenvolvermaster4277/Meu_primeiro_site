@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#16002b">
+
 <title>Desafio do Milhão</title>
 
-<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -20,198 +19,228 @@
 
 body{
     font-family:Arial,Helvetica,sans-serif;
-    background:
-        radial-gradient(circle at top,#3d1168 0%,#17002c 40%,#08000f 100%);
-    color:#fff;
+    background:linear-gradient(135deg,#090014,#18002f,#08000f);
+    color:white;
     min-height:100vh;
 }
 
-button,input{
-    font:inherit;
-}
-
 button{
-    cursor:pointer;
+    font-family:inherit;
 }
 
-.app{
+.hidden{
+    display:none !important;
+}
+
+.container{
     width:100%;
-    max-width:1100px;
+    max-width:1000px;
     margin:auto;
-    padding:15px;
+    padding:20px;
 }
 
-header{
+/* LOGIN */
+
+#loginScreen{
+    min-height:100vh;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    gap:15px;
-    padding:15px 5px 25px;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-box{
+    width:100%;
+    max-width:430px;
+    background:rgba(30,10,50,.95);
+    border:1px solid #6f27a8;
+    border-radius:25px;
+    padding:30px;
+    box-shadow:0 0 40px rgba(130,0,255,.25);
 }
 
 .logo{
-    font-size:25px;
-    font-weight:900;
-    color:#ffd700;
-    text-shadow:0 0 15px #ffb300;
-}
-
-.header-user{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:14px;
-}
-
-.record{
-    color:#ffd700;
-    font-weight:bold;
-}
-
-.screen{
-    display:none;
-}
-
-.screen.active{
-    display:block;
-}
-
-.card{
-    background:rgba(25,5,43,.92);
-    border:1px solid rgba(255,215,0,.25);
-    border-radius:20px;
-    padding:25px;
-    box-shadow:0 15px 40px rgba(0,0,0,.4);
-    margin-bottom:20px;
-}
-
-.auth-card{
-    max-width:480px;
-    margin:35px auto;
     text-align:center;
-}
-
-h1{
-    font-size:38px;
-    color:#ffd700;
-    margin-bottom:10px;
-}
-
-h2{
-    margin-bottom:15px;
+    font-size:32px;
+    font-weight:bold;
+    color:#d38cff;
+    margin-bottom:8px;
 }
 
 .subtitle{
-    color:#cbbbd6;
+    text-align:center;
+    color:#bbb;
     margin-bottom:25px;
 }
 
-input{
+input,select{
     width:100%;
     padding:14px;
-    border-radius:10px;
-    border:1px solid #69428c;
-    background:#12001f;
-    color:#fff;
+    margin:7px 0;
+    border:none;
+    border-radius:12px;
+    background:#160b22;
+    color:white;
+    border:1px solid #48205f;
     outline:none;
-    margin-bottom:12px;
 }
 
 input:focus{
-    border-color:#ffd700;
+    border-color:#a846ff;
 }
 
-.btn{
+.primary{
     width:100%;
     padding:14px;
-    border:0;
+    border:none;
     border-radius:12px;
-    font-weight:bold;
-    margin-top:8px;
-    transition:.2s;
-}
-
-.btn:hover{
-    transform:translateY(-2px);
-}
-
-.btn-primary{
-    background:linear-gradient(135deg,#ffd700,#ff9d00);
-    color:#1a0924;
-}
-
-.btn-secondary{
-    background:#3c1857;
-    color:#fff;
-    border:1px solid #704595;
-}
-
-.btn-danger{
-    background:#7d1833;
-    color:#fff;
-}
-
-.btn-green{
-    background:#20c45a;
+    background:linear-gradient(90deg,#7b16d1,#b83cff);
     color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.secondary{
+    width:100%;
+    padding:13px;
+    border:1px solid #6e2c91;
+    border-radius:12px;
+    background:#170b22;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:10px;
 }
 
 .message{
-    min-height:25px;
-    margin:10px 0;
-    color:#ffb5b5;
-}
-
-.menu-title{
     text-align:center;
-    margin-bottom:25px;
+    min-height:22px;
+    margin-top:10px;
+    color:#ff9c9c;
 }
 
-.categories{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
-    gap:12px;
+/* MENU */
+
+header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:18px 20px;
+    border-bottom:1px solid #321242;
+    background:rgba(10,0,20,.8);
+    position:sticky;
+    top:0;
+    z-index:10;
 }
 
-.category{
-    padding:20px 10px;
-    border-radius:15px;
-    background:#26103a;
-    border:1px solid #59327b;
-    color:white;
+.header-logo{
+    font-size:21px;
     font-weight:bold;
+    color:#d994ff;
+}
+
+.user-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.user-name{
+    color:#ddd;
+    font-size:14px;
+}
+
+.menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    gap:14px;
+    margin-top:25px;
+}
+
+.menu-card{
+    padding:22px 12px;
+    border-radius:18px;
+    border:1px solid #55206e;
+    background:linear-gradient(145deg,#1a0928,#100018);
+    color:white;
+    cursor:pointer;
+    text-align:center;
     transition:.2s;
 }
 
-.category:hover{
-    border-color:#ffd700;
+.menu-card:hover{
     transform:translateY(-3px);
+    border-color:#b63cff;
 }
 
-.category span{
+.menu-card .emoji{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.menu-card strong{
     display:block;
-    font-size:28px;
-    margin-bottom:7px;
+    font-size:16px;
 }
 
-.actions{
+.section-title{
+    margin-top:30px;
+    margin-bottom:12px;
+    color:#d991ff;
+}
+
+/* BOTOES */
+
+.action-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
     gap:12px;
-    margin-top:18px;
 }
+
+.action-btn{
+    padding:16px;
+    border-radius:15px;
+    background:#160b22;
+    color:white;
+    border:1px solid #51206a;
+    cursor:pointer;
+}
+
+.action-btn:hover{
+    border-color:#bd42ff;
+}
+
+/* JOGO */
 
 .game-top{
     display:flex;
     justify-content:space-between;
-    gap:15px;
     align-items:center;
-    margin-bottom:20px;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.timer{
+    background:#35104d;
+    border:1px solid #8e31bc;
+    border-radius:12px;
+    padding:10px 15px;
+    font-weight:bold;
+}
+
+.prize{
+    color:#ffd85c;
+    font-size:20px;
+    font-weight:bold;
 }
 
 .progress{
-    height:10px;
-    background:#2b173c;
+    height:8px;
+    background:#24122f;
     border-radius:20px;
     overflow:hidden;
     margin:15px 0;
@@ -219,72 +248,78 @@ input:focus{
 
 .progress-bar{
     height:100%;
-    background:linear-gradient(90deg,#ff9d00,#ffd700);
-    transition:.3s;
+    background:linear-gradient(90deg,#8c25d7,#d76bff);
+    width:0%;
 }
 
-.timer{
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    border:5px solid #ffd700;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    font-weight:bold;
-    color:#ffd700;
+.question-box{
+    background:rgba(28,10,43,.96);
+    border:1px solid #652785;
+    border-radius:22px;
+    padding:25px;
+    margin-top:15px;
+}
+
+.difficulty{
+    color:#d78fff;
+    font-size:14px;
+    margin-bottom:10px;
 }
 
 .question{
-    font-size:24px;
+    font-size:22px;
     line-height:1.4;
-    text-align:center;
-    margin:30px 0;
+    margin-bottom:20px;
 }
 
 .answers{
     display:grid;
-    grid-template-columns:1fr 1fr;
     gap:12px;
 }
 
 .answer{
-    padding:17px;
-    border-radius:12px;
-    background:#29113e;
-    border:1px solid #62407c;
+    width:100%;
+    padding:15px;
+    border-radius:14px;
+    border:1px solid #5c2477;
+    background:#160a20;
     color:white;
     text-align:left;
+    font-size:16px;
+    cursor:pointer;
 }
 
 .answer:hover{
-    border-color:#ffd700;
+    background:#251035;
+    border-color:#a837dc;
 }
 
 .answer.correct{
-    background:#146b36;
-    border-color:#43ef83;
+    background:#114d2c;
+    border-color:#28c76f;
 }
 
 .answer.wrong{
-    background:#7a1933;
-    border-color:#ff5a75;
+    background:#55151d;
+    border-color:#ff5964;
 }
 
 .lifelines{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
+    display:flex;
+    flex-wrap:wrap;
     gap:10px;
-    margin-top:20px;
+    margin-top:15px;
 }
 
 .life{
-    padding:12px 5px;
-    border-radius:10px;
-    border:1px solid #69428c;
-    background:#211032;
+    flex:1;
+    min-width:100px;
+    padding:12px;
+    border-radius:12px;
+    background:#21102c;
+    border:1px solid #57236d;
     color:white;
+    cursor:pointer;
 }
 
 .life:disabled{
@@ -292,179 +327,125 @@ input:focus{
     cursor:not-allowed;
 }
 
-.prize-box{
-    text-align:center;
-    color:#ffd700;
-    font-size:22px;
-    font-weight:bold;
+/* CARDS */
+
+.card{
+    background:rgba(27,9,42,.95);
+    border:1px solid #5a2373;
+    border-radius:20px;
+    padding:22px;
+    margin-top:15px;
 }
 
-.profile{
-    text-align:center;
-}
-
-.avatar{
-    width:90px;
-    height:90px;
-    margin:0 auto 15px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#ffd700,#9c4dff);
-    color:#1a0924;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:35px;
-    font-weight:bold;
-}
-
-.stats{
+.stat-grid{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    margin-top:20px;
-}
-
-.stat{
-    padding:18px;
-    border-radius:14px;
-    background:#211032;
-    border:1px solid #50316b;
-}
-
-.stat strong{
-    display:block;
-    font-size:25px;
-    color:#ffd700;
-    margin-bottom:5px;
-}
-
-.achievements{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
     gap:12px;
     margin-top:15px;
 }
 
-.achievement{
-    padding:15px;
-    border-radius:14px;
-    background:#211032;
-    border:1px solid #4e3267;
+.stat{
+    background:#15091e;
+    border:1px solid #43205a;
+    padding:18px;
+    border-radius:15px;
     text-align:center;
 }
 
-.achievement.unlocked{
-    border-color:#ffd700;
-    box-shadow:0 0 15px rgba(255,215,0,.15);
+.stat strong{
+    display:block;
+    font-size:23px;
+    color:#d891ff;
+    margin-bottom:5px;
+}
+
+.achievement{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:15px;
+    margin:10px 0;
+    background:#160a20;
+    border:1px solid #4c2162;
+    border-radius:15px;
 }
 
 .achievement.locked{
-    opacity:.45;
+    opacity:.4;
 }
 
 .achievement-icon{
-    font-size:32px;
-    margin-bottom:8px;
+    font-size:30px;
 }
 
-.ranking-row{
+.ranking-item{
     display:flex;
     align-items:center;
-    gap:12px;
-    padding:13px;
-    margin-bottom:8px;
-    background:#211032;
-    border-radius:12px;
+    justify-content:space-between;
+    padding:14px;
+    margin:8px 0;
+    border-radius:13px;
+    background:#15091e;
+    border:1px solid #43205a;
 }
 
-.ranking-position{
-    width:35px;
-    font-weight:bold;
-    color:#ffd700;
-}
-
-.ranking-name{
-    flex:1;
-}
-
-.ranking-score{
-    color:#ffd700;
-    font-weight:bold;
-}
-
-.online-code{
-    font-size:32px;
+.code-box{
+    font-size:30px;
     letter-spacing:7px;
     text-align:center;
-    color:#ffd700;
-    margin:20px 0;
-}
-
-.waiting{
-    text-align:center;
-    padding:25px;
-}
-
-.player-vs{
-    display:grid;
-    grid-template-columns:1fr auto 1fr;
-    gap:10px;
-    align-items:center;
-    text-align:center;
-    margin-bottom:20px;
-}
-
-.player-box{
-    padding:15px;
-    border-radius:12px;
-    background:#211032;
-}
-
-.vs{
-    font-size:24px;
+    color:#e08cff;
     font-weight:bold;
-    color:#ffd700;
+    padding:20px;
+    background:#100619;
+    border-radius:15px;
+    margin:15px 0;
 }
+
+/* RESULTADO */
 
 .result{
     text-align:center;
+    padding:30px 15px;
 }
 
-.big-prize{
-    font-size:45px;
-    color:#ffd700;
-    font-weight:900;
+.result-icon{
+    font-size:60px;
+    margin-bottom:15px;
+}
+
+.result h2{
+    color:#d991ff;
+    margin-bottom:10px;
+}
+
+.result-prize{
+    color:#ffd75c;
+    font-size:35px;
+    font-weight:bold;
     margin:20px 0;
 }
 
-.hidden{
-    display:none!important;
-}
-
-.small{
-    color:#a994b6;
-    font-size:13px;
-}
+/* RESPONSIVO */
 
 @media(max-width:600px){
-    h1{
-        font-size:30px;
+    header{
+        padding:14px;
     }
 
-    .answers{
-        grid-template-columns:1fr;
+    .user-name{
+        display:none;
+    }
+
+    .container{
+        padding:15px;
     }
 
     .question{
-        font-size:20px;
+        font-size:19px;
     }
 
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .game-top{
-        align-items:flex-start;
+    .login-box{
+        padding:22px;
     }
 }
 </style>
@@ -472,441 +453,516 @@ input:focus{
 
 <body>
 
-<div class="app">
-
-<header>
-    <div class="logo">💰 DESAFIO DO MILHÃO</div>
-
-    <div class="header-user">
-        <span id="headerNome">Visitante</span>
-        <span class="record">🏆 R$ <span id="headerRecorde">0</span></span>
-    </div>
-</header>
-
 <!-- LOGIN -->
-<section id="authScreen" class="screen active">
-    <div class="card auth-card">
 
-        <h1>💰 Desafio do Milhão</h1>
+<section id="loginScreen">
 
-        <p class="subtitle">
-            Entre na sua conta para salvar seu progresso,
-            conquistas, recordes e jogar online.
-        </p>
+<div class="login-box">
 
-        <input id="nomeCadastro" type="text" placeholder="Seu nome">
+<div class="logo">💰 Desafio do Milhão</div>
 
-        <input id="email" type="email" placeholder="E-mail">
+<div class="subtitle">
+Entre ou crie sua conta para jogar
+</div>
 
-        <input id="senha" type="password" placeholder="Senha">
+<div id="loginForm">
 
-        <div id="authMessage" class="message"></div>
+<input
+    id="loginEmail"
+    type="email"
+    placeholder="Seu e-mail"
+>
 
-        <button class="btn btn-primary" onclick="cadastrar()">
-            Criar conta
-        </button>
+<input
+    id="loginPassword"
+    type="password"
+    placeholder="Sua senha"
+>
 
-        <button class="btn btn-secondary" onclick="entrar()">
-            Entrar
-        </button>
+<button class="primary" onclick="entrar()">
+Entrar
+</button>
 
-        <button class="btn btn-secondary" onclick="recuperarSenha()">
-            Esqueci minha senha
-        </button>
-
-    </div>
-</section>
-
-<!-- MENU -->
-<section id="menuScreen" class="screen">
-
-    <div class="card">
-
-        <div class="menu-title">
-            <h1>Desafio do Milhão</h1>
-            <p class="subtitle">
-                Escolha uma categoria e tente chegar ao R$ 1.000.000!
-            </p>
-        </div>
-
-        <div class="categories">
-
-            <button class="category" onclick="novoJogo('ciencia')">
-                <span>🔬</span>
-                Ciência
-            </button>
-
-            <button class="category" onclick="novoJogo('matematica')">
-                <span>🧮</span>
-                Matemática
-            </button>
-
-            <button class="category" onclick="novoJogo('geografia')">
-                <span>🌎</span>
-                Geografia
-            </button>
-
-            <button class="category" onclick="novoJogo('historia')">
-                <span>🏛️</span>
-                História
-            </button>
-
-            <button class="category" onclick="novoJogo('tecnologia')">
-                <span>💻</span>
-                Tecnologia
-            </button>
-
-            <button class="category" onclick="novoJogo('portugues')">
-                <span>📚</span>
-                Português
-            </button>
-
-            <button class="category" onclick="novoJogo('geral')">
-                <span>🧠</span>
-                Conhecimentos Gerais
-            </button>
-
-        </div>
-
-        <div class="actions">
-
-            <button class="btn btn-primary" onclick="abrirPerfil()">
-                👤 Meu perfil
-            </button>
-
-            <button class="btn btn-secondary" onclick="abrirRanking()">
-                🏆 Ranking
-            </button>
-
-            <button class="btn btn-secondary" onclick="abrirOnline()">
-                🌐 Jogar à distância
-            </button>
-
-            <button class="btn btn-secondary" onclick="abrirAmigoLocal()">
-                👥 Jogar com amigo
-            </button>
-
-            <button class="btn btn-secondary" onclick="comoJogar()">
-                ❓ Como jogar
-            </button>
-
-            <button class="btn btn-danger" onclick="sair()">
-                🚪 Sair
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- JOGO -->
-<section id="gameScreen" class="screen">
-
-    <div class="card">
-
-        <div class="game-top">
-
-            <div>
-                <h2 id="gameCategory">Categoria</h2>
-                <div id="gameQuestionNumber">Pergunta 1 de 15</div>
-            </div>
-
-            <div class="timer" id="timer">15</div>
-
-        </div>
-
-        <div class="progress">
-            <div id="progressBar" class="progress-bar"></div>
-        </div>
-
-        <div class="prize-box">
-            R$ <span id="currentPrize">1.000</span>
-        </div>
-
-        <div id="question" class="question">
-            Pergunta
-        </div>
-
-        <div id="answers" class="answers"></div>
-
-        <div class="lifelines">
-
-            <button id="life5050" class="life" onclick="usar5050()">
-                50/50
-            </button>
-
-            <button id="lifePular" class="life" onclick="pular()">
-                ⏭️ Pular
-            </button>
-
-            <button id="lifeDica" class="life" onclick="dica()">
-                💡 Dica
-            </button>
-
-        </div>
-
-        <button class="btn btn-secondary" onclick="voltarMenu()">
-            ← Sair da partida
-        </button>
-
-    </div>
-
-</section>
-
-<!-- PERFIL -->
-<section id="profileScreen" class="screen">
-
-    <div class="card profile">
-
-        <div class="avatar" id="profileAvatar">?</div>
-
-        <h1 id="profileNome">Jogador</h1>
-
-        <p id="profileEmail" class="small"></p>
-
-        <div class="stats">
-
-            <div class="stat">
-                <strong id="profileRecord">R$ 0</strong>
-                Recorde
-            </div>
-
-            <div class="stat">
-                <strong id="profileGames">0</strong>
-                Partidas
-            </div>
-
-            <div class="stat">
-                <strong id="profileWins">0</strong>
-                Vitórias
-            </div>
-
-            <div class="stat">
-                <strong id="profileCorrect">0</strong>
-                Acertos
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>🏅 Conquistas</h2>
-
-        <div id="achievements" class="achievements"></div>
-
-    </div>
-
-    <button class="btn btn-secondary" onclick="voltarMenu()">
-        ← Voltar
-    </button>
-
-</section>
-
-<!-- RANKING -->
-<section id="rankingScreen" class="screen">
-
-    <div class="card">
-
-        <h1>🏆 Ranking</h1>
-
-        <p class="subtitle">
-            Os maiores recordes dos jogadores.
-        </p>
-
-        <div id="rankingList">
-            Carregando ranking...
-        </div>
-
-    </div>
-
-    <button class="btn btn-secondary" onclick="voltarMenu()">
-        ← Voltar
-    </button>
-
-</section>
-
-<!-- ONLINE -->
-<section id="onlineScreen" class="screen">
-
-    <div class="card">
-
-        <h1>🌐 Partida online</h1>
-
-        <p class="subtitle">
-            Jogue contra outra pessoa, mesmo estando longe.
-        </p>
-
-        <button class="btn btn-primary" onclick="criarPartidaOnline()">
-            🎮 Criar partida
-        </button>
-
-        <div style="height:15px"></div>
-
-        <input id="codigoPartida" type="text"
-               placeholder="Digite o código da partida">
-
-        <button class="btn btn-secondary" onclick="entrarPartidaOnline()">
-            🚀 Entrar na partida
-        </button>
-
-        <div id="onlineMessage" class="message"></div>
-
-    </div>
-
-    <button class="btn btn-secondary" onclick="voltarMenu()">
-        ← Voltar
-    </button>
-
-</section>
-
-<!-- ESPERA ONLINE -->
-<section id="waitingScreen" class="screen">
-
-    <div class="card waiting">
-
-        <h1>🎮 Partida criada!</h1>
-
-        <p>
-            Envie este código para seu amigo:
-        </p>
-
-        <div id="codigoCriado" class="online-code">
-            ------
-        </div>
-
-        <button class="btn btn-primary" onclick="copiarCodigo()">
-            📋 Copiar código
-        </button>
-
-        <p style="margin-top:20px" class="small">
-            Aguardando o outro jogador entrar...
-        </p>
-
-        <div id="waitingStatus"></div>
-
-    </div>
-
-    <button class="btn btn-secondary" onclick="cancelarPartida()">
-        Cancelar
-    </button>
-
-</section>
-
-<!-- ONLINE GAME -->
-<section id="onlineGameScreen" class="screen">
-
-    <div class="card">
-
-        <div class="player-vs">
-
-            <div class="player-box">
-                👤 <strong id="onlinePlayer1">Jogador 1</strong>
-                <br>
-                <span id="onlineScore1">0</span> acertos
-            </div>
-
-            <div class="vs">VS</div>
-
-            <div class="player-box">
-                👤 <strong id="onlinePlayer2">Jogador 2</strong>
-                <br>
-                <span id="onlineScore2">0</span> acertos
-            </div>
-
-        </div>
-
-        <div class="game-top">
-
-            <div>
-                <h2 id="onlineQuestionNumber">
-                    Pergunta 1 de 15
-                </h2>
-            </div>
-
-            <div class="timer" id="onlineTimer">
-                15
-            </div>
-
-        </div>
-
-        <div class="progress">
-            <div id="onlineProgressBar" class="progress-bar"></div>
-        </div>
-
-        <div id="onlineQuestion" class="question">
-            Aguardando pergunta...
-        </div>
-
-        <div id="onlineAnswers" class="answers"></div>
-
-        <div id="onlineWaiting" class="small" style="text-align:center;margin-top:15px"></div>
-
-    </div>
-
-</section>
-
-<!-- RESULTADO -->
-<section id="resultScreen" class="screen">
-
-    <div class="card result">
-
-        <h1 id="resultTitle">
-            Fim de jogo!
-        </h1>
-
-        <p id="resultMessage"></p>
-
-        <div class="big-prize">
-            R$ <span id="resultPrize">0</span>
-        </div>
-
-        <p id="resultStats"></p>
-
-        <button class="btn btn-primary" onclick="voltarMenu()">
-            🏠 Voltar ao menu
-        </button>
-
-    </div>
-
-</section>
-
-<!-- AMIGO LOCAL -->
-<section id="friendScreen" class="screen">
-
-    <div class="card">
-
-        <h1>👥 Jogar com amigo</h1>
-
-        <p class="subtitle">
-            Dois jogadores no mesmo aparelho.
-        </p>
-
-        <input id="friend1" placeholder="Nome do jogador 1">
-
-        <input id="friend2" placeholder="Nome do jogador 2">
-
-        <button class="btn btn-primary" onclick="iniciarAmigoLocal()">
-            Começar
-        </button>
-
-    </div>
-
-    <button class="btn btn-secondary" onclick="voltarMenu()">
-        ← Voltar
-    </button>
-
-</section>
+<button class="secondary" onclick="mostrarCadastro()">
+Criar conta
+</button>
 
 </div>
 
+<div id="registerForm" class="hidden">
+
+<input
+    id="registerName"
+    type="text"
+    placeholder="Seu nome"
+>
+
+<input
+    id="registerEmail"
+    type="email"
+    placeholder="Seu e-mail"
+>
+
+<input
+    id="registerPassword"
+    type="password"
+    placeholder="Crie uma senha"
+>
+
+<button class="primary" onclick="cadastrar()">
+Criar minha conta
+</button>
+
+<button class="secondary" onclick="mostrarLogin()">
+Voltar para login
+</button>
+
+</div>
+
+<div id="loginMessage" class="message"></div>
+
+</div>
+
+</section>
+
+
+<!-- APLICAÇÃO -->
+
+<div id="app" class="hidden">
+
+<header>
+
+<div class="header-logo">
+💰 Desafio do Milhão
+</div>
+
+<div class="user-area">
+
+<span class="user-name" id="headerUserName"></span>
+
+<button class="secondary" style="width:auto;margin:0;padding:9px 12px" onclick="abrirPerfil()">
+Perfil
+</button>
+
+<button class="secondary" style="width:auto;margin:0;padding:9px 12px" onclick="sair()">
+Sair
+</button>
+
+</div>
+
+</header>
+
+
+<!-- MENU PRINCIPAL -->
+
+<main id="menuScreen" class="container">
+
+<h2 class="section-title">
+Escolha uma categoria
+</h2>
+
+<div class="menu-grid">
+
+<button class="menu-card" onclick="novoJogo('ciencia')">
+<div class="emoji">🔬</div>
+<strong>Ciência</strong>
+</button>
+
+<button class="menu-card" onclick="novoJogo('matematica')">
+<div class="emoji">➗</div>
+<strong>Matemática</strong>
+</button>
+
+<button class="menu-card" onclick="novoJogo('geografia')">
+<div class="emoji">🌎</div>
+<strong>Geografia</strong>
+</button>
+
+<button class="menu-card" onclick="novoJogo('historia')">
+<div class="emoji">📜</div>
+<strong>História</strong>
+</button>
+
+<button class="menu-card" onclick="novoJogo('tecnologia')">
+<div class="emoji">💻</div>
+<strong>Tecnologia</strong>
+</button>
+
+<button class="menu-card" onclick="novoJogo('portugues')">
+<div class="emoji">📚</div>
+<strong>Português</strong>
+</button>
+
+<button class="menu-card" onclick="novoJogo('geral')">
+<div class="emoji">🧠</div>
+<strong>Conhecimentos Gerais</strong>
+</button>
+
+</div>
+
+
+<h2 class="section-title">
+Outras opções
+</h2>
+
+<div class="action-grid">
+
+<button class="action-btn" onclick="abrirPerfil()">
+👤 Meu perfil
+</button>
+
+<button class="action-btn" onclick="abrirConquistas()">
+🏆 Conquistas
+</button>
+
+<button class="action-btn" onclick="abrirRanking()">
+🥇 Ranking
+</button>
+
+<button class="action-btn" onclick="abrirAmigo()">
+👥 Jogar contra amigo
+</button>
+
+<button class="action-btn" onclick="abrirOnline()">
+🌐 Jogar online
+</button>
+
+<button class="action-btn" onclick="comoJogar()">
+❓ Como jogar
+</button>
+
+</div>
+
+</main>
+
+
+<!-- JOGO -->
+
+<main id="gameScreen" class="container hidden">
+
+<div class="game-top">
+
+<div>
+Questão <span id="questionNumber">1</span>/15
+</div>
+
+<div class="prize" id="currentPrize">
+R$ 1.000
+</div>
+
+<div class="timer">
+⏱️ <span id="timer">15</span>s
+</div>
+
+</div>
+
+<div class="progress">
+<div id="progressBar" class="progress-bar"></div>
+</div>
+
+<div class="question-box">
+
+<div id="difficulty" class="difficulty">
+Fácil
+</div>
+
+<div id="question" class="question">
+Carregando pergunta...
+</div>
+
+<div id="answers" class="answers"></div>
+
+<div class="lifelines">
+
+<button id="btn5050" class="life" onclick="usar5050()">
+50/50
+</button>
+
+<button id="btnSkip" class="life" onclick="pular()">
+⏭️ Pular
+</button>
+
+<button id="btnHint" class="life" onclick="dica()">
+💡 Dica
+</button>
+
+</div>
+
+<div id="hintText" style="margin-top:15px;color:#e4a1ff"></div>
+
+</div>
+
+</main>
+
+
+<!-- RESULTADO -->
+
+<main id="resultScreen" class="container hidden">
+
+<div class="card result">
+
+<div class="result-icon">
+🏆
+</div>
+
+<h2 id="resultTitle">
+Fim de jogo!
+</h2>
+
+<p id="resultText"></p>
+
+<div class="result-prize" id="resultPrize">
+R$ 0
+</div>
+
+<button class="primary" onclick="voltarMenu()">
+Voltar ao menu
+</button>
+
+</div>
+
+</main>
+
+
+<!-- PERFIL -->
+
+<main id="profileScreen" class="container hidden">
+
+<div class="card">
+
+<h2>👤 Meu perfil</h2>
+
+<p id="profileName" style="margin-top:10px"></p>
+<p id="profileEmail" style="color:#aaa;margin-top:5px"></p>
+
+<div class="stat-grid">
+
+<div class="stat">
+<strong id="profileRecord">R$ 0</strong>
+Recorde
+</div>
+
+<div class="stat">
+<strong id="profileGames">0</strong>
+Partidas
+</div>
+
+<div class="stat">
+<strong id="profileCorrect">0</strong>
+Acertos
+</div>
+
+<div class="stat">
+<strong id="profileBest">R$ 0</strong>
+Maior prêmio
+</div>
+
+</div>
+
+<button class="secondary" onclick="voltarMenu()">
+Voltar
+</button>
+
+</div>
+
+</main>
+
+
+<!-- CONQUISTAS -->
+
+<main id="achievementsScreen" class="container hidden">
+
+<div class="card">
+
+<h2>🏆 Conquistas</h2>
+
+<div id="achievementsList"></div>
+
+<button class="secondary" onclick="voltarMenu()">
+Voltar
+</button>
+
+</div>
+
+</main>
+
+
+<!-- RANKING -->
+
+<main id="rankingScreen" class="container hidden">
+
+<div class="card">
+
+<h2>🥇 Ranking</h2>
+
+<p style="color:#aaa;margin-top:8px">
+Os melhores jogadores.
+</p>
+
+<div id="rankingList" style="margin-top:15px">
+Carregando ranking...
+</div>
+
+<button class="secondary" onclick="voltarMenu()">
+Voltar
+</button>
+
+</div>
+
+</main>
+
+
+<!-- AMIGO -->
+
+<main id="friendScreen" class="container hidden">
+
+<div class="card">
+
+<h2>👥 Jogar contra amigo</h2>
+
+<input
+    id="player1"
+    placeholder="Nome do jogador 1"
+>
+
+<input
+    id="player2"
+    placeholder="Nome do jogador 2"
+>
+
+<select id="friendCategory">
+
+<option value="ciencia">Ciência</option>
+<option value="matematica">Matemática</option>
+<option value="geografia">Geografia</option>
+<option value="historia">História</option>
+<option value="tecnologia">Tecnologia</option>
+<option value="portugues">Português</option>
+<option value="geral">Conhecimentos Gerais</option>
+
+</select>
+
+<button class="primary" onclick="iniciarAmigo()">
+Começar partida
+</button>
+
+<button class="secondary" onclick="voltarMenu()">
+Voltar
+</button>
+
+</div>
+
+</main>
+
+
+<!-- ONLINE -->
+
+<main id="onlineScreen" class="container hidden">
+
+<div class="card">
+
+<h2>🌐 Jogar online</h2>
+
+<p style="color:#aaa;margin-top:10px">
+Crie uma sala e envie o código para seu amigo.
+</p>
+
+<button class="primary" onclick="criarPartidaOnline()">
+Criar partida
+</button>
+
+<div id="onlineCodeArea" class="hidden">
+
+<p style="text-align:center;margin-top:20px">
+Código da partida:
+</p>
+
+<div id="onlineCode" class="code-box">
+------
+</div>
+
+<p style="text-align:center;color:#aaa">
+Envie esse código para o outro jogador.
+</p>
+
+</div>
+
+<hr style="border-color:#351442;margin:25px 0">
+
+<input
+    id="joinCode"
+    maxlength="6"
+    placeholder="Digite o código"
+    style="text-transform:uppercase"
+>
+
+<button class="primary" onclick="entrarPartidaOnline()">
+Entrar em partida
+</button>
+
+<button class="secondary" onclick="voltarMenu()">
+Voltar
+</button>
+
+<div id="onlineMessage" class="message"></div>
+
+</div>
+
+</main>
+
+
+<!-- COMO JOGAR -->
+
+<main id="howScreen" class="container hidden">
+
+<div class="card">
+
+<h2>❓ Como jogar</h2>
+
+<p style="margin-top:15px;line-height:1.6">
+Escolha uma categoria e responda 15 perguntas.
+</p>
+
+<p style="margin-top:10px;line-height:1.6">
+Cada pergunta possui 15 segundos para ser respondida.
+</p>
+
+<p style="margin-top:10px;line-height:1.6">
+Quanto mais perguntas você acertar, maior será o prêmio.
+</p>
+
+<p style="margin-top:10px;line-height:1.6">
+Você possui três ajudas:
+</p>
+
+<p style="margin-top:8px">
+50/50 — elimina duas alternativas.
+</p>
+
+<p style="margin-top:8px">
+Pular — pula a pergunta.
+</p>
+
+<p style="margin-top:8px">
+Dica — mostra uma dica.
+</p>
+
+<button class="secondary" onclick="voltarMenu()">
+Voltar
+</button>
+
+</div>
+
+</main>
+
+</div>
+
+
 <script>
 
-/* =========================================================
+/* =========================
    FIREBASE
-========================================================= */
+========================= */
 
 const firebaseConfig = {
     apiKey: "AIzaSyB-0j37BKkr0jt3B6NCl6-fNe3bqeQia08",
@@ -924,9 +980,45 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 
-/* =========================================================
-   DADOS DO JOGO
-========================================================= */
+/* =========================
+   VARIÁVEIS
+========================= */
+
+let usuarioAtual = null;
+let dadosUsuario = null;
+
+let categoriaAtual = "";
+let bancoAtual = [];
+let perguntaAtual = 0;
+
+let pontos = 0;
+let premioAtual = 0;
+
+let tempo = 15;
+let intervalo = null;
+
+let ajuda5050 = true;
+let ajudaPular = true;
+let ajudaDica = true;
+
+let respondida = false;
+
+let modoAmigo = false;
+let jogadorAtual = 1;
+
+let jogador1 = "";
+let jogador2 = "";
+
+let acertosJogador1 = 0;
+let acertosJogador2 = 0;
+
+let partidaOnlineId = null;
+let unsubscribeOnline = null;
+
+
+/* =========================
+   PRÊMIOS
+========================= */
 
 const premios = [
     1000,
@@ -946,566 +1038,989 @@ const premios = [
     1000000
 ];
 
-const dificuldades = [
-    "Fácil","Fácil","Fácil",
-    "Médio","Médio","Médio",
-    "Difícil","Difícil","Difícil",
-    "Muito difícil","Muito difícil","Muito difícil",
-    "Especialista","Especialista","Especialista"
-];
 
-const nomesCategorias = {
-    ciencia:"Ciência",
-    matematica:"Matemática",
-    geografia:"Geografia",
-    historia:"História",
-    tecnologia:"Tecnologia",
-    portugues:"Português",
-    geral:"Conhecimentos Gerais"
-};
+/* =========================
+   PERGUNTAS
+========================= */
 
+const bancosBase = {
 
-/* =========================================================
-   BANCO DE QUESTÕES
-========================================================= */
+ciencia: [
 
-const bancos = {
-
-ciencia:[
 {
-q:"Qual é o planeta mais próximo do Sol?",
-a:["Mercúrio","Vênus","Terra","Marte"],
-c:0
+q:"Qual é o planeta conhecido como Planeta Vermelho?",
+a:["Marte","Júpiter","Saturno","Vênus"],
+c:0,
+d:"Fácil",
+h:"Seu nome está associado à sua aparência avermelhada."
 },
-{
-q:"Qual gás os seres humanos precisam para respirar?",
-a:["Oxigênio","Hélio","Hidrogênio","Neônio"],
-c:0
-},
-{
-q:"Qual órgão bombeia o sangue pelo corpo?",
-a:["Pulmão","Coração","Fígado","Rim"],
-c:1
-},
-{
-q:"Qual é a fórmula química da água?",
-a:["CO2","H2O","O2","NaCl"],
-c:1
-},
+
 {
 q:"Qual é o maior órgão do corpo humano?",
 a:["Coração","Pele","Fígado","Pulmão"],
-c:1
+c:1,
+d:"Fácil",
+h:"Ele cobre todo o corpo."
 },
+
+{
+q:"Qual gás os seres humanos precisam respirar para sobreviver?",
+a:["Oxigênio","Hélio","Nitrogênio puro","Hidrogênio"],
+c:0,
+d:"Fácil",
+h:"É encontrado no ar."
+},
+
+{
+q:"Qual é a unidade básica da vida?",
+a:["Átomo","Célula","Órgão","Tecido"],
+c:1,
+d:"Médio",
+h:"Todos os seres vivos são formados por ela."
+},
+
 {
 q:"Qual força mantém os planetas em órbita?",
 a:["Eletricidade","Magnetismo","Gravidade","Atrito"],
-c:2
+c:2,
+d:"Médio",
+h:"É a força de atração entre massas."
 },
+
 {
-q:"Qual é a unidade básica da vida?",
-a:["Átomo","Célula","Molécula","Tecido"],
-c:1
+q:"Qual é o símbolo químico do ouro?",
+a:["Ag","Au","Fe","Go"],
+c:1,
+d:"Médio",
+h:"O símbolo possui duas letras."
 },
+
 {
-q:"Qual planeta é conhecido como planeta vermelho?",
-a:["Júpiter","Marte","Saturno","Urano"],
-c:1
-},
-{
-q:"Qual é o maior planeta do Sistema Solar?",
+q:"Qual planeta é o maior do Sistema Solar?",
 a:["Terra","Saturno","Júpiter","Netuno"],
-c:2
+c:2,
+d:"Difícil",
+h:"É um gigante gasoso."
 },
+
 {
-q:"Qual parte da célula contém grande parte do material genético?",
-a:["Núcleo","Membrana","Citoplasma","Ribossomo"],
-c:0
+q:"Como é chamada a divisão celular que produz duas células geneticamente semelhantes?",
+a:["Meiose","Mitose","Fissão","Fecundação"],
+c:1,
+d:"Difícil",
+h:"É comum no crescimento e reparação dos tecidos."
+},
+
+{
+q:"Qual partícula possui carga elétrica negativa?",
+a:["Próton","Nêutron","Elétron","Positron"],
+c:2,
+d:"Difícil",
+h:"Faz parte da estrutura do átomo."
+},
+
+{
+q:"Qual é aproximadamente a velocidade da luz no vácuo?",
+a:["30 mil km/s","300 mil km/s","3 milhões km/s","3 mil km/s"],
+c:1,
+d:"Muito difícil",
+h:"É aproximadamente trezentos mil quilômetros por segundo."
+},
+
+{
+q:"Qual organela é conhecida como a 'usina de energia' da célula?",
+a:["Ribossomo","Mitocôndria","Núcleo","Lisossomo"],
+c:1,
+d:"Muito difícil",
+h:"Produz grande parte do ATP celular."
+},
+
+{
+q:"Qual é o nome do processo pelo qual as plantas produzem alimento usando luz?",
+a:["Respiração","Fotossíntese","Digestão","Fermentação"],
+c:1,
+d:"Muito difícil",
+h:"A palavra começa com 'foto'."
+},
+
+{
+q:"Qual cientista formulou as leis do movimento e da gravitação universal?",
+a:["Einstein","Newton","Darwin","Galileu"],
+c:1,
+d:"Especialista",
+h:"Seu primeiro nome era Isaac."
+},
+
+{
+q:"Qual é o número atômico do carbono?",
+a:["4","6","8","12"],
+c:1,
+d:"Especialista",
+h:"É um elemento fundamental para a vida."
+},
+
+{
+q:"Qual fenômeno descreve a mudança na frequência observada de uma onda devido ao movimento relativo entre fonte e observador?",
+a:["Efeito Doppler","Efeito estufa","Efeito fotoelétrico","Refração"],
+c:0,
+d:"Especialista",
+h:"É muito percebido em sirenes de veículos."
 }
+
 ],
 
 geografia:[
+
 {
-q:"Qual é o maior país do mundo em território?",
-a:["China","Brasil","Rússia","Canadá"],
-c:2
+q:"Qual é o maior país do mundo em extensão territorial?",
+a:["Brasil","China","Rússia","Canadá"],
+c:2,
+d:"Fácil",
+h:"Fica entre a Europa e a Ásia."
 },
+
 {
 q:"Qual é a capital do Brasil?",
-a:["São Paulo","Brasília","Rio de Janeiro","Salvador"],
-c:1
+a:["São Paulo","Rio de Janeiro","Brasília","Salvador"],
+c:2,
+d:"Fácil",
+h:"Foi inaugurada em 1960."
 },
+
 {
 q:"Em qual continente fica o Egito?",
-a:["África","Ásia","Europa","Oceania"],
-c:0
+a:["Ásia","África","Europa","América"],
+c:1,
+d:"Fácil",
+h:"O país abriga as famosas pirâmides de Gizé."
 },
+
 {
-q:"Qual é o maior oceano da Terra?",
+q:"Qual é o maior oceano do planeta?",
 a:["Atlântico","Índico","Pacífico","Ártico"],
-c:2
+c:2,
+d:"Médio",
+h:"Fica entre a Ásia/Oceania e as Américas."
 },
-{
-q:"Qual país tem formato aproximado de uma bota?",
-a:["Espanha","Itália","Grécia","Portugal"],
-c:1
-},
-{
-q:"Qual é o rio mais associado à maior bacia hidrográfica do mundo?",
-a:["Amazonas","Nilo","Mississipi","Danúbio"],
-c:0
-},
+
 {
 q:"Qual é a capital da França?",
-a:["Roma","Paris","Berlim","Madri"],
-c:1
+a:["Madrid","Paris","Roma","Lisboa"],
+c:1,
+d:"Médio",
+h:"É conhecida como Cidade Luz."
 },
+
 {
-q:"Qual é o continente mais populoso?",
-a:["África","Europa","Ásia","América"],
-c:2
+q:"Qual país possui o formato aproximado de uma bota?",
+a:["Itália","Grécia","Portugal","Espanha"],
+c:0,
+d:"Médio",
+h:"Fica no sul da Europa."
 },
+
 {
-q:"Qual país possui a maior população da América do Sul?",
-a:["Argentina","Brasil","Colômbia","Peru"],
-c:1
+q:"Qual é o rio mais extenso tradicionalmente considerado do mundo?",
+a:["Amazonas","Nilo","Mississippi","Yangtzé"],
+c:0,
+d:"Difícil",
+h:"Passa pela América do Sul."
 },
+
 {
 q:"Qual é a capital do Japão?",
-a:["Seul","Pequim","Tóquio","Bangcoc"],
-c:2
+a:["Kyoto","Osaka","Tóquio","Hiroshima"],
+c:2,
+d:"Difícil",
+h:"É uma das maiores cidades do mundo."
+},
+
+{
+q:"Qual país tem o maior número de habitantes do mundo atualmente?",
+a:["Brasil","Índia","Rússia","Japão"],
+c:1,
+d:"Difícil",
+h:"Fica no sul da Ásia."
+},
+
+{
+q:"Qual é o deserto quente mais extenso do mundo?",
+a:["Saara","Atacama","Gobi","Kalahari"],
+c:0,
+d:"Muito difícil",
+h:"Fica principalmente no norte da África."
+},
+
+{
+q:"Qual é a montanha mais alta do mundo acima do nível do mar?",
+a:["K2","Everest","Aconcágua","Kilimanjaro"],
+c:1,
+d:"Muito difícil",
+h:"Fica na cordilheira do Himalaia."
+},
+
+{
+q:"Qual país é conhecido como Terra do Sol Nascente?",
+a:["China","Japão","Coreia do Sul","Tailândia"],
+c:1,
+d:"Muito difícil",
+h:"Sua bandeira possui um círculo vermelho."
+},
+
+{
+q:"Qual é a capital da Austrália?",
+a:["Sydney","Melbourne","Canberra","Perth"],
+c:2,
+d:"Especialista",
+h:"Não é Sydney."
+},
+
+{
+q:"Qual país possui a maior área territorial da América do Sul?",
+a:["Argentina","Brasil","Peru","Colômbia"],
+c:1,
+d:"Especialista",
+h:"É também o maior país da América Latina."
+},
+
+{
+q:"Qual linha imaginária divide a Terra nos hemisférios Norte e Sul?",
+a:["Trópico de Câncer","Meridiano de Greenwich","Linha do Equador","Trópico de Capricórnio"],
+c:2,
+d:"Especialista",
+h:"Passa pela região central do Brasil."
 }
+
 ],
 
 historia:[
+
 {
 q:"Quem proclamou a Independência do Brasil?",
-a:["Dom Pedro I","Dom Pedro II","Tiradentes","Getúlio Vargas"],
-c:0
+a:["Dom Pedro I","Dom Pedro II","Getúlio Vargas","Tiradentes"],
+c:0,
+d:"Fácil",
+h:"O famoso grito ocorreu em 1822."
 },
+
 {
 q:"Em que ano ocorreu a Independência do Brasil?",
-a:["1500","1822","1889","1900"],
-c:1
+a:["1500","1822","1889","1808"],
+c:1,
+d:"Fácil",
+h:"O número começa com 18."
 },
+
 {
-q:"Quem foi o primeiro imperador do Brasil?",
-a:["Dom Pedro I","Dom Pedro II","Deodoro","Juscelino"],
-c:0
+q:"Quem foi o primeiro presidente do Brasil após a Proclamação da República?",
+a:["Floriano Peixoto","Deodoro da Fonseca","Getúlio Vargas","Juscelino Kubitschek"],
+c:1,
+d:"Fácil",
+h:"Era marechal."
 },
-{
-q:"Qual civilização construiu as pirâmides de Gizé?",
-a:["Romana","Egípcia","Grega","Persa"],
-c:1
-},
-{
-q:"Quem foi conhecido como Tiradentes?",
-a:["Joaquim José da Silva Xavier","José Bonifácio","Duque de Caxias","Padre Anchieta"],
-c:0
-},
+
 {
 q:"Em que ano foi proclamada a República no Brasil?",
 a:["1822","1888","1889","1891"],
-c:2
+c:2,
+d:"Médio",
+h:"Aconteceu um ano depois da Abolição."
 },
+
 {
-q:"Qual evento marcou o início da Revolução Francesa?",
-a:["Queda da Bastilha","Descobrimento da América","Tratado de Roma","Queda de Berlim"],
-c:0
+q:"Quem assinou a Lei Áurea?",
+a:["Princesa Isabel","Dona Leopoldina","Maria I","Carlota Joaquina"],
+c:0,
+d:"Médio",
+h:"Era filha de Dom Pedro II."
 },
+
 {
-q:"Quem foi Getúlio Vargas?",
-a:["Presidente brasileiro","Rei português","Explorador","Astronauta"],
-c:0
+q:"Em qual ano terminou a Segunda Guerra Mundial?",
+a:["1942","1945","1948","1950"],
+c:1,
+d:"Médio",
+h:"Foi no meio da década de 1940."
 },
+
 {
-q:"Qual civilização antiga tinha Atenas como uma de suas principais cidades?",
-a:["Grega","Egípcia","Asteca","Inca"],
-c:0
+q:"Qual civilização construiu Machu Picchu?",
+a:["Maias","Astecas","Incas","Romanos"],
+c:2,
+d:"Difícil",
+h:"A civilização dominou grande parte dos Andes."
 },
+
 {
-q:"A Segunda Guerra Mundial terminou em qual ano?",
-a:["1939","1942","1945","1950"],
-c:2
+q:"Quem foi o primeiro imperador do Brasil?",
+a:["Dom Pedro I","Dom Pedro II","Deodoro","Dom João VI"],
+c:0,
+d:"Difícil",
+h:"Era filho de Dom João VI."
+},
+
+{
+q:"Qual evento marcou o início tradicional da Revolução Francesa?",
+a:["Queda da Bastilha","Tratado de Versalhes","Congresso de Viena","Coroação de Napoleão"],
+c:0,
+d:"Difícil",
+h:"Aconteceu em 14 de julho de 1789."
+},
+
+{
+q:"Quem foi conhecido como o 'Pai da Aviação' no Brasil?",
+a:["Santos Dumont","Oswaldo Cruz","Rui Barbosa","Monteiro Lobato"],
+c:0,
+d:"Muito difícil",
+h:"Seu primeiro nome era Alberto."
+},
+
+{
+q:"Qual império tinha Constantinopla como capital?",
+a:["Império Bizantino","Império Romano do Ocidente","Império Mongol","Império Persa"],
+c:0,
+d:"Muito difícil",
+h:"Também é chamado de Império Romano do Oriente."
+},
+
+{
+q:"Qual tratado encerrou oficialmente a Primeira Guerra Mundial com a Alemanha?",
+a:["Tratado de Paris","Tratado de Versalhes","Tratado de Roma","Tratado de Viena"],
+c:1,
+d:"Muito difícil",
+h:"Foi assinado em 1919."
+},
+
+{
+q:"Qual faraó é associado à famosa máscara funerária de ouro encontrada em sua tumba?",
+a:["Ramsés II","Tutancâmon","Cleópatra","Quéops"],
+c:1,
+d:"Especialista",
+h:"Sua tumba foi encontrada quase intacta."
+},
+
+{
+q:"Quem escreveu 'O Príncipe'?",
+a:["Maquiavel","Platão","Aristóteles","Descartes"],
+c:0,
+d:"Especialista",
+h:"Era um pensador político italiano."
+},
+
+{
+q:"Qual foi a principal cidade do Império Asteca?",
+a:["Cuzco","Tenochtitlán","Teotihuacán","Lima"],
+c:1,
+d:"Especialista",
+h:"Foi construída onde hoje fica a Cidade do México."
 }
+
 ],
 
 tecnologia:[
+
 {
-q:"O que significa CPU?",
-a:["Central Processing Unit","Computer Personal User","Central Program Utility","Control Processing User"],
-c:0
+q:"O que significa a sigla CPU?",
+a:["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Processing User"],
+c:0,
+d:"Fácil",
+h:"É o processador principal."
 },
+
 {
-q:"Qual empresa criou o Android originalmente?",
-a:["Google","Android Inc.","Microsoft","Apple"],
-c:1
+q:"Qual empresa criou o sistema Android originalmente?",
+a:["Microsoft","Android Inc.","Apple","IBM"],
+c:1,
+d:"Fácil",
+h:"Depois foi adquirida pelo Google."
 },
+
 {
-q:"Qual linguagem é usada para estruturar páginas web?",
+q:"Qual linguagem é usada para estruturar páginas da web?",
 a:["HTML","CSS","SQL","Python"],
-c:0
+c:0,
+d:"Fácil",
+h:"É uma linguagem de marcação."
 },
+
 {
-q:"Qual linguagem é usada para estilizar páginas web?",
-a:["HTML","CSS","Java","C"],
-c:1
+q:"Qual linguagem é usada principalmente para estilizar páginas web?",
+a:["HTML","CSS","SQL","C"],
+c:1,
+d:"Médio",
+h:"Define cores, tamanhos e aparência."
 },
+
 {
-q:"Qual linguagem é muito usada para programação web no navegador?",
-a:["JavaScript","Excel","Photoshop","XML"],
-c:0
+q:"Qual linguagem é muito utilizada para adicionar interatividade a páginas web?",
+a:["JavaScript","HTML","CSS","XML"],
+c:0,
+d:"Médio",
+h:"Roda diretamente no navegador."
 },
+
 {
-q:"O que é uma URL?",
-a:["Endereço de um recurso na internet","Tipo de processador","Sistema operacional","Banco de dados"],
-c:0
+q:"O que significa URL?",
+a:["Uniform Resource Locator","Universal Read Link","User Resource Language","United Routing Line"],
+c:0,
+d:"Médio",
+h:"É o endereço de um recurso na internet."
 },
+
 {
-q:"Qual empresa desenvolve o Windows?",
-a:["Apple","Google","Microsoft","IBM"],
-c:2
+q:"Qual empresa desenvolve o navegador Chrome?",
+a:["Apple","Google","Microsoft","Mozilla"],
+c:1,
+d:"Difícil",
+h:"Também desenvolve o Android."
 },
+
 {
-q:"O que significa Wi-Fi?",
-a:["Tecnologia de comunicação sem fio","Tipo de cabo","Sistema operacional","Memória"],
-c:0
+q:"O que é armazenamento em nuvem?",
+a:["Armazenamento em servidores acessíveis pela internet","Um pendrive","Memória RAM","Processador"],
+c:0,
+d:"Difícil",
+h:"Os dados ficam em servidores remotos."
 },
+
 {
-q:"Qual destes é um banco de dados?",
-a:["Firestore","HTML","CSS","PNG"],
-c:0
+q:"O que significa IA?",
+a:["Internet Avançada","Inteligência Artificial","Informação Automática","Interface Avançada"],
+c:1,
+d:"Difícil",
+h:"É a tecnologia capaz de executar tarefas associadas à inteligência."
 },
+
 {
-q:"O que é inteligência artificial?",
-a:["Sistemas capazes de realizar tarefas que envolvem capacidades associadas à inteligência","Um tipo de monitor","Uma linguagem de marcação","Um cabo"],
-c:0
+q:"Qual protocolo é usado para páginas web seguras?",
+a:["HTTP","HTTPS","FTP","SMTP"],
+c:1,
+d:"Muito difícil",
+h:"Possui uma camada de segurança criptográfica."
+},
+
+{
+q:"O que é um banco de dados?",
+a:["Sistema organizado para armazenar informações","Um antivírus","Um processador","Uma rede social"],
+c:0,
+d:"Muito difícil",
+h:"Firestore é um exemplo."
+},
+
+{
+q:"O que significa API?",
+a:["Application Programming Interface","Advanced Program Internet","Application Private Internet","Automatic Programming Input"],
+c:0,
+d:"Muito difícil",
+h:"Permite que sistemas diferentes se comuniquem."
+},
+
+{
+q:"Qual tecnologia é usada para autenticação de usuários neste projeto?",
+a:["Firebase Authentication","Photoshop","HTML puro","Bluetooth"],
+c:0,
+d:"Especialista",
+h:"É um serviço do Google Firebase."
+},
+
+{
+q:"Qual banco de dados do Firebase estamos utilizando?",
+a:["MySQL","Firestore","MongoDB","SQLite"],
+c:1,
+d:"Especialista",
+h:"É o banco NoSQL do Firebase."
+},
+
+{
+q:"Qual método JavaScript é usado para transformar uma string JSON em objeto?",
+a:["JSON.make","JSON.parse","JSON.object","JSON.convert"],
+c:1,
+d:"Especialista",
+h:"Ele faz a leitura do texto JSON."
 }
+
 ],
 
 portugues:[
+
+{
+q:"Qual é o plural de 'cão'?",
+a:["Cãos","Cães","Cãoses","Cãezes"],
+c:1,
+d:"Fácil",
+h:"É uma forma irregular."
+},
+
 {
 q:"Qual palavra está escrita corretamente?",
-a:["Excessão","Exceção","Esceção","Exeção"],
-c:1
+a:["Excessão","Exceção","Eceção","Excessãoo"],
+c:1,
+d:"Fácil",
+h:"A forma correta possui 'ç'."
 },
+
 {
-q:"Qual é o plural de 'cidadão'?",
-a:["Cidadões","Cidadãos","Cidadães","Cidadans"],
-c:1
+q:"Qual é o antônimo de 'alto'?",
+a:["Grande","Baixo","Largo","Forte"],
+c:1,
+d:"Fácil",
+h:"É o oposto de alto."
 },
-{
-q:"Qual destas palavras é um verbo?",
-a:["Casa","Correr","Bonito","Mesa"],
-c:1
-},
-{
-q:"Qual é o antônimo de 'rápido'?",
-a:["Velocidade","Lento","Forte","Grande"],
-c:1
-},
+
 {
 q:"Qual destas palavras é um substantivo?",
 a:["Casa","Correr","Bonito","Rapidamente"],
-c:0
+c:0,
+d:"Médio",
+h:"Nomeia um ser, objeto ou lugar."
 },
+
 {
-q:"Qual é o plural de 'animal'?",
-a:["Animais","Animals","Animalis","Animales"],
-c:0
+q:"Qual é o feminino de 'ator'?",
+a:["Atriz","Atoresa","Atora","Atora"],
+c:0,
+d:"Médio",
+h:"É uma palavra irregular."
 },
+
 {
-q:"Qual palavra possui acento corretamente?",
-a:["Cafe","Café","Cáfe","Cafê"],
-c:1
+q:"Qual destas palavras é um verbo?",
+a:["Mesa","Correr","Bonito","Azul"],
+c:1,
+d:"Médio",
+h:"Indica uma ação."
 },
-{
-q:"Qual destas frases está correta?",
-a:["Nós vai estudar.","Nós vamos estudar.","Nós vão estudar.","Nós ir estudar."],
-c:1
-},
-{
-q:"Qual é um sinônimo de 'feliz'?",
-a:["Triste","Alegre","Bravo","Fraco"],
-c:1
-},
+
 {
 q:"Qual é o aumentativo de 'casa'?",
-a:["Casinha","Casarão","Caseta","Casazinha"],
-c:1
+a:["Casinha","Casarão","Casita","Casebre"],
+c:1,
+d:"Difícil",
+h:"Indica uma casa grande."
+},
+
+{
+q:"Qual é o diminutivo de 'flor'?",
+a:["Florzinha","Florzona","Floral","Florada"],
+c:0,
+d:"Difícil",
+h:"Indica uma flor pequena."
+},
+
+{
+q:"Qual figura de linguagem compara elementos usando 'como'?",
+a:["Metáfora","Comparação","Ironia","Hipérbole"],
+c:1,
+d:"Difícil",
+h:"A palavra 'como' é uma pista."
+},
+
+{
+q:"Qual figura de linguagem representa um exagero intencional?",
+a:["Hipérbole","Metáfora","Eufemismo","Antítese"],
+c:0,
+d:"Muito difícil",
+h:"É comum em frases exageradas."
+},
+
+{
+q:"Qual é a função principal de um adjetivo?",
+a:["Indicar ação","Caracterizar um substantivo","Substituir um verbo","Indicar quantidade"],
+c:1,
+d:"Muito difícil",
+h:"Expressa característica."
+},
+
+{
+q:"Qual destas palavras é um advérbio?",
+a:["Rapidamente","Casa","Bonito","Correr"],
+c:0,
+d:"Muito difícil",
+h:"Indica circunstância, como modo."
+},
+
+{
+q:"Quem escreveu 'Dom Casmurro'?",
+a:["Machado de Assis","José de Alencar","Carlos Drummond","Clarice Lispector"],
+c:0,
+d:"Especialista",
+h:"É um dos principais escritores brasileiros."
+},
+
+{
+q:"Qual é o sujeito na frase 'João comprou um livro'?",
+a:["Um livro","Comprou","João","Livro"],
+c:2,
+d:"Especialista",
+h:"É quem realiza a ação."
+},
+
+{
+q:"Qual palavra é uma conjunção?",
+a:["E","Casa","Muito","Correr"],
+c:0,
+d:"Especialista",
+h:"Liga palavras ou orações."
 }
+
 ],
 
 geral:[
+
+{
+q:"Qual é a capital do Brasil?",
+a:["Brasília","São Paulo","Rio de Janeiro","Salvador"],
+c:0,
+d:"Fácil",
+h:"É uma cidade planejada."
+},
+
 {
 q:"Quantos dias tem uma semana?",
 a:["5","6","7","8"],
-c:2
+c:2,
+d:"Fácil",
+h:"Começa no domingo ou segunda, dependendo da convenção."
 },
+
 {
-q:"Quantos minutos existem em uma hora?",
-a:["30","45","60","90"],
-c:2
+q:"Qual é o maior planeta do Sistema Solar?",
+a:["Terra","Marte","Júpiter","Vênus"],
+c:2,
+d:"Fácil",
+h:"É um gigante gasoso."
 },
+
 {
-q:"Qual é o maior mamífero do planeta?",
-a:["Elefante","Baleia-azul","Girafa","Orca"],
-c:1
+q:"Quantos lados tem um triângulo?",
+a:["2","3","4","5"],
+c:1,
+d:"Médio",
+h:"Seu nome está relacionado ao número de ângulos."
 },
+
 {
-q:"Quantas cores existem na bandeira do Brasil?",
-a:["3","4","5","6"],
-c:1
+q:"Qual é o idioma oficial do Brasil?",
+a:["Espanhol","Português","Inglês","Francês"],
+c:1,
+d:"Médio",
+h:"É uma língua de origem europeia."
 },
+
 {
-q:"Qual é o idioma mais falado no Brasil?",
-a:["Português","Espanhol","Inglês","Francês"],
-c:0
+q:"Qual animal é conhecido como rei da selva?",
+a:["Tigre","Leão","Elefante","Urso"],
+c:1,
+d:"Médio",
+h:"É um grande felino."
 },
+
 {
-q:"Qual instrumento possui teclas pretas e brancas?",
-a:["Violino","Piano","Flauta","Bateria"],
-c:1
-},
-{
-q:"Quantos lados tem um hexágono?",
+q:"Quantos continentes existem tradicionalmente?",
 a:["5","6","7","8"],
-c:1
+c:2,
+d:"Difícil",
+h:"A classificação mais comum considera sete."
 },
+
 {
-q:"Qual é o satélite natural da Terra?",
-a:["Sol","Lua","Marte","Vênus"],
-c:1
+q:"Qual é o metal líquido em temperatura ambiente mais conhecido?",
+a:["Ferro","Mercúrio","Ouro","Cobre"],
+c:1,
+d:"Difícil",
+h:"Era utilizado em termômetros antigos."
 },
+
 {
-q:"Qual esporte utiliza uma bola e uma cesta?",
-a:["Tênis","Basquete","Natação","Vôlei"],
-c:1
+q:"Qual esporte utiliza uma bola oval?",
+a:["Tênis","Futebol americano","Basquete","Vôlei"],
+c:1,
+d:"Difícil",
+h:"É muito popular nos Estados Unidos."
 },
+
 {
-q:"Qual é a moeda oficial do Brasil?",
-a:["Peso","Real","Dólar","Euro"],
-c:1
+q:"Qual é o símbolo químico da prata?",
+a:["Pt","Ag","Au","Pr"],
+c:1,
+d:"Muito difícil",
+h:"Seu símbolo vem do latim."
+},
+
+{
+q:"Quantos jogadores cada equipe possui em campo no futebol?",
+a:["9","10","11","12"],
+c:2,
+d:"Muito difícil",
+h:"Incluindo o goleiro."
+},
+
+{
+q:"Qual instrumento possui teclas brancas e pretas?",
+a:["Violão","Piano","Flauta","Bateria"],
+c:1,
+d:"Muito difícil",
+h:"É um instrumento de teclado."
+},
+
+{
+q:"Qual país sediou os Jogos Olímpicos de 2016?",
+a:["Brasil","China","Japão","Reino Unido"],
+c:0,
+d:"Especialista",
+h:"A competição aconteceu no Rio de Janeiro."
+},
+
+{
+q:"Qual é o menor número primo?",
+a:["0","1","2","3"],
+c:2,
+d:"Especialista",
+h:"É o único número primo que é par."
+},
+
+{
+q:"Qual é o único continente atravessado por todos os meridianos?",
+a:["África","Ásia","Antártida","Europa"],
+c:2,
+d:"Especialista",
+h:"O Polo Sul está localizado nele."
 }
+
 ]
 
 };
 
 
-/* =========================================================
+/* =========================
    MATEMÁTICA
-========================================================= */
+========================= */
 
 function gerarMatematica(){
 
-    const lista=[];
+    const lista = [];
 
     for(let i=0;i<500;i++){
 
         let a;
         let b;
-        let resposta;
+        let resultado;
         let pergunta;
+        let dificuldade;
 
-        const nivel=i%15;
+        if(i<100){
 
-        if(nivel<3){
+            a = Math.floor(Math.random()*20)+1;
+            b = Math.floor(Math.random()*20)+1;
 
-            a=Math.floor(Math.random()*20)+1;
-            b=Math.floor(Math.random()*20)+1;
-            resposta=a+b;
+            resultado = a+b;
 
-            pergunta=`Quanto é ${a} + ${b}?`;
+            pergunta = `Quanto é ${a} + ${b}?`;
 
-        }else if(nivel<6){
+            dificuldade = "Fácil";
 
-            a=Math.floor(Math.random()*30)+10;
-            b=Math.floor(Math.random()*20)+1;
-            resposta=a-b;
+        }else if(i<200){
 
-            pergunta=`Quanto é ${a} - ${b}?`;
+            a = Math.floor(Math.random()*50)+10;
+            b = Math.floor(Math.random()*20)+1;
 
-        }else if(nivel<9){
+            resultado = a-b;
 
-            a=Math.floor(Math.random()*15)+2;
-            b=Math.floor(Math.random()*12)+2;
-            resposta=a*b;
+            pergunta = `Quanto é ${a} - ${b}?`;
 
-            pergunta=`Quanto é ${a} × ${b}?`;
+            dificuldade = "Médio";
 
-        }else if(nivel<12){
+        }else if(i<300){
 
-            b=Math.floor(Math.random()*12)+2;
-            resposta=Math.floor(Math.random()*20)+2;
-            a=b*resposta;
+            a = Math.floor(Math.random()*20)+2;
+            b = Math.floor(Math.random()*12)+2;
 
-            pergunta=`Quanto é ${a} ÷ ${b}?`;
+            resultado = a*b;
+
+            pergunta = `Quanto é ${a} × ${b}?`;
+
+            dificuldade = "Difícil";
+
+        }else if(i<400){
+
+            b = Math.floor(Math.random()*10)+2;
+            resultado = Math.floor(Math.random()*20)+2;
+            a = b*resultado;
+
+            pergunta = `Quanto é ${a} ÷ ${b}?`;
+
+            dificuldade = "Muito difícil";
 
         }else{
 
-            a=Math.floor(Math.random()*20)+5;
-            b=Math.floor(Math.random()*10)+2;
-            const c=Math.floor(Math.random()*10)+1;
+            a = Math.floor(Math.random()*20)+5;
+            b = Math.floor(Math.random()*20)+5;
 
-            resposta=(a*b)+c;
+            resultado = a*a+b;
 
-            pergunta=`Quanto é (${a} × ${b}) + ${c}?`;
+            pergunta = `Quanto é ${a}² + ${b}?`;
+
+            dificuldade = "Especialista";
         }
 
-        const alternativas=[
-            resposta,
-            resposta+1,
-            resposta-1,
-            resposta+Math.floor(Math.random()*5)+2
+        let respostas = [
+            resultado,
+            resultado+1,
+            resultado-1,
+            resultado+5
         ];
 
-        alternativas.sort(()=>Math.random()-.5);
+        respostas = respostas.sort(()=>Math.random()-0.5);
+
+        const correta = respostas.indexOf(resultado);
 
         lista.push({
             q:pergunta,
-            a:alternativas.map(String),
-            c:alternativas.indexOf(resposta)
+            a:respostas.map(String),
+            c:correta,
+            d:dificuldade,
+            h:`Tente resolver a operação com calma.`
         });
     }
 
     return lista;
 }
 
-bancos.matematica=gerarMatematica();
 
+/* =========================
+   CRIAR BANCO DE 500
+========================= */
 
-/* =========================================================
-   REPETIÇÃO PARA CHEGAR A 500 QUESTÕES POR CATEGORIA
-========================================================= */
+function criarBanco(base){
 
-function criarBanco(lista){
-
-    const resultado=[];
+    const lista = [];
 
     for(let i=0;i<500;i++){
 
-        const original=lista[i%lista.length];
+        const item = base[i % base.length];
 
-        resultado.push({
-            q:original.q,
-            a:[...original.a],
-            c:original.c
+        lista.push({
+            q:item.q,
+            a:[...item.a],
+            c:item.c,
+            d:item.d,
+            h:item.h
         });
     }
 
-    return resultado;
-}
-
-for(const categoria of Object.keys(bancos)){
-    bancos[categoria]=criarBanco(bancos[categoria]);
+    return lista;
 }
 
 
-/* =========================================================
-   ESTADO
-========================================================= */
+const bancos = {};
 
-let usuarioAtual=null;
-let dadosUsuario=null;
+Object.keys(bancosBase).forEach(categoria=>{
+    bancos[categoria] = criarBanco(bancosBase[categoria]);
+});
 
-let categoriaAtual="";
-let perguntas=[];
-let indicePergunta=0;
-let premioAtual=0;
-let tempo=15;
-let intervalo=null;
-let respondido=false;
-
-let usadas5050=false;
-let usadoPular=false;
-let usadaDica=false;
-
-let acertos=0;
-
-let modoAmigo=false;
-let jogador1="";
-let jogador2="";
-
-let partidaId=null;
-let partidaRef=null;
-let souJogador1=false;
-let onlinePerguntas=[];
-let onlineIndice=0;
-let onlineRespondido=false;
-let onlineIntervalo=null;
+bancos.matematica = gerarMatematica();
 
 
-/* =========================================================
-   TELAS
-========================================================= */
-
-function mostrarTela(id){
-
-    document.querySelectorAll(".screen").forEach(el=>{
-        el.classList.remove("active");
-    });
-
-    document.getElementById(id).classList.add("active");
-
-    window.scrollTo(0,0);
-}
-
-
-/* =========================================================
+/* =========================
    AUTENTICAÇÃO
-========================================================= */
+========================= */
 
 auth.onAuthStateChanged(async user=>{
 
     if(user){
 
-        usuarioAtual=user;
+        usuarioAtual = user;
 
         await carregarUsuario();
 
-        atualizarCabecalho();
+        document.getElementById("loginScreen").classList.add("hidden");
+        document.getElementById("app").classList.remove("hidden");
+
+        document.getElementById("headerUserName").textContent =
+            dadosUsuario.nome || user.email;
 
         mostrarTela("menuScreen");
 
     }else{
 
-        usuarioAtual=null;
-        dadosUsuario=null;
+        usuarioAtual = null;
+        dadosUsuario = null;
 
-        document.getElementById("headerNome").textContent="Visitante";
-        document.getElementById("headerRecorde").textContent="0";
-
-        mostrarTela("authScreen");
+        document.getElementById("loginScreen").classList.remove("hidden");
+        document.getElementById("app").classList.add("hidden");
     }
-
 });
 
 
-async function cadastrar(){
+async function entrar(){
 
-    const nome=document.getElementById("nomeCadastro").value.trim();
-    const email=document.getElementById("email").value.trim();
-    const senha=document.getElementById("senha").value;
+    const email =
+        document.getElementById("loginEmail").value.trim();
 
-    const msg=document.getElementById("authMessage");
+    const senha =
+        document.getElementById("loginPassword").value;
 
-    if(!nome || !email || !senha){
+    const msg =
+        document.getElementById("loginMessage");
 
-        msg.textContent="Preencha nome, e-mail e senha.";
-        return;
-    }
+    msg.textContent = "";
 
-    if(senha.length<6){
+    if(!email || !senha){
 
-        msg.textContent="A senha precisa ter pelo menos 6 caracteres.";
+        msg.textContent = "Preencha e-mail e senha.";
+
         return;
     }
 
     try{
 
-        msg.textContent="Criando conta...";
+        await auth.signInWithEmailAndPassword(email,senha);
 
-        const cred=await auth.createUserWithEmailAndPassword(email,senha);
+    }catch(error){
+
+        msg.textContent = traduzirErro(error);
+    }
+}
+
+
+async function cadastrar(){
+
+    const nome =
+        document.getElementById("registerName").value.trim();
+
+    const email =
+        document.getElementById("registerEmail").value.trim();
+
+    const senha =
+        document.getElementById("registerPassword").value;
+
+    const msg =
+        document.getElementById("loginMessage");
+
+    msg.textContent = "";
+
+    if(!nome || !email || !senha){
+
+        msg.textContent = "Preencha todos os campos.";
+
+        return;
+    }
+
+    if(senha.length < 6){
+
+        msg.textContent =
+            "A senha precisa ter pelo menos 6 caracteres.";
+
+        return;
+    }
+
+    try{
+
+        const cred =
+            await auth.createUserWithEmailAndPassword(
+                email,
+                senha
+            );
 
         await db.collection("Usuarios")
             .doc(cred.user.uid)
@@ -1513,131 +2028,117 @@ async function cadastrar(){
 
                 nome:nome,
                 email:email,
+
                 recorde:0,
+                maiorPremio:0,
                 partidas:0,
-                vitorias:0,
                 acertos:0,
-                criadoEm:firebase.firestore.FieldValue.serverTimestamp()
+
+                criadoEm:
+                    firebase.firestore.FieldValue.serverTimestamp()
 
             });
 
-        msg.textContent="Conta criada!";
-
     }catch(error){
 
-        msg.textContent=traduzirErroFirebase(error);
+        msg.textContent = traduzirErro(error);
     }
 }
 
 
-async function entrar(){
+function traduzirErro(error){
 
-    const email=document.getElementById("email").value.trim();
-    const senha=document.getElementById("senha").value;
+    if(error.code==="auth/email-already-in-use")
+        return "Este e-mail já está cadastrado.";
 
-    const msg=document.getElementById("authMessage");
+    if(error.code==="auth/invalid-email")
+        return "E-mail inválido.";
 
-    if(!email || !senha){
+    if(error.code==="auth/wrong-password")
+        return "Senha incorreta.";
 
-        msg.textContent="Digite seu e-mail e sua senha.";
-        return;
-    }
+    if(error.code==="auth/user-not-found")
+        return "Usuário não encontrado.";
 
-    try{
+    if(error.code==="auth/invalid-credential")
+        return "E-mail ou senha incorretos.";
 
-        msg.textContent="Entrando...";
-
-        await auth.signInWithEmailAndPassword(email,senha);
-
-    }catch(error){
-
-        msg.textContent=traduzirErroFirebase(error);
-    }
+    return "Não foi possível realizar a operação.";
 }
 
 
-async function recuperarSenha(){
+function mostrarCadastro(){
 
-    const email=document.getElementById("email").value.trim();
+    document.getElementById("loginForm")
+        .classList.add("hidden");
 
-    if(!email){
+    document.getElementById("registerForm")
+        .classList.remove("hidden");
 
-        document.getElementById("authMessage").textContent=
-            "Digite seu e-mail primeiro.";
-        return;
-    }
-
-    try{
-
-        await auth.sendPasswordResetEmail(email);
-
-        document.getElementById("authMessage").textContent=
-            "E-mail para redefinir a senha enviado.";
-
-    }catch(error){
-
-        document.getElementById("authMessage").textContent=
-            traduzirErroFirebase(error);
-    }
+    document.getElementById("loginMessage")
+        .textContent="";
 }
 
 
-function traduzirErroFirebase(error){
+function mostrarLogin(){
 
-    const codigo=error.code||"";
+    document.getElementById("registerForm")
+        .classList.add("hidden");
 
-    const erros={
-        "auth/email-already-in-use":"Este e-mail já está cadastrado.",
-        "auth/invalid-email":"E-mail inválido.",
-        "auth/weak-password":"A senha é muito fraca.",
-        "auth/user-not-found":"Usuário não encontrado.",
-        "auth/wrong-password":"Senha incorreta.",
-        "auth/invalid-credential":"E-mail ou senha incorretos.",
-        "auth/too-many-requests":"Muitas tentativas. Tente novamente mais tarde."
-    };
+    document.getElementById("loginForm")
+        .classList.remove("hidden");
 
-    return erros[codigo] || "Não foi possível realizar a operação.";
+    document.getElementById("loginMessage")
+        .textContent="";
 }
 
 
 async function sair(){
 
     if(intervalo){
+
         clearInterval(intervalo);
+        intervalo=null;
     }
 
-    if(onlineIntervalo){
-        clearInterval(onlineIntervalo);
+    if(unsubscribeOnline){
+
+        unsubscribeOnline();
+        unsubscribeOnline=null;
     }
 
     await auth.signOut();
 }
 
 
-/* =========================================================
-   USUÁRIO FIRESTORE
-========================================================= */
+/* =========================
+   USUÁRIO
+========================= */
 
 async function carregarUsuario(){
 
     if(!usuarioAtual) return;
 
-    const ref=db.collection("Usuarios").doc(usuarioAtual.uid);
+    const ref =
+        db.collection("Usuarios")
+          .doc(usuarioAtual.uid);
 
-    const snap=await ref.get();
+    const snap = await ref.get();
 
     if(snap.exists){
 
-        dadosUsuario=snap.data();
+        dadosUsuario = snap.data();
 
     }else{
 
-        dadosUsuario={
-            nome:usuarioAtual.email.split("@")[0],
+        dadosUsuario = {
+
+            nome:usuarioAtual.email,
             email:usuarioAtual.email,
+
             recorde:0,
+            maiorPremio:0,
             partidas:0,
-            vitorias:0,
             acertos:0
         };
 
@@ -1646,51 +2147,75 @@ async function carregarUsuario(){
 }
 
 
-function atualizarCabecalho(){
+/* =========================
+   TELAS
+========================= */
 
-    if(!dadosUsuario) return;
+function mostrarTela(id){
 
-    document.getElementById("headerNome").textContent=
-        dadosUsuario.nome || "Jogador";
+    const telas = [
+        "menuScreen",
+        "gameScreen",
+        "resultScreen",
+        "profileScreen",
+        "achievementsScreen",
+        "rankingScreen",
+        "friendScreen",
+        "onlineScreen",
+        "howScreen"
+    ];
 
-    document.getElementById("headerRecorde").textContent=
-        formatarNumero(dadosUsuario.recorde||0);
+    telas.forEach(tela=>{
+
+        document.getElementById(tela)
+            .classList.add("hidden");
+
+    });
+
+    document.getElementById(id)
+        .classList.remove("hidden");
 }
 
 
-function formatarNumero(valor){
+function voltarMenu(){
 
-    return Number(valor||0).toLocaleString("pt-BR");
+    if(intervalo){
+
+        clearInterval(intervalo);
+        intervalo=null;
+    }
+
+    mostrarTela("menuScreen");
 }
 
 
-/* =========================================================
+/* =========================
    NOVO JOGO
-========================================================= */
+========================= */
 
 function novoJogo(categoria){
 
-    if(!usuarioAtual){
+    categoriaAtual = categoria;
 
-        mostrarTela("authScreen");
-        return;
-    }
+    modoAmigo = false;
 
-    modoAmigo=false;
+    jogadorAtual = 1;
 
-    categoriaAtual=categoria;
+    bancoAtual = [...bancos[categoria]];
 
-    perguntas=[...bancos[categoria]]
-        .sort(()=>Math.random()-.5)
-        .slice(0,15);
+    bancoAtual.sort(()=>Math.random()-0.5);
 
-    indicePergunta=0;
-    premioAtual=0;
-    acertos=0;
+    bancoAtual = bancoAtual.slice(0,15);
 
-    usadas5050=false;
-    usadoPular=false;
-    usadaDica=false;
+    perguntaAtual = 0;
+
+    pontos = 0;
+
+    premioAtual = 0;
+
+    ajuda5050 = true;
+    ajudaPular = true;
+    ajudaDica = true;
 
     mostrarTela("gameScreen");
 
@@ -1698,87 +2223,110 @@ function novoJogo(categoria){
 }
 
 
-/* =========================================================
+/* =========================
    CARREGAR PERGUNTA
-========================================================= */
+========================= */
 
 function carregarPergunta(){
 
-    if(indicePergunta>=15){
+    if(perguntaAtual>=15){
 
         finalizar();
+
         return;
     }
 
-    respondido=false;
+    respondida=false;
 
-    const pergunta=perguntas[indicePergunta];
+    const pergunta =
+        bancoAtual[perguntaAtual];
 
-    document.getElementById("gameCategory").textContent=
-        nomesCategorias[categoriaAtual];
+    document.getElementById("questionNumber")
+        .textContent = perguntaAtual+1;
 
-    document.getElementById("gameQuestionNumber").textContent=
-        `Pergunta ${indicePergunta+1} de 15`;
+    document.getElementById("currentPrize")
+        .textContent =
+        formatarDinheiro(premios[perguntaAtual]);
 
-    document.getElementById("currentPrize").textContent=
-        formatarNumero(premios[indicePergunta]);
+    document.getElementById("difficulty")
+        .textContent =
+        pergunta.d;
 
-    document.getElementById("progressBar").style.width=
-        `${((indicePergunta+1)/15)*100}%`;
-
-    document.getElementById("question").textContent=
+    document.getElementById("question")
+        .textContent =
         pergunta.q;
 
-    const container=document.getElementById("answers");
+    document.getElementById("hintText")
+        .textContent="";
 
-    container.innerHTML="";
+    document.getElementById("progressBar")
+        .style.width =
+        ((perguntaAtual)/15*100)+"%";
+
+    const respostas =
+        document.getElementById("answers");
+
+    respostas.innerHTML="";
 
     pergunta.a.forEach((texto,index)=>{
 
-        const botao=document.createElement("button");
+        const btn =
+            document.createElement("button");
 
-        botao.className="answer";
-        botao.textContent=
-            `${String.fromCharCode(65+index)}) ${texto}`;
+        btn.className="answer";
 
-        botao.dataset.index=index;
+        btn.textContent =
+            String.fromCharCode(65+index)+") "+texto;
 
-        botao.onclick=()=>responder(index,botao);
+        btn.dataset.index=index;
 
-        container.appendChild(botao);
+        btn.onclick=()=>{
+            responder(index,btn);
+        };
+
+        respostas.appendChild(btn);
     });
 
-    document.getElementById("life5050").disabled=usadas5050;
-    document.getElementById("lifePular").disabled=usadoPular;
-    document.getElementById("lifeDica").disabled=usadaDica;
+    document.getElementById("btn5050")
+        .disabled=!ajuda5050;
+
+    document.getElementById("btnSkip")
+        .disabled=!ajudaPular;
+
+    document.getElementById("btnHint")
+        .disabled=!ajudaDica;
 
     iniciarTimer();
 }
 
 
-/* =========================================================
+/* =========================
    TIMER
-========================================================= */
+========================= */
 
 function iniciarTimer(){
 
     if(intervalo){
+
         clearInterval(intervalo);
     }
 
     tempo=15;
 
-    document.getElementById("timer").textContent=tempo;
+    document.getElementById("timer")
+        .textContent=tempo;
 
     intervalo=setInterval(()=>{
 
         tempo--;
 
-        document.getElementById("timer").textContent=tempo;
+        document.getElementById("timer")
+            .textContent=tempo;
 
         if(tempo<=0){
 
             clearInterval(intervalo);
+            intervalo=null;
 
             tempoEsgotado();
         }
@@ -1789,469 +2337,583 @@ function iniciarTimer(){
 
 function tempoEsgotado(){
 
-    if(respondido) return;
+    if(respondida) return;
 
-    respondido=true;
+    respondida=true;
 
-    const correta=perguntas[indicePergunta].c;
+    const pergunta =
+        bancoAtual[perguntaAtual];
 
-    document.querySelectorAll(".answer").forEach((botao,index)=>{
+    const botoes =
+        document.querySelectorAll(".answer");
 
-        if(index===correta){
-            botao.classList.add("correct");
+    botoes.forEach(btn=>{
+
+        if(Number(btn.dataset.index)===pergunta.c){
+
+            btn.classList.add("correct");
         }
-
-        botao.disabled=true;
     });
 
     setTimeout(()=>{
 
-        finalizar();
+        proxima();
 
     },1200);
 }
 
 
-/* =========================================================
+/* =========================
    RESPONDER
-========================================================= */
+========================= */
 
-function responder(index,botao){
+function responder(indice,botao){
 
-    if(respondido) return;
+    if(respondida) return;
 
-    respondido=true;
+    respondida=true;
 
     if(intervalo){
+
         clearInterval(intervalo);
+        intervalo=null;
     }
 
-    const pergunta=perguntas[indicePergunta];
+    const pergunta =
+        bancoAtual[perguntaAtual];
 
-    document.querySelectorAll(".answer").forEach(b=>{
-        b.disabled=true;
+    const botoes =
+        document.querySelectorAll(".answer");
+
+    botoes.forEach(btn=>{
+        btn.disabled=true;
     });
 
-    if(index===pergunta.c){
+    if(indice===pergunta.c){
 
         botao.classList.add("correct");
 
-        acertos++;
+        pontos++;
 
-        premioAtual=premios[indicePergunta];
+        premioAtual =
+            premios[perguntaAtual];
 
-        setTimeout(proxima,900);
+        if(modoAmigo){
+
+            if(jogadorAtual===1){
+
+                acertosJogador1++;
+
+            }else{
+
+                acertosJogador2++;
+            }
+        }
 
     }else{
 
         botao.classList.add("wrong");
 
-        document.querySelectorAll(".answer").forEach((b,i)=>{
+        botoes.forEach(btn=>{
 
-            if(i===pergunta.c){
-                b.classList.add("correct");
+            if(Number(btn.dataset.index)===pergunta.c){
+
+                btn.classList.add("correct");
             }
 
         });
-
-        setTimeout(finalizar,1200);
     }
+
+    setTimeout(()=>{
+
+        proxima();
+
+    },1000);
 }
 
+
+/* =========================
+   PRÓXIMA
+========================= */
 
 function proxima(){
 
-    indicePergunta++;
+    perguntaAtual++;
+
+    if(modoAmigo && perguntaAtual<15){
+
+        jogadorAtual =
+            jogadorAtual===1 ? 2 : 1;
+    }
 
     carregarPergunta();
 }
 
 
-/* =========================================================
+/* =========================
    50/50
-========================================================= */
+========================= */
 
 function usar5050(){
 
-    if(usadas5050 || respondido) return;
+    if(!ajuda5050 || respondida) return;
 
-    usadas5050=true;
+    ajuda5050=false;
 
-    const correta=perguntas[indicePergunta].c;
+    document.getElementById("btn5050")
+        .disabled=true;
 
-    const erradas=[0,1,2,3]
-        .filter(i=>i!==correta)
-        .sort(()=>Math.random()-.5)
-        .slice(0,2);
+    const pergunta =
+        bancoAtual[perguntaAtual];
 
-    document.querySelectorAll(".answer").forEach((botao,index)=>{
+    const botoes =
+        [...document.querySelectorAll(".answer")];
 
-        if(erradas.includes(index)){
+    const erradas =
+        botoes.filter(btn=>
+            Number(btn.dataset.index)!==pergunta.c
+        );
 
-            botao.disabled=true;
-            botao.style.visibility="hidden";
-        }
-    });
+    erradas
+        .sort(()=>Math.random()-0.5)
+        .slice(0,2)
+        .forEach(btn=>{
 
-    document.getElementById("life5050").disabled=true;
+            btn.disabled=true;
+            btn.style.visibility="hidden";
+        });
 }
 
 
-/* =========================================================
+/* =========================
    PULAR
-========================================================= */
+========================= */
 
 function pular(){
 
-    if(usadoPular || respondido) return;
+    if(!ajudaPular || respondida) return;
 
-    usadoPular=true;
+    ajudaPular=false;
 
-    if(intervalo){
-        clearInterval(intervalo);
-    }
+    document.getElementById("btnSkip")
+        .disabled=true;
 
-    indicePergunta++;
-
-    carregarPergunta();
+    proxima();
 }
 
 
-/* =========================================================
+/* =========================
    DICA
-========================================================= */
+========================= */
 
 function dica(){
 
-    if(usadaDica || respondido) return;
+    if(!ajudaDica || respondida) return;
 
-    usadaDica=true;
+    ajudaDica=false;
 
-    const pergunta=perguntas[indicePergunta];
+    document.getElementById("btnHint")
+        .disabled=true;
 
-    alert(
-        "💡 Dica: a resposta correta é uma das alternativas. " +
-        "Analise cuidadosamente antes de escolher."
-    );
-
-    document.getElementById("lifeDica").disabled=true;
+    document.getElementById("hintText")
+        .textContent =
+        "💡 Dica: "+
+        bancoAtual[perguntaAtual].h;
 }
 
 
-/* =========================================================
+/* =========================
    FINALIZAR
-========================================================= */
+========================= */
 
 async function finalizar(){
 
     if(intervalo){
+
         clearInterval(intervalo);
+        intervalo=null;
     }
-
-    const recordeAnterior=dadosUsuario?.recorde||0;
-
-    if(premioAtual>recordeAnterior){
-
-        dadosUsuario.recorde=premioAtual;
-    }
-
-    dadosUsuario.partidas=(dadosUsuario.partidas||0)+1;
-
-    dadosUsuario.acertos=(dadosUsuario.acertos||0)+acertos;
-
-    if(premioAtual>=1000000){
-
-        dadosUsuario.vitorias=(dadosUsuario.vitorias||0)+1;
-    }
-
-    await db.collection("Usuarios")
-        .doc(usuarioAtual.uid)
-        .set(dadosUsuario,{merge:true});
-
-    atualizarCabecalho();
-
-    document.getElementById("resultTitle").textContent=
-        premioAtual>=1000000
-        ? "🏆 VOCÊ CHEGOU AO MILHÃO!"
-        : "Fim de jogo!";
-
-    document.getElementById("resultPrize").textContent=
-        formatarNumero(premioAtual);
-
-    document.getElementById("resultMessage").textContent=
-        premioAtual>recordeAnterior
-        ? "🎉 Novo recorde pessoal!"
-        : "Continue tentando superar seu recorde!";
-
-    document.getElementById("resultStats").textContent=
-        `Você acertou ${acertos} de 15 perguntas.`;
 
     mostrarTela("resultScreen");
+
+    if(modoAmigo){
+
+        document.getElementById("resultTitle")
+            .textContent="👥 Resultado da partida";
+
+        document.getElementById("resultText")
+            .textContent=
+            `${jogador1}: ${acertosJogador1} acertos | ${jogador2}: ${acertosJogador2} acertos`;
+
+        if(acertosJogador1>acertosJogador2){
+
+            document.getElementById("resultPrize")
+                .textContent=
+                `${jogador1} venceu!`;
+
+        }else if(acertosJogador2>acertosJogador1){
+
+            document.getElementById("resultPrize")
+                .textContent=
+                `${jogador2} venceu!`;
+
+        }else{
+
+            document.getElementById("resultPrize")
+                .textContent="Empate!";
+        }
+
+        return;
+    }
+
+    document.getElementById("resultTitle")
+        .textContent=
+        pontos===15
+        ? "🏆 MILIONÁRIO!"
+        : "🎉 Fim de jogo!";
+
+    document.getElementById("resultText")
+        .textContent=
+        `Você acertou ${pontos} de 15 perguntas.`;
+
+    document.getElementById("resultPrize")
+        .textContent=
+        formatarDinheiro(premioAtual);
+
+    await salvarResultado();
 }
 
 
-/* =========================================================
+/* =========================
+   SALVAR RESULTADO
+========================= */
+
+async function salvarResultado(){
+
+    if(!usuarioAtual) return;
+
+    const ref =
+        db.collection("Usuarios")
+          .doc(usuarioAtual.uid);
+
+    const snap=await ref.get();
+
+    const dados=snap.exists
+        ? snap.data()
+        : {};
+
+    const novoRecorde =
+        Math.max(
+            Number(dados.recorde||0),
+            Number(premioAtual||0)
+        );
+
+    const maiorPremio =
+        Math.max(
+            Number(dados.maiorPremio||0),
+            Number(premioAtual||0)
+        );
+
+    const partidas =
+        Number(dados.partidas||0)+1;
+
+    const acertos =
+        Number(dados.acertos||0)+pontos;
+
+    await ref.update({
+
+        recorde:novoRecorde,
+        maiorPremio:maiorPremio,
+        partidas:partidas,
+        acertos:acertos
+    });
+
+    dadosUsuario={
+        ...dados,
+        recorde:novoRecorde,
+        maiorPremio:maiorPremio,
+        partidas:partidas,
+        acertos:acertos
+    };
+}
+
+
+/* =========================
    PERFIL
-========================================================= */
+========================= */
 
 async function abrirPerfil(){
 
     await carregarUsuario();
 
-    const nome=dadosUsuario.nome||"Jogador";
+    document.getElementById("profileName")
+        .textContent=
+        "Nome: "+(dadosUsuario.nome||"Jogador");
 
-    document.getElementById("profileNome").textContent=nome;
+    document.getElementById("profileEmail")
+        .textContent=
+        "E-mail: "+(dadosUsuario.email||usuarioAtual.email);
 
-    document.getElementById("profileEmail").textContent=
-        dadosUsuario.email||usuarioAtual.email;
+    document.getElementById("profileRecord")
+        .textContent=
+        formatarDinheiro(dadosUsuario.recorde||0);
 
-    document.getElementById("profileAvatar").textContent=
-        nome.charAt(0).toUpperCase();
-
-    document.getElementById("profileRecord").textContent=
-        "R$ "+formatarNumero(dadosUsuario.recorde||0);
-
-    document.getElementById("profileGames").textContent=
+    document.getElementById("profileGames")
+        .textContent=
         dadosUsuario.partidas||0;
 
-    document.getElementById("profileWins").textContent=
-        dadosUsuario.vitorias||0;
-
-    document.getElementById("profileCorrect").textContent=
+    document.getElementById("profileCorrect")
+        .textContent=
         dadosUsuario.acertos||0;
 
-    renderizarConquistas();
+    document.getElementById("profileBest")
+        .textContent=
+        formatarDinheiro(dadosUsuario.maiorPremio||0);
 
     mostrarTela("profileScreen");
 }
 
 
-/* =========================================================
+/* =========================
    CONQUISTAS
-========================================================= */
+========================= */
 
-function renderizarConquistas(){
+async function abrirConquistas(){
 
-    const lista=document.getElementById("achievements");
+    await carregarUsuario();
 
-    const recorde=dadosUsuario.recorde||0;
-    const partidas=dadosUsuario.partidas||0;
-    const acertos=dadosUsuario.acertos||0;
-    const vitorias=dadosUsuario.vitorias||0;
+    const recorde =
+        Number(dadosUsuario.recorde||0);
+
+    const partidas =
+        Number(dadosUsuario.partidas||0);
+
+    const acertos =
+        Number(dadosUsuario.acertos||0);
 
     const conquistas=[
 
         {
-            icone:"🎮",
-            nome:"Primeira partida",
-            descricao:"Jogue sua primeira partida.",
+            icon:"🎮",
+            nome:"Primeiro jogo",
+            desc:"Jogue sua primeira partida.",
             liberada:partidas>=1
         },
 
         {
-            icone:"💵",
-            nome:"Primeiros ganhos",
-            descricao:"Alcance R$ 10.000.",
-            liberada:recorde>=10000
+            icon:"🎯",
+            nome:"Primeiro acerto",
+            desc:"Acerte uma pergunta.",
+            liberada:acertos>=1
         },
 
         {
-            icone:"💰",
-            nome:"Jogador avançado",
-            descricao:"Alcance R$ 100.000.",
+            icon:"💵",
+            nome:"Cinco mil",
+            desc:"Alcance R$ 5.000.",
+            liberada:recorde>=5000
+        },
+
+        {
+            icon:"💰",
+            nome:"Cem mil",
+            desc:"Alcance R$ 100.000.",
             liberada:recorde>=100000
         },
 
         {
-            icone:"👑",
-            nome:"Quase milionário",
-            descricao:"Alcance R$ 750.000.",
-            liberada:recorde>=750000
-        },
-
-        {
-            icone:"🏆",
+            icon:"👑",
             nome:"Milionário",
-            descricao:"Chegue ao R$ 1.000.000.",
+            desc:"Alcance R$ 1.000.000.",
             liberada:recorde>=1000000
-        },
-
-        {
-            icone:"🎯",
-            nome:"100 acertos",
-            descricao:"Acumule 100 respostas corretas.",
-            liberada:acertos>=100
-        },
-
-        {
-            icone:"🔥",
-            nome:"Veterano",
-            descricao:"Jogue 20 partidas.",
-            liberada:partidas>=20
-        },
-
-        {
-            icone:"🥇",
-            nome:"Campeão",
-            descricao:"Conquiste uma vitória.",
-            liberada:vitorias>=1
         }
 
     ];
+
+    const lista =
+        document.getElementById("achievementsList");
 
     lista.innerHTML="";
 
     conquistas.forEach(item=>{
 
-        const div=document.createElement("div");
+        const div =
+            document.createElement("div");
 
         div.className=
-            "achievement "+
-            (item.liberada?"unlocked":"locked");
+            "achievement"+
+            (item.liberada ? "" : " locked");
 
         div.innerHTML=`
 
             <div class="achievement-icon">
-                ${item.icone}
+                ${item.icon}
             </div>
 
-            <strong>${item.nome}</strong>
-
-            <p class="small">
-                ${item.descricao}
-            </p>
+            <div>
+                <strong>${item.nome}</strong>
+                <p style="color:#aaa;margin-top:4px">
+                    ${item.desc}
+                </p>
+            </div>
 
         `;
 
         lista.appendChild(div);
     });
+
+    mostrarTela("achievementsScreen");
 }
 
 
-/* =========================================================
+/* =========================
    RANKING
-========================================================= */
+========================= */
 
 async function abrirRanking(){
 
-    mostrarTela("rankingScreen");
+    const lista =
+        document.getElementById("rankingList");
 
-    const lista=document.getElementById("rankingList");
-
-    lista.textContent="Carregando ranking...";
+    lista.innerHTML="Carregando ranking...";
 
     try{
 
-        const snap=await db.collection("Usuarios")
-            .orderBy("recorde","desc")
-            .limit(50)
-            .get();
+        const snap =
+            await db.collection("Usuarios")
+                .orderBy("recorde","desc")
+                .limit(20)
+                .get();
 
         lista.innerHTML="";
 
         if(snap.empty){
 
-            lista.textContent="Ainda não existem jogadores no ranking.";
-            return;
+            lista.innerHTML=
+                "<p>Nenhum jogador ainda.</p>";
+
+        }else{
+
+            let pos=1;
+
+            snap.forEach(doc=>{
+
+                const dados=doc.data();
+
+                const item=
+                    document.createElement("div");
+
+                item.className="ranking-item";
+
+                item.innerHTML=`
+
+                    <span>
+                        ${pos}º
+                        ${dados.nome||"Jogador"}
+                    </span>
+
+                    <strong style="color:#ffd75c">
+                        ${formatarDinheiro(dados.recorde||0)}
+                    </strong>
+
+                `;
+
+                lista.appendChild(item);
+
+                pos++;
+            });
         }
-
-        let posicao=1;
-
-        snap.forEach(doc=>{
-
-            const jogador=doc.data();
-
-            const div=document.createElement("div");
-
-            div.className="ranking-row";
-
-            div.innerHTML=`
-
-                <div class="ranking-position">
-                    #${posicao}
-                </div>
-
-                <div class="ranking-name">
-                    ${escaparHTML(jogador.nome||"Jogador")}
-                </div>
-
-                <div class="ranking-score">
-                    R$ ${formatarNumero(jogador.recorde||0)}
-                </div>
-            `;
-
-            lista.appendChild(div);
-
-            posicao++;
-        });
 
     }catch(error){
 
         lista.innerHTML=
-            "Não foi possível carregar o ranking agora.";
+            "Não foi possível carregar o ranking.";
     }
+
+    mostrarTela("rankingScreen");
 }
 
 
-function escaparHTML(texto){
+/* =========================
+   AMIGO
+========================= */
 
-    return String(texto)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
-
-
-/* =========================================================
-   AMIGO NO MESMO APARELHO
-========================================================= */
-
-function abrirAmigoLocal(){
+function abrirAmigo(){
 
     mostrarTela("friendScreen");
 }
 
 
-function iniciarAmigoLocal(){
+function iniciarAmigo(){
 
-    jogador1=
-        document.getElementById("friend1").value.trim()||"Jogador 1";
+    jogador1 =
+        document.getElementById("player1")
+            .value.trim();
 
-    jogador2=
-        document.getElementById("friend2").value.trim()||"Jogador 2";
+    jogador2 =
+        document.getElementById("player2")
+            .value.trim();
+
+    const categoria =
+        document.getElementById("friendCategory")
+            .value;
+
+    if(!jogador1 || !jogador2){
+
+        alert("Digite o nome dos dois jogadores.");
+
+        return;
+    }
 
     modoAmigo=true;
 
-    alert(
-        "Modo amigo local preparado. " +
-        "Para uma partida totalmente à distância, use 'Jogar à distância'."
-    );
+    jogadorAtual=1;
+
+    acertosJogador1=0;
+    acertosJogador2=0;
+
+    categoriaAtual=categoria;
+
+    bancoAtual=[...bancos[categoria]];
+
+    bancoAtual.sort(()=>Math.random()-0.5);
+
+    bancoAtual=bancoAtual.slice(0,15);
+
+    perguntaAtual=0;
+
+    pontos=0;
+    premioAtual=0;
+
+    ajuda5050=true;
+    ajudaPular=true;
+    ajudaDica=true;
+
+    mostrarTela("gameScreen");
+
+    carregarPergunta();
 }
 
 
-/* =========================================================
-   PARTIDA ONLINE
-========================================================= */
-
-function abrirOnline(){
-
-    mostrarTela("onlineScreen");
-}
-
+/* =========================
+   ONLINE
+========================= */
 
 function gerarCodigo(){
 
-    const caracteres="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    const caracteres=
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
     let codigo="";
 
     for(let i=0;i<6;i++){
 
-        codigo+=caracteres[
-            Math.floor(Math.random()*caracteres.length)
-        ];
+        codigo +=
+            caracteres[
+                Math.floor(
+                    Math.random()*caracteres.length
+                )
+            ];
     }
 
     return codigo;
@@ -2260,77 +2922,66 @@ function gerarCodigo(){
 
 async function criarPartidaOnline(){
 
-    if(!usuarioAtual) return;
+    if(!usuarioAtual){
+
+        return;
+    }
 
     const codigo=gerarCodigo();
 
-    onlinePerguntas=
-        [...bancos.geral]
-        .sort(()=>Math.random()-.5)
-        .slice(0,15);
+    const ref =
+        await db.collection("Partidas")
+            .add({
 
-    const perguntasServidor=
-        onlinePerguntas.map(p=>({
-            q:p.q,
-            a:p.a,
-            c:p.c
-        }));
+                codigo:codigo,
 
-    try{
+                criador:usuarioAtual.uid,
 
-        const ref=db.collection("Partidas").doc();
+                criadorNome:
+                    dadosUsuario.nome||usuarioAtual.email,
 
-        partidaId=ref.id;
-        partidaRef=ref;
-        souJogador1=true;
+                jogador2:null,
 
-        await ref.set({
+                jogador2Nome:null,
 
-            codigo:codigo,
+                status:"aguardando",
 
-            status:"aguardando",
+                categoria:"geral",
 
-            jogador1:{
-                uid:usuarioAtual.uid,
-                nome:dadosUsuario.nome,
-                acertos:0,
-                respostas:[]
-            },
+                pergunta:0,
 
-            jogador2:null,
+                criadoEm:
+                    firebase.firestore.FieldValue.serverTimestamp()
+            });
 
-            perguntaAtual:0,
+    partidaOnlineId=ref.id;
 
-            perguntas:perguntasServidor,
+    document.getElementById("onlineCode")
+        .textContent=codigo;
 
-            criadoEm:firebase.firestore.FieldValue.serverTimestamp()
+    document.getElementById("onlineCodeArea")
+        .classList.remove("hidden");
 
-        });
-
-        document.getElementById("codigoCriado").textContent=codigo;
-
-        mostrarTela("waitingScreen");
-
-        ouvirPartida();
-
-    }catch(error){
-
-        alert("Não foi possível criar a partida.");
-    }
+    observarPartidaOnline();
 }
 
 
 async function entrarPartidaOnline(){
 
-    const codigo=
-        document.getElementById("codigoPartida")
-        .value
-        .trim()
-        .toUpperCase();
+    const codigo =
+        document.getElementById("joinCode")
+            .value
+            .trim()
+            .toUpperCase();
+
+    const msg =
+        document.getElementById("onlineMessage");
+
+    msg.textContent="";
 
     if(codigo.length!==6){
 
-        document.getElementById("onlineMessage").textContent=
+        msg.textContent=
             "Digite um código de 6 caracteres.";
 
         return;
@@ -2338,15 +2989,15 @@ async function entrarPartidaOnline(){
 
     try{
 
-        const snap=await db.collection("Partidas")
-            .where("codigo","==",codigo)
-            .where("status","==","aguardando")
-            .limit(1)
-            .get();
+        const snap =
+            await db.collection("Partidas")
+                .where("codigo","==",codigo)
+                .limit(1)
+                .get();
 
         if(snap.empty){
 
-            document.getElementById("onlineMessage").textContent=
+            msg.textContent=
                 "Partida não encontrada.";
 
             return;
@@ -2354,485 +3005,119 @@ async function entrarPartidaOnline(){
 
         const doc=snap.docs[0];
 
-        partidaId=doc.id;
-        partidaRef=doc.ref;
-        souJogador1=false;
+        partidaOnlineId=doc.id;
 
-        const dados=doc.data();
+        await doc.ref.update({
 
-        await partidaRef.update({
+            jogador2:usuarioAtual.uid,
 
-            jogador2:{
-                uid:usuarioAtual.uid,
-                nome:dadosUsuario.nome,
-                acertos:0,
-                respostas:[]
-            },
+            jogador2Nome:
+                dadosUsuario.nome||usuarioAtual.email,
 
-            status:"jogando"
+            status:"pronta"
 
         });
 
-        ouvirPartida();
+        observarPartidaOnline();
 
     }catch(error){
 
-        document.getElementById("onlineMessage").textContent=
+        msg.textContent=
             "Não foi possível entrar na partida.";
     }
 }
 
 
-/* =========================================================
-   OUVIR PARTIDA EM TEMPO REAL
-========================================================= */
+function observarPartidaOnline(){
 
-function ouvirPartida(){
+    if(unsubscribeOnline){
 
-    if(!partidaRef) return;
+        unsubscribeOnline();
+    }
 
-    partidaRef.onSnapshot(snapshot=>{
+    if(!partidaOnlineId) return;
 
-        if(!snapshot.exists) return;
+    unsubscribeOnline =
+        db.collection("Partidas")
+          .doc(partidaOnlineId)
+          .onSnapshot(async doc=>{
 
-        const dados=snapshot.data();
+              if(!doc.exists) return;
 
-        if(dados.status==="jogando"){
+              const partida=doc.data();
 
-            if(dados.perguntas){
+              if(
+                  partida.status==="pronta" &&
+                  partida.pergunta===0
+              ){
 
-                onlinePerguntas=dados.perguntas;
-            }
+                  await iniciarJogoOnline(partida);
+              }
 
-            iniciarJogoOnlineInterface(dados);
-        }
-
-        if(dados.status==="finalizada"){
-
-            finalizarOnline(dados);
-        }
-
-    });
+          });
 }
 
 
-function iniciarJogoOnlineInterface(dados){
+async function iniciarJogoOnline(partida){
 
-    document.getElementById("onlinePlayer1").textContent=
-        dados.jogador1?.nome||"Jogador 1";
+    categoriaAtual=
+        partida.categoria||"geral";
 
-    document.getElementById("onlinePlayer2").textContent=
-        dados.jogador2?.nome||"Jogador 2";
+    modoAmigo=false;
 
-    document.getElementById("onlineScore1").textContent=
-        dados.jogador1?.acertos||0;
+    bancoAtual =
+        [...bancos[categoriaAtual]]
+        .sort(()=>Math.random()-0.5)
+        .slice(0,15);
 
-    document.getElementById("onlineScore2").textContent=
-        dados.jogador2?.acertos||0;
+    perguntaAtual=0;
 
-    if(!document.getElementById("onlineGameScreen").classList.contains("active")){
+    pontos=0;
 
-        mostrarTela("onlineGameScreen");
-    }
+    premioAtual=0;
 
-    const perguntaAtual=dados.perguntaAtual||0;
+    ajuda5050=true;
+    ajudaPular=true;
+    ajudaDica=true;
 
-    onlineIndice=perguntaAtual;
+    mostrarTela("gameScreen");
 
-    carregarPerguntaOnline(dados);
+    carregarPergunta();
 }
 
 
-function carregarPerguntaOnline(dados){
-
-    if(onlineIndice>=15){
-
-        document.getElementById("onlineQuestion").textContent=
-            "Partida encerrada.";
-
-        return;
-    }
-
-    onlineRespondido=false;
-
-    const pergunta=onlinePerguntas[onlineIndice];
-
-    document.getElementById("onlineQuestionNumber").textContent=
-        `Pergunta ${onlineIndice+1} de 15`;
-
-    document.getElementById("onlineProgressBar").style.width=
-        `${((onlineIndice+1)/15)*100}%`;
-
-    document.getElementById("onlineQuestion").textContent=
-        pergunta.q;
-
-    const container=document.getElementById("onlineAnswers");
-
-    container.innerHTML="";
-
-    pergunta.a.forEach((texto,index)=>{
-
-        const botao=document.createElement("button");
-
-        botao.className="answer";
-
-        botao.textContent=
-            `${String.fromCharCode(65+index)}) ${texto}`;
-
-        botao.onclick=()=>responderOnline(index);
-
-        container.appendChild(botao);
-
-    });
-
-    iniciarTimerOnline();
-}
-
-
-function iniciarTimerOnline(){
-
-    if(onlineIntervalo){
-
-        clearInterval(onlineIntervalo);
-    }
-
-    let segundos=15;
-
-    document.getElementById("onlineTimer").textContent=
-        segundos;
-
-    onlineIntervalo=setInterval(()=>{
-
-        segundos--;
-
-        document.getElementById("onlineTimer").textContent=
-            segundos;
-
-        if(segundos<=0){
-
-            clearInterval(onlineIntervalo);
-
-            if(!onlineRespondido){
-
-                responderOnline(-1);
-            }
-        }
-
-    },1000);
-}
-
-
-/* =========================================================
-   RESPOSTA ONLINE
-========================================================= */
-
-async function responderOnline(indice){
-
-    if(onlineRespondido) return;
-
-    onlineRespondido=true;
-
-    if(onlineIntervalo){
-
-        clearInterval(onlineIntervalo);
-    }
-
-    const pergunta=onlinePerguntas[onlineIndice];
-
-    const acertou=indice===pergunta.c;
-
-    if(acertou){
-
-        acertos++;
-    }
-
-    document.querySelectorAll("#onlineAnswers .answer")
-        .forEach((botao,i)=>{
-
-            botao.disabled=true;
-
-            if(i===pergunta.c){
-
-                botao.classList.add("correct");
-            }
-
-            if(i===indice && !acertou){
-
-                botao.classList.add("wrong");
-            }
-        });
-
-    const campo=souJogador1
-        ?"jogador1"
-        :"jogador2";
-
-    try{
-
-        const snap=await partidaRef.get();
-
-        if(!snap.exists) return;
-
-        const dados=snap.data();
-
-        const jogador={
-            ...(dados[campo]||{}),
-            respostas:[
-                ...((dados[campo]||{}).respostas||[]),
-                {
-                    pergunta:onlineIndice,
-                    resposta:indice,
-                    acertou:acertou
-                }
-            ],
-            acertos:
-                ((dados[campo]||{}).acertos||0)+
-                (acertou?1:0)
-        };
-
-        const atualizacoes={};
-
-        atualizacoes[campo]=jogador;
-
-        await partidaRef.update(atualizacoes);
-
-        setTimeout(async()=>{
-
-            const atual=await partidaRef.get();
-
-            if(!atual.exists) return;
-
-            const dadosAtuais=atual.data();
-
-            const outro=souJogador1
-                ?dadosAtuais.jogador2
-                :dadosAtuais.jogador1;
-
-            const eu=souJogador1
-                ?dadosAtuais.jogador1
-                :dadosAtuais.jogador2;
-
-            if(eu?.respostas?.some(r=>r.pergunta===onlineIndice) &&
-               outro?.respostas?.some(r=>r.pergunta===onlineIndice)){
-
-                if(onlineIndice>=14){
-
-                    await partidaRef.update({
-                        status:"finalizada"
-                    });
-
-                }else{
-
-                    await partidaRef.update({
-                        perguntaAtual:onlineIndice+1
-                    });
-                }
-            }
-
-        },700);
-
-    }catch(error){
-
-        console.error(error);
-    }
-}
-
-
-/* =========================================================
-   FINAL ONLINE
-========================================================= */
-
-async function finalizarOnline(dados){
-
-    if(onlineIntervalo){
-
-        clearInterval(onlineIntervalo);
-    }
-
-    const meuCampo=souJogador1
-        ?"jogador1"
-        :"jogador2";
-
-    const outroCampo=souJogador1
-        ?"jogador2"
-        :"jogador1";
-
-    const eu=dados[meuCampo];
-    const outro=dados[outroCampo];
-
-    const meusAcertos=eu?.acertos||0;
-    const outrosAcertos=outro?.acertos||0;
-
-    if(meusAcertos>outrosAcertos){
-
-        dadosUsuario.vitorias=(dadosUsuario.vitorias||0)+1;
-
-    }
-
-    dadosUsuario.partidas=(dadosUsuario.partidas||0)+1;
-
-    dadosUsuario.acertos=
-        (dadosUsuario.acertos||0)+meusAcertos;
-
-    await db.collection("Usuarios")
-        .doc(usuarioAtual.uid)
-        .set(dadosUsuario,{merge:true});
-
-    atualizarCabecalho();
-
-    document.getElementById("resultTitle").textContent=
-        meusAcertos>outrosAcertos
-        ?"🏆 Você venceu!"
-        :meusAcertos<outrosAcertos
-        ?"😢 Você perdeu!"
-        :"🤝 Empate!";
-
-    document.getElementById("resultPrize").textContent=
-        meusAcertos;
-
-    document.getElementById("resultMessage").textContent=
-        `${eu?.nome||"Você"}: ${meusAcertos} acertos | `+
-        `${outro?.nome||"Adversário"}: ${outrosAcertos} acertos`;
-
-    document.getElementById("resultStats").textContent=
-        "Partida online finalizada.";
-
-    mostrarTela("resultScreen");
-}
-
-
-/* =========================================================
-   COPIAR CÓDIGO
-========================================================= */
-
-function copiarCodigo(){
-
-    const codigo=
-        document.getElementById("codigoCriado").textContent;
-
-    navigator.clipboard.writeText(codigo)
-        .then(()=>{
-
-            alert("Código copiado!");
-
-        })
-        .catch(()=>{
-
-            alert("Código: "+codigo);
-        });
-}
-
-
-/* =========================================================
-   CANCELAR PARTIDA
-========================================================= */
-
-async function cancelarPartida(){
-
-    if(partidaRef){
-
-        try{
-
-            await partidaRef.delete();
-
-        }catch(e){}
-    }
-
-    partidaRef=null;
-    partidaId=null;
-
-    mostrarTela("onlineScreen");
-}
-
-
-/* =========================================================
-   VOLTAR
-========================================================= */
-
-function voltarMenu(){
-
-    if(intervalo){
-
-        clearInterval(intervalo);
-    }
-
-    if(onlineIntervalo){
-
-        clearInterval(onlineIntervalo);
-    }
-
-    mostrarTela("menuScreen");
-}
-
-
-/* =========================================================
+/* =========================
    COMO JOGAR
-========================================================= */
+========================= */
 
 function comoJogar(){
 
-    alert(
-
-`💰 DESAFIO DO MILHÃO
-
-🎮 JOGO NORMAL
-Escolha uma categoria e responda 15 perguntas.
-
-⏱️ TEMPO
-Você tem 15 segundos para cada pergunta.
-
-🏆 PRÊMIOS
-Quanto mais você avança, maior fica o prêmio.
-
-🃏 50/50
-Elimina duas alternativas erradas.
-
-⏭️ PULAR
-Pula uma pergunta.
-
-💡 DICA
-Receba uma ajuda.
-
-👤 PERFIL
-Veja seu recorde, partidas, acertos e conquistas.
-
-🏆 RANKING
-Compare seu recorde com outros jogadores.
-
-🌐 JOGAR À DISTÂNCIA
-Crie uma partida, envie o código para seu amigo e joguem cada um em seu celular.
-
-Boa sorte! 🍀`
-
-    );
+    mostrarTela("howScreen");
 }
 
 
-/* =========================================================
+/* =========================
+   FORMATAÇÃO
+========================= */
+
+function formatarDinheiro(valor){
+
+    return Number(valor||0)
+        .toLocaleString(
+            "pt-BR",
+            {
+                style:"currency",
+                currency:"BRL"
+            }
+        );
+}
+
+
+/* =========================
    INICIALIZAÇÃO
-========================================================= */
+========================= */
 
-document.addEventListener("DOMContentLoaded",()=>{
-
-    const campos=[
-        "nomeCadastro",
-        "email",
-        "senha"
-    ];
-
-    campos.forEach(id=>{
-
-        document.getElementById(id)
-            ?.addEventListener("keydown",e=>{
-
-                if(e.key==="Enter"){
-
-                    entrar();
-                }
-
-            });
-    });
-
-});
+mostrarLogin();
 
 </script>
 
