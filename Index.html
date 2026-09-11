@@ -1,8 +1,13 @@
+<!-- Vou montar aqui a versão completa corrigida, mantendo as funções existentes
+     e adicionando ranking, amigos, solicitações, chat privado, notificações,
+     presença online/offline, perfil, conquistas, XP, moedas, níveis,
+     desafios, música, jogo de 15 perguntas, modos de jogo e demais funções. -->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Minha Plataforma</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -10,829 +15,380 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <style>
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-font-family:Arial,sans-serif;
-}
-
+*{box-sizing:border-box}
 body{
-background:linear-gradient(135deg,#09000f,#160021,#09000f);
-color:#fff;
-min-height:100vh;
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#090611;
+    color:white;
 }
-
 button,input{
-font:inherit;
+    font:inherit;
 }
-
 button{
-cursor:pointer;
-border:0;
+    cursor:pointer;
 }
+.hidden{display:none!important}
 
-.hidden{
-display:none!important;
-}
-
-#loginScreen{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
-}
-
-.loginBox{
-width:100%;
-max-width:420px;
-background:rgba(25,5,40,.95);
-border:1px solid #68219b;
-border-radius:24px;
-padding:30px;
-box-shadow:0 0 40px rgba(120,30,180,.25);
-}
-
-.logo{
-font-size:32px;
-font-weight:900;
-text-align:center;
-margin-bottom:8px;
-color:#c66aff;
-}
-
-.subtitle{
-text-align:center;
-color:#aaa;
-margin-bottom:25px;
-}
-
-.tabs{
-display:flex;
-gap:8px;
-margin-bottom:20px;
-}
-
-.tab{
-flex:1;
-padding:12px;
-border-radius:12px;
-background:#21102d;
-color:#aaa;
-}
-
-.tab.active{
-background:#7b24b5;
-color:white;
-}
-
-input{
-width:100%;
-padding:14px;
-margin-bottom:12px;
-border-radius:12px;
-border:1px solid #4c2465;
-background:#100718;
-color:white;
-outline:none;
-}
-
-input:focus{
-border-color:#a83de7;
-}
-
-.primary{
-width:100%;
-padding:14px;
-border-radius:12px;
-background:linear-gradient(135deg,#8e2bd1,#5c158d);
-color:white;
-font-weight:bold;
-margin-top:5px;
-}
-
-.primary:active{
-transform:scale(.98);
-}
-
-#app{
-display:none;
-min-height:100vh;
-}
-
-.topbar{
-position:sticky;
-top:0;
-z-index:20;
-height:65px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 15px;
-background:rgba(12,2,20,.96);
-border-bottom:1px solid #351346;
-backdrop-filter:blur(10px);
-}
-
-.brand{
-font-size:20px;
-font-weight:bold;
-color:#d17aff;
-}
-
-.topActions{
-display:flex;
-gap:8px;
-}
-
-.iconBtn{
-width:42px;
-height:42px;
-border-radius:12px;
-background:#21102d;
-color:white;
-font-size:18px;
-position:relative;
-}
-
-.badge{
-position:absolute;
-top:-4px;
-right:-4px;
-background:#ff285d;
-color:#fff;
-font-size:10px;
-min-width:18px;
-height:18px;
-border-radius:20px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
-}
-
-.container{
-width:100%;
-max-width:1100px;
-margin:auto;
-padding:20px 15px 90px;
-}
-
-.hero{
-background:linear-gradient(135deg,#32104d,#170522);
-border:1px solid #67218f;
-border-radius:22px;
-padding:24px;
-margin-bottom:18px;
-}
-
-.hero h1{
-font-size:28px;
-margin-bottom:8px;
-}
-
-.hero p{
-color:#bda9c7;
-line-height:1.5;
-}
-
-.sectionTitle{
-font-size:20px;
-margin:22px 0 12px;
-}
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:15px;
+.tela{
+    min-height:100vh;
+    padding:20px;
 }
 
 .card{
-background:#160a20;
-border:1px solid #392044;
-border-radius:20px;
-padding:18px;
-transition:.2s;
+    background:linear-gradient(145deg,#171020,#0f0a16);
+    border:1px solid #38234c;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 10px 30px #0008;
 }
 
-.card:hover{
-border-color:#8530b5;
-transform:translateY(-2px);
+h1,h2,h3{margin-top:0}
+
+.logo{
+    font-size:32px;
+    font-weight:900;
+    text-align:center;
+    margin:20px 0;
 }
 
-.gameIcon{
-height:130px;
-border-radius:15px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:52px;
-background:linear-gradient(135deg,#42105f,#17031f);
-margin-bottom:15px;
+.sub{
+    color:#bba9c9;
+    text-align:center;
 }
 
-.card h3{
-margin-bottom:7px;
+input{
+    width:100%;
+    padding:14px;
+    margin:7px 0;
+    border-radius:12px;
+    border:1px solid #49315e;
+    background:#0d0813;
+    color:white;
+    outline:none;
 }
 
-.card p{
-color:#9f91a8;
-font-size:14px;
-line-height:1.4;
-margin-bottom:15px;
+input:focus{
+    border-color:#9b59ff;
 }
 
 .btn{
-padding:11px 14px;
-border-radius:11px;
-background:#281333;
-color:#fff;
-font-weight:bold;
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:13px;
+    background:#772cff;
+    color:white;
+    font-weight:bold;
+    margin-top:8px;
 }
 
-.btn.primaryBtn{
-background:#8127b7;
+.btn:hover{filter:brightness(1.12)}
+
+.btn-green{background:#18a957}
+.btn-red{background:#c93450}
+.btn-dark{background:#21162d}
+.btn-gold{background:#d59616}
+
+.row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
-.btn.green{
-background:#159447;
+.row>*{
+    flex:1;
 }
 
-.btn.red{
-background:#a52242;
+.nav{
+    position:sticky;
+    bottom:0;
+    z-index:20;
+    background:#0d0813ee;
+    backdrop-filter:blur(12px);
+    border-top:1px solid #33203f;
+    display:flex;
+    justify-content:space-around;
+    padding:10px 4px;
 }
 
-.btn.blue{
-background:#225fa8;
+.nav button{
+    background:none;
+    border:0;
+    color:#bca9c8;
+    font-size:12px;
 }
 
-.btn:active{
-transform:scale(.97);
+.nav button.active{
+    color:white;
 }
 
-.profileHeader{
-display:flex;
-align-items:center;
-gap:15px;
-background:#160a20;
-border:1px solid #392044;
-border-radius:20px;
-padding:18px;
-margin-bottom:15px;
+.top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:15px;
 }
 
 .avatar{
-width:75px;
-height:75px;
-border-radius:50%;
-object-fit:cover;
-background:#321441;
-border:2px solid #9130c9;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-font-weight:bold;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:#2b183c;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border:2px solid #8b43ff;
+    flex-shrink:0;
 }
 
-.profileName{
-font-size:22px;
-font-weight:bold;
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
-.profileMeta{
-color:#9e91a7;
-margin-top:4px;
+.player{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px;
+    margin:8px 0;
+    border-radius:14px;
+    background:#140c1c;
 }
 
-.stats{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-margin-bottom:15px;
-}
-
-.stat{
-background:#160a20;
-border:1px solid #392044;
-border-radius:16px;
-padding:15px;
-}
-
-.stat b{
-display:block;
-font-size:21px;
-color:#d27aff;
-margin-bottom:4px;
-}
-
-.stat span{
-font-size:12px;
-color:#98889f;
-}
-
-.row{
-display:flex;
-gap:8px;
-flex-wrap:wrap;
-}
-
-.panel{
-background:#160a20;
-border:1px solid #392044;
-border-radius:20px;
-padding:18px;
-margin-bottom:15px;
-}
-
-.avatarSmall{
-width:45px;
-height:45px;
-border-radius:50%;
-object-fit:cover;
-background:#321441;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
-flex-shrink:0;
-}
-
-.userRow{
-display:flex;
-align-items:center;
-gap:12px;
-padding:12px 0;
-border-bottom:1px solid #2d1937;
-}
-
-.userRow:last-child{
-border-bottom:0;
-}
-
-.userInfo{
-flex:1;
-min-width:0;
-}
-
-.userInfo b{
-display:block;
-}
-
-.userInfo span{
-font-size:12px;
-color:#96889c;
+.player-info{
+    flex:1;
 }
 
 .online{
-color:#43dc72!important;
+    font-size:12px;
+    color:#42e68a;
 }
 
 .offline{
-color:#817783!important;
+    font-size:12px;
+    color:#777;
 }
 
-.notice{
-padding:12px;
-border-radius:12px;
-background:#24112e;
-color:#bda9c7;
-margin-bottom:8px;
-font-size:13px;
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    background:#322044;
+    color:#d7baff;
+    font-size:12px;
+    margin:3px;
 }
 
-.notificationUnread{
-border-left:3px solid #b43fe9;
-}
-
-.chatBox{
-height:55vh;
-display:flex;
-flex-direction:column;
-}
-
-.messages{
-flex:1;
-overflow-y:auto;
-padding:10px 0;
-}
-
-.message{
-max-width:80%;
-padding:10px 12px;
-border-radius:14px;
-margin-bottom:8px;
-line-height:1.4;
-word-break:break-word;
-}
-
-.message.mine{
-margin-left:auto;
-background:#7021a0;
-border-bottom-right-radius:4px;
-}
-
-.message.theirs{
-background:#2a1832;
-border-bottom-left-radius:4px;
-}
-
-.messageTime{
-font-size:9px;
-opacity:.6;
-margin-top:4px;
-}
-
-.chatInput{
-display:flex;
-gap:8px;
-margin-top:10px;
-}
-
-.chatInput input{
-margin:0;
-}
-
-.gameScreen{
-max-width:800px;
-margin:auto;
-}
-
-.gameTop{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-margin-bottom:15px;
-}
-
-.gameTitle{
-font-size:22px;
-font-weight:bold;
-}
-
-.progress{
-height:8px;
-background:#28152f;
-border-radius:20px;
-overflow:hidden;
-margin-bottom:15px;
-}
-
-.progress div{
-height:100%;
-background:linear-gradient(90deg,#8d2bc4,#d56cff);
-transition:.2s;
-}
-
-.questionCard{
-background:#160a20;
-border:1px solid #4c2362;
-border-radius:22px;
-padding:22px;
-}
-
-.questionNumber{
-color:#a991af;
-font-size:13px;
-margin-bottom:10px;
-}
-
-.question{
-font-size:21px;
-font-weight:bold;
-line-height:1.4;
-margin-bottom:20px;
-}
-
-.answers{
-display:grid;
-grid-template-columns:1fr;
-gap:10px;
-}
-
-.answer{
-padding:15px;
-background:#24112e;
-color:white;
-border:1px solid #442451;
-border-radius:13px;
-text-align:left;
-}
-
-.answer:hover{
-border-color:#a43bd8;
-}
-
-.answer.correct{
-background:#145b34;
-border-color:#39d47a;
-}
-
-.answer.wrong{
-background:#672038;
-border-color:#ff466e;
-}
-
-.timer{
-font-size:22px;
-font-weight:bold;
-color:#e277ff;
-}
-
-.lifelines{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-margin-top:12px;
-}
-
-.life{
-background:#291535;
-padding:11px 5px;
-border-radius:11px;
-color:white;
-font-size:12px;
-}
-
-.life:disabled{
-opacity:.35;
+.rank{
+    font-size:22px;
+    font-weight:bold;
+    width:35px;
 }
 
 .prize{
-margin-top:18px;
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:5px;
+    color:#ffd34d;
+    font-weight:bold;
 }
 
-.prize div{
-font-size:10px;
-padding:6px 2px;
-text-align:center;
-background:#21102b;
-border-radius:6px;
-color:#9e91a6;
+.progress{
+    height:9px;
+    border-radius:10px;
+    background:#21162b;
+    overflow:hidden;
+    margin:8px 0;
 }
 
-.prize .current{
-background:#8b2bc0;
-color:white;
-font-weight:bold;
+.progress div{
+    height:100%;
+    background:#8b43ff;
 }
 
-.endBox{
-text-align:center;
-padding:30px 10px;
+.question{
+    font-size:22px;
+    font-weight:bold;
+    line-height:1.35;
+    margin:25px 0;
 }
 
-.endBox .bigPrize{
-font-size:40px;
-font-weight:900;
-color:#d16aff;
-margin:15px 0;
+.answer{
+    width:100%;
+    text-align:left;
+    padding:15px;
+    margin:6px 0;
+    border:1px solid #432957;
+    border-radius:13px;
+    background:#160d20;
+    color:white;
 }
 
-.bottomNav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-height:65px;
-background:rgba(12,2,20,.97);
-border-top:1px solid #351346;
-display:flex;
-justify-content:space-around;
-align-items:center;
-z-index:30;
+.answer.correct{
+    background:#126e3c;
+    border-color:#38e58c;
 }
 
-.navBtn{
-background:none;
-color:#8f8097;
-font-size:11px;
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:3px;
+.answer.wrong{
+    background:#762237;
+    border-color:#ff617e;
 }
 
-.navBtn.active{
-color:#d06aff;
-}
-
-.modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.72);
-display:flex;
-align-items:center;
-justify-content:center;
-padding:15px;
-z-index:100;
-}
-
-.modalBox{
-width:100%;
-max-width:500px;
-max-height:90vh;
-overflow-y:auto;
-background:#170920;
-border:1px solid #68238e;
-border-radius:22px;
-padding:20px;
-}
-
-.modalHead{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:15px;
-}
-
-.close{
-background:#2a1533;
-color:#fff;
-width:35px;
-height:35px;
-border-radius:10px;
-}
-
-.hiddenFile{
-display:none;
-}
-
-.photoBtn{
-display:inline-block;
-padding:10px 13px;
-border-radius:10px;
-background:#2b1537;
-cursor:pointer;
-font-size:13px;
+.timer{
+    font-size:30px;
+    text-align:center;
+    font-weight:bold;
+    color:#ffd34d;
 }
 
 .toast{
-position:fixed;
-left:50%;
-bottom:80px;
-transform:translateX(-50%);
-background:#24102d;
-border:1px solid #7930a1;
-padding:12px 16px;
-border-radius:12px;
-z-index:200;
-display:none;
-max-width:90%;
-text-align:center;
+    position:fixed;
+    left:50%;
+    bottom:90px;
+    transform:translateX(-50%);
+    background:#24152e;
+    border:1px solid #704394;
+    padding:12px 18px;
+    border-radius:13px;
+    z-index:100;
+    box-shadow:0 10px 30px #0008;
 }
 
-.empty{
-text-align:center;
-padding:25px 10px;
-color:#887a90;
+.modal{
+    position:fixed;
+    inset:0;
+    background:#000b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:90;
 }
 
-.rankNumber{
-width:30px;
-font-weight:bold;
-color:#d06aff;
+.modal-box{
+    width:100%;
+    max-width:500px;
+    max-height:90vh;
+    overflow:auto;
 }
 
-.rankScore{
-font-weight:bold;
-margin-left:auto;
-color:#d06aff;
+.chat-box{
+    height:55vh;
+    overflow:auto;
+    padding:10px;
+    background:#0b0710;
+    border-radius:15px;
 }
 
-.challenge{
-background:linear-gradient(135deg,#26103a,#180721);
-border:1px solid #6c2690;
+.msg{
+    max-width:80%;
+    padding:10px 13px;
+    border-radius:14px;
+    margin:7px 0;
+}
+
+.msg.me{
+    background:#6e2bd4;
+    margin-left:auto;
+}
+
+.msg.other{
+    background:#21162d;
+}
+
+.game-card{
+    padding:20px;
+    border-radius:20px;
+    background:linear-gradient(145deg,#241037,#110817);
+    border:1px solid #5a2c7d;
+    margin-bottom:12px;
+}
+
+.game-card h2{
+    margin-bottom:8px;
+}
+
+.big{
+    font-size:38px;
+    font-weight:900;
+}
+
+.center{text-align:center}
+
+.notice{
+    padding:12px;
+    background:#21152b;
+    border-radius:12px;
+    margin:8px 0;
 }
 
 @media(min-width:700px){
-.stats{
-grid-template-columns:repeat(4,1fr);
+    .tela{
+        max-width:900px;
+        margin:auto;
+    }
 }
-.answers{
-grid-template-columns:1fr 1fr;
-}
-}
-
 </style>
 </head>
 
 <body>
 
-<div id="loginScreen">
+<div id="loginTela" class="tela">
+    <div class="logo">Minha Plataforma</div>
+    <p class="sub">Entre para jogar, competir e evoluir.</p>
 
-<div class="loginBox">
-
-<div class="logo">Minha Plataforma</div>
-<div class="subtitle">Jogos, desafios e competição</div>
-
-<div class="tabs">
-<button class="tab active" id="loginTab" onclick="mostrarLogin()">Entrar</button>
-<button class="tab" id="signupTab" onclick="mostrarCadastro()">Criar conta</button>
+    <div class="card">
+        <h2>Entrar</h2>
+        <input id="loginEmail" type="email" placeholder="E-mail">
+        <input id="loginPassword" type="password" placeholder="Senha">
+        <button class="btn" onclick="login()">Entrar</button>
+        <button class="btn btn-dark" onclick="mostrarCadastro()">Criar conta</button>
+    </div>
 </div>
 
-<div id="loginForm">
+<div id="cadastroTela" class="tela hidden">
+    <div class="logo">Criar conta</div>
 
-<input id="loginEmail" type="email" placeholder="E-mail">
-
-<input id="loginPassword" type="password" placeholder="Senha">
-
-<button class="primary" onclick="login()">Entrar</button>
-
+    <div class="card">
+        <input id="signupName" placeholder="Seu nome">
+        <input id="signupEmail" type="email" placeholder="E-mail">
+        <input id="signupPassword" type="password" placeholder="Senha">
+        <button class="btn" onclick="cadastro()">Criar conta</button>
+        <button class="btn btn-dark" onclick="mostrarLogin()">Voltar</button>
+    </div>
 </div>
 
-<div id="signupForm" class="hidden">
+<div id="app" class="hidden">
 
-<input id="signupName" type="text" placeholder="Seu nome">
+    <main id="conteudo" class="tela"></main>
 
-<input id="signupEmail" type="email" placeholder="E-mail">
-
-<input id="signupPassword" type="password" placeholder="Senha">
-
-<button class="primary" onclick="cadastro()">Criar conta</button>
-
-</div>
-
-</div>
-</div>
-
-
-<div id="app">
-
-<header class="topbar">
-
-<div class="brand">Minha Plataforma</div>
-
-<div class="topActions">
-
-<button class="iconBtn" onclick="abrirNotificacoes()">🔔<span id="notificationBadge" class="badge hidden">0</span></button>
-
-<button class="iconBtn" onclick="abrirPerfil()">👤</button>
+    <div class="nav">
+        <button onclick="central()">🏠<br>Início</button>
+        <button onclick="abrirRanking()">🏆<br>Ranking</button>
+        <button onclick="abrirAmigos()">👥<br>Amigos</button>
+        <button onclick="abrirPerfil()">👤<br>Perfil</button>
+        <button onclick="abrirNotificacoes()">🔔<br>Avisos</button>
+    </div>
 
 </div>
-
-</header>
-
-
-<main class="container">
-
-<div id="central"></div>
-
-</main>
-
-
-<nav class="bottomNav">
-
-<button class="navBtn active" id="navInicio" onclick="central()">🏠<span>Início</span></button>
-
-<button class="navBtn" id="navRanking" onclick="abrirRanking()">🏆<span>Ranking</span></button>
-
-<button class="navBtn" id="navAmigos" onclick="abrirAmigos()">👥<span>Amigos</span></button>
-
-<button class="navBtn" id="navPerfil" onclick="abrirPerfil()">👤<span>Perfil</span></button>
-
-</nav>
-
-</div>
-
 
 <div id="modal" class="modal hidden">
-
-<div class="modalBox">
-
-<div class="modalHead">
-
-<h3 id="modalTitle">Aviso</h3>
-
-<button class="close" onclick="fecharModal()">×</button>
-
+    <div class="modal-box card" id="modalConteudo"></div>
 </div>
 
-<div id="modalContent"></div>
-
-</div>
-
-</div>
-
-
-<div id="toast" class="toast"></div>
-
+<div id="toast" class="toast hidden"></div>
 
 <script>
-
 const firebaseConfig={
-apiKey:"AIzaSyB-0j37BKkr0jt3B6NCl6-fNe3bqeQia08",
-authDomain:"desafio-do-milhao.firebaseapp.com",
-projectId:"desafio-do-milhao",
-storageBucket:"desafio-do-milhao.firebasestorage.app",
-messagingSenderId:"303629660012",
-appId:"1:303629660012:web:61bf5af93d9824e8100d49",
-measurementId:"G-0TZ68JLKJR"
+    apiKey:"AIzaSyB-0j37BKkr0jt3B6NCl-fNe3bqeQia08",
+    authDomain:"desafio-do-milhao.firebaseapp.com",
+    projectId:"desafio-do-milhao",
+    storageBucket:"desafio-do-milhao.firebasestorage.app",
+    messagingSenderId:"303629660012",
+    appId:"1:303629660012:web:61bf5af93d9824e8100d49",
+    measurementId:"G-0TZ68JLKJR"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -845,3712 +401,1884 @@ let usuario=null;
 let perfil=null;
 let telaAtual="central";
 
-let unsubscribeNotificacoes=null;
-let unsubscribeChat=null;
-
-let amigoChatAtual=null;
-
 let musicaLigada=true;
 let efeitosLigados=true;
 let audioCtx=null;
 let musicTimer=null;
 
-const premios=[
-1000,
-2000,
-5000,
-10000,
-20000,
-30000,
-50000,
-100000,
-150000,
-200000,
-300000,
-400000,
-500000,
-750000,
-1000000
-];
+let unsubscribeNotificacoes=null;
+let unsubscribeChat=null;
 
-const dificuldades=[
-"Fácil",
-"Fácil",
-"Fácil",
-"Médio",
-"Médio",
-"Médio",
-"Difícil",
-"Difícil",
-"Difícil",
-"Muito difícil",
-"Muito difícil",
-"Muito difícil",
-"Especialista",
-"Especialista",
-"Especialista"
+const premios=[
+1000,2000,5000,10000,20000,
+30000,50000,100000,150000,200000,
+300000,400000,500000,750000,1000000
 ];
 
 let jogo={
-categoria:"",
-questoes:[],
-indice:0,
-acertos:0,
-erros:0,
-premioAtual:0,
-timer:null,
-tempo:15,
-usou5050:false,
-usouPular:false,
-usouDica:false,
-respondendo:false
+    categoria:"geral",
+    perguntas:[],
+    indice:0,
+    premio:0,
+    acertos:0,
+    erros:0,
+    tempo:15,
+    timer:null,
+    respondeu:false,
+    usadas:new Set()
 };
 
-
-const bancos={
-
+const perguntas={
 ciencia:[
-["Qual planeta é conhecido como Planeta Vermelho?","Marte",["Júpiter","Marte","Saturno","Vênus"]],
-["Qual é o maior órgão do corpo humano?","Pele",["Coração","Fígado","Pele","Pulmão"]],
-["Qual gás as plantas absorvem na fotossíntese?","Dióxido de carbono",["Oxigênio","Hidrogênio","Nitrogênio","Dióxido de carbono"]],
-["Qual é o símbolo químico do ouro?","Au",["Ag","Au","Fe","O"]],
-["Quantos ossos aproximadamente possui um adulto?","206",["106","206","306","406"]],
-["Qual força mantém os corpos atraídos à Terra?","Gravidade",["Magnetismo","Gravidade","Pressão","Eletricidade"]],
-["Qual é o planeta mais próximo do Sol?","Mercúrio",["Terra","Marte","Mercúrio","Vênus"]],
-["A água ferve ao nível do mar a quantos graus Celsius?","100",["50","75","100","150"]],
-["Qual órgão bombeia o sangue?","Coração",["Pulmão","Cérebro","Coração","Rim"]],
-["Qual é a fórmula química da água?","H2O",["CO2","H2O","O2","NaCl"]],
-["Qual animal é conhecido por mudar de cor para se camuflar?","Camaleão",["Elefante","Camaleão","Golfinho","Cavalo"]],
-["Qual é o maior planeta do Sistema Solar?","Júpiter",["Terra","Saturno","Júpiter","Netuno"]],
-["Como se chama o processo pelo qual as plantas produzem alimento?","Fotossíntese",["Respiração","Fotossíntese","Digestão","Fermentação"]],
-["Qual vitamina é produzida pela exposição solar?","Vitamina D",["Vitamina A","Vitamina B","Vitamina C","Vitamina D"]],
-["Qual é o satélite natural da Terra?","Lua",["Sol","Lua","Marte","Vênus"]],
-["Qual unidade mede a corrente elétrica?","Ampere",["Volt","Watt","Ampere","Ohm"]],
-["Qual é o centro de um átomo?","Núcleo",["Elétron","Núcleo","Íon","Molécula"]],
-["Qual metal é líquido em temperatura ambiente?","Mercúrio",["Ferro","Mercúrio","Cobre","Alumínio"]],
-["Qual é o maior mamífero do mundo?","Baleia-azul",["Elefante","Girafa","Baleia-azul","Hipopótamo"]],
-["Qual planeta possui os famosos anéis mais visíveis?","Saturno",["Marte","Saturno","Urano","Mercúrio"]],
-["Qual é a velocidade aproximada da luz no vácuo?","300 mil km/s",["30 mil km/s","300 mil km/s","3 mil km/s","3 milhões km/s"]],
-["Qual parte da planta absorve água do solo?","Raiz",["Folha","Flor","Raiz","Fruto"]],
-["Qual ciência estuda os seres vivos?","Biologia",["Geologia","Biologia","Astronomia","Física"]],
-["Qual é o pH considerado neutro?","7",["0","5","7","14"]],
-["Qual fenômeno ocorre quando a Lua fica entre a Terra e o Sol?","Eclipse solar",["Eclipse lunar","Eclipse solar","Solstício","Equinócio"]]
+["Qual planeta é conhecido como planeta vermelho?",["Terra","Marte","Júpiter","Vênus"],1],
+["Qual é o maior órgão do corpo humano?",["Coração","Pulmão","Pele","Fígado"],2],
+["Qual gás as plantas absorvem?",["Oxigênio","Nitrogênio","Gás carbônico","Hélio"],2],
+["Qual é a unidade básica da vida?",["Átomo","Célula","Tecido","Órgão"],1],
+["Qual força nos mantém no chão?",["Magnetismo","Gravidade","Eletricidade","Atrito"],1],
+["Qual planeta é o maior do Sistema Solar?",["Marte","Saturno","Júpiter","Urano"],2],
+["A água ferve aproximadamente a quantos graus Celsius ao nível do mar?",["50","75","100","150"],2],
+["Qual órgão bombeia o sangue?",["Pulmão","Cérebro","Coração","Rim"],2],
+["Qual estrela está no centro do Sistema Solar?",["Lua","Sol","Sirius","Polaris"],1],
+["Qual vitamina é produzida com ajuda da luz solar?",["A","B12","C","D"],3],
+["Qual animal é um mamífero?",["Tubarão","Golfinho","Jacaré","Pinguim"],1],
+["Qual é o símbolo químico do oxigênio?",["O","Ox","X","Og"],0],
+["Qual planeta possui anéis muito conhecidos?",["Mercúrio","Saturno","Terra","Marte"],1],
+["Qual é a velocidade aproximada da luz?",["300 km/s","3.000 km/s","300.000 km/s","3 milhões km/s"],2],
+["Qual parte da planta realiza principalmente fotossíntese?",["Raiz","Folha","Semente","Fruto"],1],
+["Qual é o satélite natural da Terra?",["Sol","Lua","Marte","Vênus"],1],
+["Qual sangue é bombeado pelo coração?",["Somente arterial","Somente venoso","Sangue em circulação","Nenhum"],2],
+["Qual ciência estuda os seres vivos?",["Geologia","Biologia","Astronomia","Física"],1],
+["Qual é o maior animal conhecido?",["Elefante","Baleia-azul","Girafa","Tubarão-branco"],1],
+["Qual elemento químico tem símbolo Fe?",["Ferro","Flúor","Fósforo","Frâncio"],0],
+["Qual planeta é o mais próximo do Sol?",["Mercúrio","Vênus","Terra","Marte"],0],
+["Qual órgão está relacionado à respiração?",["Pulmão","Estômago","Rim","Pâncreas"],0],
+["Qual é o estado da água em forma de gelo?",["Líquido","Gasoso","Sólido","Plasma"],2],
+["Qual é o centro de uma célula eucariótica?",["Núcleo","Parede","Membrana","Citoplasma"],0],
+["Qual ramo estuda os astros?",["Botânica","Astronomia","Ecologia","Anatomia"],1]
 ],
 
 geografia:[
-["Qual é o maior país do mundo em território?","Rússia",["Brasil","China","Rússia","Canadá"]],
-["Qual é a capital do Brasil?","Brasília",["São Paulo","Rio de Janeiro","Brasília","Salvador"]],
-["Qual é o maior oceano do planeta?","Pacífico",["Atlântico","Índico","Pacífico","Ártico"]],
-["Em qual continente fica o Egito?","África",["Ásia","Europa","África","Oceania"]],
-["Qual é o rio mais extenso do Brasil?","Amazonas",["São Francisco","Paraná","Amazonas","Tocantins"]],
-["Qual país tem formato aproximado de uma bota?","Itália",["Espanha","Itália","França","Grécia"]],
-["Qual é a capital da França?","Paris",["Roma","Madrid","Paris","Londres"]],
-["Qual continente é conhecido como continente gelado?","Antártida",["Europa","Antártida","Ásia","África"]],
-["Qual é o menor país do mundo?","Vaticano",["Mônaco","Vaticano","Malta","Luxemburgo"]],
-["Qual país possui a maior população atualmente?","Índia",["Brasil","China","Índia","Estados Unidos"]],
-["Qual é a capital da Argentina?","Buenos Aires",["Córdoba","Buenos Aires","Rosário","Mendoza"]],
-["Qual deserto é considerado o maior quente do mundo?","Saara",["Gobi","Saara","Atacama","Kalahari"]],
-["Qual é a montanha mais alta do mundo?","Everest",["K2","Everest","Aconcágua","Makalu"]],
-["Qual oceano banha a costa leste do Brasil?","Atlântico",["Pacífico","Índico","Atlântico","Ártico"]],
-["Qual é a capital de Portugal?","Lisboa",["Porto","Lisboa","Coimbra","Braga"]],
-["Em qual continente fica o Japão?","Ásia",["Europa","Ásia","África","Oceania"]],
-["Qual país é famoso pelas pirâmides de Gizé?","Egito",["México","Egito","Peru","Índia"]],
-["Qual é a capital do Canadá?","Ottawa",["Toronto","Vancouver","Ottawa","Montreal"]],
-["Qual país possui a cidade de Machu Picchu?","Peru",["Chile","Peru","Bolívia","Equador"]],
-["Qual é o maior estado brasileiro em território?","Amazonas",["Pará","Amazonas","Mato Grosso","Bahia"]],
-["Qual é a capital de Minas Gerais?","Belo Horizonte",["Uberlândia","Belo Horizonte","Ouro Preto","Juiz de Fora"]],
-["Qual país é conhecido pela Torre Eiffel?","França",["Itália","França","Alemanha","Bélgica"]],
-["Qual é a capital do Japão?","Tóquio",["Osaka","Kyoto","Tóquio","Hiroshima"]],
-["Qual linha imaginária divide a Terra em hemisférios Norte e Sul?","Equador",["Greenwich","Equador","Trópico de Câncer","Trópico de Capricórnio"]],
-["Qual é a capital da Austrália?","Canberra",["Sydney","Melbourne","Canberra","Perth"]]
+["Qual é o maior país da América do Sul?",["Argentina","Brasil","Chile","Peru"],1],
+["Qual é a capital do Brasil?",["São Paulo","Rio de Janeiro","Brasília","Salvador"],2],
+["Qual é o maior oceano?",["Atlântico","Índico","Pacífico","Ártico"],2],
+["Em qual continente fica o Egito?",["Ásia","África","Europa","Oceania"],1],
+["Qual é o maior continente?",["África","Europa","Ásia","América"],2],
+["Qual é a capital da França?",["Roma","Paris","Madrid","Lisboa"],1],
+["Qual país possui formato conhecido como bota?",["Espanha","Itália","Grécia","Portugal"],1],
+["Qual é o deserto quente famoso do norte da África?",["Saara","Gobi","Atacama","Kalahari"],0],
+["Qual é a capital da Argentina?",["Lima","Buenos Aires","Santiago","Montevidéu"],1],
+["Qual país tem a maior população?",["Brasil","Índia","Canadá","Austrália"],1],
+["Qual é a capital do Japão?",["Osaka","Kyoto","Tóquio","Hiroshima"],2],
+["Qual continente é conhecido como continente gelado?",["Europa","Antártida","África","Ásia"],1],
+["Qual é o maior país do mundo em território?",["China","Canadá","Rússia","EUA"],2],
+["Qual é a capital de Portugal?",["Porto","Lisboa","Braga","Coimbra"],1],
+["Qual rio é tradicionalmente considerado o mais extenso do mundo?",["Nilo","Amazonas","Mississipi","Danúbio"],1],
+["Qual cordilheira fica na América do Sul?",["Alpes","Andes","Himalaia","Rochosas"],1],
+["Qual é a capital do Chile?",["Santiago","Lima","Quito","La Paz"],0],
+["Qual país é famoso pelo formato de uma longa faixa na costa oeste da América do Sul?",["Chile","Paraguai","Uruguai","Bolívia"],0],
+["Qual é a capital do Peru?",["Lima","Cusco","Quito","Bogotá"],0],
+["Qual país possui a cidade de Barcelona?",["Portugal","Espanha","Itália","França"],1],
+["Qual é a capital da Itália?",["Milão","Veneza","Roma","Nápoles"],2],
+["Qual é a capital do Canadá?",["Toronto","Vancouver","Ottawa","Montreal"],2],
+["Qual país é conhecido pela Torre Eiffel?",["França","Alemanha","Bélgica","Suíça"],0],
+["Qual é a capital da Alemanha?",["Berlim","Munique","Hamburgo","Frankfurt"],0],
+["Qual é a capital do México?",["Cancún","Guadalajara","Cidade do México","Monterrey"],2]
 ],
 
 historia:[
-["Quem proclamou a Independência do Brasil?","Dom Pedro I",["Dom Pedro II","Dom Pedro I","Tiradentes","Getúlio Vargas"]],
-["Em que ano ocorreu a Independência do Brasil?","1822",["1500","1808","1822","1889"]],
-["Quem foi o primeiro presidente do Brasil?","Deodoro da Fonseca",["Floriano Peixoto","Deodoro da Fonseca","Getúlio Vargas","Juscelino Kubitschek"]],
-["Em que ano foi proclamada a República no Brasil?","1889",["1822","1889","1900","1930"]],
-["Qual civilização construiu Machu Picchu?","Inca",["Maia","Asteca","Inca","Romana"]],
-["Quem foi conhecido como Rei do Futebol?","Pelé",["Zico","Pelé","Romário","Garrincha"]],
-["Qual foi o primeiro imperador do Brasil?","Dom Pedro I",["Dom Pedro II","Dom Pedro I","Getúlio Vargas","Deodoro"]],
-["Qual evento marcou o início da Segunda Guerra Mundial na Europa?","Invasão da Polônia",["Invasão da França","Invasão da Polônia","Ataque a Pearl Harbor","Queda de Berlim"]],
-["Quem escreveu a obra Dom Quixote?","Miguel de Cervantes",["Shakespeare","Miguel de Cervantes","Dante","Homero"]],
-["Qual povo antigo criou a democracia em Atenas?","Gregos",["Romanos","Gregos","Egípcios","Persas"]],
-["Quem foi Napoleão Bonaparte?","Imperador francês",["Rei inglês","Imperador francês","Czar russo","Presidente americano"]],
-["A Revolução Francesa começou em qual ano?","1789",["1689","1789","1889","1914"]],
-["Quem liderou a luta pela independência da Índia?","Mahatma Gandhi",["Nelson Mandela","Mahatma Gandhi","Churchill","Lenin"]],
-["Qual império tinha Roma como centro?","Império Romano",["Império Bizantino","Império Romano","Império Persa","Império Otomano"]],
-["Qual foi a capital do Brasil antes de Brasília?","Rio de Janeiro",["Salvador","São Paulo","Rio de Janeiro","Recife"]],
-["Quem foi Tiradentes?","Líder da Inconfidência Mineira",["Imperador","Líder da Inconfidência Mineira","Presidente","Explorador"]],
-["Qual acontecimento ocorreu em 1500?","Chegada dos portugueses ao Brasil",["Independência","Proclamação da República","Chegada dos portugueses ao Brasil","Abolição"]],
-["Em que ano terminou a Segunda Guerra Mundial?","1945",["1939","1942","1945","1950"]],
-["Quem foi Getúlio Vargas?","Presidente do Brasil",["Imperador","Presidente do Brasil","Rei","General argentino"]],
-["Qual civilização construiu as pirâmides de Gizé?","Egípcia",["Romana","Egípcia","Grega","Persa"]],
-["Quem assinou a Lei Áurea?","Princesa Isabel",["Dom Pedro I","Princesa Isabel","Deodoro","Getúlio Vargas"]],
-["Em que ano ocorreu a Abolição da Escravidão no Brasil?","1888",["1822","1850","1888","1889"]],
-["Qual guerra ocorreu entre os Estados Unidos e a União Soviética sem confronto militar direto entre eles?","Guerra Fria",["Primeira Guerra","Guerra Fria","Guerra do Vietnã","Guerra Civil"]],
-["Quem foi o primeiro homem a pisar na Lua?","Neil Armstrong",["Buzz Aldrin","Neil Armstrong","Yuri Gagarin","John Glenn"]],
-["Qual muro caiu em 1989, simbolizando o fim de uma era?","Muro de Berlim",["Muro de Paris","Muro de Berlim","Muro de Roma","Muro de Londres"]]
+["Quem proclamou a Independência do Brasil?",["Dom Pedro I","Dom Pedro II","Tiradentes","Getúlio Vargas"],0],
+["Em que ano ocorreu a Independência do Brasil?",["1500","1822","1889","1900"],1],
+["Quem foi o primeiro imperador do Brasil?",["Dom Pedro I","Dom Pedro II","João VI","Deodoro"],0],
+["Em que ano ocorreu a Proclamação da República?",["1822","1888","1889","1891"],2],
+["Quem foi conhecido como Tiradentes?",["Joaquim José da Silva Xavier","José Bonifácio","Duque de Caxias","Pedro Álvares Cabral"],0],
+["Qual civilização construiu Machu Picchu?",["Maia","Inca","Romana","Egípcia"],1],
+["Onde surgiram os Jogos Olímpicos antigos?",["Roma","Grécia","Egito","China"],1],
+["Qual evento começou em 1789 na França?",["Revolução Francesa","Revolução Industrial","Guerra Civil","Renascimento"],0],
+["Quem descobriu o Brasil segundo a narrativa tradicional?",["Pedro Álvares Cabral","Cristóvão Colombo","Vasco da Gama","Fernão de Magalhães"],0],
+["Qual lei aboliu a escravidão no Brasil?",["Lei Áurea","Lei do Ventre Livre","Lei Eusébio","Lei Imperial"],0],
+["Quem assinou a Lei Áurea?",["Princesa Isabel","Maria Leopoldina","Dona Teresa","Carlota Joaquina"],0],
+["Qual guerra terminou em 1945?",["Primeira Guerra Mundial","Segunda Guerra Mundial","Guerra Fria","Guerra do Vietnã"],1],
+["Qual povo construiu as pirâmides de Gizé?",["Romanos","Egípcios","Maias","Persas"],1],
+["Qual foi a capital do Império Romano?",["Atenas","Roma","Paris","Cartago"],1],
+["Qual movimento artístico ocorreu na Europa entre os séculos XIV e XVI?",["Renascimento","Barroco","Romantismo","Cubismo"],0],
+["Quem foi Napoleão Bonaparte?",["Imperador e líder militar francês","Rei inglês","Cientista italiano","Filósofo grego"],0],
+["Qual período ficou conhecido como Idade Média?",["Período entre Antiguidade e Modernidade","Século XX","Era pré-histórica","Idade Contemporânea"],0],
+["Qual povo antigo tinha sua cidade em Tenochtitlán?",["Astecas","Incas","Romanos","Gregos"],0],
+["Qual foi o principal conflito entre EUA e URSS após a Segunda Guerra?",["Guerra Fria","Guerra dos Cem Anos","Guerra Civil","Guerra do Golfo"],0],
+["Qual país lançou as bombas atômicas em Hiroshima e Nagasaki?",["Alemanha","EUA","Japão","URSS"],1],
+["Quem foi o primeiro presidente do Brasil?",["Deodoro da Fonseca","Getúlio Vargas","Floriano Peixoto","Juscelino"],0],
+["Em que ano o Brasil foi descoberto segundo a narrativa tradicional?",["1492","1500","1530","1600"],1],
+["Qual império teve Constantinopla como importante centro?",["Bizantino","Asteca","Inca","Mongol"],0],
+["Qual revolução transformou profundamente a indústria a partir do século XVIII?",["Industrial","Francesa","Russa","Gloriosa"],0],
+["Qual país iniciou a expansão marítima portuguesa?",["Portugal","Espanha","França","Inglaterra"],0]
 ],
 
 tecnologia:[
-["Qual empresa criou o sistema operacional Android?","Google",["Microsoft","Google","Apple","IBM"]],
-["O que significa CPU?","Unidade Central de Processamento",["Controle Principal Universal","Unidade Central de Processamento","Central de Programas","Computador Pessoal Universal"]],
-["Qual linguagem é usada para estruturar páginas web?","HTML",["CSS","HTML","Python","SQL"]],
-["Qual linguagem é usada principalmente para estilizar páginas web?","CSS",["HTML","CSS","Java","C++"]],
-["Qual linguagem é muito usada para programação web no navegador?","JavaScript",["Python","JavaScript","SQL","Swift"]],
-["O que é Wi-Fi?","Tecnologia de comunicação sem fio",["Tipo de bateria","Tecnologia de comunicação sem fio","Sistema operacional","Processador"]],
-["Qual empresa criou o iPhone?","Apple",["Google","Apple","Samsung","Microsoft"]],
-["O que significa URL?","Localizador Uniforme de Recursos",["Usuário Universal Local","Localizador Uniforme de Recursos","Rede Universal","Link Principal"]],
-["Qual é um navegador de internet?","Safari",["Photoshop","Safari","Excel","Word"]],
-["O que é inteligência artificial?","Tecnologia capaz de executar tarefas associadas à inteligência humana",["Um tipo de cabo","Tecnologia capaz de executar tarefas associadas à inteligência humana","Um antivírus","Um navegador"]],
-["Qual linguagem é conhecida por sua simplicidade e muito usada em IA?","Python",["Python","HTML","CSS","SQL"]],
-["O que é armazenamento em nuvem?","Guardar dados em servidores acessíveis pela internet",["Guardar dados apenas no celular","Guardar dados em servidores acessíveis pela internet","Excluir arquivos","Aumentar a memória RAM"]],
-["O que significa USB?","Universal Serial Bus",["Universal System Backup","Universal Serial Bus","User System Base","United Software Bus"]],
-["Qual empresa desenvolve o Windows?","Microsoft",["Apple","Microsoft","Google","Sony"]],
-["O que é um aplicativo?","Programa criado para realizar funções específicas",["Um cabo","Programa criado para realizar funções específicas","Uma bateria","Um processador"]],
-["O que é phishing?","Tentativa de enganar alguém para obter informações",["Tipo de computador","Tentativa de enganar alguém para obter informações","Jogo online","Sistema operacional"]],
-["O que é blockchain?","Registro digital distribuído",["Rede social","Registro digital distribuído","Antivírus","Processador"]],
-["Qual empresa criou o PlayStation?","Sony",["Nintendo","Sony","Microsoft","Sega"]],
-["O que é RAM?","Memória de acesso rápido usada pelo sistema",["Memória de acesso rápido usada pelo sistema","Processador","Disco rígido","Placa de vídeo"]],
-["Qual tecnologia permite chamadas de curta distância por aproximação?","NFC",["GPS","NFC","HDMI","USB"]],
-["O que é um QR Code?","Código que pode armazenar informações legíveis por dispositivos",["Tipo de vírus","Código que pode armazenar informações legíveis por dispositivos","Sistema operacional","Senha de Wi-Fi"]],
-["Qual sistema é desenvolvido pela Apple para iPhones?","iOS",["Android","Windows","iOS","Linux"]],
-["O que é um domínio de internet?","Nome usado para identificar um site",["Tipo de aplicativo","Nome usado para identificar um site","Processador","Banco de dados"]],
-["Qual empresa criou o navegador Chrome?","Google",["Apple","Google","Mozilla","Microsoft"]],
-["O que é banco de dados?","Sistema organizado para armazenar informações",["Sistema organizado para armazenar informações","Um cabo","Um monitor","Um antivírus"]]
+["O que significa CPU?",["Unidade Central de Processamento","Controle Principal Universal","Central de Programas","Código de Processamento"],0],
+["Qual empresa criou o Android?",["Google","Microsoft","Nintendo","IBM"],0],
+["Qual linguagem é usada para estruturar páginas web?",["HTML","CSS","SQL","Python"],0],
+["Qual linguagem estiliza páginas web?",["HTML","CSS","Java","C"],1],
+["Qual tecnologia é usada para conectar dispositivos sem fio a curta distância?",["Bluetooth","HDMI","USB","VGA"],0],
+["O que significa Wi-Fi?",["Tecnologia de rede sem fio","Memória rápida","Sistema operacional","Programa gráfico"],0],
+["Qual empresa criou o Windows?",["Apple","Microsoft","Google","Sony"],1],
+["Qual sistema operacional é usado em iPhones?",["Android","Windows","iOS","Linux"],2],
+["O que é um navegador?",["Programa para acessar páginas da internet","Peça do computador","Tipo de cabo","Sistema de áudio"],0],
+["Qual destes é um navegador?",["Chrome","Photoshop","Excel","Discord"],0],
+["O que é armazenamento em nuvem?",["Guardar dados em servidores acessíveis pela internet","Guardar dados somente no teclado","Memória da CPU","Uma placa de vídeo"],0],
+["Qual tecnologia é usada para gerar páginas dinâmicas no navegador?",["JavaScript","HDMI","Bluetooth","USB"],0],
+["O que é IA?",["Inteligência Artificial","Internet Avançada","Interface Analógica","Informação Automática"],0],
+["Qual empresa desenvolve o sistema Android?",["Google","Adobe","Intel","Dell"],0],
+["O que significa URL?",["Endereço de um recurso na internet","Tipo de memória","Código de vídeo","Programa antivírus"],0],
+["Qual dispositivo normalmente distribui internet em uma casa?",["Roteador","Monitor","Teclado","Impressora"],0],
+["O que é um aplicativo?",["Programa desenvolvido para realizar funções","Tipo de cabo","Peça física obrigatória","Arquivo de imagem"],0],
+["Qual tecnologia permite pagamento aproximando o celular?",["NFC","VGA","FTP","RAM"],0],
+["O que é RAM?",["Memória de acesso aleatório","Rede automática","Arquivo remoto","Processador gráfico"],0],
+["Qual empresa criou o PlayStation?",["Sony","Microsoft","Nintendo","Sega"],0],
+["Qual empresa criou o Xbox?",["Microsoft","Sony","Apple","Google"],0],
+["O que é software?",["Conjunto de programas","Peça física","Cabo","Fonte de energia"],0],
+["O que é hardware?",["Componentes físicos","Programas","Internet","Arquivos"],0],
+["O que é programação?",["Processo de criar instruções para computadores","Montagem de computadores apenas","Uso de redes sociais","Criação de imagens"],0],
+["Qual formato é comum para imagens?",["JPG","EXE","HTML","SQL"],0]
 ],
 
 portugues:[
-["Qual é o plural de pão?","Pães",["Pãos","Pães","Pãoses","Pões"]],
-["Qual palavra está escrita corretamente?","Exceção",["Excessão","Exceção","Escessão","Exeção"]],
-["Qual é o antônimo de feliz?","Triste",["Alegre","Contente","Triste","Animado"]],
-["Qual é o sinônimo de rápido?","Veloz",["Lento","Veloz","Fraco","Baixo"]],
-["Qual classe gramatical indica ação?","Verbo",["Adjetivo","Substantivo","Verbo","Artigo"]],
-["Qual é o feminino de ator?","Atriz",["Atora","Atriz","Atores","Atora"]],
-["Qual palavra é um substantivo?","Casa",["Bonito","Correr","Casa","Rapidamente"]],
-["Qual é o aumentativo de casa?","Casarão",["Casinha","Casarão","Casebre","Casita"]],
-["Qual é o diminutivo de cachorro?","Cachorrinho",["Cachorrão","Cachorrinho","Cachorroso","Cachorrada"]],
-["Qual sinal usamos para indicar uma pergunta?","?",[".","!",",","?"]],
-["Qual é o plural de cidadão?","Cidadãos",["Cidadões","Cidadãos","Cidadães","Cidadans"]],
-["Qual palavra apresenta acento corretamente?","Você",["Voce","Você","Vocé","Vôce"]],
-["Qual é o coletivo de peixes?","Cardume",["Matilha","Cardume","Enxame","Manada"]],
-["Qual é o coletivo de lobos?","Alcateia",["Cardume","Alcateia","Manada","Rebanho"]],
-["Qual palavra é um adjetivo?","Bonito",["Casa","Correr","Bonito","Rapidamente"]],
-["Qual é o contrário de antigo?","Moderno",["Velho","Moderno","Passado","Histórico"]],
-["Qual é o plural de papel?","Papéis",["Papeis","Papéis","Papels","Papéus"]],
-["Qual é o plural de animal?","Animais",["Animalis","Animães","Animais","Animals"]],
-["Qual palavra está no tempo passado?","Andei",["Andarei","Ando","Andei","Andando"]],
-["Qual é a função principal de um verbo?","Indicar ação, estado ou fenômeno",["Indicar ação, estado ou fenômeno","Nomear objetos","Descrever substantivos","Indicar gênero"]],
-["Qual palavra é um pronome?","Ele",["Ele","Casa","Bonito","Correr"]],
-["Qual é o sujeito em 'João comprou pão'?","João",["Pão","Comprou","João","Nenhum"]],
-["Qual palavra é oxítona?","Café",["Médico","Café","Árvore","Lâmpada"]],
-["Qual palavra é paroxítona?","Casa",["Café","Casa","Avó","Também"]],
-["Qual palavra é proparoxítona?","Lâmpada",["Casa","Café","Lâmpada","Papel"]]
+["Qual é o plural de cidadão?",["Cidadãos","Cidadões","Cidadães","Cidadam"],0],
+["Qual é o contrário de alto?",["Grande","Baixo","Largo","Forte"],1],
+["Qual palavra é um verbo?",["Casa","Correr","Azul","Mesa"],1],
+["Qual palavra é um adjetivo?",["Bonito","Correr","Casa","Rapidamente"],0],
+["Qual é o plural de papel?",["Papéis","Papeis","Papels","Papelões"],0],
+["Qual é o feminino de ator?",["Atriz","Atora","Atorina","Atrizta"],0],
+["Qual é o aumentativo de casa?",["Casinha","Casarão","Caseta","Casal"],1],
+["Qual é o diminutivo de gato?",["Gatão","Gatinho","Gataria","Gatoide"],1],
+["Qual palavra possui acento?",["Cafe","Café","Cafeu","Cafes"],1],
+["Qual é sinônimo de feliz?",["Triste","Alegre","Bravo","Cansado"],1],
+["Qual é antônimo de rápido?",["Lento","Veloz","Forte","Alto"],0],
+["Qual frase está correta?",["Nós fomos ao mercado.","Nós foi ao mercado.","Nós foi mercado.","Nós fomos mercado."],0],
+["Qual é o coletivo de peixes?",["Cardume","Matilha","Alcateia","Manada"],0],
+["Qual é o coletivo de lobos?",["Matilha","Cardume","Bando","Colmeia"],0],
+["Qual palavra é um substantivo?",["Mesa","Correr","Bonito","Rapidamente"],0],
+["Qual é o plural de mão?",["Mãos","Mões","Mães","Mãoses"],0],
+["Qual é o plural de pão?",["Pães","Pãos","Pões","Pãoses"],0],
+["Qual palavra é uma conjunção?",["E","Casa","Azul","Correr"],0],
+["Qual é o sujeito em 'João comprou pão'?",["João","comprou","pão","comprou pão"],0],
+["Qual é o verbo em 'Maria estudou ontem'?",["Maria","estudou","ontem","Maria estudou"],1],
+["Qual é o antônimo de claro?",["Escuro","Branco","Luz","Brilho"],0],
+["Qual é o sinônimo de bonito?",["Belo","Feio","Grande","Rápido"],0],
+["Qual palavra está escrita corretamente?",["Exceção","Excessão","Eceção","Exeção"],0],
+["Qual é o plural de animal?",["Animais","Animals","Animalis","Animãos"],0],
+["Qual é o feminino de príncipe?",["Princesa","Princípa","Princeza","Princesa"],0]
 ],
 
 geral:[
-["Quantos dias tem uma semana?","7",["5","6","7","8"]],
-["Quantos meses tem um ano?","12",["10","11","12","13"]],
-["Qual é o maior animal terrestre?","Elefante",["Girafa","Elefante","Rinoceronte","Hipopótamo"]],
-["Qual esporte é jogado com uma bola e uma cesta?","Basquete",["Vôlei","Basquete","Tênis","Golfe"]],
-["Qual é a moeda do Japão?","Iene",["Won","Iene","Dólar","Euro"]],
-["Quantas cores possui o arco-íris tradicionalmente?","7",["5","6","7","8"]],
-["Qual é o idioma mais falado no Brasil?","Português",["Espanhol","Português","Inglês","Francês"]],
-["Qual instrumento possui teclas pretas e brancas?","Piano",["Violão","Piano","Flauta","Bateria"]],
-["Quantos lados tem um triângulo?","3",["2","3","4","5"]],
-["Qual é o maior planeta do Sistema Solar?","Júpiter",["Terra","Marte","Júpiter","Vênus"]],
-["Qual bebida é tradicionalmente feita com grãos torrados?","Café",["Suco","Café","Leite","Chá"]],
-["Qual é a cor resultante da mistura de azul e amarelo?","Verde",["Roxo","Verde","Laranja","Rosa"]],
-["Quantas horas tem um dia?","24",["12","18","24","48"]],
-["Qual animal é conhecido como rei da selva?","Leão",["Tigre","Leão","Onça","Urso"]],
-["Qual é a capital da Itália?","Roma",["Milão","Roma","Nápoles","Veneza"]],
-["Qual é o maior órgão do corpo humano?","Pele",["Coração","Pele","Pulmão","Fígado"]],
-["Qual é o continente mais populoso?","Ásia",["Europa","Ásia","África","América"]],
-["Qual é o resultado de 10 + 15?","25",["20","25","30","35"]],
-["Qual é o resultado de 9 x 9?","81",["72","81","90","99"]],
-["Quantos minutos tem uma hora?","60",["30","45","60","90"]],
-["Qual é o metal usado principalmente em latas de refrigerante?","Alumínio",["Ferro","Alumínio","Ouro","Prata"]],
-["Qual é o planeta onde vivemos?","Terra",["Marte","Terra","Vênus","Júpiter"]],
-["Qual animal produz lã?","Ovelha",["Cavalo","Ovelha","Cachorro","Galinha"]],
-["Qual é o símbolo matemático de multiplicação mais comum?","×",["+","−","×","÷"]],
-["Qual é o país conhecido pelo formato de uma bota?","Itália",["França","Itália","Espanha","Grécia"]]
+["Qual é a capital do Brasil?",["Brasília","São Paulo","Salvador","Recife"],0],
+["Quantos dias tem uma semana?",["5","6","7","8"],2],
+["Quantos meses tem um ano?",["10","11","12","13"],2],
+["Qual é o maior planeta do Sistema Solar?",["Terra","Júpiter","Marte","Vênus"],1],
+["Qual é o idioma oficial do Brasil?",["Português","Espanhol","Inglês","Francês"],0],
+["Qual é o maior animal terrestre?",["Elefante-africano","Girafa","Rinoceronte","Hipopótamo"],0],
+["Quantos lados tem um triângulo?",["2","3","4","5"],1],
+["Qual é a cor formada por azul e amarelo?",["Verde","Roxo","Laranja","Rosa"],0],
+["Qual esporte usa uma bola e uma cesta?",["Futebol","Basquete","Tênis","Vôlei"],1],
+["Qual instrumento possui teclas pretas e brancas?",["Violão","Piano","Flauta","Bateria"],1],
+["Qual é o continente do Brasil?",["Europa","Ásia","América do Sul","África"],2],
+["Qual é o maior oceano?",["Pacífico","Atlântico","Índico","Ártico"],0],
+["Quantas horas tem um dia?",["12","18","24","30"],2],
+["Qual é o resultado de 10 + 10?",["15","20","25","30"],1],
+["Qual é a moeda do Brasil?",["Peso","Real","Dólar","Euro"],1],
+["Qual animal é conhecido por miar?",["Cachorro","Gato","Cavalo","Boi"],1],
+["Qual animal é conhecido por latir?",["Gato","Cachorro","Leão","Peixe"],1],
+["Qual planeta é conhecido como planeta vermelho?",["Marte","Terra","Júpiter","Saturno"],0],
+["Qual é a estrela do nosso sistema?",["Lua","Sol","Sirius","Vênus"],1],
+["Qual é o maior país da América do Sul?",["Brasil","Argentina","Chile","Peru"],0],
+["Qual é o idioma mais falado no Brasil?",["Português","Inglês","Espanhol","Francês"],0],
+["Qual objeto usamos para saber as horas?",["Relógio","Régua","Bússola","Termômetro"],0],
+["Qual é o satélite natural da Terra?",["Lua","Sol","Marte","Vênus"],0],
+["Qual é a estação mais fria do ano?",["Verão","Primavera","Outono","Inverno"],3],
+["Qual é o nome do nosso planeta?",["Terra","Marte","Vênus","Saturno"],0]
 ]
-
 };
 
+for(let i=0;i<500;i++){
+    const a=Math.floor(Math.random()*1000);
+    const b=Math.floor(Math.random()*1000);
+    const op=i%3;
 
-const matematica=[];
-
-for(let i=1;i<=500;i++){
-
-let a=(i*7)%50+1;
-let b=(i*13)%50+1;
-let resultado=a+b;
-
-matematica.push([
-`Quanto é ${a} + ${b}?`,
-String(resultado),
-[
-String(resultado+1),
-String(resultado),
-String(resultado-1),
-String(resultado+2)
-]
-]);
-
+    if(op===0){
+        perguntas.matematica=perguntas.matematica||[];
+        perguntas.matematica.push([
+            `Quanto é ${a} + ${b}?`,
+            [String(a+b),String(a+b+1),String(a+b-1),String(a+b+10)],
+            0
+        ]);
+    }else if(op===1){
+        const maior=Math.max(a,b);
+        const menor=Math.min(a,b);
+        perguntas.matematica=perguntas.matematica||[];
+        perguntas.matematica.push([
+            `Quanto é ${maior} - ${menor}?`,
+            [String(maior-menor),String(maior-menor+2),String(maior-menor+5),String(maior-menor+10)],
+            0
+        ]);
+    }else{
+        perguntas.matematica=perguntas.matematica||[];
+        perguntas.matematica.push([
+            `Quanto é ${a} × ${b}?`,
+            [String(a*b),String(a*b+1),String(a*b-1),String(a*b+10)],
+            0
+        ]);
+    }
 }
 
-bancos.matematica=matematica;
-
-
-function mostrarLogin(){
-
-document.getElementById("loginForm").classList.remove("hidden");
-document.getElementById("signupForm").classList.add("hidden");
-
-document.getElementById("loginTab").classList.add("active");
-document.getElementById("signupTab").classList.remove("active");
-
+function $(id){
+    return document.getElementById(id);
 }
-
-
-function mostrarCadastro(){
-
-document.getElementById("loginForm").classList.add("hidden");
-document.getElementById("signupForm").classList.remove("hidden");
-
-document.getElementById("loginTab").classList.remove("active");
-document.getElementById("signupTab").classList.add("active");
-
-}
-
 
 function mostrarToast(texto){
-
-const t=document.getElementById("toast");
-
-t.textContent=texto;
-t.style.display="block";
-
-clearTimeout(window.toastTimer);
-
-window.toastTimer=setTimeout(()=>{
-t.style.display="none";
-},3000);
-
+    const t=$("toast");
+    t.textContent=texto;
+    t.classList.remove("hidden");
+    clearTimeout(window.toastTimer);
+    window.toastTimer=setTimeout(()=>t.classList.add("hidden"),2500);
 }
 
-
-function abrirModal(titulo,conteudo){
-
-document.getElementById("modalTitle").textContent=titulo;
-document.getElementById("modalContent").innerHTML=conteudo;
-
-document.getElementById("modal").classList.remove("hidden");
-
+function mostrarLogin(){
+    $("loginTela").classList.remove("hidden");
+    $("cadastroTela").classList.add("hidden");
 }
 
-
-function fecharModal(){
-
-document.getElementById("modal").classList.add("hidden");
-
+function mostrarCadastro(){
+    $("loginTela").classList.add("hidden");
+    $("cadastroTela").classList.remove("hidden");
 }
 
-
-function escapar(texto){
-
-return String(texto||"")
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-
+function mostrarApp(){
+    $("loginTela").classList.add("hidden");
+    $("cadastroTela").classList.add("hidden");
+    $("app").classList.remove("hidden");
 }
 
-
-function traduzirErro(error){
-
-const code=error?.code||"";
-
-const erros={
-"auth/email-already-in-use":"Este e-mail já está cadastrado.",
-"auth/invalid-email":"E-mail inválido.",
-"auth/user-not-found":"Usuário não encontrado.",
-"auth/wrong-password":"Senha incorreta.",
-"auth/invalid-credential":"E-mail ou senha incorretos.",
-"auth/weak-password":"A senha é muito fraca.",
-"auth/too-many-requests":"Muitas tentativas. Aguarde um pouco.",
-"auth/network-request-failed":"Falha de conexão com a internet."
-};
-
-return erros[code]||error?.message||"Ocorreu um erro.";
-
+function esconderApp(){
+    $("app").classList.add("hidden");
+    $("loginTela").classList.remove("hidden");
 }
-
-
-async function login(){
-
-try{
-
-const email=document.getElementById("loginEmail").value.trim();
-const senha=document.getElementById("loginPassword").value;
-
-if(!email||!senha){
-
-mostrarToast("Preencha e-mail e senha.");
-
-return;
-
-}
-
-await auth.signInWithEmailAndPassword(email,senha);
-
-}catch(error){
-
-mostrarToast(traduzirErro(error));
-
-}
-
-}
-
-
-async function cadastro(){
-
-try{
-
-const nome=document.getElementById("signupName").value.trim();
-const email=document.getElementById("signupEmail").value.trim();
-const senha=document.getElementById("signupPassword").value;
-
-if(!nome||!email||!senha){
-
-mostrarToast("Preencha todos os campos.");
-
-return;
-
-}
-
-if(senha.length<6){
-
-mostrarToast("A senha precisa ter pelo menos 6 caracteres.");
-
-return;
-
-}
-
-const cred=await auth.createUserWithEmailAndPassword(email,senha);
-
-const dados={
-nome:nome,
-nomeBusca:nome.toLowerCase(),
-email:email,
-avatar:"",
-xp:0,
-nivel:1,
-moedas:0,
-recorde:0,
-maiorPremio:0,
-partidas:0,
-vitorias:0,
-acertos:0,
-erros:0,
-titulo:"Novato",
-criadoEm:FV.serverTimestamp()
-};
-
-await db.collection("Usuarios")
-.doc(cred.user.uid)
-.set(dados);
-
-await salvarRanking();
-
-mostrarToast("Conta criada!");
-
-}catch(error){
-
-mostrarToast(traduzirErro(error));
-
-}
-
-}
-
-
-auth.onAuthStateChanged(async user=>{
-
-usuario=user;
-
-if(!user){
-
-document.getElementById("loginScreen").style.display="flex";
-document.getElementById("app").style.display="none";
-
-return;
-
-}
-
-try{
-
-await carregarPerfil();
-
-document.getElementById("loginScreen").style.display="none";
-document.getElementById("app").style.display="block";
-
-await registrarPresenca();
-
-await salvarRanking();
-
-central();
-
-iniciarSistemaSocial();
-
-iniciarMusica("central");
-
-}catch(error){
-
-console.log(error);
-mostrarToast("Erro ao carregar sua conta.");
-
-}
-
-});
-
-
-async function carregarPerfil(){
-
-if(!usuario)return;
-
-const ref=db.collection("Usuarios").doc(usuario.uid);
-
-const snap=await ref.get();
-
-if(snap.exists){
-
-perfil=snap.data();
-
-}else{
-
-perfil={
-nome:usuario.email?.split("@")[0]||"Jogador",
-nomeBusca:(usuario.email||"jogador").toLowerCase(),
-email:usuario.email||"",
-avatar:"",
-xp:0,
-nivel:1,
-moedas:0,
-recorde:0,
-maiorPremio:0,
-partidas:0,
-vitorias:0,
-acertos:0,
-erros:0,
-titulo:"Novato"
-};
-
-await ref.set(perfil);
-
-}
-
-}
-
 
 function getNome(){
-
-return perfil?.nome||"Jogador";
-
+    return perfil?.nome||"Jogador";
 }
-
 
 function getAvatar(){
+    if(perfil?.avatar){
+        return `<img src="${perfil.avatar}" alt="avatar">`;
+    }
 
-if(perfil?.avatar){
-
-return `<img class="avatarSmall" src="${perfil.avatar}">`;
-
-}
-
-return `<div class="avatarSmall">${escapar(getNome().charAt(0).toUpperCase())}</div>`;
-
-}
-
-
-function getNivel(){
-
-return perfil?.nivel||1;
-
-}
-
-
-function getXP(){
-
-return perfil?.xp||0;
-
-}
-
-
-async function salvarPerfil(){
-
-if(!usuario||!perfil)return;
-
-perfil.nomeBusca=(perfil.nome||"").toLowerCase();
-
-await db.collection("Usuarios")
-.doc(usuario.uid)
-.set(perfil,{merge:true});
-
-await salvarRanking();
-
-}
-
-
-async function salvarRanking(){
-
-if(!usuario||!perfil)return;
-
-try{
-
-await db.collection("Partidas")
-.doc("ranking_"+usuario.uid)
-.set({
-
-tipo:"ranking",
-uid:usuario.uid,
-nome:getNome(),
-nomeBusca:(getNome()||"").toLowerCase(),
-avatar:perfil.avatar||"",
-recorde:perfil.recorde||0,
-maiorPremio:perfil.maiorPremio||0,
-nivel:perfil.nivel||1,
-xp:perfil.xp||0,
-atualizadoEm:FV.serverTimestamp()
-
-},{merge:true});
-
-}catch(e){
-
-console.log("Ranking:",e);
-
-}
-
-}
-
-
-function atualizarNav(id){
-
-document.querySelectorAll(".navBtn").forEach(x=>x.classList.remove("active"));
-
-const el=document.getElementById(id);
-
-if(el)el.classList.add("active");
-
-}
-
-
-function central(){
-
-telaAtual="central";
-
-atualizarNav("navInicio");
-
-const html=`
-
-<div class="hero">
-
-<h1>Olá, ${escapar(getNome())}! 👋</h1>
-
-<p>Escolha um jogo e comece a competir. Suba de nível, conquiste XP e apareça no ranking.</p>
-
-</div>
-
-
-<div class="cards">
-
-<div class="card">
-
-<div class="gameIcon">💰</div>
-
-<h3>Desafio do Milhão</h3>
-
-<p>15 perguntas, 15 segundos por pergunta e prêmio máximo de R$ 1.000.000.</p>
-
-<button class="btn primaryBtn" onclick="abrirMenuMilhao()">Jogar agora</button>
-
-</div>
-
-
-<div class="card">
-
-<div class="gameIcon">🏎️</div>
-
-<h3>Corrida do Milhão</h3>
-
-<p>Uma corrida competitiva com modos solo, amigos e partidas online.</p>
-
-<button class="btn" onclick="mostrarToast('Corrida do Milhão em breve!')">Em breve</button>
-
-</div>
-
-</div>
-
-
-<h2 class="sectionTitle">Desafio diário</h2>
-
-<div class="panel challenge">
-
-<h3>🔥 Pergunta do dia</h3>
-
-<p style="color:#bca8c6;margin:8px 0 15px">
-Responda a pergunta diária e ganhe XP.
-</p>
-
-<button class="btn primaryBtn" onclick="desafioDiario()">Responder</button>
-
-</div>
-
-
-<h2 class="sectionTitle">Seu progresso</h2>
-
-<div class="stats">
-
-<div class="stat">
-<b>${getNivel()}</b>
-<span>Nível</span>
-</div>
-
-<div class="stat">
-<b>${getXP()}</b>
-<span>XP</span>
-</div>
-
-<div class="stat">
-<b>${perfil?.moedas||0}</b>
-<span>Moedas</span>
-</div>
-
-<div class="stat">
-<b>R$ ${(perfil?.recorde||0).toLocaleString("pt-BR")}</b>
-<span>Recorde</span>
-</div>
-
-</div>
-
-`;
-
-document.getElementById("central").innerHTML=html;
-
-}
-
-
-function abrirMenuMilhao(){
-
-abrirModal(
-"Desafio do Milhão",
-`
-
-<div class="panel">
-
-<h3>Escolha uma categoria</h3>
-
-<p style="color:#98899f;margin:8px 0 15px">
-Você responderá 15 perguntas. A dificuldade aumenta conforme avança.
-</p>
-
-<div class="row">
-
-<button class="btn primaryBtn" onclick="iniciarMilhao('geral')">🌎 Geral</button>
-
-<button class="btn" onclick="iniciarMilhao('ciencia')">🔬 Ciência</button>
-
-<button class="btn" onclick="iniciarMilhao('geografia')">🗺️ Geografia</button>
-
-<button class="btn" onclick="iniciarMilhao('historia')">📚 História</button>
-
-<button class="btn" onclick="iniciarMilhao('tecnologia')">💻 Tecnologia</button>
-
-<button class="btn" onclick="iniciarMilhao('portugues')">📝 Português</button>
-
-<button class="btn" onclick="iniciarMilhao('matematica')">➗ Matemática</button>
-
-</div>
-
-</div>
-
-
-<div class="panel">
-
-<h3>Modos</h3>
-
-<div class="row" style="margin-top:10px">
-
-<button class="btn green" onclick="iniciarAmigoPerto()">👥 Jogar com amigo perto</button>
-
-<button class="btn blue" onclick="iniciarOnline()">🌐 Jogar online</button>
-
-</div>
-
-</div>
-
-`
-);
-
-}
-
-
-function embaralhar(array){
-
-const arr=[...array];
-
-for(let i=arr.length-1;i>0;i--){
-
-const j=Math.floor(Math.random()*(i+1));
-
-[arr[i],arr[j]]=[arr[j],arr[i]];
-
-}
-
-return arr;
-
-}
-
-
-function prepararQuestoes(categoria){
-
-const banco=bancos[categoria]||bancos.geral;
-
-const escolhidas=embaralhar(banco).slice(0,15);
-
-return escolhidas.map(q=>{
-
-return {
-pergunta:q[0],
-resposta:q[1],
-opcoes:embaralhar(q[2])
-};
-
-});
-
-}
-
-
-function iniciarMilhao(categoria){
-
-fecharModal();
-
-jogo={
-categoria,
-questoes:prepararQuestoes(categoria),
-indice:0,
-acertos:0,
-erros:0,
-premioAtual:0,
-timer:null,
-tempo:15,
-usou5050:false,
-usouPular:false,
-usouDica:false,
-respondendo:false
-};
-
-iniciarMusica("game");
-
-renderPergunta();
-
-}
-
-
-function renderPergunta(){
-
-clearInterval(jogo.timer);
-
-if(jogo.indice>=15){
-
-finalizarJogo();
-
-return;
-
-}
-
-jogo.respondendo=false;
-jogo.tempo=15;
-
-const q=jogo.questoes[jogo.indice];
-
-let html=`
-
-<div class="gameScreen">
-
-<div class="gameTop">
-
-<div>
-
-<div class="gameTitle">Desafio do Milhão</div>
-
-<div style="color:#98899f;font-size:12px">
-${escapar(jogo.categoria)} • ${dificuldades[jogo.indice]}
-</div>
-
-</div>
-
-<div class="timer" id="timer">15</div>
-
-</div>
-
-
-<div class="progress">
-<div style="width:${(jogo.indice/15)*100}%"></div>
-</div>
-
-
-<div class="questionCard">
-
-<div class="questionNumber">
-Pergunta ${jogo.indice+1} de 15
-</div>
-
-<div class="question">
-${escapar(q.pergunta)}
-</div>
-
-<div class="answers" id="answers">
-
-${q.opcoes.map((op,i)=>`
-
-<button class="answer" onclick="responder(${i})">
-${String.fromCharCode(65+i)}) ${escapar(op)}
-</button>
-
-`).join("")}
-
-</div>
-
-
-<div class="lifelines">
-
-<button class="life" id="life5050" onclick="usar5050()">50/50</button>
-
-<button class="life" id="lifePular" onclick="pularPergunta()">Pular</button>
-
-<button class="life" id="lifeDica" onclick="usarDica()">💡 Dica</button>
-
-</div>
-
-
-<div class="prize">
-
-${premios.map((p,i)=>`
-
-<div class="${i===jogo.indice?"current":""}">
-R$ ${p.toLocaleString("pt-BR")}
-</div>
-
-`).join("")}
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-document.getElementById("central").innerHTML=html;
-
-atualizarNav("");
-
-iniciarTimer();
-
-}
-
-
-function iniciarTimer(){
-
-jogo.tempo=15;
-
-const el=document.getElementById("timer");
-
-jogo.timer=setInterval(()=>{
-
-jogo.tempo--;
-
-if(el)el.textContent=jogo.tempo;
-
-if(jogo.tempo<=0){
-
-clearInterval(jogo.timer);
-
-tempoEsgotado();
-
-}
-
-},1000);
-
-}
-
-
-function responder(index){
-
-if(jogo.respondendo)return;
-
-jogo.respondendo=true;
-
-clearInterval(jogo.timer);
-
-const q=jogo.questoes[jogo.indice];
-
-const botoes=document.querySelectorAll(".answer");
-
-const botao=botoes[index];
-
-if(q.opcoes[index]===q.resposta){
-
-botao.classList.add("correct");
-
-jogo.acertos++;
-
-jogo.premioAtual=premios[jogo.indice];
-
-tocarSom("correct");
-
-}else{
-
-botao.classList.add("wrong");
-
-jogo.erros++;
-
-tocarSom("wrong");
-
-botoes.forEach((b,i)=>{
-
-if(q.opcoes[i]===q.resposta)b.classList.add("correct");
-
-});
-
-}
-
-setTimeout(()=>{
-
-jogo.indice++;
-
-renderPergunta();
-
-},900);
-
-}
-
-
-function tempoEsgotado(){
-
-if(jogo.respondendo)return;
-
-jogo.respondendo=true;
-
-jogo.erros++;
-
-tocarSom("wrong");
-
-const q=jogo.questoes[jogo.indice];
-
-document.querySelectorAll(".answer").forEach((b,i)=>{
-
-if(q.opcoes[i]===q.resposta)b.classList.add("correct");
-
-});
-
-setTimeout(()=>{
-
-jogo.indice++;
-
-renderPergunta();
-
-},900);
-
-}
-
-
-function usar5050(){
-
-if(jogo.usou5050)return;
-
-jogo.usou5050=true;
-
-const q=jogo.questoes[jogo.indice];
-
-const erradas=[];
-
-q.opcoes.forEach((op,i)=>{
-
-if(op!==q.resposta)erradas.push(i);
-
-});
-
-const remover=embaralhar(erradas).slice(0,2);
-
-document.querySelectorAll(".answer").forEach((b,i)=>{
-
-if(remover.includes(i)){
-
-b.disabled=true;
-b.style.visibility="hidden";
-
-}
-
-});
-
-document.getElementById("life5050").disabled=true;
-
-}
-
-
-function pularPergunta(){
-
-if(jogo.usouPular)return;
-
-jogo.usouPular=true;
-
-clearInterval(jogo.timer);
-
-jogo.indice++;
-
-tocarSom("click");
-
-renderPergunta();
-
-}
-
-
-function usarDica(){
-
-if(jogo.usouDica)return;
-
-jogo.usouDica=true;
-
-const q=jogo.questoes[jogo.indice];
-
-abrirModal(
-"💡 Dica",
-`<p style="color:#cbb8d1;line-height:1.5">
-Pense com atenção. A resposta correta é uma das alternativas apresentadas e a dificuldade atual é <b>${dificuldades[jogo.indice]}</b>.
-</p>`
-);
-
-document.getElementById("lifeDica").disabled=true;
-
-}
-
-
-async function finalizarJogo(){
-
-clearInterval(jogo.timer);
-
-iniciarMusica("final");
-
-const venceu=jogo.indice>=15&&jogo.acertos===15;
-
-if(!perfil)perfil={};
-
-perfil.partidas=(perfil.partidas||0)+1;
-perfil.acertos=(perfil.acertos||0)+jogo.acertos;
-perfil.erros=(perfil.erros||0)+jogo.erros;
-
-if(jogo.premioAtual>(perfil.maiorPremio||0)){
-perfil.maiorPremio=jogo.premioAtual;
-}
-
-if(jogo.premioAtual>(perfil.recorde||0)){
-perfil.recorde=jogo.premioAtual;
-}
-
-let xpGanho=jogo.acertos*100;
-
-if(venceu){
-
-perfil.vitorias=(perfil.vitorias||0)+1;
-xpGanho+=1000;
-
-}
-
-perfil.xp=(perfil.xp||0)+xpGanho;
-
-perfil.nivel=Math.max(1,Math.floor((perfil.xp||0)/1000)+1);
-
-perfil.moedas=(perfil.moedas||0)+jogo.acertos*10;
-
-await salvarPerfil();
-
-const premio=jogo.premioAtual;
-
-document.getElementById("central").innerHTML=`
-
-<div class="gameScreen">
-
-<div class="questionCard endBox">
-
-<div style="font-size:55px">
-${venceu?"🏆":"🎮"}
-</div>
-
-<h2>${venceu?"MILIONÁRIO!":"Fim de jogo"}</h2>
-
-<div class="bigPrize">
-R$ ${premio.toLocaleString("pt-BR")}
-</div>
-
-<p style="color:#aa9aaa">
-Acertos: <b>${jogo.acertos}</b><br>
-Erros: <b>${jogo.erros}</b><br>
-XP ganho: <b>+${xpGanho}</b>
-</p>
-
-<div class="row" style="justify-content:center;margin-top:20px">
-
-<button class="btn primaryBtn" onclick="central()">Voltar ao início</button>
-
-<button class="btn" onclick="abrirRanking()">Ver ranking</button>
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-function desafioDiario(){
-
-const hoje=new Date().toISOString().slice(0,10);
-
-const numero=hoje.split("-").reduce((a,b)=>a+Number(b),0);
-
-const banco=bancos.geral;
-
-const q=banco[numero%banco.length];
-
-abrirModal(
-"🔥 Desafio diário",
-`
-
-<div class="questionCard">
-
-<div class="question">
-${escapar(q[0])}
-</div>
-
-<div class="answers">
-
-${q[2].map(op=>`
-
-<button class="answer" onclick="responderDiario(this,'${escapar(op)}','${escapar(q[1])}')">
-${escapar(op)}
-</button>
-
-`).join("")}
-
-</div>
-
-</div>
-
-`
-);
-
-}
-
-
-async function responderDiario(botao,resposta,correta){
-
-document.querySelectorAll(".modalBox .answer").forEach(b=>b.disabled=true);
-
-if(resposta===correta){
-
-botao.classList.add("correct");
-
-perfil.xp=(perfil.xp||0)+100;
-
-perfil.nivel=Math.floor(perfil.xp/1000)+1;
-
-await salvarPerfil();
-
-mostrarToast("+100 XP!");
-
-}else{
-
-botao.classList.add("wrong");
-
-mostrarToast("Resposta incorreta.");
-
-}
-
-}
-
-
-function abrirPerfil(){
-
-telaAtual="perfil";
-
-atualizarNav("navPerfil");
-
-const avatarHtml=perfil?.avatar
-?`<img class="avatar" src="${perfil.avatar}">`
-:`<div class="avatar">${escapar(getNome().charAt(0).toUpperCase())}</div>`;
-
-document.getElementById("central").innerHTML=`
-
-<div class="profileHeader">
-
-${avatarHtml}
-
-<div style="flex:1">
-
-<div class="profileName">${escapar(getNome())}</div>
-
-<div class="profileMeta">${escapar(perfil?.titulo||"Novato")} • Nível ${getNivel()}</div>
-
-</div>
-
-</div>
-
-
-<div class="panel">
-
-<h3>Foto de perfil</h3>
-
-<p style="color:#98899f;font-size:13px;margin:7px 0 12px">
-Escolha uma foto da sua galeria.
-</p>
-
-<label class="photoBtn">
-📷 Escolher foto
-<input class="hiddenFile" type="file" accept="image/*" onchange="trocarFoto(event)">
-</label>
-
-</div>
-
-
-<div class="stats">
-
-<div class="stat">
-<b>${perfil?.partidas||0}</b>
-<span>Partidas</span>
-</div>
-
-<div class="stat">
-<b>${perfil?.vitorias||0}</b>
-<span>Vitórias</span>
-</div>
-
-<div class="stat">
-<b>${perfil?.acertos||0}</b>
-<span>Acertos</span>
-</div>
-
-<div class="stat">
-<b>R$ ${(perfil?.maiorPremio||0).toLocaleString("pt-BR")}</b>
-<span>Maior prêmio</span>
-</div>
-
-</div>
-
-
-<div class="panel">
-
-<h3>Editar perfil</h3>
-
-<input id="editNome" value="${escapar(getNome())}" placeholder="Nome">
-
-<input id="editTitulo" value="${escapar(perfil?.titulo||"Novato")}" placeholder="Título">
-
-<button class="btn primaryBtn" onclick="salvarEdicaoPerfil()">Salvar alterações</button>
-
-</div>
-
-
-<div class="panel">
-
-<h3>Conquistas</h3>
-
-<div class="row" style="margin-top:12px">
-
-<div class="notice">🏅 Primeiro jogo</div>
-
-<div class="notice">🔥 ${perfil?.acertos>=10?"10 acertos":"10 acertos — bloqueada"}</div>
-
-<div class="notice">💰 ${perfil?.maiorPremio>=100000?"Prêmio 100 mil":"Prêmio 100 mil — bloqueada"}</div>
-
-<div class="notice">🏆 ${perfil?.vitorias>=1?"Primeira vitória":"Primeira vitória — bloqueada"}</div>
-
-</div>
-
-</div>
-
-
-<div class="panel">
-
-<h3>Configurações</h3>
-
-<div class="row" style="margin-top:10px">
-
-<button class="btn" onclick="alternarMusica()">
-🎵 Música: ${musicaLigada?"ON":"OFF"}
-</button>
-
-<button class="btn" onclick="alternarEfeitos()">
-🔊 Efeitos: ${efeitosLigados?"ON":"OFF"}
-</button>
-
-<button class="btn red" onclick="sair()">Sair da conta</button>
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-async function salvarEdicaoPerfil(){
-
-const nome=document.getElementById("editNome").value.trim();
-const titulo=document.getElementById("editTitulo").value.trim();
-
-if(!nome){
-
-mostrarToast("Digite um nome.");
-
-return;
-
-}
-
-perfil.nome=nome;
-perfil.titulo=titulo||"Novato";
-
-await salvarPerfil();
-
-mostrarToast("Perfil atualizado!");
-
-abrirPerfil();
-
-}
-
-
-function trocarFoto(event){
-
-const file=event.target.files?.[0];
-
-if(!file)return;
-
-const reader=new FileReader();
-
-reader.onload=e=>{
-
-const img=new Image();
-
-img.onload=async()=>{
-
-const canvas=document.createElement("canvas");
-
-canvas.width=256;
-canvas.height=256;
-
-const ctx=canvas.getContext("2d");
-
-const menor=Math.min(img.width,img.height);
-
-const sx=(img.width-menor)/2;
-const sy=(img.height-menor)/2;
-
-ctx.drawImage(
-img,
-sx,
-sy,
-menor,
-menor,
-0,
-0,
-256,
-256
-);
-
-perfil.avatar=canvas.toDataURL("image/jpeg",.7);
-
-await salvarPerfil();
-
-mostrarToast("Foto atualizada!");
-
-abrirPerfil();
-
-};
-
-img.src=e.target.result;
-
-};
-
-reader.readAsDataURL(file);
-
-}
-
-
-async function sair(){
-
-try{
-
-marcarOffline();
-
-await auth.signOut();
-
-}catch(e){
-
-console.log(e);
-
-}
-
-}
-
-
-async function abrirRanking(){
-
-telaAtual="ranking";
-
-atualizarNav("navRanking");
-
-let jogadores=[];
-
-try{
-
-const snap=await db.collection("Partidas")
-.where("tipo","==","ranking")
-.limit(100)
-.get();
-
-snap.forEach(doc=>{
-
-const d=doc.data();
-
-if(d.uid)jogadores.push(d);
-
-});
-
-jogadores.sort((a,b)=>(b.recorde||0)-(a.recorde||0));
-
-}catch(e){
-
-console.log(e);
-
-}
-
-if(!jogadores.length){
-
-document.getElementById("central").innerHTML=`
-
-<div class="panel">
-
-<h2>🏆 Ranking</h2>
-
-<div class="empty">
-Ainda não há jogadores suficientes no ranking.
-</div>
-
-</div>
-
-`;
-
-return;
-
-}
-
-document.getElementById("central").innerHTML=`
-
-<div class="panel">
-
-<h2 style="margin-bottom:15px">🏆 Ranking</h2>
-
-${jogadores.slice(0,30).map((j,i)=>`
-
-<div class="userRow">
-
-<div class="rankNumber">#${i+1}</div>
-
-${j.avatar
-?`<img class="avatarSmall" src="${j.avatar}">`
-:`<div class="avatarSmall">${escapar((j.nome||"J").charAt(0).toUpperCase())}</div>`
-}
-
-<div class="userInfo">
-
-<b>${escapar(j.nome||"Jogador")}</b>
-
-<span>Nível ${j.nivel||1} • ${j.xp||0} XP</span>
-
-</div>
-
-<div class="rankScore">
-R$ ${(j.recorde||0).toLocaleString("pt-BR")}
-</div>
-
-</div>
-
-`).join("")}
-
-</div>
-
-`;
-
-}
-
-
-function abrirAmigos(){
-
-telaAtual="amigos";
-
-atualizarNav("navAmigos");
-
-document.getElementById("central").innerHTML=`
-
-<div class="panel">
-
-<h2>👥 Amigos</h2>
-
-<p style="color:#98899f;font-size:13px;margin:7px 0 15px">
-Encontre jogadores, envie pedidos e converse em particular.
-</p>
-
-<input id="buscarJogador" placeholder="Buscar jogador..." oninput="buscarJogadores()">
-
-<div id="resultadosJogadores"></div>
-
-</div>
-
-
-<div class="panel">
-
-<h3>Pedidos de amizade</h3>
-
-<div id="pedidosAmizade">
-<div class="empty">Carregando...</div>
-</div>
-
-</div>
-
-
-<div class="panel">
-
-<h3>Meus amigos</h3>
-
-<div id="listaAmigos">
-<div class="empty">Carregando...</div>
-</div>
-
-</div>
-
-`;
-
-carregarListaAmigos();
-carregarPedidos();
-
-}
-
-
-async function buscarJogadores(){
-
-const input=document.getElementById("buscarJogador");
-
-const area=document.getElementById("resultadosJogadores");
-
-if(!input||!area)return;
-
-const termo=input.value.trim().toLowerCase();
-
-if(termo.length<2){
-
-area.innerHTML="";
-
-return;
-
-}
-
-try{
-
-const snap=await db.collection("Partidas")
-.where("tipo","==","ranking")
-.limit(200)
-.get();
-
-const jogadores=[];
-
-snap.forEach(doc=>{
-
-const d=doc.data();
-
-if(
-d.uid!==usuario.uid &&
-(d.nomeBusca||"").includes(termo)
-){
-
-jogadores.push(d);
-
-}
-
-});
-
-if(!jogadores.length){
-
-area.innerHTML=`<div class="empty">Nenhum jogador encontrado.</div>`;
-
-return;
-
-}
-
-area.innerHTML=jogadores.slice(0,15).map(j=>`
-
-<div class="userRow">
-
-${j.avatar
-?`<img class="avatarSmall" src="${j.avatar}">`
-:`<div class="avatarSmall">${escapar((j.nome||"J").charAt(0).toUpperCase())}</div>`
-}
-
-<div class="userInfo">
-
-<b>${escapar(j.nome||"Jogador")}</b>
-
-<span>Nível ${j.nivel||1} • R$ ${(j.recorde||0).toLocaleString("pt-BR")}</span>
-
-</div>
-
-<button class="btn primaryBtn" onclick="enviarPedido('${j.uid}','${escapar(j.nome||"Jogador")}')">
-Adicionar
-</button>
-
-</div>
-
-`).join("");
-
-}catch(e){
-
-console.log(e);
-
-area.innerHTML=`<div class="empty">Não foi possível buscar jogadores.</div>`;
-
-}
-
-}
-
-
-async function enviarPedido(uid,nome){
-
-if(!usuario||uid===usuario.uid)return;
-
-try{
-
-const id=[usuario.uid,uid].sort().join("_");
-
-const ref=db.collection("Amizades").doc(id);
-
-const snap=await ref.get();
-
-if(snap.exists){
-
-const d=snap.data();
-
-if(d.status==="aceita"){
-
-mostrarToast("Vocês já são amigos.");
-
-return;
-
-}
-
-if(d.status==="pendente"){
-
-mostrarToast("Pedido já enviado.");
-
-return;
-
-}
-
-}
-
-await ref.set({
-
-usuarios:[usuario.uid,uid],
-
-remetente:usuario.uid,
-remetenteNome:getNome(),
-remetenteAvatar:perfil.avatar||"",
-destinatario:uid,
-status:"pendente",
-criadoEm:FV.serverTimestamp()
-
-});
-
-await criarNotificacao(
-uid,
-"pedido_amizade",
-{mensagem:`${getNome()} enviou um pedido de amizade.`}
-);
-
-mostrarToast("Pedido enviado!");
-
-}catch(e){
-
-console.log(e);
-
-mostrarToast("Não foi possível enviar o pedido.");
-
-}
-
-}
-
-
-async function carregarPedidos(){
-
-const area=document.getElementById("pedidosAmizade");
-
-if(!area||!usuario)return;
-
-try{
-
-const snap=await db.collection("Amizades")
-.where("destinatario","==",usuario.uid)
-.where("status","==","pendente")
-.get();
-
-if(snap.empty){
-
-area.innerHTML=`<div class="empty">Nenhum pedido novo.</div>`;
-
-return;
-
-}
-
-let html="";
-
-snap.forEach(doc=>{
-
-const d=doc.data();
-
-html+=`
-
-<div class="userRow">
-
-${d.remetenteAvatar
-?`<img class="avatarSmall" src="${d.remetenteAvatar}">`
-:`<div class="avatarSmall">${escapar((d.remetenteNome||"J").charAt(0).toUpperCase())}</div>`
-}
-
-<div class="userInfo">
-
-<b>${escapar(d.remetenteNome||"Jogador")}</b>
-
-<span>Quer ser seu amigo</span>
-
-</div>
-
-<button class="btn green" onclick="aceitarPedido('${doc.id}','${d.remetente}')">✓</button>
-
-<button class="btn red" onclick="recusarPedido('${doc.id}')">×</button>
-
-</div>
-
-`;
-
-});
-
-area.innerHTML=html;
-
-}catch(e){
-
-console.log(e);
-
-area.innerHTML=`<div class="empty">Erro ao carregar pedidos.</div>`;
-
-}
-
-}
-
-
-async function aceitarPedido(id,uid){
-
-try{
-
-await db.collection("Amizades").doc(id).update({
-status:"aceita",
-aceitoEm:FV.serverTimestamp()
-});
-
-await criarNotificacao(
-uid,
-"amizade_aceita",
-{mensagem:`${getNome()} aceitou seu pedido de amizade.`}
-);
-
-mostrarToast("Amizade aceita!");
-
-carregarPedidos();
-carregarListaAmigos();
-
-}catch(e){
-
-console.log(e);
-
-}
-
-}
-
-
-async function recusarPedido(id){
-
-try{
-
-await db.collection("Amizades").doc(id).delete();
-
-mostrarToast("Pedido recusado.");
-
-carregarPedidos();
-
-}catch(e){
-
-console.log(e);
-
-}
-
-}
-
-
-async function carregarListaAmigos(){
-
-const area=document.getElementById("listaAmigos");
-
-if(!area||!usuario)return;
-
-try{
-
-const snap=await db.collection("Amizades")
-.where("usuarios","array-contains",usuario.uid)
-.get();
-
-const amigos=[];
-
-snap.forEach(doc=>{
-
-const d=doc.data();
-
-if(d.status==="aceita"){
-
-const uid=d.usuarios.find(x=>x!==usuario.uid);
-
-if(uid)amigos.push(uid);
-
-}
-
-});
-
-if(!amigos.length){
-
-area.innerHTML=`<div class="empty">Você ainda não tem amigos.</div>`;
-
-return;
-
-}
-
-let html="";
-
-for(const uid of amigos){
-
-let dados={};
-
-try{
-
-const ranking=await db.collection("Partidas")
-.doc("ranking_"+uid)
-.get();
-
-if(ranking.exists)dados=ranking.data();
-
-}catch(e){}
-
-html+=`
-
-<div class="userRow">
-
-${dados.avatar
-?`<img class="avatarSmall" src="${dados.avatar}">`
-:`<div class="avatarSmall">${escapar((dados.nome||"Jogador").charAt(0).toUpperCase())}</div>`
-}
-
-<div class="userInfo">
-
-<b>${escapar(dados.nome||"Jogador")}</b>
-
-<span>Nível ${dados.nivel||1}</span>
-
-</div>
-
-<button class="btn blue" onclick="abrirChat('${uid}','${escapar(dados.nome||"Jogador")}')">💬</button>
-
-</div>
-
-`;
-
-}
-
-area.innerHTML=html;
-
-}catch(e){
-
-console.log(e);
-
-area.innerHTML=`<div class="empty">Erro ao carregar amigos.</div>`;
-
-}
-
-}
-
-
-function criarChatId(uid1,uid2){
-
-return [uid1,uid2].sort().join("_");
-
-}
-
-
-async function abrirChat(uid,nome){
-
-amigoChatAtual={uid,nome};
-
-abrirModal(
-"💬 "+nome,
-`
-
-<div class="chatBox">
-
-<div class="messages" id="messages">
-
-<div class="empty">Carregando mensagens...</div>
-
-</div>
-
-<div class="chatInput">
-
-<input id="chatInput" placeholder="Digite uma mensagem..." onkeydown="if(event.key==='Enter')enviarMensagem()">
-
-<button class="btn primaryBtn" onclick="enviarMensagem()">Enviar</button>
-
-</div>
-
-</div>
-
-`
-);
-
-ouvirChat(uid);
-
-}
-
-
-function ouvirChat(uid){
-
-if(unsubscribeChat){
-
-unsubscribeChat();
-unsubscribeChat=null;
-
-}
-
-const chatId=criarChatId(usuario.uid,uid);
-
-const ref=db.collection("Chats")
-.doc(chatId)
-.collection("Mensagens")
-.orderBy("criadoEm","asc");
-
-unsubscribeChat=ref.onSnapshot(snap=>{
-
-const area=document.getElementById("messages");
-
-if(!area)return;
-
-if(snap.empty){
-
-area.innerHTML=`<div class="empty">Nenhuma mensagem ainda.</div>`;
-
-return;
-
-}
-
-let html="";
-
-snap.forEach(doc=>{
-
-const d=doc.data();
-
-const mine=d.remetente===usuario.uid;
-
-html+=`
-
-<div class="message ${mine?"mine":"theirs"}">
-
-${escapar(d.texto)}
-
-<div class="messageTime">
-${mine?"Você":escapar(d.remetenteNome||"")}
-</div>
-
-</div>
-
-`;
-
-});
-
-area.innerHTML=html;
-
-area.scrollTop=area.scrollHeight;
-
-});
-
-}
-
-
-async function enviarMensagem(){
-
-const input=document.getElementById("chatInput");
-
-if(!input||!amigoChatAtual)return;
-
-const texto=input.value.trim();
-
-if(!texto)return;
-
-const uid=amigoChatAtual.uid;
-
-const nome=amigoChatAtual.nome;
-
-const chatId=criarChatId(usuario.uid,uid);
-
-try{
-
-await db.collection("Chats")
-.doc(chatId)
-.set({
-
-participantes:[usuario.uid,uid],
-atualizadoEm:FV.serverTimestamp()
-
-},{merge:true});
-
-await db.collection("Chats")
-.doc(chatId)
-.collection("Mensagens")
-.add({
-
-remetente:usuario.uid,
-remetenteNome:getNome(),
-destinatario:uid,
-texto:texto,
-criadoEm:FV.serverTimestamp()
-
-});
-
-await criarNotificacao(
-uid,
-"mensagem",
-{mensagem:`${getNome()} enviou uma mensagem.`}
-);
-
-input.value="";
-
-}catch(e){
-
-console.log(e);
-
-mostrarToast("Não foi possível enviar.");
-
-}
-
-}
-
-
-async function criarNotificacao(destinatario,tipo,dados={}){
-
-if(!usuario)return;
-
-try{
-
-await db.collection("Notificacoes").add({
-
-destinatario,
-remetente:usuario.uid,
-remetenteNome:getNome(),
-remetenteAvatar:perfil?.avatar||"",
-tipo,
-...dados,
-lida:false,
-criadoEm:FV.serverTimestamp()
-
-});
-
-}catch(e){
-
-console.log("Notificação:",e);
-
-}
-
-}
-
-
-function iniciarSistemaSocial(){
-
-ouvirNotificacoes();
-
-}
-
-
-function ouvirNotificacoes(){
-
-if(unsubscribeNotificacoes){
-
-unsubscribeNotificacoes();
-unsubscribeNotificacoes=null;
-
-}
-
-if(!usuario)return;
-
-unsubscribeNotificacoes=db.collection("Notificacoes")
-.where("destinatario","==",usuario.uid)
-.onSnapshot(snap=>{
-
-let naoLidas=0;
-
-snap.forEach(doc=>{
-
-if(!doc.data().lida)naoLidas++;
-
-});
-
-const badge=document.getElementById("notificationBadge");
-
-if(badge){
-
-badge.textContent=naoLidas>99?"99+":String(naoLidas);
-
-badge.classList.toggle("hidden",naoLidas===0);
-
-}
-
-});
-
-}
-
-
-async function abrirNotificacoes(){
-
-if(!usuario)return;
-
-let html="";
-
-try{
-
-const snap=await db.collection("Notificacoes")
-.where("destinatario","==",usuario.uid)
-.limit(50)
-.get();
-
-const docs=[];
-
-snap.forEach(doc=>docs.push({
-id:doc.id,
-...doc.data()
-}));
-
-docs.sort((a,b)=>{
-
-const ta=a.criadoEm?.toMillis?.()||0;
-const tb=b.criadoEm?.toMillis?.()||0;
-
-return tb-ta;
-
-});
-
-if(!docs.length){
-
-html=`<div class="empty">Nenhuma notificação.</div>`;
-
-}else{
-
-html=docs.map(d=>`
-
-<div class="notice ${d.lida?"":"notificationUnread"}">
-
-<b>${escapar(d.remetenteNome||"Sistema")}</b>
-
-<div style="margin-top:4px">
-${escapar(d.mensagem||"Você recebeu uma notificação.")}
-</div>
-
-</div>
-
-`).join("");
-
-}
-
-for(const d of docs){
-
-if(!d.lida){
-
-try{
-
-await db.collection("Notificacoes")
-.doc(d.id)
-.update({lida:true});
-
-}catch(e){}
-
-}
-
-}
-
-}catch(e){
-
-console.log(e);
-
-html=`<div class="empty">Erro ao carregar notificações.</div>`;
-
-}
-
-abrirModal("🔔 Notificações",html);
-
-}
-
-
-async function registrarPresenca(){
-
-if(!usuario)return;
-
-try{
-
-await db.collection("Usuarios")
-.doc(usuario.uid)
-.set({
-
-online:true,
-ultimaAtividade:FV.serverTimestamp()
-
-},{merge:true});
-
-
-await db.collection("Partidas")
-.doc("presenca_"+usuario.uid)
-.set({
-
-tipo:"presenca",
-uid:usuario.uid,
-nome:getNome(),
-avatar:perfil?.avatar||"",
-online:true,
-ultimaAtividade:FV.serverTimestamp()
-
-},{merge:true});
-
-}catch(e){
-
-console.log("Presença:",e);
-
-}
-
-}
-
-
-async function marcarOffline(){
-
-if(!usuario)return;
-
-try{
-
-await db.collection("Usuarios")
-.doc(usuario.uid)
-.set({
-
-online:false,
-ultimaAtividade:FV.serverTimestamp()
-
-},{merge:true});
-
-
-await db.collection("Partidas")
-.doc("presenca_"+usuario.uid)
-.set({
-
-tipo:"presenca",
-uid:usuario.uid,
-online:false,
-ultimaAtividade:FV.serverTimestamp()
-
-},{merge:true});
-
-}catch(e){
-
-console.log(e);
-
-}
-
-}
-
-
-window.addEventListener("beforeunload",()=>{
-
-marcarOffline();
-
-});
-
-
-function iniciarMusica(tipo){
-
-if(!musicaLigada)return;
-
-try{
-
-if(!audioCtx){
-
-audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-
-}
-
-if(audioCtx.state==="suspended")audioCtx.resume();
-
-clearInterval(musicTimer);
-
-let freq=tipo==="game"?220:tipo==="final"?330:tipo==="menu"?180:200;
-
-musicTimer=setInterval(()=>{
-
-if(!musicaLigada)return;
-
-const osc=audioCtx.createOscillator();
-const gain=audioCtx.createGain();
-
-osc.frequency.value=freq;
-
-gain.gain.value=.025;
-
-osc.connect(gain);
-gain.connect(audioCtx.destination);
-
-osc.start();
-
-osc.stop(audioCtx.currentTime+.18);
-
-freq=freq===220?277:freq===277?330:freq===330?247:220;
-
-},500);
-
-}catch(e){
-
-console.log(e);
-
-}
-
-}
-
-
-function tocarSom(tipo){
-
-if(!efeitosLigados)return;
-
-try{
-
-if(!audioCtx){
-
-audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-
-}
-
-const osc=audioCtx.createOscillator();
-const gain=audioCtx.createGain();
-
-let freq=tipo==="correct"?700:
-tipo==="wrong"?180:
-tipo==="click"?450:300;
-
-osc.frequency.value=freq;
-
-gain.gain.value=.06;
-
-osc.connect(gain);
-gain.connect(audioCtx.destination);
-
-osc.start();
-
-osc.stop(audioCtx.currentTime+.12);
-
-}catch(e){}
-
-}
-
-
-function alternarMusica(){
-
-musicaLigada=!musicaLigada;
-
-if(!musicaLigada){
-
-clearInterval(musicTimer);
-
-}else{
-
-iniciarMusica(telaAtual==="game"?"game":"central");
-
-}
-
-abrirPerfil();
-
-}
-
-
-function alternarEfeitos(){
-
-efeitosLigados=!efeitosLigados;
-
-abrirPerfil();
-
-}
-
-
-function iniciarAmigoPerto(){
-
-fecharModal();
-
-abrirModal(
-"👥 Jogar com amigo perto",
-`
-
-<div class="panel">
-
-<h3>Modo local</h3>
-
-<p style="color:#aa9aaa;line-height:1.5;margin:8px 0 15px">
-Passe o aparelho para cada jogador responder sua vez. O modo local usa a mesma tela e mantém os resultados da partida.
-</p>
-
-<button class="btn green" onclick="iniciarMilhao('geral')">
-Começar partida local
-</button>
-
-</div>
-
-`
-);
-
-}
-
-
-async function iniciarOnline(){
-
-fecharModal();
-
-const codigo=Math.random().toString(36).substring(2,8).toUpperCase();
-
-try{
-
-await db.collection("Partidas")
-.doc("online_"+codigo)
-.set({
-
-tipo:"online",
-codigo,
-criador:usuario.uid,
-criadorNome:getNome(),
-jogadores:[{
-uid:usuario.uid,
-nome:getNome()
-}],
-status:"aguardando",
-criadoEm:FV.serverTimestamp()
-
-});
-
-abrirModal(
-"🌐 Sala online",
-`
-
-<div class="panel">
-
-<h3>Código da sala</h3>
-
-<div style="font-size:35px;text-align:center;font-weight:bold;color:#d16aff;margin:20px 0">
-${codigo}
-</div>
-
-<p style="color:#a99aaa;line-height:1.5">
-Envie esse código para seu amigo. Ele poderá entrar na sala pelo botão de partida online.
-</p>
-
-<button class="btn primaryBtn" onclick="copiarTexto('${codigo}')">
-📋 Copiar código
-</button>
-
-</div>
-
-<div class="panel">
-
-<input id="entrarCodigo" placeholder="Digite o código de outra sala">
-
-<button class="btn blue" onclick="entrarSala()">
-Entrar em sala
-</button>
-
-</div>
-
-`
-);
-
-}catch(e){
-
-console.log(e);
-
-mostrarToast("Não foi possível criar a sala.");
-
-}
-
-}
-
-
-async function entrarSala(){
-
-const input=document.getElementById("entrarCodigo");
-
-const codigo=input?.value.trim().toUpperCase();
-
-if(!codigo){
-
-mostrarToast("Digite o código.");
-
-return;
-
-}
-
-try{
-
-const ref=db.collection("Partidas").doc("online_"+codigo);
-
-const snap=await ref.get();
-
-if(!snap.exists){
-
-mostrarToast("Sala não encontrada.");
-
-return;
-
+    return "👤";
 }
-
-const d=snap.data();
-
-if(d.jogadores?.some(x=>x.uid===usuario.uid)){
-
-mostrarToast("Você já está na sala.");
-
-return;
-
-}
-
-const jogadores=[...(d.jogadores||[])];
-
-jogadores.push({
-uid:usuario.uid,
-nome:getNome()
-});
-
-await ref.update({
-jogadores
-});
-
-mostrarToast("Você entrou na sala!");
-
-iniciarMilhao("geral");
-
-}catch(e){
-
-console.log(e);
-
-mostrarToast("Erro ao entrar na sala.");
-
-}
-
-}
-
-
-async function copiarTexto(texto){
-
-try{
-
-await navigator.clipboard.writeText(texto);
-
-mostrarToast("Copiado!");
-
-}catch(e){
-
-mostrarToast(texto);
-
-}
-
-}
-
-
-</script>
-
-</body>
-</html><!-- PARTE 2/2 — COLE DIRETAMENTE ABAIXO DA PARTE 1 -->
-
-<script>
-/* =========================
-   SISTEMA SOCIAL
-========================= */
 
-async function abrirPerfilJogador(uid){
+async function login(){
+    const email=$("loginEmail").value.trim();
+    const senha=$("loginPassword").value;
 
-    if(!uid || uid===usuario.uid){
-        abrirPerfil();
+    if(!email||!senha){
+        mostrarToast("Preencha todos os campos.");
         return;
     }
 
     try{
+        await auth.signInWithEmailAndPassword(email,senha);
+        mostrarToast("Entrando...");
+    }catch(e){
+        mostrarToast(traduzirErro(e));
+    }
+}
 
-        const snap=await db.collection("Partidas")
-            .doc("ranking_"+uid)
-            .get();
+async function cadastro(){
+    try{
+        const nome=$("signupName").value.trim();
+        const email=$("signupEmail").value.trim();
+        const senha=$("signupPassword").value;
 
-        if(!snap.exists){
-            mostrarToast("Jogador não encontrado.");
+        if(!nome||!email||!senha){
+            mostrarToast("Preencha todos os campos.");
             return;
         }
 
-        const j=snap.data();
+        if(senha.length<6){
+            mostrarToast("A senha precisa ter pelo menos 6 caracteres.");
+            return;
+        }
 
-        abrirModal(
-            "👤 Perfil do jogador",
-            `
-            <div class="profileHeader">
+        const cred=await auth.createUserWithEmailAndPassword(email,senha);
 
-                ${
-                    j.avatar
-                    ? `<img class="avatar" src="${j.avatar}">`
-                    : `<div class="avatar">
-                        ${escapar((j.nome||"J").charAt(0).toUpperCase())}
-                       </div>`
-                }
+        const dados={
+            nome,
+            nomeBusca:nome.toLowerCase(),
+            email,
+            avatar:"",
+            xp:0,
+            nivel:1,
+            moedas:0,
+            recorde:0,
+            maiorPremio:0,
+            partidas:0,
+            vitorias:0,
+            acertos:0,
+            erros:0,
+            titulo:"Novato",
+            criadoEm:FV.serverTimestamp()
+        };
 
-                <div>
-                    <div class="profileName">
-                        ${escapar(j.nome||"Jogador")}
-                    </div>
+        await db.collection("Usuarios").doc(cred.user.uid).set(dados);
 
-                    <div class="profileMeta">
-                        Nível ${j.nivel||1}
-                    </div>
-                </div>
+        await salvarRanking();
 
-            </div>
-
-            <div class="stats">
-
-                <div class="stat">
-                    <b>${j.nivel||1}</b>
-                    <span>Nível</span>
-                </div>
-
-                <div class="stat">
-                    <b>${j.xp||0}</b>
-                    <span>XP</span>
-                </div>
-
-                <div class="stat">
-                    <b>R$ ${(j.recorde||0).toLocaleString("pt-BR")}</b>
-                    <span>Recorde</span>
-                </div>
-
-                <div class="stat">
-                    <b>R$ ${(j.maiorPremio||0).toLocaleString("pt-BR")}</b>
-                    <span>Maior prêmio</span>
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                <button class="btn primaryBtn"
-                    onclick="fecharModal();enviarPedido('${uid}','${escapar(j.nome||"Jogador")}')">
-                    👥 Adicionar amigo
-                </button>
-
-                <button class="btn"
-                    onclick="fecharModal();abrirChat('${uid}','${escapar(j.nome||"Jogador")}')">
-                    💬 Mensagem
-                </button>
-
-            </div>
-            `
-        );
-
+        mostrarToast("Conta criada!");
     }catch(e){
-
-        console.log(e);
-        mostrarToast("Não foi possível abrir o perfil.");
-
+        mostrarToast(traduzirErro(e));
     }
-
 }
 
+function traduzirErro(e){
+    const codigo=e?.code||"";
 
-/* =========================
-   PRESENÇA DOS AMIGOS
-========================= */
+    const erros={
+        "auth/invalid-email":"E-mail inválido.",
+        "auth/user-not-found":"Usuário não encontrado.",
+        "auth/wrong-password":"Senha incorreta.",
+        "auth/invalid-credential":"E-mail ou senha incorretos.",
+        "auth/email-already-in-use":"Este e-mail já está cadastrado.",
+        "auth/weak-password":"A senha é muito fraca."
+    };
 
-async function verificarPresenca(uid){
+    return erros[codigo]||"Ocorreu um erro. Tente novamente.";
+}
+
+async function carregarPerfil(){
+    if(!usuario)return;
+
+    const ref=db.collection("Usuarios").doc(usuario.uid);
+    const snap=await ref.get();
+
+    if(snap.exists){
+        perfil=snap.data();
+    }else{
+        perfil={
+            nome:usuario.email?.split("@")[0]||"Jogador",
+            nomeBusca:(usuario.email||"jogador").split("@")[0].toLowerCase(),
+            email:usuario.email,
+            avatar:"",
+            xp:0,
+            nivel:1,
+            moedas:0,
+            recorde:0,
+            maiorPremio:0,
+            partidas:0,
+            vitorias:0,
+            acertos:0,
+            erros:0,
+            titulo:"Novato"
+        };
+
+        await ref.set(perfil);
+    }
+
+    await salvarRanking();
+}
+
+async function salvarPerfil(dados={}){
+    if(!usuario)return;
+
+    perfil={...perfil,...dados};
+
+    await db.collection("Usuarios")
+        .doc(usuario.uid)
+        .set(perfil,{merge:true});
+
+    await salvarRanking();
+}
+
+async function salvarRanking(){
+    if(!usuario||!perfil)return;
 
     try{
-
-        const snap=await db.collection("Partidas")
-            .doc("presenca_"+uid)
-            .get();
-
-        if(!snap.exists)return false;
-
-        const d=snap.data();
-
-        if(!d.online)return false;
-
-        const tempo=d.ultimaAtividade?.toMillis?.()||0;
-
-        if(!tempo)return false;
-
-        return Date.now()-tempo<120000;
-
+        await db.collection("Partidas")
+            .doc("ranking_"+usuario.uid)
+            .set({
+                tipo:"ranking",
+                uid:usuario.uid,
+                nome:getNome(),
+                nomeBusca:getNome().toLowerCase(),
+                avatar:perfil.avatar||"",
+                recorde:perfil.recorde||0,
+                nivel:perfil.nivel||1,
+                xp:perfil.xp||0,
+                moedas:perfil.moedas||0,
+                maiorPremio:perfil.maiorPremio||0,
+                atualizadoEm:FV.serverTimestamp()
+            },{merge:true});
     }catch(e){
-
-        return false;
-
+        console.log(e);
     }
-
 }
 
+function central(){
+    telaAtual="central";
 
-/* Atualiza presença periodicamente */
+    $("conteudo").innerHTML=`
+        <div class="top">
+            <div>
+                <div style="font-size:13px;color:#aa98b8">Bem-vindo</div>
+                <h1>${escapeHtml(getNome())}</h1>
+            </div>
+            <div class="avatar">${getAvatar()}</div>
+        </div>
 
-setInterval(async()=>{
+        <div class="card">
+            <div class="row">
+                <div>
+                    <div style="color:#aa98b8">Nível</div>
+                    <div class="big">${perfil?.nivel||1}</div>
+                </div>
+                <div>
+                    <div style="color:#aa98b8">XP</div>
+                    <div class="big">${perfil?.xp||0}</div>
+                </div>
+                <div>
+                    <div style="color:#aa98b8">Moedas</div>
+                    <div class="big">🪙 ${perfil?.moedas||0}</div>
+                </div>
+            </div>
+        </div>
 
-    if(usuario){
+        <h2 style="margin-top:25px">🎮 Jogos</h2>
 
-        await registrarPresenca();
+        <div class="game-card">
+            <h2>💰 Desafio do Milhão</h2>
+            <p>15 perguntas. 15 segundos. Chegue ao milhão.</p>
+            <button class="btn btn-gold" onclick="abrirMenuMilhao()">Jogar agora</button>
+        </div>
 
+        <div class="game-card">
+            <h2>🏎️ Corrida do Milhão</h2>
+            <p>Prepare-se para uma nova competição.</p>
+            <button class="btn btn-dark" onclick="abrirCorrida()">Em breve</button>
+        </div>
+
+        <div class="card">
+            <h3>📅 Desafio diário</h3>
+            <p>Responda uma pergunta por dia e ganhe XP.</p>
+            <button class="btn" onclick="desafioDiario()">Jogar desafio</button>
+        </div>
+    `;
+
+    iniciarMusica("central");
+}
+
+function abrirMenuMilhao(){
+    abrirModal(`
+        <h2>💰 Desafio do Milhão</h2>
+        <p>Escolha a categoria.</p>
+
+        <button class="btn" onclick="iniciarMilhao('geral')">🌎 Geral</button>
+        <button class="btn" onclick="iniciarMilhao('ciencia')">🔬 Ciência</button>
+        <button class="btn" onclick="iniciarMilhao('geografia')">🌎 Geografia</button>
+        <button class="btn" onclick="iniciarMilhao('historia')">📜 História</button>
+        <button class="btn" onclick="iniciarMilhao('tecnologia')">💻 Tecnologia</button>
+        <button class="btn" onclick="iniciarMilhao('portugues')">📚 Português</button>
+        <button class="btn" onclick="iniciarMilhao('matematica')">➗ Matemática</button>
+
+        <hr style="border-color:#302039">
+
+        <button class="btn btn-dark" onclick="modoLocal()">👥 Jogar com amigo perto</button>
+        <button class="btn btn-dark" onclick="iniciarOnline()">🌐 Jogar online</button>
+
+        <button class="btn btn-red" onclick="fecharModal()">Fechar</button>
+    `);
+}
+
+function nivelPergunta(i){
+    if(i<=2)return "Fácil";
+    if(i<=5)return "Médio";
+    if(i<=8)return "Difícil";
+    if(i<=11)return "Muito difícil";
+    return "Especialista";
+}
+
+function prepararPerguntas(categoria){
+    const banco=[...(perguntas[categoria]||perguntas.geral)];
+
+    banco.sort(()=>Math.random()-0.5);
+
+    const selecionadas=banco.slice(0,15);
+
+    return selecionadas.map(q=>({
+        pergunta:q[0],
+        respostas:[...q[1]],
+        correta:q[2]
+    }));
+}
+
+function iniciarMilhao(categoria){
+    fecharModal();
+
+    jogo={
+        categoria,
+        perguntas:prepararPerguntas(categoria),
+        indice:0,
+        premio:0,
+        acertos:0,
+        erros:0,
+        tempo:15,
+        timer:null,
+        respondeu:false,
+        usadas:new Set()
+    };
+
+    mostrarPergunta();
+    iniciarMusica("game");
+}
+
+function mostrarPergunta(){
+    clearInterval(jogo.timer);
+
+    const q=jogo.perguntas[jogo.indice];
+
+    if(!q){
+        finalizarJogo(true);
+        return;
     }
 
-},60000);
+    jogo.respondeu=false;
+    jogo.tempo=15;
 
+    const nivel=nivelPergunta(jogo.indice);
 
-/* =========================
-   RANKING CLICÁVEL
-========================= */
+    $("conteudo").innerHTML=`
+        <div class="top">
+            <button class="btn btn-dark" onclick="sairDoJogo()">← Sair</button>
+            <div class="prize">${formatarDinheiro(premios[jogo.indice])}</div>
+        </div>
 
-const rankingOriginal=abrirRanking;
+        <div class="card">
+            <div class="center">
+                <div>${jogo.indice+1} / 15</div>
+                <div class="badge">${nivel}</div>
+            </div>
 
-abrirRanking=async function(){
+            <div class="progress">
+                <div style="width:${((jogo.indice)/15)*100}%"></div>
+            </div>
 
+            <div class="timer" id="timer">${jogo.tempo}</div>
+
+            <div class="question">${escapeHtml(q.pergunta)}</div>
+
+            <div id="respostas">
+                ${q.respostas.map((r,i)=>`
+                    <button class="answer" onclick="responder(${i})">
+                        <b>${String.fromCharCode(65+i)}.</b> ${escapeHtml(r)}
+                    </button>
+                `).join("")}
+            </div>
+
+            <div class="row" style="margin-top:12px">
+                <button class="btn btn-dark" onclick="usar5050()">50/50</button>
+                <button class="btn btn-dark" onclick="pularPergunta()">Pular</button>
+                <button class="btn btn-dark" onclick="usarDica()">Dica</button>
+            </div>
+        </div>
+    `;
+
+    iniciarTimer();
+}
+
+function iniciarTimer(){
+    jogo.timer=setInterval(()=>{
+        jogo.tempo--;
+
+        const el=$("timer");
+        if(el)el.textContent=jogo.tempo;
+
+        if(jogo.tempo<=0){
+            clearInterval(jogo.timer);
+            responder(-1);
+        }
+    },1000);
+}
+
+function responder(indice){
+    if(jogo.respondeu)return;
+
+    jogo.respondeu=true;
+    clearInterval(jogo.timer);
+
+    const q=jogo.perguntas[jogo.indice];
+    const botoes=document.querySelectorAll(".answer");
+
+    if(indice===q.correta){
+        if(botoes[indice])botoes[indice].classList.add("correct");
+
+        jogo.acertos++;
+        jogo.premio=premios[jogo.indice];
+
+        tocarSom("correct");
+
+        setTimeout(()=>{
+            jogo.indice++;
+
+            if(jogo.indice>=15){
+                finalizarJogo(true);
+            }else{
+                mostrarPergunta();
+            }
+        },700);
+
+    }else{
+        if(indice>=0&&botoes[indice]){
+            botoes[indice].classList.add("wrong");
+        }
+
+        if(botoes[q.correta]){
+            botoes[q.correta].classList.add("correct");
+        }
+
+        jogo.erros++;
+        tocarSom("wrong");
+
+        setTimeout(()=>{
+            finalizarJogo(false);
+        },900);
+    }
+}
+
+function usar5050(){
+    if(jogo.respondeu)return;
+
+    const q=jogo.perguntas[jogo.indice];
+    const botoes=document.querySelectorAll(".answer");
+
+    let removidas=0;
+
+    [...Array(4).keys()]
+        .sort(()=>Math.random()-0.5)
+        .forEach(i=>{
+            if(i!==q.correta&&removidas<2){
+                botoes[i].style.visibility="hidden";
+                removidas++;
+            }
+        });
+
+    mostrarToast("Duas alternativas foram eliminadas.");
+}
+
+function pularPergunta(){
+    if(jogo.respondeu)return;
+
+    clearInterval(jogo.timer);
+
+    jogo.indice++;
+
+    if(jogo.indice>=15){
+        finalizarJogo(true);
+    }else{
+        mostrarPergunta();
+    }
+}
+
+function usarDica(){
+    if(jogo.respondeu)return;
+
+    mostrarToast("Dica: pense com calma e elimine as alternativas improváveis.");
+}
+
+async function finalizarJogo(vitoria){
+    clearInterval(jogo.timer);
+
+    const premioFinal=vitoria?jogo.premio:0;
+
+    let xpGanho=Math.max(10,jogo.acertos*10);
+
+    if(vitoria){
+        xpGanho+=100;
+    }
+
+    const novoXP=(perfil.xp||0)+xpGanho;
+    const novoNivel=Math.floor(novoXP/100)+1;
+
+    const maior=Math.max(
+        perfil.maiorPremio||0,
+        premioFinal
+    );
+
+    const recorde=Math.max(
+        perfil.recorde||0,
+        premioFinal
+    );
+
+    await salvarPerfil({
+        xp:novoXP,
+        nivel:novoNivel,
+        maiorPremio:maior,
+        recorde,
+        partidas:(perfil.partidas||0)+1,
+        vitorias:(perfil.vitorias||0)+(vitoria?1:0),
+        acertos:(perfil.acertos||0)+jogo.acertos,
+        erros:(perfil.erros||0)+jogo.erros,
+        moedas:(perfil.moedas||0)+(vitoria?50:5)
+    });
+
+    try{
+        await db.collection("Partidas").add({
+            uid:usuario.uid,
+            nome:getNome(),
+            categoria:jogo.categoria,
+            acertos:jogo.acertos,
+            erros:jogo.erros,
+            premio:premioFinal,
+            venceu:vitoria,
+            criadoEm:FV.serverTimestamp()
+        });
+    }catch(e){
+        console.log(e);
+    }
+
+    iniciarMusica("final");
+
+    $("conteudo").innerHTML=`
+        <div class="card center">
+            <div style="font-size:65px">${vitoria?"🏆":"💥"}</div>
+
+            <h1>${vitoria?"Parabéns!":"Fim de jogo"}</h1>
+
+            <p>${vitoria?
+                "Você completou o Desafio do Milhão!":
+                "Você errou uma pergunta."
+            }</p>
+
+            <div class="big prize">
+                ${formatarDinheiro(premioFinal)}
+            </div>
+
+            <p>Acertos: <b>${jogo.acertos}</b></p>
+            <p>XP ganho: <b>+${xpGanho}</b></p>
+
+            <button class="btn" onclick="central()">Voltar ao início</button>
+            <button class="btn btn-dark" onclick="abrirRanking()">Ver ranking</button>
+        </div>
+    `;
+}
+
+function sairDoJogo(){
+    clearInterval(jogo.timer);
+    central();
+}
+
+function formatarDinheiro(valor){
+    return "R$ "+Number(valor||0).toLocaleString("pt-BR");
+}
+
+async function abrirRanking(){
     telaAtual="ranking";
 
-    atualizarNav("navRanking");
+    $("conteudo").innerHTML=`
+        <div class="top">
+            <h1>🏆 Ranking</h1>
+            <button class="btn btn-dark" onclick="central()">Voltar</button>
+        </div>
 
-    let jogadores=[];
+        <div class="card">
+            <p>Carregando jogadores...</p>
+        </div>
+    `;
 
     try{
-
         const snap=await db.collection("Partidas")
             .where("tipo","==","ranking")
             .limit(100)
             .get();
 
+        const jogadores=[];
+
         snap.forEach(doc=>{
-
-            const d=doc.data();
-
-            if(d.uid){
-                jogadores.push(d);
-            }
-
+            jogadores.push(doc.data());
         });
 
         jogadores.sort((a,b)=>
-            (b.recorde||0)-(a.recorde||0)
+            Number(b.recorde||0)-Number(a.recorde||0)
         );
 
-    }catch(e){
+        $("conteudo").innerHTML=`
+            <div class="top">
+                <h1>🏆 Ranking</h1>
+                <button class="btn btn-dark" onclick="central()">Voltar</button>
+            </div>
 
+            <div class="card">
+                ${
+                    jogadores.length?
+                    jogadores.map((p,i)=>`
+                        <div class="player" onclick="abrirPerfilJogador('${p.uid}')">
+                            <div class="rank">${i+1}º</div>
+                            <div class="avatar">${p.avatar?
+                                `<img src="${p.avatar}">`:
+                                "👤"
+                            }</div>
+                            <div class="player-info">
+                                <b>${escapeHtml(p.nome||"Jogador")}</b>
+                                <div style="color:#aaa">
+                                    Nível ${p.nivel||1} · XP ${p.xp||0}
+                                </div>
+                            </div>
+                            <div class="prize">
+                                ${formatarDinheiro(p.recorde||0)}
+                            </div>
+                        </div>
+                    `).join("")
+                    :
+                    `<div class="center">
+                        <p>Ainda não há jogadores no ranking.</p>
+                    </div>`
+                }
+            </div>
+        `;
+    }catch(e){
         console.log(e);
 
-    }
-
-
-    if(!jogadores.length){
-
-        document.getElementById("central").innerHTML=`
-
-        <div class="panel">
-
-            <h2>🏆 Ranking</h2>
-
-            <div class="empty">
-                Ainda não há jogadores no ranking.
+        $("conteudo").innerHTML=`
+            <div class="card">
+                <h2>Ranking</h2>
+                <p>Não foi possível carregar o ranking.</p>
+                <button class="btn" onclick="abrirRanking()">Tentar novamente</button>
             </div>
-
-        </div>
-
         `;
-
-        return;
-
     }
+}
 
-
-    document.getElementById("central").innerHTML=`
-
-    <div class="panel">
-
-        <h2 style="margin-bottom:15px">
-            🏆 Ranking
-        </h2>
-
-        <p style="color:#96889f;font-size:13px;margin-bottom:15px">
-            Os melhores jogadores da plataforma.
-        </p>
-
-
-        ${jogadores.slice(0,30).map((j,i)=>`
-
-        <div
-            class="userRow"
-            onclick="abrirPerfilJogador('${j.uid}')"
-            style="cursor:pointer"
-        >
-
-            <div class="rankNumber">
-                #${i+1}
-            </div>
-
-
-            ${
-                j.avatar
-                ? `<img
-                    class="avatarSmall"
-                    src="${j.avatar}"
-                  >`
-                : `<div class="avatarSmall">
-                    ${escapar((j.nome||"J").charAt(0).toUpperCase())}
-                   </div>`
-            }
-
-
-            <div class="userInfo">
-
-                <b>
-                    ${escapar(j.nome||"Jogador")}
-                </b>
-
-                <span>
-                    Nível ${j.nivel||1}
-                    • ${j.xp||0} XP
-                </span>
-
-            </div>
-
-
-            <div class="rankScore">
-
-                R$ ${(j.recorde||0).toLocaleString("pt-BR")}
-
-            </div>
-
-        </div>
-
-        `).join("")}
-
-    </div>
-
-    `;
-
-};
-
-
-/* =========================
-   AMIGOS COM STATUS ONLINE
-========================= */
-
-const carregarListaAmigosOriginal=carregarListaAmigos;
-
-carregarListaAmigos=async function(){
-
-    const area=document.getElementById("listaAmigos");
-
-    if(!area||!usuario)return;
+async function abrirPerfilJogador(uid){
+    if(!uid)return;
 
     try{
+        const snap=await db.collection("Partidas")
+            .doc("ranking_"+uid)
+            .get();
 
+        if(!snap.exists){
+            mostrarToast("Perfil não encontrado.");
+            return;
+        }
+
+        const p=snap.data();
+
+        abrirModal(`
+            <div class="center">
+                <div class="avatar" style="margin:auto;width:90px;height:90px">
+                    ${p.avatar?
+                        `<img src="${p.avatar}">`:
+                        "👤"
+                    }
+                </div>
+
+                <h2>${escapeHtml(p.nome||"Jogador")}</h2>
+
+                <span class="badge">Nível ${p.nivel||1}</span>
+
+                <p>XP: ${p.xp||0}</p>
+                <p>Recorde: <span class="prize">${formatarDinheiro(p.recorde||0)}</span></p>
+                <p>Maior prêmio: <span class="prize">${formatarDinheiro(p.maiorPremio||0)}</span></p>
+
+                ${
+                    uid!==usuario.uid?
+                    `<button class="btn" onclick="enviarPedidoAmizade('${uid}','${escapeAttr(p.nome||"Jogador")}','${escapeAttr(p.avatar||"")}')">
+                        👥 Adicionar amigo
+                    </button>
+                    <button class="btn btn-dark" onclick="abrirChat('${uid}','${escapeAttr(p.nome||"Jogador")}')">
+                        💬 Conversar
+                    </button>`
+                    :""
+                }
+
+                <button class="btn btn-red" onclick="fecharModal()">Fechar</button>
+            </div>
+        `);
+
+    }catch(e){
+        mostrarToast("Erro ao abrir perfil.");
+    }
+}
+
+function abrirPerfil(){
+    telaAtual="perfil";
+
+    $("conteudo").innerHTML=`
+        <div class="top">
+            <h1>👤 Perfil</h1>
+            <button class="btn btn-dark" onclick="central()">Voltar</button>
+        </div>
+
+        <div class="card center">
+            <div class="avatar" style="width:100px;height:100px;margin:auto">
+                ${getAvatar()}
+            </div>
+
+            <h2>${escapeHtml(getNome())}</h2>
+
+            <span class="badge">${escapeHtml(perfil.titulo||"Novato")}</span>
+
+            <p>Nível ${perfil.nivel||1}</p>
+            <p>XP: ${perfil.xp||0}</p>
+            <p>🪙 Moedas: ${perfil.moedas||0}</p>
+            <p>🏆 Recorde: ${formatarDinheiro(perfil.recorde||0)}</p>
+            <p>💰 Maior prêmio: ${formatarDinheiro(perfil.maiorPremio||0)}</p>
+            <p>🎮 Partidas: ${perfil.partidas||0}</p>
+            <p>✅ Acertos: ${perfil.acertos||0}</p>
+            <p>❌ Erros: ${perfil.erros||0}</p>
+            <p>🏅 Vitórias: ${perfil.vitorias||0}</p>
+        </div>
+
+        <div class="card">
+            <h2>🏅 Conquistas</h2>
+            <span class="badge">🎮 Primeiro jogo</span>
+            ${perfil.partidas>=10?'<span class="badge">🔥 10 partidas</span>':""}
+            ${perfil.acertos>=50?'<span class="badge">🎯 50 acertos</span>':""}
+            ${perfil.recorde>=1000000?'<span class="badge">👑 Milionário</span>':""}
+            ${perfil.vitorias>=5?'<span class="badge">🏆 5 vitórias</span>':""}
+        </div>
+
+        <div class="card">
+            <h2>📷 Foto do perfil</h2>
+            <input id="fotoPerfil" type="file" accept="image/*"
+                onchange="carregarFoto(event)">
+        </div>
+
+        <div class="card">
+            <h2>⚙️ Configurações</h2>
+
+            <button class="btn btn-dark" onclick="alternarMusica()">
+                🎵 Música: ${musicaLigada?"Ligada":"Desligada"}
+            </button>
+
+            <button class="btn btn-dark" onclick="alternarEfeitos()">
+                🔊 Efeitos: ${efeitosLigados?"Ligados":"Desligados"}
+            </button>
+
+            <button class="btn btn-red" onclick="logout()">Sair da conta</button>
+        </div>
+    `;
+}
+
+async function carregarFoto(event){
+    const arquivo=event.target.files?.[0];
+
+    if(!arquivo)return;
+
+    const leitor=new FileReader();
+
+    leitor.onload=function(e){
+        const img=new Image();
+
+        img.onload=async function(){
+            const canvas=document.createElement("canvas");
+            canvas.width=256;
+            canvas.height=256;
+
+            const ctx=canvas.getContext("2d");
+
+            const tamanho=Math.min(img.width,img.height);
+            const x=(img.width-tamanho)/2;
+            const y=(img.height-tamanho)/2;
+
+            ctx.drawImage(
+                img,
+                x,y,tamanho,tamanho,
+                0,0,256,256
+            );
+
+            const base64=canvas.toDataURL("image/jpeg",.7);
+
+            await salvarPerfil({
+                avatar:base64
+            });
+
+            mostrarToast("Foto atualizada!");
+            abrirPerfil();
+        };
+
+        img.src=e.target.result;
+    };
+
+    leitor.readAsDataURL(arquivo);
+}
+
+async function abrirAmigos(){
+    telaAtual="amigos";
+
+    $("conteudo").innerHTML=`
+        <h1>👥 Amigos</h1>
+
+        <div class="card">
+            <input id="buscarJogador"
+                placeholder="Buscar jogador..."
+                oninput="buscarJogadores()">
+
+            <div id="resultadosBusca"></div>
+        </div>
+
+        <div class="card">
+            <h2>Meus amigos</h2>
+            <div id="listaAmigos">Carregando...</div>
+        </div>
+
+        <div class="card">
+            <h2>Solicitações</h2>
+            <div id="pedidosAmizade">Carregando...</div>
+        </div>
+    `;
+
+    carregarListaAmigos();
+    carregarPedidos();
+}
+
+async function buscarJogadores(){
+    const termo=$("buscarJogador")?.value.trim().toLowerCase();
+
+    if(!termo||termo.length<2){
+        $("resultadosBusca").innerHTML="";
+        return;
+    }
+
+    try{
+        const snap=await db.collection("Partidas")
+            .where("tipo","==","ranking")
+            .limit(100)
+            .get();
+
+        const jogadores=[];
+
+        snap.forEach(doc=>{
+            const p=doc.data();
+
+            if(
+                p.uid!==usuario.uid &&
+                String(p.nomeBusca||p.nome||"")
+                    .toLowerCase()
+                    .includes(termo)
+            ){
+                jogadores.push(p);
+            }
+        });
+
+        $("resultadosBusca").innerHTML=jogadores.length?
+            jogadores.map(p=>`
+                <div class="player" onclick="abrirPerfilJogador('${p.uid}')">
+                    <div class="avatar">
+                        ${p.avatar?
+                            `<img src="${p.avatar}">`:
+                            "👤"
+                        }
+                    </div>
+
+                    <div class="player-info">
+                        <b>${escapeHtml(p.nome||"Jogador")}</b>
+                        <div>Nível ${p.nivel||1}</div>
+                    </div>
+
+                    <button class="btn"
+                        onclick="event.stopPropagation();enviarPedidoAmizade('${p.uid}','${escapeAttr(p.nome||"Jogador")}','${escapeAttr(p.avatar||"")}')">
+                        Adicionar
+                    </button>
+                </div>
+            `).join("")
+            :
+            "<p>Nenhum jogador encontrado.</p>";
+
+    }catch(e){
+        console.log(e);
+    }
+}
+
+async function enviarPedidoAmizade(uid,nome,avatar){
+    if(!usuario||uid===usuario.uid)return;
+
+    try{
+        const id=[usuario.uid,uid].sort().join("_");
+        const ref=db.collection("Amizades").doc(id);
+        const snap=await ref.get();
+
+        if(snap.exists){
+            mostrarToast("Essa amizade já existe ou está pendente.");
+            return;
+        }
+
+        await ref.set({
+            usuarios:[usuario.uid,uid],
+            remetente:usuario.uid,
+            destinatario:uid,
+            remetenteNome:getNome(),
+            remetenteAvatar:perfil.avatar||"",
+            destinatarioNome:nome,
+            status:"pendente",
+            criadoEm:FV.serverTimestamp()
+        });
+
+        await criarNotificacao(
+            uid,
+            "amizade",
+            {
+                texto:`${getNome()} enviou uma solicitação de amizade.`
+            }
+        );
+
+        mostrarToast("Solicitação enviada!");
+    }catch(e){
+        console.log(e);
+        mostrarToast("Não foi possível enviar.");
+    }
+}
+
+async function carregarPedidos(){
+    const box=$("pedidosAmizade");
+
+    if(!box)return;
+
+    try{
+        const snap=await db.collection("Amizades")
+            .where("destinatario","==",usuario.uid)
+            .where("status","==","pendente")
+            .get();
+
+        if(snap.empty){
+            box.innerHTML="<p>Nenhuma solicitação.</p>";
+            return;
+        }
+
+        box.innerHTML=snap.docs.map(doc=>{
+            const d=doc.data();
+
+            return `
+                <div class="player">
+                    <div class="avatar">
+                        ${d.remetenteAvatar?
+                            `<img src="${d.remetenteAvatar}">`:
+                            "👤"
+                        }
+                    </div>
+
+                    <div class="player-info">
+                        <b>${escapeHtml(d.remetenteNome||"Jogador")}</b>
+                    </div>
+
+                    <button class="btn btn-green"
+                        onclick="aceitarAmizade('${doc.id}')">
+                        Aceitar
+                    </button>
+
+                    <button class="btn btn-red"
+                        onclick="recusarAmizade('${doc.id}')">
+                        Recusar
+                    </button>
+                </div>
+            `;
+        }).join("");
+
+    }catch(e){
+        console.log(e);
+        box.innerHTML="<p>Não foi possível carregar.</p>";
+    }
+}
+
+async function aceitarAmizade(id){
+    try{
+        const ref=db.collection("Amizades").doc(id);
+        const snap=await ref.get();
+
+        if(!snap.exists)return;
+
+        const d=snap.data();
+
+        await ref.update({
+            status:"aceita",
+            aceitaEm:FV.serverTimestamp()
+        });
+
+        await criarNotificacao(
+            d.remetente,
+            "amizade_aceita",
+            {
+                texto:`${getNome()} aceitou sua solicitação de amizade.`
+            }
+        );
+
+        mostrarToast("Amizade aceita!");
+        abrirAmigos();
+
+    }catch(e){
+        console.log(e);
+    }
+}
+
+async function recusarAmizade(id){
+    try{
+        await db.collection("Amizades").doc(id).delete();
+        mostrarToast("Solicitação recusada.");
+        carregarPedidos();
+    }catch(e){
+        console.log(e);
+    }
+}
+
+async function carregarListaAmigos(){
+    const box=$("listaAmigos");
+
+    if(!box)return;
+
+    try{
         const snap=await db.collection("Amizades")
             .where("usuarios","array-contains",usuario.uid)
             .get();
 
-        const amigos=[];
+        const amizades=snap.docs
+            .map(d=>({id:d.id,...d.data()}))
+            .filter(d=>d.status==="aceita");
 
-        snap.forEach(doc=>{
-
-            const d=doc.data();
-
-            if(d.status==="aceita"){
-
-                const uid=d.usuarios.find(
-                    x=>x!==usuario.uid
-                );
-
-                if(uid){
-                    amigos.push(uid);
-                }
-
-            }
-
-        });
-
-
-        if(!amigos.length){
-
-            area.innerHTML=`
-
-            <div class="empty">
-                Você ainda não tem amigos.
-            </div>
-
-            `;
-
+        if(!amizades.length){
+            box.innerHTML="<p>Você ainda não tem amigos.</p>";
             return;
-
         }
 
+        const html=[];
 
-        let html="";
+        for(const amizade of amizades){
+            const outro=amizade.usuarios.find(x=>x!==usuario.uid);
 
+            if(!outro)continue;
 
-        for(const uid of amigos){
+            const ranking=await db.collection("Partidas")
+                .doc("ranking_"+outro)
+                .get();
 
-            let dados={};
-            let online=false;
+            const p=ranking.exists?ranking.data():{
+                nome:"Jogador",
+                avatar:"",
+                nivel:1
+            };
 
+            html.push(`
+                <div class="player">
+                    <div class="avatar">
+                        ${p.avatar?
+                            `<img src="${p.avatar}">`:
+                            "👤"
+                        }
+                    </div>
 
-            try{
+                    <div class="player-info">
+                        <b>${escapeHtml(p.nome||"Jogador")}</b>
+                        <div>Nível ${p.nivel||1}</div>
+                        <div id="status_${outro}" class="offline">
+                            Verificando...
+                        </div>
+                    </div>
 
-                const ranking=await db.collection("Partidas")
-                    .doc("ranking_"+uid)
-                    .get();
+                    <button class="btn" onclick="abrirChat('${outro}','${escapeAttr(p.nome||"Jogador")}')">
+                        💬
+                    </button>
 
-                if(ranking.exists){
-                    dados=ranking.data();
-                }
-
-            }catch(e){}
-
-
-            online=await verificarPresenca(uid);
-
-
-            html+=`
-
-            <div class="userRow">
-
-                ${
-                    dados.avatar
-                    ? `<img
-                        class="avatarSmall"
-                        src="${dados.avatar}"
-                       >`
-                    : `<div class="avatarSmall">
-                        ${escapar(
-                            (dados.nome||"Jogador")
-                            .charAt(0)
-                            .toUpperCase()
-                        )}
-                       </div>`
-                }
-
-
-                <div class="userInfo">
-
-                    <b>
-                        ${escapar(dados.nome||"Jogador")}
-                    </b>
-
-                    <span class="${online?"online":"offline"}">
-
-                        ${online?"● Online":"● Offline"}
-
-                    </span>
-
+                    <button class="btn btn-dark" onclick="abrirPerfilJogador('${outro}')">
+                        👤
+                    </button>
                 </div>
+            `);
 
-
-                <button
-                    class="btn blue"
-                    onclick="abrirChat(
-                        '${uid}',
-                        '${escapar(dados.nome||"Jogador")}'
-                    )"
-                >
-                    💬
-                </button>
-
-                <button
-                    class="btn"
-                    onclick="abrirPerfilJogador('${uid}')"
-                >
-                    👤
-                </button>
-
-            </div>
-
-            `;
-
+            verificarPresenca(outro);
         }
 
-
-        area.innerHTML=html;
-
+        box.innerHTML=html.join("");
 
     }catch(e){
-
         console.log(e);
-
-        area.innerHTML=`
-
-        <div class="empty">
-            Erro ao carregar amigos.
-        </div>
-
-        `;
-
+        box.innerHTML="<p>Erro ao carregar amigos.</p>";
     }
+}
 
-};
+async function verificarPresenca(uid){
+    try{
+        const snap=await db.collection("Partidas")
+            .doc("presenca_"+uid)
+            .get();
 
+        const el=$("status_"+uid);
 
-/* =========================
-   CHAT MAIS COMPLETO
-========================= */
+        if(!el)return;
 
-const abrirChatOriginal=abrirChat;
-
-abrirChat=async function(uid,nome){
-
-    amigoChatAtual={
-        uid,
-        nome
-    };
-
-    abrirModal(
-        "💬 "+nome,
-        `
-
-        <div class="chatBox">
-
-            <div
-                class="messages"
-                id="messages"
-            >
-
-                <div class="empty">
-                    Carregando mensagens...
-                </div>
-
-            </div>
-
-
-            <div class="chatInput">
-
-                <input
-                    id="chatInput"
-                    placeholder="Digite uma mensagem..."
-                    maxlength="500"
-                    onkeydown="
-                        if(event.key==='Enter'){
-                            enviarMensagem()
-                        }
-                    "
-                >
-
-                <button
-                    class="btn primaryBtn"
-                    onclick="enviarMensagem()"
-                >
-                    Enviar
-                </button>
-
-            </div>
-
-        </div>
-
-        `
-    );
-
-    ouvirChat(uid);
-
-};
-
-
-/* =========================
-   NOTIFICAÇÕES MAIS VISÍVEIS
-========================= */
-
-async function mostrarNotificacaoAmizade(uid,nome){
-
-    await criarNotificacao(
-        uid,
-        "pedido_amizade",
-        {
-            mensagem:
-            `${getNome()} enviou um pedido de amizade para você.`
+        if(!snap.exists){
+            el.textContent="Offline";
+            el.className="offline";
+            return;
         }
-    );
 
+        const d=snap.data();
+
+        const tempo=d.ultimaAtividade?.toMillis?.()||0;
+        const online=d.online===true&&
+            Date.now()-tempo<120000;
+
+        el.textContent=online?"● Online":"○ Offline";
+        el.className=online?"online":"offline";
+
+    }catch(e){
+        console.log(e);
+    }
 }
 
-
-/* =========================
-   EXPERIÊNCIA DE JOGO
-========================= */
-
-function iniciarMilhao(categoria){
-
-    fecharModal();
-
-    jogo={
-        categoria:categoria,
-        questoes:prepararQuestoes(categoria),
-        indice:0,
-        acertos:0,
-        erros:0,
-        premioAtual:0,
-        timer:null,
-        tempo:15,
-        usou5050:false,
-        usouPular:false,
-        usouDica:false,
-        respondendo:false
-    };
-
-    telaAtual="game";
-
-    iniciarMusica("game");
-
-    renderPergunta();
-
-}
-
-
-/* =========================
-   SALVAMENTO DA PARTIDA
-========================= */
-
-async function registrarPartida(){
-
+async function registrarPresenca(){
     if(!usuario)return;
 
     try{
-
         await db.collection("Partidas")
-            .add({
-
-                tipo:"partida",
-
+            .doc("presenca_"+usuario.uid)
+            .set({
                 uid:usuario.uid,
-
                 nome:getNome(),
-
-                categoria:jogo.categoria,
-
-                acertos:jogo.acertos,
-
-                erros:jogo.erros,
-
-                premio:jogo.premioAtual,
-
-                criadoEm:FV.serverTimestamp()
-
-            });
-
+                avatar:perfil.avatar||"",
+                online:true,
+                ultimaAtividade:FV.serverTimestamp()
+            },{merge:true});
     }catch(e){
-
-        console.log("Partida:",e);
-
+        console.log(e);
     }
-
 }
 
-
-/* Substitui o finalizador para registrar também a partida */
-
-const finalizarJogoOriginal=finalizarJogo;
-
-finalizarJogo=async function(){
-
-    clearInterval(jogo.timer);
-
-    iniciarMusica("final");
-
-
-    const venceu=
-        jogo.indice>=15 &&
-        jogo.acertos===15;
-
-
-    if(!perfil)perfil={};
-
-
-    perfil.partidas=
-        (perfil.partidas||0)+1;
-
-
-    perfil.acertos=
-        (perfil.acertos||0)+jogo.acertos;
-
-
-    perfil.erros=
-        (perfil.erros||0)+jogo.erros;
-
-
-    if(
-        jogo.premioAtual>
-        (perfil.maiorPremio||0)
-    ){
-
-        perfil.maiorPremio=
-            jogo.premioAtual;
-
-    }
-
-
-    if(
-        jogo.premioAtual>
-        (perfil.recorde||0)
-    ){
-
-        perfil.recorde=
-            jogo.premioAtual;
-
-    }
-
-
-    let xpGanho=
-        jogo.acertos*100;
-
-
-    if(venceu){
-
-        perfil.vitorias=
-            (perfil.vitorias||0)+1;
-
-        xpGanho+=1000;
-
-    }
-
-
-    perfil.xp=
-        (perfil.xp||0)+xpGanho;
-
-
-    perfil.nivel=
-        Math.max(
-            1,
-            Math.floor(
-                (perfil.xp||0)/1000
-            )+1
-        );
-
-
-    perfil.moedas=
-        (perfil.moedas||0)+
-        jogo.acertos*10;
-
-
-    await salvarPerfil();
-
-    await registrarPartida();
-
-
-    const premio=
-        jogo.premioAtual;
-
-
-    document.getElementById("central").innerHTML=`
-
-    <div class="gameScreen">
-
-        <div class="questionCard endBox">
-
-            <div style="font-size:55px">
-                ${venceu?"🏆":"🎮"}
-            </div>
-
-            <h2>
-                ${venceu?"MILIONÁRIO!":"Fim de jogo"}
-            </h2>
-
-            <div class="bigPrize">
-                R$ ${premio.toLocaleString("pt-BR")}
-            </div>
-
-            <p style="color:#aa9aaa">
-
-                Acertos:
-                <b>${jogo.acertos}</b>
-
-                <br>
-
-                Erros:
-                <b>${jogo.erros}</b>
-
-                <br>
-
-                XP ganho:
-                <b>+${xpGanho}</b>
-
-            </p>
-
-
-            <div class="row"
-                style="
-                    justify-content:center;
-                    margin-top:20px
-                "
-            >
-
-                <button
-                    class="btn primaryBtn"
-                    onclick="central()"
-                >
-                    Voltar ao início
-                </button>
-
-                <button
-                    class="btn"
-                    onclick="abrirRanking()"
-                >
-                    Ver ranking
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    `;
-
-};
-
-
-/* =========================
-   SAÍDA SEGURA
-========================= */
-
-document.addEventListener(
-    "visibilitychange",
-    async()=>{
-
-        if(document.visibilityState==="hidden"){
-
-            if(usuario){
-                await marcarOffline();
-            }
-
-        }else{
-
-            if(usuario){
-                await registrarPresenca();
-            }
-
-        }
-
-    }
-);
-
-
-/* =========================
-   CONTROLE DE ÁUDIO NO IPHONE
-========================= */
-
-document.addEventListener(
-    "touchstart",
-    ()=>{
-
-        try{
-
-            if(!audioCtx){
-
-                audioCtx=
-                    new(
-                        window.AudioContext||
-                        window.webkitAudioContext
-                    )();
-
-            }
-
-            if(audioCtx.state==="suspended"){
-
-                audioCtx.resume();
-
-            }
-
-        }catch(e){}
-
-    },
-    {once:true}
-);
-
-
-/* =========================
-   RECUPERAR LOGIN
-========================= */
-
-auth.onAuthStateChanged(
-async user=>{
-
-    usuario=user;
-
-
-    if(!user){
-
-        if(unsubscribeNotificacoes){
-
-            unsubscribeNotificacoes();
-
-            unsubscribeNotificacoes=null;
-
-        }
-
-        if(unsubscribeChat){
-
-            unsubscribeChat();
-
-            unsubscribeChat=null;
-
-        }
-
-        document.getElementById(
-            "loginScreen"
-        ).style.display="flex";
-
-
-        document.getElementById(
-            "app"
-        ).style.display="none";
-
-
-        return;
-
-    }
-
+async function marcarOffline(){
+    if(!usuario)return;
 
     try{
+        await db.collection("Partidas")
+            .doc("presenca_"+usuario.uid)
+            .set({
+                uid:usuario.uid,
+                online:false,
+                ultimaAtividade:FV.serverTimestamp()
+            },{merge:true});
+    }catch(e){
+        console.log(e);
+    }
+}
 
-        await carregarPerfil();
+async function criarNotificacao(destinatario,tipo,dados={}){
+    if(!usuario)return;
 
-        await salvarRanking();
+    try{
+        await db.collection("Notificacoes").add({
+            destinatario,
+            remetente:usuario.uid,
+            remetenteNome:getNome(),
+            remetenteAvatar:perfil.avatar||"",
+            tipo,
+            ...dados,
+            lida:false,
+            criadoEm:FV.serverTimestamp()
+        });
+    }catch(e){
+        console.log(e);
+    }
+}
 
-        await registrarPresenca();
+function iniciarSistemaSocial(){
+    ouvirNotificacoes();
+}
 
+function ouvirNotificacoes(){
+    if(unsubscribeNotificacoes){
+        unsubscribeNotificacoes();
+    }
 
-        document.getElementById(
-            "loginScreen"
-        ).style.display="none";
+    unsubscribeNotificacoes=db.collection("Notificacoes")
+        .where("destinatario","==",usuario.uid)
+        .onSnapshot(snap=>{
+            window.notificacoesCount=snap.docs.filter(
+                d=>!d.data().lida
+            ).length;
+        },e=>console.log(e));
+}
 
+async function abrirNotificacoes(){
+    telaAtual="notificacoes";
 
-        document.getElementById(
-            "app"
-        ).style.display="block";
+    $("conteudo").innerHTML=`
+        <h1>🔔 Notificações</h1>
+        <div class="card" id="notificacoesLista">
+            Carregando...
+        </div>
+    `;
 
+    try{
+        const snap=await db.collection("Notificacoes")
+            .where("destinatario","==",usuario.uid)
+            .get();
 
-        iniciarSistemaSocial();
+        const lista=snap.docs
+            .map(d=>({id:d.id,...d.data()}))
+            .sort((a,b)=>{
+                const aa=a.criadoEm?.toMillis?.()||0;
+                const bb=b.criadoEm?.toMillis?.()||0;
+                return bb-aa;
+            });
 
-        central();
-
-        iniciarMusica("central");
-
+        $("notificacoesLista").innerHTML=lista.length?
+            lista.map(n=>`
+                <div class="notice">
+                    <b>${escapeHtml(n.remetenteNome||"Sistema")}</b>
+                    <p>${escapeHtml(n.texto||"Nova notificação.")}</p>
+                    ${!n.lida?
+                        `<button class="btn btn-dark" onclick="marcarNotificacao('${n.id}')">
+                            Marcar como lida
+                        </button>`
+                        :"✓ Lida"
+                    }
+                </div>
+            `).join("")
+            :
+            "<p>Nenhuma notificação.</p>";
 
     }catch(e){
-
         console.log(e);
-
-        mostrarToast(
-            "Erro ao carregar sua conta."
-        );
-
     }
+}
 
-});
+async function marcarNotificacao(id){
+    await db.collection("Notificacoes")
+        .doc(id)
+        .update({lida:true});
 
+    abrirNotificacoes();
+}
 
-/* =========================
-   CORRIDA DO MILHÃO
-========================= */
+function criarChatId(a,b){
+    return [a,b].sort().join("_");
+}
 
-function abrirCorrida(){
+async function abrirChat(uid,nome){
+    const chatId=criarChatId(usuario.uid,uid);
 
-    abrirModal(
-        "🏎️ Corrida do Milhão",
-        `
+    abrirModal(`
+        <h2>💬 ${escapeHtml(nome)}</h2>
 
-        <div class="panel">
-
-            <h3>
-                Corrida do Milhão
-            </h3>
-
-            <p
-                style="
-                    color:#a99aaa;
-                    line-height:1.5;
-                    margin:8px 0 15px
-                "
-            >
-
-                Esse será o próximo jogo da
-                plataforma.
-
-                <br><br>
-
-                Ele terá:
-
-                <br>
-                🏎️ Corrida
-                <br>
-                👤 Solo
-                <br>
-                👥 Amigos
-                <br>
-                🌐 Online
-                <br>
-                🏆 Ranking
-                <br>
-                ⭐ XP e níveis
-
-            </p>
-
-            <button
-                class="btn primaryBtn"
-                onclick="fecharModal()"
-            >
-                Entendi
-            </button>
-
+        <div id="chatMensagens" class="chat-box">
+            Carregando...
         </div>
 
-        `
+        <div class="row">
+            <input id="mensagemTexto" placeholder="Digite sua mensagem...">
+            <button class="btn" onclick="enviarMensagem('${uid}','${escapeAttr(nome)}')">
+                Enviar
+            </button>
+        </div>
+
+        <button class="btn btn-red" onclick="fecharModal()">Fechar</button>
+    `);
+
+    if(unsubscribeChat){
+        unsubscribeChat();
+    }
+
+    const chatRef=db.collection("Chats").doc(chatId);
+
+    await chatRef.set({
+        participantes:[usuario.uid,uid]
+    },{merge:true});
+
+    unsubscribeChat=chatRef.collection("Mensagens")
+        .orderBy("criadoEm","asc")
+        .onSnapshot(snap=>{
+            const box=$("chatMensagens");
+
+            if(!box)return;
+
+            box.innerHTML=snap.docs.map(doc=>{
+                const m=doc.data();
+
+                return `
+                    <div class="msg ${m.remetente===usuario.uid?"me":"other"}">
+                        ${escapeHtml(m.texto||"")}
+                    </div>
+                `;
+            }).join("");
+
+            box.scrollTop=box.scrollHeight;
+        },e=>console.log(e));
+}
+
+async function enviarMensagem(uid,nome){
+    const input=$("mensagemTexto");
+    const texto=input?.value.trim();
+
+    if(!texto)return;
+
+    const chatId=criarChatId(usuario.uid,uid);
+
+    try{
+        await db.collection("Chats")
+            .doc(chatId)
+            .set({
+                participantes:[usuario.uid,uid],
+                atualizadoEm:FV.serverTimestamp()
+            },{merge:true});
+
+        await db.collection("Chats")
+            .doc(chatId)
+            .collection("Mensagens")
+            .add({
+                remetente:usuario.uid,
+                destinatario:uid,
+                texto,
+                criadoEm:FV.serverTimestamp()
+            });
+
+        await criarNotificacaoParaUsuario(
+            uid,
+            "mensagem",
+            `${getNome()} enviou uma mensagem.`
+        );
+
+        input.value="";
+    }catch(e){
+        console.log(e);
+        mostrarToast("Não foi possível enviar.");
+    }
+}
+
+async function criarNotificacaoParaUsuario(uid,tipo,texto){
+    try{
+        await db.collection("Notificacoes").add({
+            destinatario:uid,
+            remetente:usuario.uid,
+            remetenteNome:getNome(),
+            remetenteAvatar:perfil.avatar||"",
+            tipo,
+            texto,
+            lida:false,
+            criadoEm:FV.serverTimestamp()
+        });
+    }catch(e){
+        console.log(e);
+    }
+}
+
+function abrirModal(html){
+    $("modalConteudo").innerHTML=html;
+    $("modal").classList.remove("hidden");
+}
+
+function fecharModal(){
+    $("modal").classList.add("hidden");
+
+    if(unsubscribeChat){
+        unsubscribeChat();
+        unsubscribeChat=null;
+    }
+}
+
+function modoLocal(){
+    abrirModal(`
+        <h2>👥 Jogar com amigo perto</h2>
+
+        <p>Escolha os jogadores.</p>
+
+        <input id="p1" value="${escapeAttr(getNome())}" placeholder="Jogador 1">
+        <input id="p2" placeholder="Jogador 2">
+        <input id="p3" placeholder="Jogador 3 (opcional)">
+
+        <button class="btn" onclick="iniciarLocal()">Começar</button>
+        <button class="btn btn-red" onclick="fecharModal()">Cancelar</button>
+    `);
+}
+
+function iniciarLocal(){
+    fecharModal();
+
+    mostrarToast(
+        "Modo local preparado. O jogo será disputado no mesmo aparelho."
     );
 
+    iniciarMilhao("geral");
 }
 
+async function iniciarOnline(){
+    const codigo=Math.random()
+        .toString(36)
+        .substring(2,7)
+        .toUpperCase();
 
-/* =========================
-   GARANTIA DE RANKING
-========================= */
+    try{
+        await db.collection("Partidas")
+            .doc("online_"+codigo)
+            .set({
+                tipo:"online",
+                codigo,
+                criador:usuario.uid,
+                jogadores:[usuario.uid],
+                status:"aguardando",
+                criadoEm:FV.serverTimestamp()
+            });
 
-async function garantirRanking(){
+        abrirModal(`
+            <h2>🌐 Sala online</h2>
 
-    if(!usuario||!perfil)return;
+            <p>Envie este código ao seu amigo:</p>
 
-    await db.collection("Partidas")
-        .doc("ranking_"+usuario.uid)
-        .set({
+            <div class="center big">${codigo}</div>
 
-            tipo:"ranking",
+            <p>A sala foi criada. O modo online será conectado a ela.</p>
 
-            uid:usuario.uid,
+            <button class="btn" onclick="iniciarMilhao('geral')">
+                Começar
+            </button>
 
-            nome:getNome(),
+            <button class="btn btn-red" onclick="fecharModal()">
+                Fechar
+            </button>
+        `);
 
-            nomeBusca:
-                (getNome()||"").toLowerCase(),
-
-            avatar:
-                perfil.avatar||"",
-
-            recorde:
-                perfil.recorde||0,
-
-            maiorPremio:
-                perfil.maiorPremio||0,
-
-            nivel:
-                perfil.nivel||1,
-
-            xp:
-                perfil.xp||0,
-
-            atualizadoEm:
-                FV.serverTimestamp()
-
-        },{merge:true});
-
+    }catch(e){
+        console.log(e);
+        mostrarToast("Não foi possível criar a sala.");
+    }
 }
 
+async function desafioDiario(){
+    const hoje=new Date();
+    const indice=(hoje.getFullYear()+hoje.getMonth()+hoje.getDate())%perguntas.geral.length;
+    const q=perguntas.geral[indice];
 
-/* =========================
-   ATUALIZA RANKING
-========================= */
+    abrirModal(`
+        <h2>📅 Desafio diário</h2>
+
+        <p>${escapeHtml(q[0])}</p>
+
+        ${q[1].map((r,i)=>`
+            <button class="answer"
+                onclick="responderDiario(${i},${q[2]})">
+                ${escapeHtml(r)}
+            </button>
+        `).join("")}
+
+        <button class="btn btn-red" onclick="fecharModal()">Fechar</button>
+    `);
+}
+
+async function responderDiario(i,correta){
+    if(i===correta){
+        const xp=(perfil.xp||0)+25;
+
+        await salvarPerfil({
+            xp,
+            nivel:Math.floor(xp/100)+1,
+            moedas:(perfil.moedas||0)+10
+        });
+
+        mostrarToast("Acertou! +25 XP");
+    }else{
+        mostrarToast("Resposta errada.");
+    }
+
+    fecharModal();
+    central();
+}
+
+function abrirCorrida(){
+    abrirModal(`
+        <h2>🏎️ Corrida do Milhão</h2>
+        <p>Este será o próximo grande jogo da plataforma.</p>
+        <p>🏁 Corrida solo</p>
+        <p>👥 2 ou 3 jogadores</p>
+        <p>🌐 Partidas online</p>
+        <p>🏆 Ranking próprio</p>
+
+        <button class="btn btn-red" onclick="fecharModal()">Fechar</button>
+    `);
+}
+
+function alternarMusica(){
+    musicaLigada=!musicaLigada;
+
+    if(!musicaLigada){
+        pararMusica();
+    }else{
+        iniciarMusica(telaAtual);
+    }
+
+    abrirPerfil();
+}
+
+function alternarEfeitos(){
+    efeitosLigados=!efeitosLigados;
+    abrirPerfil();
+}
+
+function iniciarMusica(track){
+    if(!musicaLigada)return;
+
+    try{
+        if(!audioCtx){
+            audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+        }
+
+        if(audioCtx.state==="suspended"){
+            audioCtx.resume();
+        }
+
+        pararMusica();
+
+        let notas;
+
+        if(track==="game"){
+            notas=[220,277,330,440,330,277];
+        }else if(track==="final"){
+            notas=[262,330,392,523,659];
+        }else{
+            notas=[196,247,294,392,294,247];
+        }
+
+        let i=0;
+
+        musicTimer=setInterval(()=>{
+            if(!musicaLigada)return;
+
+            const osc=audioCtx.createOscillator();
+            const gain=audioCtx.createGain();
+
+            osc.type="sine";
+            osc.frequency.value=notas[i%notas.length];
+
+            gain.gain.setValueAtTime(.0001,audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(
+                .025,
+                audioCtx.currentTime+.03
+            );
+            gain.gain.exponentialRampToValueAtTime(
+                .0001,
+                audioCtx.currentTime+.25
+            );
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime+.26);
+
+            i++;
+        },320);
+
+    }catch(e){
+        console.log(e);
+    }
+}
+
+function pararMusica(){
+    if(musicTimer){
+        clearInterval(musicTimer);
+        musicTimer=null;
+    }
+}
+
+function tocarSom(tipo){
+    if(!efeitosLigados)return;
+
+    try{
+        if(!audioCtx){
+            audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+        }
+
+        const osc=audioCtx.createOscillator();
+        const gain=audioCtx.createGain();
+
+        osc.type="triangle";
+
+        if(tipo==="correct"){
+            osc.frequency.value=660;
+        }else if(tipo==="wrong"){
+            osc.frequency.value=150;
+        }else{
+            osc.frequency.value=440;
+        }
+
+        gain.gain.value=.06;
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime+.18);
+    }catch(e){}
+}
+
+function escapeHtml(text){
+    return String(text||"")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+function escapeAttr(text){
+    return escapeHtml(text);
+}
+
+async function logout(){
+    await marcarOffline();
+    pararMusica();
+    await auth.signOut();
+}
+
+auth.onAuthStateChanged(async user=>{
+    usuario=user;
+
+    if(!user){
+        perfil=null;
+        pararMusica();
+        esconderApp();
+        return;
+    }
+
+    try{
+        await carregarPerfil();
+        mostrarApp();
+        await registrarPresenca();
+        iniciarSistemaSocial();
+        central();
+    }catch(e){
+        console.log(e);
+        mostrarToast("Erro ao carregar seu perfil.");
+    }
+});
 
 setInterval(()=>{
-
-    if(usuario&&perfil){
-
-        garantirRanking();
-
+    if(usuario){
+        registrarPresenca();
+        salvarRanking();
     }
+},60000);
 
-},30000);
+document.addEventListener("visibilitychange",()=>{
+    if(!usuario)return;
 
-
-/* =========================
-   CORREÇÃO DE DATA
-========================= */
-
-window.addEventListener(
-    "load",
-    ()=>{
-
-        try{
-
-            if(usuario){
-
-                registrarPresenca();
-
-            }
-
-        }catch(e){}
-
+    if(document.hidden){
+        marcarOffline();
+    }else{
+        registrarPresenca();
     }
-);
+});
 
+document.addEventListener("click",()=>{
+    if(audioCtx&&audioCtx.state==="suspended"){
+        audioCtx.resume();
+    }
+},{once:false});
 
-/* =========================
-   PREVENÇÃO CONTRA ZOOM
-========================= */
-
-document.addEventListener(
-    "gesturestart",
-    e=>e.preventDefault()
-);
-
-
-/* =========================
-   FIM
-========================= */
-
+window.addEventListener("beforeunload",()=>{
+    marcarOffline();
+});
 </script>
+
+</body>
+</html>
