@@ -3,633 +3,340 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Xadrez IA</title>
+<title>Optimus Prime AI</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#080b12;
+    color:#fff;
+    min-height:100vh;
 }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #111827, #1e293b);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+header{
+    padding:18px;
+    background:#101722;
+    border-bottom:1px solid #263244;
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
-.container {
-    width: 100%;
-    max-width: 650px;
-    text-align: center;
+.logo{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
 }
 
-h1 {
-    margin: 0 0 8px;
-    font-size: 34px;
+header h1{
+    margin:0;
+    font-size:20px;
 }
 
-.subtitle {
-    color: #cbd5e1;
-    margin-bottom: 20px;
+header p{
+    margin:3px 0 0;
+    color:#94a3b8;
+    font-size:13px;
 }
 
-.status {
-    background: #0f172a;
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 15px;
-    font-weight: bold;
+.chat{
+    max-width:850px;
+    margin:auto;
+    padding:20px;
+    padding-bottom:120px;
 }
 
-.board {
-    width: min(92vw, 600px);
-    height: min(92vw, 600px);
-    max-width: 600px;
-    max-height: 600px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    border: 5px solid #0f172a;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0,0,0,.4);
+.welcome{
+    text-align:center;
+    margin:50px 0 35px;
 }
 
-.square {
-    aspect-ratio: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: clamp(30px, 9vw, 62px);
-    cursor: pointer;
-    user-select: none;
-    position: relative;
+.welcome h2{
+    font-size:32px;
+    margin-bottom:10px;
 }
 
-.light {
-    background: #f0d9b5;
+.welcome p{
+    color:#94a3b8;
 }
 
-.dark {
-    background: #b58863;
+.message{
+    display:flex;
+    margin:18px 0;
 }
 
-.selected {
-    box-shadow: inset 0 0 0 5px #facc15;
+.message.user{
+    justify-content:flex-end;
 }
 
-.possible {
-    box-shadow: inset 0 0 0 5px rgba(34,197,94,.65);
+.bubble{
+    max-width:80%;
+    padding:14px 17px;
+    border-radius:18px;
+    line-height:1.5;
+    white-space:pre-wrap;
 }
 
-.last {
-    background: #c9b458 !important;
+.ai .bubble{
+    background:#151c28;
+    border:1px solid #263244;
 }
 
-.controls {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 18px;
-    flex-wrap: wrap;
+.user .bubble{
+    background:#2563eb;
 }
 
-button {
-    border: 0;
-    border-radius: 10px;
-    padding: 13px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    background: #2563eb;
-    color: white;
+.input-area{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#080b12;
+    border-top:1px solid #263244;
+    padding:15px;
 }
 
-button:hover {
-    background: #1d4ed8;
+.input-box{
+    max-width:850px;
+    margin:auto;
+    display:flex;
+    gap:10px;
 }
 
-.info {
-    margin-top: 18px;
-    background: rgba(15,23,42,.8);
-    padding: 15px;
-    border-radius: 12px;
-    color: #cbd5e1;
-    font-size: 14px;
+input{
+    flex:1;
+    padding:15px;
+    border-radius:14px;
+    border:1px solid #334155;
+    background:#111827;
+    color:white;
+    outline:none;
+    font-size:16px;
 }
 
-.move-list {
-    margin-top: 15px;
-    max-height: 130px;
-    overflow-y: auto;
-    text-align: left;
-    background: #0f172a;
-    border-radius: 10px;
-    padding: 12px;
-    color: #e2e8f0;
+button{
+    border:0;
+    border-radius:14px;
+    padding:0 20px;
+    background:#2563eb;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    max-width:600px;
+    margin:auto;
+}
+
+.card{
+    padding:15px;
+    background:#111827;
+    border:1px solid #263244;
+    border-radius:14px;
+    cursor:pointer;
+}
+
+.card:hover{
+    border-color:#3b82f6;
+}
+
+@media(max-width:600px){
+    .bubble{max-width:90%}
+    .welcome h2{font-size:27px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<header>
+    <div class="logo">🤖</div>
+    <div>
+        <h1>Optimus Prime</h1>
+        <p>Assistente virtual inteligente</p>
+    </div>
+</header>
 
-    <h1>♟️ Xadrez IA</h1>
-    <div class="subtitle">Jogue contra o computador</div>
+<main class="chat" id="chat">
 
-    <div class="status" id="status">
-        Sua vez — você joga com as brancas
+    <div class="welcome" id="welcome">
+        <h2>Olá, eu sou a Optimus Prime 🤖</h2>
+        <p>Como posso ajudar você hoje?</p>
+
+        <div class="cards">
+            <div class="card" onclick="suggest('Explique o que é inteligência artificial')">
+                🧠 Inteligência Artificial
+            </div>
+
+            <div class="card" onclick="suggest('Me ajude a criar um site')">
+                💻 Criar um site
+            </div>
+
+            <div class="card" onclick="suggest('Faça uma análise de dados')">
+                📊 Analisar dados
+            </div>
+
+            <div class="card" onclick="suggest('Me dê uma ideia de negócio')">
+                💡 Ideias
+            </div>
+        </div>
     </div>
 
-    <div class="board" id="board"></div>
+</main>
 
-    <div class="controls">
-        <button onclick="newGame()">🔄 Novo jogo</button>
+<div class="input-area">
+    <div class="input-box">
+        <input
+            id="input"
+            type="text"
+            placeholder="Pergunte alguma coisa..."
+            onkeydown="if(event.key==='Enter') sendMessage()"
+        >
+
+        <button onclick="sendMessage()">➤</button>
     </div>
-
-    <div class="move-list" id="moves">
-        <strong>Jogadas:</strong>
-    </div>
-
-    <div class="info">
-        Você joga com as peças brancas. Clique em uma peça e depois
-        clique na casa para onde deseja movê-la.
-    </div>
-
 </div>
 
 <script>
 
-const pieces = {
-    wK: "♔",
-    wQ: "♕",
-    wR: "♖",
-    wB: "♗",
-    wN: "♘",
-    wP: "♙",
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
 
-    bK: "♚",
-    bQ: "♛",
-    bR: "♜",
-    bB: "♝",
-    bN: "♞",
-    bP: "♟"
-};
-
-let board = [];
-let selected = null;
-let turn = "w";
-let gameOver = false;
-let lastMove = null;
-let moveHistory = [];
-
-function newGame() {
-
-    board = [
-        ["bR","bN","bB","bQ","bK","bB","bN","bR"],
-        ["bP","bP","bP","bP","bP","bP","bP","bP"],
-        [null,null,null,null,null,null,null,null],
-        [null,null,null,null,null,null,null,null],
-        [null,null,null,null,null,null,null,null],
-        [null,null,null,null,null,null,null,null],
-        ["wP","wP","wP","wP","wP","wP","wP","wP"],
-        ["wR","wN","wB","wQ","wK","wB","wN","wR"]
-    ];
-
-    selected = null;
-    turn = "w";
-    gameOver = false;
-    lastMove = null;
-    moveHistory = [];
-
-    document.getElementById("status").textContent =
-        "Sua vez — você joga com as brancas";
-
-    render();
+function suggest(text){
+    input.value = text;
+    sendMessage();
 }
 
-function render() {
+function addMessage(text,type){
 
-    const boardElement = document.getElementById("board");
-    boardElement.innerHTML = "";
+    const message = document.createElement("div");
 
-    for(let r = 0; r < 8; r++) {
+    message.className = "message " + type;
 
-        for(let c = 0; c < 8; c++) {
+    const bubble = document.createElement("div");
 
-            const square = document.createElement("div");
+    bubble.className = "bubble";
 
-            square.className =
-                "square " + ((r+c)%2 === 0 ? "light" : "dark");
+    bubble.textContent = text;
 
-            if(lastMove &&
-               ((lastMove.from.r === r && lastMove.from.c === c) ||
-                (lastMove.to.r === r && lastMove.to.c === c))) {
-                square.classList.add("last");
-            }
+    message.appendChild(bubble);
 
-            if(selected &&
-               selected.r === r &&
-               selected.c === c) {
-                square.classList.add("selected");
-            }
+    chat.appendChild(message);
 
-            if(selected) {
-
-                const moves = getLegalMoves(selected.r, selected.c);
-
-                if(moves.some(m => m.r === r && m.c === c)) {
-                    square.classList.add("possible");
-                }
-            }
-
-            const piece = board[r][c];
-
-            if(piece) {
-                square.textContent = pieces[piece];
-            }
-
-            square.onclick = () => clickSquare(r,c);
-
-            boardElement.appendChild(square);
-        }
-    }
-
-    updateMoves();
+    window.scrollTo({
+        top:document.body.scrollHeight,
+        behavior:"smooth"
+    });
 }
 
-function clickSquare(r,c) {
+function sendMessage(){
 
-    if(gameOver || turn !== "w") return;
+    const text = input.value.trim();
 
-    const piece = board[r][c];
+    if(!text) return;
 
-    if(selected) {
+    const welcome = document.getElementById("welcome");
 
-        const moves = getLegalMoves(selected.r, selected.c);
+    if(welcome) welcome.remove();
 
-        const valid = moves.some(
-            m => m.r === r && m.c === c
-        );
+    addMessage(text,"user");
 
-        if(valid) {
+    input.value="";
 
-            movePiece(
-                selected.r,
-                selected.c,
-                r,
-                c
-            );
+    setTimeout(()=>{
 
-            selected = null;
+        const answer = generateAnswer(text);
 
-            render();
+        addMessage(answer,"ai");
 
-            setTimeout(computerMove, 500);
-
-            return;
-        }
-
-        if(piece && piece[0] === "w") {
-
-            selected = {r,c};
-            render();
-            return;
-        }
-
-        selected = null;
-        render();
-        return;
-    }
-
-    if(piece && piece[0] === "w") {
-
-        selected = {r,c};
-        render();
-    }
+    },500);
 }
 
-function movePiece(fr,fc,tr,tc) {
+function generateAnswer(text){
 
-    const piece = board[fr][fc];
+    const t = text.toLowerCase();
 
-    const captured = board[tr][tc];
+    if(
+        t.includes("olá") ||
+        t.includes("ola") ||
+        t.includes("oi") ||
+        t.includes("bom dia") ||
+        t.includes("boa tarde") ||
+        t.includes("boa noite")
+    ){
 
-    board[tr][tc] = piece;
-    board[fr][fc] = null;
-
-    // Promoção simples para dama
-    if(piece === "wP" && tr === 0) {
-        board[tr][tc] = "wQ";
+        return "Olá! 👋 Eu sou a Optimus Prime. Estou pronta para conversar, explicar assuntos, ajudar com ideias, programação e análises.";
     }
 
-    if(piece === "bP" && tr === 7) {
-        board[tr][tc] = "bQ";
+    if(t.includes("inteligência artificial") || t.includes("ia")){
+
+        return "Inteligência Artificial é uma área da tecnologia que permite que computadores realizem tarefas que normalmente exigiriam inteligência humana, como interpretar textos, reconhecer padrões, analisar informações e gerar respostas.";
     }
 
-    lastMove = {
-        from:{r:fr,c:fc},
-        to:{r:tr,c:tc}
-    };
+    if(t.includes("site") || t.includes("website")){
 
-    moveHistory.push(
-        `${turn === "w" ? "Você" : "IA"}: ${piece} ${fr+1},${fc+1} → ${tr+1},${tc+1}` +
-        (captured ? " ⚔️" : "")
-    );
+        return "Posso ajudar você a criar sites. 💻\n\nPodemos trabalhar com HTML, CSS e JavaScript e transformar uma ideia em uma página completa.";
+    }
 
-    turn = turn === "w" ? "b" : "w";
+    if(
+        t.includes("analisar dados") ||
+        t.includes("dados") ||
+        t.includes("análise")
+    ){
 
-    checkGameState();
+        return "Claro! 📊\n\nPara uma análise real, envie os dados que deseja analisar. Posso ajudar a identificar padrões, calcular indicadores, comparar valores e interpretar os resultados.";
+    }
+
+    if(t.includes("negócio") || t.includes("negocio")){
+
+        return "Uma boa ideia de negócio começa identificando um problema real. 💡\n\nProcure algo que as pessoas precisam, descubra quanto pagariam por uma solução e depois teste a ideia com poucos clientes antes de investir muito dinheiro.";
+    }
+
+    if(t.includes("quem é você") || t.includes("quem é voce")){
+
+        return "Eu sou a Optimus Prime 🤖, uma assistente virtual criada neste site. Esta versão funciona localmente no navegador.";
+    }
+
+    if(t.includes("obrigado") || t.includes("obrigada")){
+
+        return "De nada! 😄 Estou aqui para ajudar.";
+    }
+
+    if(
+        t.includes("html") ||
+        t.includes("javascript") ||
+        t.includes("css") ||
+        t.includes("programar") ||
+        t.includes("código") ||
+        t.includes("codigo")
+    ){
+
+        return "Posso ajudar com programação. 👨‍💻\n\nPosso explicar conceitos, corrigir códigos e ajudar você a construir projetos usando HTML, CSS e JavaScript.";
+    }
+
+    if(t.includes("matemática") || t.includes("matematica")){
+
+        return "Posso ajudar com matemática. 🔢\n\nDigite a conta ou o problema que deseja resolver.";
+    }
+
+    return "Entendi sua pergunta. 🤖\n\nNesta versão inicial da Optimus Prime, minhas respostas são baseadas em regras programadas no próprio site.\n\nPara eu realmente conversar sobre praticamente qualquer assunto, analisar arquivos e gerar respostas como uma IA avançada, precisamos conectar este site a uma API de inteligência artificial.";
 }
-
-function getLegalMoves(r,c) {
-
-    const piece = board[r][c];
-
-    if(!piece) return [];
-
-    const color = piece[0];
-    const type = piece[1];
-
-    let moves = [];
-
-    if(type === "P") {
-
-        const direction = color === "w" ? -1 : 1;
-
-        const startRow = color === "w" ? 6 : 1;
-
-        const one = r + direction;
-
-        if(inBounds(one,c) && !board[one][c]) {
-
-            moves.push({r:one,c});
-
-            const two = r + direction*2;
-
-            if(r === startRow && !board[two][c]) {
-                moves.push({r:two,c});
-            }
-        }
-
-        for(const dc of [-1,1]) {
-
-            const nr = r + direction;
-            const nc = c + dc;
-
-            if(inBounds(nr,nc) &&
-               board[nr][nc] &&
-               board[nr][nc][0] !== color) {
-
-                moves.push({r:nr,c:nc});
-            }
-        }
-    }
-
-    if(type === "N") {
-
-        const jumps = [
-            [-2,-1],[-2,1],
-            [-1,-2],[-1,2],
-            [1,-2],[1,2],
-            [2,-1],[2,1]
-        ];
-
-        for(const [dr,dc] of jumps) {
-
-            const nr = r+dr;
-            const nc = c+dc;
-
-            if(inBounds(nr,nc) &&
-               (!board[nr][nc] ||
-                board[nr][nc][0] !== color)) {
-
-                moves.push({r:nr,c:nc});
-            }
-        }
-    }
-
-    if(type === "K") {
-
-        for(let dr=-1;dr<=1;dr++) {
-
-            for(let dc=-1;dc<=1;dc++) {
-
-                if(dr===0 && dc===0) continue;
-
-                const nr=r+dr;
-                const nc=c+dc;
-
-                if(inBounds(nr,nc) &&
-                   (!board[nr][nc] ||
-                    board[nr][nc][0] !== color)) {
-
-                    moves.push({r:nr,c:nc});
-                }
-            }
-        }
-    }
-
-    if(type === "B" || type === "Q") {
-
-        moves.push(
-            ...slideMoves(
-                r,c,color,
-                [[-1,-1],[-1,1],[1,-1],[1,1]]
-            )
-        );
-    }
-
-    if(type === "R" || type === "Q") {
-
-        moves.push(
-            ...slideMoves(
-                r,c,color,
-                [[-1,0],[1,0],[0,-1],[0,1]]
-            )
-        );
-    }
-
-    return moves;
-}
-
-function slideMoves(r,c,color,directions) {
-
-    const moves = [];
-
-    for(const [dr,dc] of directions) {
-
-        let nr = r+dr;
-        let nc = c+dc;
-
-        while(inBounds(nr,nc)) {
-
-            if(!board[nr][nc]) {
-
-                moves.push({r:nr,c:nc});
-
-            } else {
-
-                if(board[nr][nc][0] !== color) {
-                    moves.push({r:nr,c:nc});
-                }
-
-                break;
-            }
-
-            nr += dr;
-            nc += dc;
-        }
-    }
-
-    return moves;
-}
-
-function inBounds(r,c) {
-
-    return r >= 0 &&
-           r < 8 &&
-           c >= 0 &&
-           c < 8;
-}
-
-function allMoves(color) {
-
-    const result = [];
-
-    for(let r=0;r<8;r++) {
-
-        for(let c=0;c<8;c++) {
-
-            if(board[r][c] &&
-               board[r][c][0] === color) {
-
-                const moves =
-                    getLegalMoves(r,c);
-
-                for(const move of moves) {
-
-                    result.push({
-                        from:{r,c},
-                        to:move
-                    });
-                }
-            }
-        }
-    }
-
-    return result;
-}
-
-function computerMove() {
-
-    if(gameOver) return;
-
-    const moves = allMoves("b");
-
-    if(moves.length === 0) {
-
-        endGame("🏆 Você venceu!");
-
-        return;
-    }
-
-    let bestMove = null;
-    let bestScore = -Infinity;
-
-    for(const move of moves) {
-
-        const captured =
-            board[move.to.r][move.to.c];
-
-        let score = Math.random() * 5;
-
-        if(captured) {
-
-            const values = {
-                P:10,
-                N:30,
-                B:30,
-                R:50,
-                Q:90,
-                K:900
-            };
-
-            score += values[captured[1]] || 0;
-        }
-
-        if(score > bestScore) {
-
-            bestScore = score;
-            bestMove = move;
-        }
-    }
-
-    movePiece(
-        bestMove.from.r,
-        bestMove.from.c,
-        bestMove.to.r,
-        bestMove.to.c
-    );
-
-    render();
-
-    if(!gameOver) {
-
-        document.getElementById("status").textContent =
-            "Sua vez — você joga com as brancas";
-    }
-}
-
-function checkGameState() {
-
-    const whiteMoves = allMoves("w");
-    const blackMoves = allMoves("b");
-
-    if(turn === "w" && whiteMoves.length === 0) {
-
-        endGame("🤖 A IA venceu!");
-
-    } else if(turn === "b" && blackMoves.length === 0) {
-
-        endGame("🏆 Você venceu!");
-
-    } else {
-
-        document.getElementById("status").textContent =
-            turn === "w"
-            ? "Sua vez — você joga com as brancas"
-            : "🤖 A IA está pensando...";
-    }
-}
-
-function endGame(message) {
-
-    gameOver = true;
-
-    document.getElementById("status").textContent =
-        message;
-}
-
-function updateMoves() {
-
-    const element =
-        document.getElementById("moves");
-
-    element.innerHTML =
-        "<strong>Jogadas:</strong><br>" +
-        (moveHistory.length
-            ? moveHistory.join("<br>")
-            : "Nenhuma jogada ainda.");
-}
-
-newGame();
 
 </script>
 
