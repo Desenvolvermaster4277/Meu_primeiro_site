@@ -80,6 +80,25 @@ button{
     border:1px solid rgba(255,255,255,.12);
     background:#191024;
     color:white;
+    position:relative;
+}
+
+.notification-badge{
+    position:absolute;
+    top:-5px;
+    right:-5px;
+    min-width:20px;
+    height:20px;
+    padding:0 5px;
+    border-radius:20px;
+    background:#ef4444;
+    color:white;
+    font-size:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    border:2px solid #100817;
 }
 
 .content{
@@ -258,12 +277,17 @@ input:focus{
     align-items:center;
     justify-content:center;
     font-size:25px;
+    flex-shrink:0;
 }
 
 .avatar.large{
     width:90px;
     height:90px;
     font-size:40px;
+}
+
+.photo-btn{
+    margin-top:10px;
 }
 
 .game-grid{
@@ -503,10 +527,6 @@ input:focus{
     font-weight:bold;
 }
 
-.photo-btn{
-    margin-top:10px;
-}
-
 .achievement-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -602,6 +622,175 @@ input:focus{
     margin-right:5px;
 }
 
+.offline-dot{
+    width:9px;
+    height:9px;
+    background:#777;
+    border-radius:50%;
+    display:inline-block;
+    margin-right:5px;
+}
+
+.social-card{
+    background:#160c20;
+    border:1px solid #30203c;
+    border-radius:16px;
+    padding:14px;
+    margin-bottom:10px;
+}
+
+.social-user{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.social-user-info{
+    flex:1;
+    min-width:0;
+}
+
+.social-user-info strong{
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.social-actions{
+    display:flex;
+    gap:7px;
+    margin-top:11px;
+}
+
+.social-actions .btn{
+    padding:10px 12px;
+    font-size:13px;
+}
+
+.notification-item{
+    padding:13px;
+    border-radius:14px;
+    background:#160c20;
+    border:1px solid #30203c;
+    margin-bottom:8px;
+}
+
+.notification-item.unread{
+    border-color:#7c3aed;
+    background:#20102d;
+}
+
+.notification-icon{
+    font-size:25px;
+    margin-right:8px;
+}
+
+.chat-list{
+    max-height:430px;
+    overflow-y:auto;
+    padding:5px 0;
+}
+
+.chat-message{
+    display:flex;
+    margin:8px 0;
+}
+
+.chat-message.mine{
+    justify-content:flex-end;
+}
+
+.chat-bubble{
+    max-width:78%;
+    padding:10px 13px;
+    border-radius:17px;
+    background:#251832;
+    border:1px solid #392649;
+}
+
+.chat-message.mine .chat-bubble{
+    background:#6d28d9;
+    border-color:#8b5cf6;
+}
+
+.chat-time{
+    display:block;
+    font-size:10px;
+    opacity:.65;
+    margin-top:5px;
+}
+
+.chat-input-row{
+    display:flex;
+    gap:8px;
+    margin-top:12px;
+}
+
+.chat-input-row input{
+    flex:1;
+}
+
+.chat-input-row button{
+    width:54px;
+    flex-shrink:0;
+}
+
+.unread-dot{
+    width:10px;
+    height:10px;
+    background:#ef4444;
+    border-radius:50%;
+    display:inline-block;
+}
+
+.friend-online{
+    color:#22c55e;
+    font-size:12px;
+}
+
+.friend-offline{
+    color:#888;
+    font-size:12px;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:12px;
+}
+
+.empty-state{
+    padding:25px 10px;
+    text-align:center;
+    color:#aaa2b6;
+}
+
+.social-tabs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+    margin-bottom:15px;
+}
+
+.social-tab{
+    border:1px solid #392649;
+    border-radius:12px;
+    padding:11px 5px;
+    background:#191021;
+    color:#aaa;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.social-tab.active{
+    background:#7c3aed;
+    color:white;
+    border-color:#8b5cf6;
+}
+
 @media(min-width:700px){
     .game-grid{
         grid-template-columns:1fr 1fr;
@@ -676,6 +865,11 @@ input:focus{
 
         <div class="top-actions">
 
+            <button class="icon-btn" onclick="abrirNotificacoes()" title="Notificações">
+                🔔
+                <span id="notificationBadge" class="notification-badge hidden">0</span>
+            </button>
+
             <button class="icon-btn" onclick="abrirPerfil()">👤</button>
 
             <button class="icon-btn" onclick="abrirConfig()">⚙️</button>
@@ -726,7 +920,6 @@ let usuario = null;
 let perfil = null;
 
 let telaAtual = "central";
-
 let modoCadastro = false;
 
 let musicaLigada = true;
@@ -735,6 +928,13 @@ let efeitosLigados = true;
 let audioCtx = null;
 let musicTimer = null;
 let musicTrack = "central";
+
+let unsubscribeNotificacoes = null;
+let unsubscribeAmigos = null;
+let unsubscribeChat = null;
+let unsubscribePresenca = null;
+
+let amigoChatAtual = null;
 
 let jogo = {
     categoria:"geral",
@@ -964,7 +1164,6 @@ function gerarMatematica(){
 
         const a=i+2;
         const b=(i%15)+2;
-
         const tipo=i%4;
 
         let pergunta;
@@ -1020,6 +1219,7 @@ const bancos={
 
 function escapeHTML(text){
     if(text===undefined || text===null) return "";
+
     return String(text)
         .replaceAll("&","&amp;")
         .replaceAll("<","&lt;")
@@ -1118,6 +1318,7 @@ async function login(){
         const senha=document.getElementById("loginPassword").value;
 
         if(!email || !senha){
+
             mostrarToast("Preencha e-mail e senha.");
             return;
         }
@@ -1139,11 +1340,13 @@ async function cadastro(){
         const senha=document.getElementById("signupPassword").value;
 
         if(!nome || !email || !senha){
+
             mostrarToast("Preencha todos os campos.");
             return;
         }
 
         if(senha.length<6){
+
             mostrarToast("A senha precisa ter pelo menos 6 caracteres.");
             return;
         }
@@ -1152,6 +1355,7 @@ async function cadastro(){
 
         const dados={
             nome:nome,
+            nomeBusca:nome.toLowerCase(),
             email:email,
             avatar:"",
             xp:0,
@@ -1167,7 +1371,9 @@ async function cadastro(){
             criadoEm:FV.serverTimestamp()
         };
 
-        await db.collection("Usuarios").doc(cred.user.uid).set(dados);
+        await db.collection("Usuarios")
+            .doc(cred.user.uid)
+            .set(dados);
 
         mostrarToast("Conta criada!");
 
@@ -1203,7 +1409,9 @@ auth.onAuthStateChanged(async user=>{
 
     if(!user){
 
+        limparListenersSocial();
         esconderApp();
+
         return;
     }
 
@@ -1212,6 +1420,7 @@ auth.onAuthStateChanged(async user=>{
     mostrarApp();
 
     registrarPresenca();
+    iniciarSistemaSocial();
 
     central();
 
@@ -1226,7 +1435,6 @@ auth.onAuthStateChanged(async user=>{
 async function carregarPerfil(){
 
     const ref=db.collection("Usuarios").doc(usuario.uid);
-
     const snap=await ref.get();
 
     if(snap.exists){
@@ -1239,6 +1447,7 @@ async function carregarPerfil(){
 
         perfil={
             nome:usuario.displayName || "Jogador",
+            nomeBusca:(usuario.displayName || "Jogador").toLowerCase(),
             email:usuario.email,
             avatar:"",
             xp:0,
@@ -1261,10 +1470,11 @@ async function salvarPerfil(){
 
     if(!usuario || !perfil) return;
 
-    await db.collection("Usuarios").doc(usuario.uid).set(
-        perfil,
-        {merge:true}
-    );
+    perfil.nomeBusca=(perfil.nome||"Jogador").toLowerCase();
+
+    await db.collection("Usuarios")
+        .doc(usuario.uid)
+        .set(perfil,{merge:true});
 }
 
 function getNome(){
@@ -1276,7 +1486,7 @@ function getAvatar(){
 
     if(perfil?.avatar){
 
-        return `<img class="avatar" src="${perfil.avatar}" alt="Avatar">`;
+        return `<img class="avatar" src="${escapeHTML(perfil.avatar)}" alt="Avatar">`;
     }
 
     return `<div class="avatar">👤</div>`;
@@ -1284,7 +1494,7 @@ function getAvatar(){
 
 
 /* =========================================================
-   CENTRAL DA PLATAFORMA
+   CENTRAL
 ========================================================= */
 
 function central(){
@@ -1309,15 +1519,15 @@ function central(){
 
                 <div>
                     <strong>${nome}</strong>
+
                     <div class="muted">
-                        Nível ${perfil.nivel || 1} • ${perfil.titulo || "Novato"}
+                        Nível ${perfil.nivel || 1} • ${escapeHTML(perfil.titulo || "Novato")}
                     </div>
                 </div>
 
             </div>
 
         </section>
-
 
         <section class="stats-grid">
 
@@ -1343,7 +1553,6 @@ function central(){
 
         </section>
 
-
         <h2 style="margin-top:25px">🎮 Jogos</h2>
 
         <div class="game-grid">
@@ -1356,14 +1565,15 @@ function central(){
 
                 <h2>Desafio do Milhão</h2>
 
-                <p>Responda perguntas, use suas habilidades e tente chegar ao prêmio máximo.</p>
+                <p>
+                    Responda perguntas, use suas habilidades e tente chegar ao prêmio máximo.
+                </p>
 
                 <button class="btn btn-primary full" onclick="abrirDesafio()">
                     Jogar
                 </button>
 
             </article>
-
 
             <article class="game-card" style="opacity:.65">
 
@@ -1373,16 +1583,20 @@ function central(){
 
                 <h2>Corrida do Milhão</h2>
 
-                <p>Uma corrida arcade com modo solo, amigos e partidas online.</p>
+                <p>
+                    Uma corrida arcade com modo solo, amigos e partidas online.
+                </p>
 
-                <button class="btn btn-dark full" onclick="mostrarToast('Esse jogo será adicionado em breve!')">
+                <button
+                    class="btn btn-dark full"
+                    onclick="mostrarToast('Esse jogo será adicionado em breve!')">
+
                     Em breve
                 </button>
 
             </article>
 
         </div>
-
 
         <section class="card daily">
 
@@ -1392,22 +1606,37 @@ function central(){
                 Complete o desafio diário para ganhar XP e moedas.
             </p>
 
-            <button class="btn btn-gold full" style="margin-top:12px" onclick="desafioDiario()">
+            <button
+                class="btn btn-gold full"
+                style="margin-top:12px"
+                onclick="desafioDiario()">
+
                 Ver desafio
             </button>
 
         </section>
 
-
         <div class="menu-grid" style="margin-top:15px">
 
-            <button class="btn btn-dark" onclick="abrirPerfil()">👤 Perfil</button>
+            <button class="btn btn-dark" onclick="abrirPerfil()">
+                👤 Perfil
+            </button>
 
-            <button class="btn btn-dark" onclick="abrirRanking()">🏆 Ranking</button>
+            <button class="btn btn-dark" onclick="abrirRanking()">
+                🏆 Ranking
+            </button>
 
-            <button class="btn btn-dark" onclick="abrirAmigos()">👥 Amigos</button>
+            <button class="btn btn-dark" onclick="abrirAmigos()">
+                👥 Amigos
+            </button>
 
-            <button class="btn btn-dark" onclick="abrirConquistas()">🏅 Conquistas</button>
+            <button class="btn btn-dark" onclick="abrirConquistas()">
+                🏅 Conquistas
+            </button>
+
+            <button class="btn btn-dark" onclick="abrirNotificacoes()">
+                🔔 Notificações
+            </button>
 
         </div>
     `;
@@ -1430,7 +1659,9 @@ function abrirDesafio(){
 
             <span class="badge">💰 DESAFIO DO MILHÃO</span>
 
-            <h1 style="margin-top:12px">Escolha como jogar</h1>
+            <h1 style="margin-top:12px">
+                Escolha como jogar
+            </h1>
 
             <p class="muted">
                 15 perguntas • dificuldade crescente • 15 segundos por pergunta
@@ -1438,43 +1669,64 @@ function abrirDesafio(){
 
             <div style="height:15px"></div>
 
-            <button class="btn btn-primary full" onclick="abrirCategorias('solo')">
+            <button
+                class="btn btn-primary full"
+                onclick="abrirCategorias('solo')">
+
                 🎯 Jogar sozinho
             </button>
 
             <div style="height:9px"></div>
 
-            <button class="btn btn-blue full" onclick="abrirCategorias('dupla')">
+            <button
+                class="btn btn-blue full"
+                onclick="abrirCategorias('dupla')">
+
                 👥 Jogar em dupla
             </button>
 
             <div style="height:9px"></div>
 
-            <button class="btn btn-blue full" onclick="abrirCategorias('trio')">
+            <button
+                class="btn btn-blue full"
+                onclick="abrirCategorias('trio')">
+
                 👥👥 Jogar em trio
             </button>
 
             <div style="height:9px"></div>
 
-            <button class="btn btn-green full" onclick="abrirAmigoPerto()">
+            <button
+                class="btn btn-green full"
+                onclick="abrirAmigoPerto()">
+
                 📱 Jogar com amigo perto
             </button>
 
             <div style="height:9px"></div>
 
-            <button class="btn btn-dark full" onclick="abrirOnline()">
+            <button
+                class="btn btn-dark full"
+                onclick="abrirOnline()">
+
                 🌐 Jogar online
             </button>
 
             <div style="height:9px"></div>
 
-            <button class="btn btn-dark full" onclick="comoJogar()">
+            <button
+                class="btn btn-dark full"
+                onclick="comoJogar()">
+
                 ❓ Como jogar
             </button>
 
             <div style="height:15px"></div>
 
-            <button class="btn btn-dark full" onclick="central()">
+            <button
+                class="btn btn-dark full"
+                onclick="central()">
+
                 ← Voltar para jogos
             </button>
 
@@ -1505,31 +1757,45 @@ function abrirCategorias(modo){
 
         <div class="modal-buttons">
 
-            <button class="btn btn-primary" onclick="fecharModal();novoJogo('geral','${modoSelecionado}')">
+            <button class="btn btn-primary"
+                onclick="fecharModal();novoJogo('geral','${modoSelecionado}')">
+
                 🌎 Conhecimentos gerais
             </button>
 
-            <button class="btn btn-dark" onclick="fecharModal();novoJogo('ciencia','${modoSelecionado}')">
+            <button class="btn btn-dark"
+                onclick="fecharModal();novoJogo('ciencia','${modoSelecionado}')">
+
                 🔬 Ciência
             </button>
 
-            <button class="btn btn-dark" onclick="fecharModal();novoJogo('geografia','${modoSelecionado}')">
+            <button class="btn btn-dark"
+                onclick="fecharModal();novoJogo('geografia','${modoSelecionado}')">
+
                 🌎 Geografia
             </button>
 
-            <button class="btn btn-dark" onclick="fecharModal();novoJogo('historia','${modoSelecionado}')">
+            <button class="btn btn-dark"
+                onclick="fecharModal();novoJogo('historia','${modoSelecionado}')">
+
                 📜 História
             </button>
 
-            <button class="btn btn-dark" onclick="fecharModal();novoJogo('tecnologia','${modoSelecionado}')">
+            <button class="btn btn-dark"
+                onclick="fecharModal();novoJogo('tecnologia','${modoSelecionado}')">
+
                 💻 Tecnologia
             </button>
 
-            <button class="btn btn-dark" onclick="fecharModal();novoJogo('portugues','${modoSelecionado}')">
+            <button class="btn btn-dark"
+                onclick="fecharModal();novoJogo('portugues','${modoSelecionado}')">
+
                 📚 Português
             </button>
 
-            <button class="btn btn-dark" onclick="fecharModal();novoJogo('matematica','${modoSelecionado}')">
+            <button class="btn btn-dark"
+                onclick="fecharModal();novoJogo('matematica','${modoSelecionado}')">
+
                 🧮 Matemática
             </button>
 
@@ -1567,7 +1833,6 @@ function criarPerguntas(categoria){
             respostas,
             correta:respostas.indexOf(respostaCorreta)
         };
-
     });
 }
 
@@ -1606,7 +1871,6 @@ function novoJogo(categoria="geral",modo="solo"){
             {nome:"Jogador 1",acertos:0,premio:0},
             {nome:"Jogador 2",acertos:0,premio:0}
         ];
-
     }
 
     if(modo==="trio"){
@@ -1616,7 +1880,6 @@ function novoJogo(categoria="geral",modo="solo"){
             {nome:"Jogador 2",acertos:0,premio:0},
             {nome:"Jogador 3",acertos:0,premio:0}
         ];
-
     }
 
     telaAtual="jogo";
@@ -1676,7 +1939,6 @@ function renderizarJogo(){
 
         </div>
 
-
         <div class="progress">
 
             <div
@@ -1686,10 +1948,11 @@ function renderizarJogo(){
 
         </div>
 
-
         <div class="prize-box">
 
-            <div class="muted">Próximo prêmio</div>
+            <div class="muted">
+                Próximo prêmio
+            </div>
 
             <div class="prize">
                 ${formatarDinheiro(proximoPremio)}
@@ -1701,7 +1964,6 @@ function renderizarJogo(){
             </small>
 
         </div>
-
 
         ${jogo.modo!=="solo" ? `
 
@@ -1718,7 +1980,6 @@ function renderizarJogo(){
             </div>
 
         `:""}
-
 
         <div class="card">
 
@@ -1743,7 +2004,6 @@ function renderizarJogo(){
                 `).join("")}
 
             </div>
-
 
             <div class="lifelines">
 
@@ -1773,14 +2033,19 @@ function renderizarJogo(){
 
             </div>
 
-
             <div class="game-controls">
 
-                <button class="btn btn-dark" onclick="confirmarSair()">
+                <button
+                    class="btn btn-dark"
+                    onclick="confirmarSair()">
+
                     🚪 Sair
                 </button>
 
-                <button class="btn btn-dark" onclick="compartilhar()">
+                <button
+                    class="btn btn-dark"
+                    onclick="compartilhar()">
+
                     📤 Compartilhar
                 </button>
 
@@ -1832,6 +2097,7 @@ function atualizarTimer(){
         if(jogo.tempo<=5){
 
             timer.style.borderColor="#ef4444";
+
         }else{
 
             timer.style.borderColor="#8b5cf6";
@@ -1905,14 +2171,9 @@ function responder(index){
                 (jogo.jogadores[jogo.jogadorAtual].erros||0)+1;
         }
 
-        /* IMPORTANTE:
-           ERRAR NÃO AUMENTA O PRÊMIO.
-        */
-
         tocarSom("wrong");
 
         mostrarToast("❌ Resposta errada!");
-
     }
 
     setTimeout(()=>{
@@ -1934,12 +2195,6 @@ function tempoEsgotado(){
     jogo.respondida=true;
 
     jogo.erros++;
-
-    /*
-       Não marca resposta correta.
-       Não aumenta prêmio.
-       Não revela a resposta correta.
-    */
 
     tocarSom("wrong");
 
@@ -1964,12 +2219,6 @@ function tempoEsgotado(){
 function proximaPergunta(){
 
     jogo.indice++;
-
-    /*
-       Ao carregar a próxima questão:
-       qualquer destaque anterior desaparece,
-       porque os botões são recriados.
-    */
 
     if(jogo.modo!=="solo"){
 
@@ -2058,8 +2307,6 @@ function dica(){
 
     jogo.usadaDica=true;
 
-    const pergunta=jogo.perguntas[jogo.indice];
-
     abrirModal(`
 
         <h2>💡 Dica</h2>
@@ -2127,6 +2374,7 @@ async function finalizar(){
     if(ganhouMilhao){
 
         perfil.vitorias=(perfil.vitorias||0)+1;
+
         ganharXP(300);
 
     }else{
@@ -2156,14 +2404,15 @@ async function finalizar(){
 
             <div class="prize-box" style="margin-top:20px">
 
-                <div class="muted">Prêmio final</div>
+                <div class="muted">
+                    Prêmio final
+                </div>
 
                 <div class="prize">
                     ${formatarDinheiro(premioFinal)}
                 </div>
 
             </div>
-
 
             <div class="stats-grid">
 
@@ -2188,7 +2437,6 @@ async function finalizar(){
                 </div>
 
             </div>
-
 
             <button
                 class="btn btn-primary full"
@@ -2340,7 +2588,7 @@ async function abrirRanking(){
 
                             ${
                                 p.avatar
-                                ? `<img class="avatar" src="${p.avatar}">`
+                                ? `<img class="avatar" src="${escapeHTML(p.avatar)}">`
                                 : `<div class="avatar">👤</div>`
                             }
 
@@ -2368,7 +2616,6 @@ async function abrirRanking(){
                 }
 
             </div>
-
 
             <button
                 class="btn btn-dark full"
@@ -2399,7 +2646,7 @@ function abrirPerfil(){
 
                 ${
                     perfil.avatar
-                    ? `<img class="avatar large" src="${perfil.avatar}">`
+                    ? `<img class="avatar large" src="${escapeHTML(perfil.avatar)}">`
                     : `<div class="avatar large">👤</div>`
                 }
 
@@ -2421,7 +2668,6 @@ function abrirPerfil(){
 
             </div>
 
-
             <input
                 id="photoInput"
                 type="file"
@@ -2436,9 +2682,7 @@ function abrirPerfil(){
                 📷 Escolher foto da fototeca
             </button>
 
-
             <div style="height:15px"></div>
-
 
             <div class="field">
 
@@ -2451,14 +2695,12 @@ function abrirPerfil(){
 
             </div>
 
-
             <button
                 class="btn btn-green full"
                 onclick="salvarNome()">
 
                 💾 Salvar nome
             </button>
-
 
             <div class="stats-grid">
 
@@ -2484,6 +2726,13 @@ function abrirPerfil(){
 
             </div>
 
+            <button
+                class="btn btn-blue full"
+                style="margin-bottom:9px"
+                onclick="abrirAmigos()">
+
+                👥 Amigos e mensagens
+            </button>
 
             <button
                 class="btn btn-dark full"
@@ -2498,7 +2747,7 @@ function abrirPerfil(){
 
 
 /* =========================================================
-   FOTO DA FOTOTECA
+   FOTO
 ========================================================= */
 
 function selecionarFoto(event){
@@ -2560,6 +2809,8 @@ function selecionarFoto(event){
 
                 await salvarPerfil();
 
+                await salvarRanking();
+
                 mostrarToast("📷 Foto de perfil atualizada!");
 
                 abrirPerfil();
@@ -2568,9 +2819,7 @@ function selecionarFoto(event){
 
                 console.log(error);
 
-                mostrarToast(
-                    "Não foi possível salvar a foto."
-                );
+                mostrarToast("Não foi possível salvar a foto.");
             }
         };
 
@@ -2598,9 +2847,9 @@ async function salvarNome(){
     }
 
     perfil.nome=nome;
+    perfil.nomeBusca=nome.toLowerCase();
 
     await salvarPerfil();
-
     await salvarRanking();
 
     mostrarToast("Nome atualizado!");
@@ -2681,7 +2930,10 @@ function abrirConquistas(){
 
                     <strong>${c.nome}</strong>
 
-                    <p class="muted" style="font-size:13px;margin-top:5px">
+                    <p
+                        class="muted"
+                        style="font-size:13px;margin-top:5px">
+
                         ${c.descricao}
                     </p>
 
@@ -2708,61 +2960,1590 @@ function abrirConquistas(){
 
 
 /* =========================================================
-   AMIGOS
+   =========================================================
+   SISTEMA SOCIAL
+   =========================================================
+   ========================================================= */
+
+
+/* =========================================================
+   INICIAR SISTEMA SOCIAL
 ========================================================= */
 
-function abrirAmigos(){
+function iniciarSistemaSocial(){
 
-    abrirModal(`
-
-        <h2>👥 Amigos</h2>
-
-        <p class="muted">
-            O sistema de amigos está preparado para receber
-            convites e partidas online.
-        </p>
-
-        <div class="card" style="margin-top:15px">
-
-            <h3>🟢 Seu status</h3>
-
-            <p>
-                <span class="online-dot"></span>
-                Online
-            </p>
-
-        </div>
-
-        <button
-            class="btn btn-green full"
-            style="margin-top:12px"
-            onclick="abrirAmigoPerto();fecharModal()">
-
-            📱 Jogar com amigo perto
-        </button>
-
-        <button
-            class="btn btn-primary full"
-            style="margin-top:9px"
-            onclick="abrirOnline();fecharModal()">
-
-            🌐 Jogar online
-        </button>
-
-        <button
-            class="btn btn-dark full"
-            style="margin-top:9px"
-            onclick="fecharModal()">
-
-            Fechar
-        </button>
-
-    `);
+    ouvirNotificacoes();
+    atualizarPresencaPeriodicamente();
 }
 
 
 /* =========================================================
-   JOGAR COM AMIGO PERTO
+   LIMPAR LISTENERS
+========================================================= */
+
+function limparListenersSocial(){
+
+    if(unsubscribeNotificacoes){
+
+        unsubscribeNotificacoes();
+        unsubscribeNotificacoes=null;
+    }
+
+    if(unsubscribeAmigos){
+
+        unsubscribeAmigos();
+        unsubscribeAmigos=null;
+    }
+
+    if(unsubscribeChat){
+
+        unsubscribeChat();
+        unsubscribeChat=null;
+    }
+
+    if(unsubscribePresenca){
+
+        unsubscribePresenca();
+        unsubscribePresenca=null;
+    }
+}
+
+
+/* =========================================================
+   PRESENÇA ONLINE
+========================================================= */
+
+let presencaInterval=null;
+
+async function registrarPresenca(){
+
+    if(!usuario) return;
+
+    try{
+
+        await db.collection("Usuarios")
+            .doc(usuario.uid)
+            .set({
+
+                online:true,
+                ultimaAtividade:FV.serverTimestamp()
+
+            },{merge:true});
+
+        await db.collection("Partidas")
+            .doc("presenca_"+usuario.uid)
+            .set({
+
+                uid:usuario.uid,
+                nome:getNome(),
+                avatar:perfil.avatar||"",
+                online:true,
+                atualizadoEm:FV.serverTimestamp()
+
+            },{merge:true});
+
+    }catch(e){
+
+        console.log("Presença:",e);
+    }
+}
+
+function atualizarPresencaPeriodicamente(){
+
+    if(presencaInterval){
+
+        clearInterval(presencaInterval);
+    }
+
+    registrarPresenca();
+
+    presencaInterval=setInterval(()=>{
+
+        registrarPresenca();
+
+    },30000);
+}
+
+async function marcarOffline(){
+
+    if(!usuario) return;
+
+    try{
+
+        await db.collection("Usuarios")
+            .doc(usuario.uid)
+            .set({
+
+                online:false,
+                ultimaAtividade:FV.serverTimestamp()
+
+            },{merge:true});
+
+        await db.collection("Partidas")
+            .doc("presenca_"+usuario.uid)
+            .set({
+
+                online:false,
+                atualizadoEm:FV.serverTimestamp()
+
+            },{merge:true});
+
+    }catch(e){}
+}
+
+function usuarioEstaOnline(data){
+
+    if(!data) return false;
+
+    if(data.online!==true) return false;
+
+    if(!data.ultimaAtividade) return true;
+
+    const tempo=data.ultimaAtividade.toDate
+        ? data.ultimaAtividade.toDate().getTime()
+        : Date.now();
+
+    return Date.now()-tempo < 90000;
+}
+
+window.addEventListener("beforeunload",()=>{
+
+    marcarOffline();
+});
+
+
+/* =========================================================
+   NOTIFICAÇÕES
+========================================================= */
+
+function ouvirNotificacoes(){
+
+    if(!usuario) return;
+
+    if(unsubscribeNotificacoes){
+
+        unsubscribeNotificacoes();
+    }
+
+    unsubscribeNotificacoes=db
+        .collection("Notificacoes")
+        .where("destinatario","==",usuario.uid)
+        .onSnapshot(snap=>{
+
+            let quantidade=0;
+
+            snap.forEach(doc=>{
+
+                const n=doc.data();
+
+                if(!n.lida){
+
+                    quantidade++;
+                }
+            });
+
+            const badge=document.getElementById("notificationBadge");
+
+            if(badge){
+
+                if(quantidade>0){
+
+                    badge.textContent=
+                        quantidade>99 ? "99+" : quantidade;
+
+                    badge.classList.remove("hidden");
+
+                }else{
+
+                    badge.classList.add("hidden");
+                }
+            }
+
+        },error=>{
+
+            console.log("Notificações:",error);
+        });
+}
+
+async function criarNotificacao(destinatario,tipo,dados={}){
+
+    if(!destinatario || !usuario) return;
+
+    try{
+
+        await db.collection("Notificacoes").add({
+
+            destinatario,
+            remetente:usuario.uid,
+            remetenteNome:getNome(),
+            remetenteAvatar:perfil.avatar||"",
+            tipo,
+            ...dados,
+            lida:false,
+            criadoEm:FV.serverTimestamp()
+
+        });
+
+    }catch(e){
+
+        console.log("Erro notificação:",e);
+    }
+}
+
+async function abrirNotificacoes(){
+
+    if(!usuario) return;
+
+    let notificacoes=[];
+
+    try{
+
+        const snap=await db
+            .collection("Notificacoes")
+            .where("destinatario","==",usuario.uid)
+            .limit(50)
+            .get();
+
+        snap.forEach(doc=>{
+
+            notificacoes.push({
+                id:doc.id,
+                ...doc.data()
+            });
+
+        });
+
+        notificacoes.sort((a,b)=>{
+
+            const ta=a.criadoEm?.toMillis
+                ? a.criadoEm.toMillis()
+                : 0;
+
+            const tb=b.criadoEm?.toMillis
+                ? b.criadoEm.toMillis()
+                : 0;
+
+            return tb-ta;
+        });
+
+    }catch(e){
+
+        console.log(e);
+    }
+
+    abrirModal(`
+
+        <div class="section-title">
+
+            <h2>🔔 Notificações</h2>
+
+            <button
+                class="btn btn-dark"
+                style="padding:8px 10px"
+                onclick="marcarTodasNotificacoes()">
+
+                Ler todas
+            </button>
+
+        </div>
+
+        <div>
+
+            ${
+                notificacoes.length
+                ?
+                notificacoes.map(n=>`
+
+                    <div class="notification-item ${n.lida?"":"unread"}">
+
+                        <div style="display:flex;align-items:flex-start">
+
+                            <span class="notification-icon">
+                                ${
+                                    n.tipo==="amizade"
+                                    ?"👥"
+                                    :n.tipo==="mensagem"
+                                    ?"💬"
+                                    :"🔔"
+                                }
+                            </span>
+
+                            <div style="flex:1">
+
+                                <strong>
+                                    ${escapeHTML(n.titulo||"Nova notificação")}
+                                </strong>
+
+                                <p
+                                    class="muted"
+                                    style="margin-top:5px">
+
+                                    ${escapeHTML(n.texto||"")}
+                                </p>
+
+                                ${
+                                    n.tipo==="amizade"
+                                    ?
+                                    `
+                                    <button
+                                        class="btn btn-primary"
+                                        style="margin-top:8px;padding:9px 12px"
+                                        onclick="fecharModal();abrirAmigos('pedidos')">
+
+                                        Ver pedido
+                                    </button>
+                                    `
+                                    :
+                                    n.tipo==="mensagem"
+                                    ?
+                                    `
+                                    <button
+                                        class="btn btn-primary"
+                                        style="margin-top:8px;padding:9px 12px"
+                                        onclick="fecharModal();abrirChat('${escapeHTML(n.remetente)}','${escapeHTML(n.remetenteNome||"Jogador")}','${escapeHTML(n.remetenteAvatar||"")}')">
+
+                                        Abrir conversa
+                                    </button>
+                                    `
+                                    :""
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `).join("")
+                :
+                `
+                <div class="empty-state">
+                    <div style="font-size:40px">🔔</div>
+                    <p>Você não tem notificações.</p>
+                </div>
+                `
+            }
+
+        </div>
+
+        <button
+            class="btn btn-dark full"
+            style="margin-top:12px"
+            onclick="fecharModal()">
+
+            Fechar
+        </button>
+    `);
+
+    for(const n of notificacoes){
+
+        if(!n.lida){
+
+            db.collection("Notificacoes")
+                .doc(n.id)
+                .update({lida:true})
+                .catch(()=>{});
+        }
+    }
+}
+
+async function marcarTodasNotificacoes(){
+
+    if(!usuario) return;
+
+    try{
+
+        const snap=await db
+            .collection("Notificacoes")
+            .where("destinatario","==",usuario.uid)
+            .get();
+
+        const batch=db.batch();
+
+        snap.forEach(doc=>{
+
+            if(!doc.data().lida){
+
+                batch.update(doc.ref,{lida:true});
+            }
+        });
+
+        await batch.commit();
+
+        mostrarToast("🔔 Notificações lidas.");
+
+        fecharModal();
+
+    }catch(e){
+
+        console.log(e);
+    }
+}
+
+
+/* =========================================================
+   BUSCAR JOGADORES
+========================================================= */
+
+async function buscarJogadores(){
+
+    const input=document.getElementById("buscarJogador");
+
+    if(!input) return;
+
+    const termo=input.value.trim().toLowerCase();
+
+    if(termo.length<2){
+
+        document.getElementById("resultadoBusca").innerHTML=`
+            <p class="muted">
+                Digite pelo menos 2 caracteres.
+            </p>
+        `;
+
+        return;
+    }
+
+    const resultado=document.getElementById("resultadoBusca");
+
+    resultado.innerHTML=`
+        <p class="muted">🔎 Procurando jogadores...</p>
+    `;
+
+    try{
+
+        const snap=await db
+            .collection("Usuarios")
+            .where("nomeBusca",">=",termo)
+            .where("nomeBusca","<=",termo+"\uf8ff")
+            .limit(15)
+            .get();
+
+        const jogadores=[];
+
+        snap.forEach(doc=>{
+
+            if(doc.id!==usuario.uid){
+
+                jogadores.push({
+                    uid:doc.id,
+                    ...doc.data()
+                });
+            }
+        });
+
+        resultado.innerHTML=jogadores.length
+        ?
+        jogadores.map(j=>renderUsuarioSocial(j,"buscar")).join("")
+        :
+        `
+        <div class="empty-state">
+            Nenhum jogador encontrado.
+        </div>
+        `;
+
+    }catch(e){
+
+        console.log(e);
+
+        resultado.innerHTML=`
+            <p class="muted">
+                Não foi possível pesquisar agora.
+            </p>
+        `;
+    }
+}
+
+
+/* =========================================================
+   STATUS DE AMIZADE
+========================================================= */
+
+async function obterStatusAmizade(uid){
+
+    if(!usuario || !uid) return "nenhum";
+
+    try{
+
+        const id1=usuario.uid+"_"+uid;
+        const id2=uid+"_"+usuario.uid;
+
+        const a=await db.collection("Amizades").doc(id1).get();
+
+        if(a.exists){
+
+            return a.data().status || "nenhum";
+        }
+
+        const b=await db.collection("Amizades").doc(id2).get();
+
+        if(b.exists){
+
+            return b.data().status || "nenhum";
+        }
+
+    }catch(e){
+
+        console.log(e);
+    }
+
+    return "nenhum";
+}
+
+
+/* =========================================================
+   AMIGOS
+========================================================= */
+
+async function abrirAmigos(aba="amigos"){
+
+    telaAtual="amigos";
+
+    document.getElementById("content").innerHTML=`
+
+        <div class="card">
+
+            <div class="section-title">
+
+                <div>
+                    <h1>👥 Amigos</h1>
+
+                    <p class="muted">
+                        Adicione jogadores e converse com seus amigos.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="social-tabs">
+
+                <button
+                    id="tabAmigos"
+                    class="social-tab ${aba==="amigos"?"active":""}"
+                    onclick="mostrarAbaAmigos('amigos')">
+
+                    👥 Amigos
+                </button>
+
+                <button
+                    id="tabPedidos"
+                    class="social-tab ${aba==="pedidos"?"active":""}"
+                    onclick="mostrarAbaAmigos('pedidos')">
+
+                    📩 Pedidos
+                </button>
+
+                <button
+                    id="tabBuscar"
+                    class="social-tab ${aba==="buscar"?"active":""}"
+                    onclick="mostrarAbaAmigos('buscar')">
+
+                    🔎 Buscar
+                </button>
+
+            </div>
+
+            <div id="socialContent">
+                Carregando...
+            </div>
+
+            <button
+                class="btn btn-dark full"
+                style="margin-top:15px"
+                onclick="central()">
+
+                ← Voltar
+            </button>
+
+        </div>
+    `;
+
+    mostrarAbaAmigos(aba);
+}
+
+function mostrarAbaAmigos(aba){
+
+    document.querySelectorAll(".social-tab")
+        .forEach(btn=>btn.classList.remove("active"));
+
+    if(aba==="amigos"){
+
+        document.getElementById("tabAmigos")
+            ?.classList.add("active");
+
+        carregarListaAmigos();
+    }
+
+    if(aba==="pedidos"){
+
+        document.getElementById("tabPedidos")
+            ?.classList.add("active");
+
+        carregarPedidos();
+    }
+
+    if(aba==="buscar"){
+
+        document.getElementById("tabBuscar")
+            ?.classList.add("active");
+
+        document.getElementById("socialContent").innerHTML=`
+
+            <div class="field">
+
+                <label>Nome do jogador</label>
+
+                <div style="display:flex;gap:8px">
+
+                    <input
+                        id="buscarJogador"
+                        placeholder="Digite um nome">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="buscarJogadores()">
+
+                        🔎
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div id="resultadoBusca">
+
+                <div class="empty-state">
+                    <div style="font-size:38px">🔎</div>
+                    <p>
+                        Pesquise outro jogador pelo nome.
+                    </p>
+                </div>
+
+            </div>
+        `;
+    }
+}
+
+
+/* =========================================================
+   RENDER USUÁRIO
+========================================================= */
+
+function renderAvatarUsuario(u,large=false){
+
+    if(u.avatar){
+
+        return `
+            <img
+                class="avatar ${large?"large":""}"
+                src="${escapeHTML(u.avatar)}"
+                alt="Avatar">
+        `;
+    }
+
+    return `
+        <div class="avatar ${large?"large":""}">
+            👤
+        </div>
+    `;
+}
+
+function renderUsuarioSocial(u){
+
+    const online=usuarioEstaOnline(u);
+
+    return `
+
+        <div class="social-card">
+
+            <div class="social-user">
+
+                ${renderAvatarUsuario(u)}
+
+                <div class="social-user-info">
+
+                    <strong>
+                        ${escapeHTML(u.nome||"Jogador")}
+                    </strong>
+
+                    <div class="${online?"friend-online":"friend-offline"}">
+
+                        ${
+                            online
+                            ? "🟢 Online"
+                            : "⚫ Offline"
+                        }
+
+                    </div>
+
+                    <div class="muted" style="font-size:12px;margin-top:3px">
+
+                        Nível ${u.nivel||1} •
+                        ${escapeHTML(u.titulo||"Novato")}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   CARREGAR AMIGOS
+========================================================= */
+
+async function carregarListaAmigos(){
+
+    const container=document.getElementById("socialContent");
+
+    if(!container) return;
+
+    container.innerHTML=`
+        <p class="muted">Carregando seus amigos...</p>
+    `;
+
+    try{
+
+        const snap=await db
+            .collection("Amizades")
+            .where("usuarios","array-contains",usuario.uid)
+            .get();
+
+        const amigos=[];
+
+        snap.forEach(doc=>{
+
+            const data=doc.data();
+
+            if(data.status!=="aceita") return;
+
+            const uid=data.usuarios.find(id=>id!==usuario.uid);
+
+            if(uid){
+
+                amigos.push({
+                    uid,
+                    ...data
+                });
+            }
+        });
+
+        if(!amigos.length){
+
+            container.innerHTML=`
+
+                <div class="empty-state">
+
+                    <div style="font-size:45px">
+                        👥
+                    </div>
+
+                    <p>
+                        Você ainda não tem amigos.
+                    </p>
+
+                    <button
+                        class="btn btn-primary"
+                        style="margin-top:12px"
+                        onclick="mostrarAbaAmigos('buscar')">
+
+                        🔎 Encontrar jogadores
+                    </button>
+
+                </div>
+            `;
+
+            return;
+        }
+
+        const usuarios=[];
+
+        for(const amizade of amigos){
+
+            try{
+
+                const snapUser=await db
+                    .collection("Usuarios")
+                    .doc(amizade.uid)
+                    .get();
+
+                if(snapUser.exists){
+
+                    usuarios.push({
+                        uid:snapUser.id,
+                        ...snapUser.data()
+                    });
+                }
+
+            }catch(e){}
+        }
+
+        container.innerHTML=usuarios.map(u=>`
+
+            <div class="social-card">
+
+                <div class="social-user">
+
+                    ${renderAvatarUsuario(u)}
+
+                    <div class="social-user-info">
+
+                        <strong>
+                            ${escapeHTML(u.nome||"Jogador")}
+                        </strong>
+
+                        <div class="${usuarioEstaOnline(u)?"friend-online":"friend-offline"}">
+
+                            ${
+                                usuarioEstaOnline(u)
+                                ?"🟢 Online"
+                                :"⚫ Offline"
+                            }
+
+                        </div>
+
+                        <div
+                            class="muted"
+                            style="font-size:12px;margin-top:3px">
+
+                            Nível ${u.nivel||1}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="social-actions">
+
+                    <button
+                        class="btn btn-primary"
+                        style="flex:1"
+                        onclick="abrirChat(
+                            '${escapeHTML(u.uid)}',
+                            '${escapeHTML(u.nome||"Jogador")}',
+                            '${escapeHTML(u.avatar||"")}'
+                        )">
+
+                        💬 Conversar
+                    </button>
+
+                    <button
+                        class="btn btn-dark"
+                        onclick="abrirOnlineComAmigo(
+                            '${escapeHTML(u.uid)}',
+                            '${escapeHTML(u.nome||"Jogador")}'
+                        )">
+
+                        🎮 Jogar
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+    }catch(e){
+
+        console.log(e);
+
+        container.innerHTML=`
+
+            <p class="muted">
+                Não foi possível carregar seus amigos.
+            </p>
+        `;
+    }
+}
+
+
+/* =========================================================
+   PEDIDOS DE AMIZADE
+========================================================= */
+
+async function carregarPedidos(){
+
+    const container=document.getElementById("socialContent");
+
+    if(!container) return;
+
+    container.innerHTML=`
+        <p class="muted">Carregando pedidos...</p>
+    `;
+
+    try{
+
+        const snap=await db
+            .collection("Amizades")
+            .where("destinatario","==",usuario.uid)
+            .where("status","==","pendente")
+            .get();
+
+        const pedidos=[];
+
+        snap.forEach(doc=>{
+
+            pedidos.push({
+                id:doc.id,
+                ...doc.data()
+            });
+        });
+
+        if(!pedidos.length){
+
+            container.innerHTML=`
+
+                <div class="empty-state">
+
+                    <div style="font-size:45px">
+                        📩
+                    </div>
+
+                    <p>
+                        Você não tem pedidos de amizade.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+        let html="";
+
+        for(const p of pedidos){
+
+            let u={
+                uid:p.remetente,
+                nome:p.remetenteNome,
+                avatar:p.remetenteAvatar,
+                nivel:1,
+                online:false
+            };
+
+            try{
+
+                const snapUser=await db
+                    .collection("Usuarios")
+                    .doc(p.remetente)
+                    .get();
+
+                if(snapUser.exists){
+
+                    u={
+                        uid:snapUser.id,
+                        ...snapUser.data()
+                    };
+                }
+
+            }catch(e){}
+
+            html+=`
+
+                <div class="social-card">
+
+                    <div class="social-user">
+
+                        ${renderAvatarUsuario(u)}
+
+                        <div class="social-user-info">
+
+                            <strong>
+                                ${escapeHTML(u.nome||"Jogador")}
+                            </strong>
+
+                            <div class="${usuarioEstaOnline(u)?"friend-online":"friend-offline"}">
+
+                                ${
+                                    usuarioEstaOnline(u)
+                                    ?"🟢 Online"
+                                    :"⚫ Offline"
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="social-actions">
+
+                        <button
+                            class="btn btn-green"
+                            style="flex:1"
+                            onclick="aceitarAmizade('${p.id}','${escapeHTML(p.remetente)}')">
+
+                            ✅ Aceitar
+                        </button>
+
+                        <button
+                            class="btn btn-red"
+                            style="flex:1"
+                            onclick="recusarAmizade('${p.id}')">
+
+                            ❌ Recusar
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+        }
+
+        container.innerHTML=html;
+
+    }catch(e){
+
+        console.log(e);
+
+        container.innerHTML=`
+
+            <p class="muted">
+                Não foi possível carregar os pedidos.
+            </p>
+        `;
+    }
+}
+
+
+/* =========================================================
+   ENVIAR PEDIDO
+========================================================= */
+
+async function enviarPedido(uid,nome,avatar=""){
+
+    if(!usuario || !uid || uid===usuario.uid) return;
+
+    try{
+
+        const id1=usuario.uid+"_"+uid;
+        const id2=uid+"_"+usuario.uid;
+
+        const existente1=await db
+            .collection("Amizades")
+            .doc(id1)
+            .get();
+
+        const existente2=await db
+            .collection("Amizades")
+            .doc(id2)
+            .get();
+
+        if(existente1.exists || existente2.exists){
+
+            mostrarToast("Você já enviou ou recebeu um pedido desse jogador.");
+            return;
+        }
+
+        await db
+            .collection("Amizades")
+            .doc(id1)
+            .set({
+
+                solicitante:usuario.uid,
+                destinatario:uid,
+                usuarios:[usuario.uid,uid],
+                status:"pendente",
+
+                solicitanteNome:getNome(),
+                solicitanteAvatar:perfil.avatar||"",
+
+                destinatarioNome:nome||"Jogador",
+                destinatarioAvatar:avatar||"",
+
+                criadoEm:FV.serverTimestamp()
+
+            });
+
+        await criarNotificacao(
+            uid,
+            "amizade",
+            {
+                titulo:"Novo pedido de amizade",
+                texto:`${getNome()} enviou um pedido de amizade para você.`
+            }
+        );
+
+        mostrarToast("👥 Pedido de amizade enviado!");
+
+        buscarJogadores();
+
+    }catch(e){
+
+        console.log(e);
+
+        mostrarToast("Não foi possível enviar o pedido.");
+    }
+}
+
+
+/* =========================================================
+   ACEITAR AMIZADE
+========================================================= */
+
+async function aceitarAmizade(id,remetente){
+
+    try{
+
+        const ref=db.collection("Amizades").doc(id);
+
+        await ref.update({
+
+            status:"aceita",
+            aceitoEm:FV.serverTimestamp()
+
+        });
+
+        await criarNotificacao(
+            remetente,
+            "amizade",
+            {
+                titulo:"Pedido aceito!",
+                texto:`${getNome()} aceitou seu pedido de amizade.`
+            }
+        );
+
+        mostrarToast("👥 Agora vocês são amigos!");
+
+        carregarPedidos();
+
+    }catch(e){
+
+        console.log(e);
+
+        mostrarToast("Não foi possível aceitar.");
+    }
+}
+
+
+/* =========================================================
+   RECUSAR AMIZADE
+========================================================= */
+
+async function recusarAmizade(id){
+
+    try{
+
+        await db.collection("Amizades")
+            .doc(id)
+            .delete();
+
+        mostrarToast("Pedido recusado.");
+
+        carregarPedidos();
+
+    }catch(e){
+
+        console.log(e);
+
+        mostrarToast("Não foi possível recusar.");
+    }
+}
+
+
+/* =========================================================
+   CHAT PRIVADO
+========================================================= */
+
+function criarChatId(uid1,uid2){
+
+    return [uid1,uid2].sort().join("_");
+}
+
+async function abrirChat(uid,nome,avatar=""){
+
+    fecharModal();
+
+    amigoChatAtual={
+        uid,
+        nome,
+        avatar
+    };
+
+    telaAtual="chat";
+
+    document.getElementById("content").innerHTML=`
+
+        <div class="card">
+
+            <div class="section-title">
+
+                <div style="display:flex;align-items:center;gap:12px">
+
+                    ${
+                        avatar
+                        ? `<img class="avatar" src="${escapeHTML(avatar)}">`
+                        : `<div class="avatar">👤</div>`
+                    }
+
+                    <div>
+
+                        <h2 style="margin-bottom:3px">
+                            ${escapeHTML(nome||"Jogador")}
+                        </h2>
+
+                        <div
+                            id="chatStatus"
+                            class="muted"
+                            style="font-size:12px">
+
+                            Conversa privada
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="chatMessages" class="chat-list">
+
+                <div class="empty-state">
+                    Carregando mensagens...
+                </div>
+
+            </div>
+
+            <div class="chat-input-row">
+
+                <input
+                    id="chatInput"
+                    type="text"
+                    maxlength="500"
+                    placeholder="Digite uma mensagem..."
+                    onkeydown="if(event.key==='Enter') enviarMensagem()">
+
+                <button
+                    class="btn btn-primary"
+                    onclick="enviarMensagem()">
+
+                    ➤
+                </button>
+
+            </div>
+
+            <button
+                class="btn btn-dark full"
+                style="margin-top:12px"
+                onclick="fecharChat()">
+
+                ← Voltar para amigos
+            </button>
+
+        </div>
+    `;
+
+    observarStatusAmigo(uid);
+    ouvirChat(uid);
+}
+
+function observarStatusAmigo(uid){
+
+    db.collection("Usuarios")
+        .doc(uid)
+        .onSnapshot(snap=>{
+
+            if(!snap.exists) return;
+
+            const data=snap.data();
+
+            const el=document.getElementById("chatStatus");
+
+            if(!el) return;
+
+            if(usuarioEstaOnline(data)){
+
+                el.innerHTML=`
+                    <span class="friend-online">
+                        🟢 Online
+                    </span>
+                `;
+
+            }else{
+
+                el.innerHTML=`
+                    <span class="friend-offline">
+                        ⚫ Offline
+                    </span>
+                `;
+            }
+        });
+}
+
+function ouvirChat(uid){
+
+    if(unsubscribeChat){
+
+        unsubscribeChat();
+    }
+
+    const chatId=criarChatId(usuario.uid,uid);
+
+    unsubscribeChat=db
+        .collection("Chats")
+        .doc(chatId)
+        .collection("Mensagens")
+        .orderBy("criadoEm","asc")
+        .limitToLast(100)
+        .onSnapshot(snap=>{
+
+            const container=document.getElementById("chatMessages");
+
+            if(!container) return;
+
+            const mensagens=[];
+
+            snap.forEach(doc=>{
+
+                mensagens.push({
+                    id:doc.id,
+                    ...doc.data()
+                });
+            });
+
+            if(!mensagens.length){
+
+                container.innerHTML=`
+
+                    <div class="empty-state">
+
+                        <div style="font-size:40px">
+                            💬
+                        </div>
+
+                        <p>
+                            Comece a conversa!
+                        </p>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+            container.innerHTML=mensagens.map(m=>{
+
+                const minha=m.remetente===usuario.uid;
+
+                let hora="";
+
+                if(m.criadoEm?.toDate){
+
+                    hora=m.criadoEm
+                        .toDate()
+                        .toLocaleTimeString(
+                            "pt-BR",
+                            {
+                                hour:"2-digit",
+                                minute:"2-digit"
+                            }
+                        );
+                }
+
+                return `
+
+                    <div class="chat-message ${minha?"mine":""}">
+
+                        <div class="chat-bubble">
+
+                            <div>
+                                ${escapeHTML(m.texto||"")}
+                            </div>
+
+                            <span class="chat-time">
+                                ${hora}
+                            </span>
+
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("");
+
+            container.scrollTop=container.scrollHeight;
+
+        },error=>{
+
+            console.log("Chat:",error);
+
+            const container=document.getElementById("chatMessages");
+
+            if(container){
+
+                container.innerHTML=`
+
+                    <div class="empty-state">
+
+                        <p>
+                            Não foi possível carregar a conversa.
+                        </p>
+
+                    </div>
+                `;
+            }
+        });
+}
+
+async function enviarMensagem(){
+
+    if(!usuario || !amigoChatAtual) return;
+
+    const input=document.getElementById("chatInput");
+
+    if(!input) return;
+
+    const texto=input.value.trim();
+
+    if(!texto) return;
+
+    if(texto.length>500){
+
+        mostrarToast("Mensagem muito grande.");
+        return;
+    }
+
+    const uid=amigoChatAtual.uid;
+    const chatId=criarChatId(usuario.uid,uid);
+
+    input.value="";
+
+    try{
+
+        await db
+            .collection("Chats")
+            .doc(chatId)
+            .set({
+
+                participantes:[
+                    usuario.uid,
+                    uid
+                ],
+
+                atualizadoEm:FV.serverTimestamp(),
+
+                ultimoRemetente:usuario.uid,
+
+                ultimaMensagem:texto.substring(0,100)
+
+            },{merge:true});
+
+        await db
+            .collection("Chats")
+            .doc(chatId)
+            .collection("Mensagens")
+            .add({
+
+                remetente:usuario.uid,
+                destinatario:uid,
+                texto,
+                criadoEm:FV.serverTimestamp()
+            });
+
+        await criarNotificacao(
+            uid,
+            "mensagem",
+            {
+                titulo:"Nova mensagem",
+                texto:`${getNome()}: ${texto.substring(0,80)}`
+            }
+        );
+
+    }catch(e){
+
+        console.log(e);
+
+        input.value=texto;
+
+        mostrarToast("Não foi possível enviar a mensagem.");
+    }
+}
+
+function fecharChat(){
+
+    if(unsubscribeChat){
+
+        unsubscribeChat();
+        unsubscribeChat=null;
+    }
+
+    amigoChatAtual=null;
+
+    abrirAmigos("amigos");
+}
+
+
+/* =========================================================
+   JOGAR ONLINE COM AMIGO
+========================================================= */
+
+async function abrirOnlineComAmigo(uid,nome){
+
+    if(!usuario) return;
+
+    fecharModal();
+
+    const codigo=Math.random()
+        .toString(36)
+        .substring(2,8)
+        .toUpperCase();
+
+    try{
+
+        const perguntas=criarPerguntas("geral");
+
+        await db
+            .collection("Partidas")
+            .doc("sala_"+codigo)
+            .set({
+
+                codigo,
+                criador:usuario.uid,
+                convidado:uid,
+
+                jogadores:{
+                    [usuario.uid]:{
+                        nome:getNome(),
+                        avatar:perfil.avatar||"",
+                        pronto:true
+                    }
+                },
+
+                perguntas,
+                status:"aguardando",
+
+                criadoEm:FV.serverTimestamp()
+            });
+
+        salaAtual=codigo;
+
+        await criarNotificacao(
+            uid,
+            "amizade",
+            {
+                titulo:"Convite para jogar",
+                texto:`${getNome()} convidou você para uma partida. Código: ${codigo}`
+            }
+        );
+
+        abrirSalaOnline();
+
+    }catch(e){
+
+        console.log(e);
+
+        mostrarToast("Não foi possível criar a partida.");
+    }
+}
+
+
+/* =========================================================
+   AMIGO PERTO
 ========================================================= */
 
 function abrirAmigoPerto(){
@@ -2782,7 +4563,9 @@ function abrirAmigoPerto(){
 
             <label>Jogador 1</label>
 
-            <input id="localP1" value="${escapeHTML(getNome())}">
+            <input
+                id="localP1"
+                value="${escapeHTML(getNome())}">
 
         </div>
 
@@ -2790,7 +4573,9 @@ function abrirAmigoPerto(){
 
             <label>Jogador 2</label>
 
-            <input id="localP2" placeholder="Nome do jogador 2">
+            <input
+                id="localP2"
+                placeholder="Nome do jogador 2">
 
         </div>
 
@@ -2798,7 +4583,9 @@ function abrirAmigoPerto(){
 
             <label>Jogador 3 (opcional)</label>
 
-            <input id="localP3" placeholder="Nome do jogador 3">
+            <input
+                id="localP3"
+                placeholder="Nome do jogador 3">
 
         </div>
 
@@ -2825,23 +4612,38 @@ function iniciarAmigoPerto(){
     }
 
     const jogadores=[
-        {nome:p1,acertos:0,premio:0,erros:0},
-        {nome:p2,acertos:0,premio:0,erros:0}
+        {
+            nome:p1,
+            acertos:0,
+            premio:0,
+            erros:0
+        },
+
+        {
+            nome:p2,
+            acertos:0,
+            premio:0,
+            erros:0
+        }
     ];
 
     if(p3){
 
         jogadores.push({
+
             nome:p3,
             acertos:0,
             premio:0,
             erros:0
+
         });
     }
 
     fecharModal();
 
-    const modo=jogadores.length===2?"dupla":"trio";
+    const modo=jogadores.length===2
+        ?"dupla"
+        :"trio";
 
     novoJogo("geral",modo);
 
@@ -3048,7 +4850,11 @@ function observarSala(){
 
         const jogadores=Object.values(data.jogadores||{});
 
-        document.getElementById("salaStatus").innerHTML=`
+        const status=document.getElementById("salaStatus");
+
+        if(!status) return;
+
+        status.innerHTML=`
 
             <h3>Jogadores</h3>
 
@@ -3058,7 +4864,7 @@ function observarSala(){
 
                     ${
                         j.avatar
-                        ? `<img class="avatar" src="${j.avatar}">`
+                        ? `<img class="avatar" src="${escapeHTML(j.avatar)}">`
                         : `<div class="avatar">👤</div>`
                     }
 
@@ -3144,8 +4950,10 @@ function compartilharSala(){
     if(navigator.share){
 
         navigator.share({
+
             title:"Desafio do Milhão",
             text:texto
+
         });
 
     }else{
@@ -3153,35 +4961,6 @@ function compartilharSala(){
         navigator.clipboard?.writeText(texto);
 
         mostrarToast("Código copiado!");
-    }
-}
-
-
-/* =========================================================
-   PRESENÇA ONLINE
-========================================================= */
-
-async function registrarPresenca(){
-
-    if(!usuario) return;
-
-    try{
-
-        await db.collection("Partidas")
-            .doc("presenca_"+usuario.uid)
-            .set({
-
-                uid:usuario.uid,
-                nome:getNome(),
-                avatar:perfil.avatar||"",
-                online:true,
-                atualizadoEm:FV.serverTimestamp()
-
-            },{merge:true});
-
-    }catch(e){
-
-        console.log(e);
     }
 }
 
@@ -3203,8 +4982,13 @@ function desafioDiario(){
 
         <h2>🔥 Desafio diário</h2>
 
-        <p style="margin:15px 0;font-size:19px;font-weight:bold">
+        <p style="
+            margin:15px 0;
+            font-size:19px;
+            font-weight:bold">
+
             ${escapeHTML(q[0])}
+
         </p>
 
         <div class="modal-buttons">
@@ -3310,8 +5094,10 @@ function compartilhar(){
     if(navigator.share){
 
         navigator.share({
+
             title:"Desafio do Milhão",
             text:texto
+
         });
 
     }else{
@@ -3330,8 +5116,10 @@ function compartilharResultado(){
     if(navigator.share){
 
         navigator.share({
+
             title:"Desafio do Milhão",
             text:texto
+
         });
 
     }else{
@@ -3426,6 +5214,14 @@ async function logout(){
 
     pararMusica();
 
+    await marcarOffline();
+
+    if(presencaInterval){
+
+        clearInterval(presencaInterval);
+        presencaInterval=null;
+    }
+
     await auth.signOut();
 }
 
@@ -3489,7 +5285,12 @@ function criarAudio(){
     }
 }
 
-function tocarNota(freq,duracao=.18,tipo="sine",volume=.025){
+function tocarNota(
+    freq,
+    duracao=.18,
+    tipo="sine",
+    volume=.025
+){
 
     if(!musicaLigada) return;
 
@@ -3563,7 +5364,12 @@ function iniciarMusica(track){
 
     let i=0;
 
-    tocarNota(notas[0],.35,"sine",.018);
+    tocarNota(
+        notas[0],
+        .35,
+        "sine",
+        .018
+    );
 
     musicTimer=setInterval(()=>{
 
@@ -3600,61 +5406,124 @@ function tocarSom(tipo){
 
     if(tipo==="correct"){
 
-        tocarNota(523.25,.12,"triangle",.05);
+        tocarNota(
+            523.25,
+            .12,
+            "triangle",
+            .05
+        );
 
         setTimeout(()=>{
-            tocarNota(659.25,.15,"triangle",.05);
-        },100);
 
+            tocarNota(
+                659.25,
+                .15,
+                "triangle",
+                .05
+            );
+
+        },100);
     }
 
     if(tipo==="wrong"){
 
-        tocarNota(180,.2,"sawtooth",.04);
-
+        tocarNota(
+            180,
+            .2,
+            "sawtooth",
+            .04
+        );
     }
 
     if(tipo==="click"){
 
-        tocarNota(500,.06,"square",.025);
-
+        tocarNota(
+            500,
+            .06,
+            "square",
+            .025
+        );
     }
 
     if(tipo==="finish"){
 
-        tocarNota(392,.18,"triangle",.05);
+        tocarNota(
+            392,
+            .18,
+            "triangle",
+            .05
+        );
 
         setTimeout(()=>{
-            tocarNota(523.25,.18,"triangle",.05);
+
+            tocarNota(
+                523.25,
+                .18,
+                "triangle",
+                .05
+            );
+
         },180);
 
         setTimeout(()=>{
-            tocarNota(659.25,.3,"triangle",.05);
-        },360);
 
+            tocarNota(
+                659.25,
+                .3,
+                "triangle",
+                .05
+            );
+
+        },360);
     }
 
     if(tipo==="million"){
 
-        tocarNota(523.25,.2,"triangle",.06);
+        tocarNota(
+            523.25,
+            .2,
+            "triangle",
+            .06
+        );
 
         setTimeout(()=>{
-            tocarNota(659.25,.2,"triangle",.06);
+
+            tocarNota(
+                659.25,
+                .2,
+                "triangle",
+                .06
+            );
+
         },180);
 
         setTimeout(()=>{
-            tocarNota(783.99,.2,"triangle",.06);
+
+            tocarNota(
+                783.99,
+                .2,
+                "triangle",
+                .06
+            );
+
         },360);
 
         setTimeout(()=>{
-            tocarNota(1046.5,.5,"triangle",.07);
+
+            tocarNota(
+                1046.5,
+                .5,
+                "triangle",
+                .07
+            );
+
         },540);
     }
 }
 
 
 /* =========================================================
-   PRIMEIRO TOQUE NO CELULAR
+   PRIMEIRO TOQUE
 ========================================================= */
 
 document.addEventListener("click",()=>{
@@ -3671,18 +5540,19 @@ document.addEventListener("click",()=>{
    FECHAR MODAL AO CLICAR FORA
 ========================================================= */
 
-document.getElementById("modal").addEventListener("click",function(e){
+document.getElementById("modal")
+    .addEventListener("click",function(e){
 
-    if(e.target===this){
+        if(e.target===this){
 
-        fecharModal();
-    }
+            fecharModal();
+        }
 
-});
+    });
 
 
 /* =========================================================
-   PREPARAR LOCALSTORAGE
+   LOCAL STORAGE
 ========================================================= */
 
 if(localStorage.getItem("milhao_recorde")===null){
@@ -3696,4 +5566,4 @@ if(localStorage.getItem("milhao_recorde")===null){
 </script>
 
 </body>
-</html>
+</html></html>
