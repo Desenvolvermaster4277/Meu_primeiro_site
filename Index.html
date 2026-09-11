@@ -2,163 +2,144 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Optimus Prime AI</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CifraFácil 🎸</title>
 
 <style>
 *{box-sizing:border-box}
 
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#080b12;
-    color:#fff;
-    min-height:100vh;
+margin:0;
+font-family:Arial,sans-serif;
+background:#0b1220;
+color:#fff
 }
 
 header{
-    padding:18px;
-    background:#101722;
-    border-bottom:1px solid #263244;
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.logo{
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    background:#2563eb;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
+background:linear-gradient(135deg,#111827,#1e3a8a);
+padding:30px 20px;
+text-align:center
 }
 
 header h1{
-    margin:0;
-    font-size:20px;
+font-size:34px;
+margin:0 0 8px
 }
 
 header p{
-    margin:3px 0 0;
-    color:#94a3b8;
-    font-size:13px;
+color:#cbd5e1;
+margin:0
 }
 
-.chat{
-    max-width:850px;
-    margin:auto;
-    padding:20px;
-    padding-bottom:120px;
+.container{
+max-width:900px;
+margin:auto;
+padding:20px
 }
 
-.welcome{
-    text-align:center;
-    margin:50px 0 35px;
+.search{
+display:flex;
+gap:10px;
+margin:20px 0
 }
 
-.welcome h2{
-    font-size:32px;
-    margin-bottom:10px;
-}
-
-.welcome p{
-    color:#94a3b8;
-}
-
-.message{
-    display:flex;
-    margin:18px 0;
-}
-
-.message.user{
-    justify-content:flex-end;
-}
-
-.bubble{
-    max-width:80%;
-    padding:14px 17px;
-    border-radius:18px;
-    line-height:1.5;
-    white-space:pre-wrap;
-}
-
-.ai .bubble{
-    background:#151c28;
-    border:1px solid #263244;
-}
-
-.user .bubble{
-    background:#2563eb;
-}
-
-.input-area{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    background:#080b12;
-    border-top:1px solid #263244;
-    padding:15px;
-}
-
-.input-box{
-    max-width:850px;
-    margin:auto;
-    display:flex;
-    gap:10px;
-}
-
-input{
-    flex:1;
-    padding:15px;
-    border-radius:14px;
-    border:1px solid #334155;
-    background:#111827;
-    color:white;
-    outline:none;
-    font-size:16px;
+.search input{
+flex:1;
+padding:16px;
+border-radius:12px;
+border:1px solid #334155;
+background:#111827;
+color:white;
+font-size:16px
 }
 
 button{
-    border:0;
-    border-radius:14px;
-    padding:0 20px;
-    background:#2563eb;
-    color:white;
-    font-size:20px;
-    cursor:pointer;
+border:0;
+border-radius:12px;
+padding:14px 18px;
+background:#2563eb;
+color:white;
+font-weight:bold;
+cursor:pointer
 }
 
 button:hover{
-    background:#1d4ed8;
+background:#1d4ed8
 }
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-    max-width:600px;
-    margin:auto;
+.categories{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+margin-bottom:20px
+}
+
+.categories button{
+background:#1e293b
 }
 
 .card{
-    padding:15px;
-    background:#111827;
-    border:1px solid #263244;
-    border-radius:14px;
-    cursor:pointer;
+background:#111827;
+border:1px solid #263244;
+border-radius:15px;
+padding:18px;
+margin:12px 0;
+cursor:pointer
 }
 
 .card:hover{
-    border-color:#3b82f6;
+border-color:#3b82f6
 }
 
-@media(max-width:600px){
-    .bubble{max-width:90%}
-    .welcome h2{font-size:27px}
+.card h3{
+margin:0 0 7px
+}
+
+.card p{
+margin:0;
+color:#94a3b8
+}
+
+#results{
+margin-top:15px
+}
+
+.cifra{
+display:none;
+background:#111827;
+border-radius:15px;
+padding:20px;
+margin-top:20px
+}
+
+.cifra h2{
+margin-top:0
+}
+
+.chords{
+white-space:pre-wrap;
+font-family:monospace;
+font-size:17px;
+line-height:1.7;
+color:#e2e8f0
+}
+
+.chord{
+color:#60a5fa;
+font-weight:bold
+}
+
+.controls{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px
+}
+
+.empty{
+text-align:center;
+padding:30px;
+color:#94a3b8
 }
 </style>
 </head>
@@ -166,177 +147,312 @@ button:hover{
 <body>
 
 <header>
-    <div class="logo">🤖</div>
-    <div>
-        <h1>Optimus Prime</h1>
-        <p>Assistente virtual inteligente</p>
-    </div>
+<h1>🎸 CifraFácil</h1>
+<p>Pesquise suas cifras de violão</p>
 </header>
 
-<main class="chat" id="chat">
+<div class="container">
 
-    <div class="welcome" id="welcome">
-        <h2>Olá, eu sou a Optimus Prime 🤖</h2>
-        <p>Como posso ajudar você hoje?</p>
+<div class="search">
+<input
+id="search"
+placeholder="Digite o nome da música ou artista..."
+onkeydown="if(event.key==='Enter')pesquisar()"
+>
+<button onclick="pesquisar()">🔎 Buscar</button>
+</div>
 
-        <div class="cards">
-            <div class="card" onclick="suggest('Explique o que é inteligência artificial')">
-                🧠 Inteligência Artificial
-            </div>
+<div class="categories">
+<button onclick="mostrarCategoria('Todas')">Todas</button>
+<button onclick="mostrarCategoria('Pop')">Pop</button>
+<button onclick="mostrarCategoria('Rock')">Rock</button>
+<button onclick="mostrarCategoria('Sertanejo')">Sertanejo</button>
+<button onclick="mostrarCategoria('MPB')">MPB</button>
+</div>
 
-            <div class="card" onclick="suggest('Me ajude a criar um site')">
-                💻 Criar um site
-            </div>
+<div id="results"></div>
 
-            <div class="card" onclick="suggest('Faça uma análise de dados')">
-                📊 Analisar dados
-            </div>
+<div id="cifra" class="cifra">
 
-            <div class="card" onclick="suggest('Me dê uma ideia de negócio')">
-                💡 Ideias
-            </div>
-        </div>
-    </div>
+<h2 id="titulo"></h2>
 
-</main>
+<div class="controls">
+<button onclick="transpor(-1)">⬇️ Tom -</button>
+<button onclick="transpor(1)">⬆️ Tom +</button>
+<button onclick="fechar()">✖ Fechar</button>
+</div>
 
-<div class="input-area">
-    <div class="input-box">
-        <input
-            id="input"
-            type="text"
-            placeholder="Pergunte alguma coisa..."
-            onkeydown="if(event.key==='Enter') sendMessage()"
-        >
+<div id="conteudo" class="chords"></div>
 
-        <button onclick="sendMessage()">➤</button>
-    </div>
+</div>
+
 </div>
 
 <script>
 
-const chat = document.getElementById("chat");
-const input = document.getElementById("input");
+const musicas=[
 
-function suggest(text){
-    input.value = text;
-    sendMessage();
+{
+titulo:"Exemplo de Música",
+artista:"Artista Exemplo",
+categoria:"Pop",
+cifra:
+`Tom: G
+
+G              D
+Esta é uma cifra de exemplo
+Em             C
+Para você testar o site
+
+G                 D
+Troque este conteúdo
+Em                C
+Pelas cifras que você possui`
+},
+
+{
+titulo:"Outra Música",
+artista:"Banda Exemplo",
+categoria:"Rock",
+cifra:
+`Tom: C
+
+C             G
+Aqui começa a música
+Am            F
+Com os acordes no violão
+
+C             G
+Você pode pesquisar
+Am             F
+E abrir esta cifra`
+},
+
+{
+titulo:"Canção Sertaneja",
+artista:"Artista Sertanejo",
+categoria:"Sertanejo",
+cifra:
+`Tom: D
+
+D             A
+Cifra de exemplo
+Bm            G
+Para seu violão
+
+D             A
+Você pode alterar
+Bm             G
+O tom da música`
+},
+
+{
+titulo:"Canção MPB",
+artista:"Artista MPB",
+categoria:"MPB",
+cifra:
+`Tom: Am
+
+Am             F
+Uma canção de exemplo
+C              G
+Para testar o sistema
+
+Am             F
+Pesquise pelo nome
+C               G
+E abra a cifra`
 }
 
-function addMessage(text,type){
+];
 
-    const message = document.createElement("div");
+let cifraAtual=null;
+let tomAtual=0;
 
-    message.className = "message " + type;
+function pesquisar(){
 
-    const bubble = document.createElement("div");
+const termo=
+document.getElementById("search")
+.value
+.toLowerCase()
+.trim();
 
-    bubble.className = "bubble";
+const resultados=
+musicas.filter(m=>
+m.titulo.toLowerCase().includes(termo) ||
+m.artista.toLowerCase().includes(termo)
+);
 
-    bubble.textContent = text;
-
-    message.appendChild(bubble);
-
-    chat.appendChild(message);
-
-    window.scrollTo({
-        top:document.body.scrollHeight,
-        behavior:"smooth"
-    });
+mostrarResultados(resultados);
 }
 
-function sendMessage(){
+function mostrarResultados(lista){
 
-    const text = input.value.trim();
+const area=
+document.getElementById("results");
 
-    if(!text) return;
+area.innerHTML="";
 
-    const welcome = document.getElementById("welcome");
+if(lista.length===0){
 
-    if(welcome) welcome.remove();
+area.innerHTML=
+`<div class="empty">
+🎸 Nenhuma cifra encontrada.<br><br>
+Tente pesquisar outro nome.
+</div>`;
 
-    addMessage(text,"user");
-
-    input.value="";
-
-    setTimeout(()=>{
-
-        const answer = generateAnswer(text);
-
-        addMessage(answer,"ai");
-
-    },500);
+return;
 }
 
-function generateAnswer(text){
+lista.forEach((musica,index)=>{
 
-    const t = text.toLowerCase();
+const card=document.createElement("div");
 
-    if(
-        t.includes("olá") ||
-        t.includes("ola") ||
-        t.includes("oi") ||
-        t.includes("bom dia") ||
-        t.includes("boa tarde") ||
-        t.includes("boa noite")
-    ){
+card.className="card";
 
-        return "Olá! 👋 Eu sou a Optimus Prime. Estou pronta para conversar, explicar assuntos, ajudar com ideias, programação e análises.";
-    }
+card.innerHTML=`
+<h3>🎵 ${musica.titulo}</h3>
+<p>${musica.artista} • ${musica.categoria}</p>
+`;
 
-    if(t.includes("inteligência artificial") || t.includes("ia")){
+card.onclick=()=>abrirCifra(musica);
 
-        return "Inteligência Artificial é uma área da tecnologia que permite que computadores realizem tarefas que normalmente exigiriam inteligência humana, como interpretar textos, reconhecer padrões, analisar informações e gerar respostas.";
-    }
+area.appendChild(card);
 
-    if(t.includes("site") || t.includes("website")){
+});
 
-        return "Posso ajudar você a criar sites. 💻\n\nPodemos trabalhar com HTML, CSS e JavaScript e transformar uma ideia em uma página completa.";
-    }
-
-    if(
-        t.includes("analisar dados") ||
-        t.includes("dados") ||
-        t.includes("análise")
-    ){
-
-        return "Claro! 📊\n\nPara uma análise real, envie os dados que deseja analisar. Posso ajudar a identificar padrões, calcular indicadores, comparar valores e interpretar os resultados.";
-    }
-
-    if(t.includes("negócio") || t.includes("negocio")){
-
-        return "Uma boa ideia de negócio começa identificando um problema real. 💡\n\nProcure algo que as pessoas precisam, descubra quanto pagariam por uma solução e depois teste a ideia com poucos clientes antes de investir muito dinheiro.";
-    }
-
-    if(t.includes("quem é você") || t.includes("quem é voce")){
-
-        return "Eu sou a Optimus Prime 🤖, uma assistente virtual criada neste site. Esta versão funciona localmente no navegador.";
-    }
-
-    if(t.includes("obrigado") || t.includes("obrigada")){
-
-        return "De nada! 😄 Estou aqui para ajudar.";
-    }
-
-    if(
-        t.includes("html") ||
-        t.includes("javascript") ||
-        t.includes("css") ||
-        t.includes("programar") ||
-        t.includes("código") ||
-        t.includes("codigo")
-    ){
-
-        return "Posso ajudar com programação. 👨‍💻\n\nPosso explicar conceitos, corrigir códigos e ajudar você a construir projetos usando HTML, CSS e JavaScript.";
-    }
-
-    if(t.includes("matemática") || t.includes("matematica")){
-
-        return "Posso ajudar com matemática. 🔢\n\nDigite a conta ou o problema que deseja resolver.";
-    }
-
-    return "Entendi sua pergunta. 🤖\n\nNesta versão inicial da Optimus Prime, minhas respostas são baseadas em regras programadas no próprio site.\n\nPara eu realmente conversar sobre praticamente qualquer assunto, analisar arquivos e gerar respostas como uma IA avançada, precisamos conectar este site a uma API de inteligência artificial.";
 }
+
+function mostrarCategoria(categoria){
+
+if(categoria==="Todas"){
+
+mostrarResultados(musicas);
+return;
+
+}
+
+const lista=
+musicas.filter(
+m=>m.categoria===categoria
+);
+
+mostrarResultados(lista);
+}
+
+function abrirCifra(musica){
+
+cifraAtual=musica;
+tomAtual=0;
+
+document.getElementById("titulo").textContent=
+"🎵 "+musica.titulo+
+" — "+musica.artista;
+
+document.getElementById("cifra").style.display="block";
+
+renderizarCifra();
+
+window.scrollTo({
+top:document.getElementById("cifra").offsetTop-20,
+behavior:"smooth"
+});
+
+}
+
+const notas=[
+"C","C#","D","D#","E","F",
+"F#","G","G#","A","A#","B"
+];
+
+function transpor(direcao){
+
+if(!cifraAtual)return;
+
+tomAtual+=direcao;
+
+renderizarCifra();
+
+}
+
+function renderizarCifra(){
+
+let texto=cifraAtual.cifra;
+
+const acordes=
+texto.match(/\b[A-G](#|b)?(m|maj|dim|aug|sus|7|9|11|13)?\b/g);
+
+if(acordes){
+
+acordes.forEach(acorde=>{
+
+const novo=transporAcorde(
+acorde,
+tomAtual
+);
+
+texto=texto.replace(
+new RegExp("\\b"+escapeRegExp(acorde)+"\\b"),
+novo
+);
+
+});
+
+}
+
+document.getElementById("conteudo").textContent=
+texto;
+
+}
+
+function transporAcorde(acorde,semitons){
+
+const match=
+acorde.match(/^([A-G](#|b)?)(.*)$/);
+
+if(!match)return acorde;
+
+let nota=match[1];
+let resto=match[3];
+
+let indice=notas.indexOf(nota);
+
+if(indice===-1){
+
+if(nota==="Db")indice=1;
+if(nota==="Eb")indice=3;
+if(nota==="Gb")indice=6;
+if(nota==="Ab")indice=8;
+if(nota==="Bb")indice=10;
+
+}
+
+if(indice===-1)return acorde;
+
+indice=
+(indice+semitons+12)%12;
+
+return notas[indice]+resto;
+
+}
+
+function escapeRegExp(text){
+
+return text.replace(
+/[.*+?^${}()|[\]\\]/g,
+"\\$&"
+);
+
+}
+
+function fechar(){
+
+document.getElementById("cifra")
+.style.display="none";
+
+}
+
+mostrarResultados(musicas);
 
 </script>
 
