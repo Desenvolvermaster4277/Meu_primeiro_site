@@ -6,339 +6,344 @@
 <title>MenteLab — Desafio do Milhão</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    color:white;
+    min-height:100vh;
     background:
-        radial-gradient(circle at top, #29205c 0%, #100d24 45%, #070611 100%);
-    color: white;
-    min-height: 100vh;
+    radial-gradient(circle at top,#302060 0%,#110c28 45%,#05040c 100%);
 }
 
-button {
-    font-family: inherit;
+button{
+    font-family:inherit;
 }
 
-header {
-    padding: 18px 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,.1);
-    background: rgba(8,6,20,.65);
-    backdrop-filter: blur(10px);
-    position: sticky;
-    top: 0;
-    z-index: 20;
+header{
+    height:70px;
+    padding:0 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(5,4,15,.75);
+    border-bottom:1px solid rgba(255,255,255,.1);
+    position:sticky;
+    top:0;
+    z-index:50;
+    backdrop-filter:blur(15px);
 }
 
-.logo {
-    font-size: 22px;
-    font-weight: 900;
+.logo{
+    font-size:22px;
+    font-weight:900;
 }
 
-.logo span {
-    color: #a78bfa;
+.logo span{
+    color:#a78bfa;
 }
 
-.recorde {
-    background: rgba(255,255,255,.08);
-    padding: 9px 14px;
-    border-radius: 20px;
-    font-size: 13px;
+.recorde{
+    font-size:13px;
+    background:rgba(255,255,255,.08);
+    padding:9px 13px;
+    border-radius:20px;
 }
 
-main {
-    max-width: 900px;
-    margin: auto;
-    padding: 25px 16px 50px;
+main{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:25px 15px 60px;
 }
 
-/* TELA INICIAL */
+/* INÍCIO */
 
-#inicio {
-    text-align: center;
-    padding-top: 45px;
+#inicio{
+    text-align:center;
+    padding-top:40px;
 }
 
-.trofeu {
-    font-size: 70px;
-    margin-bottom: 10px;
+.trofeu{
+    font-size:75px;
+    margin-bottom:12px;
 }
 
-h1 {
-    font-size: clamp(32px, 8vw, 60px);
-    margin-bottom: 12px;
+#inicio h1{
+    font-size:clamp(35px,8vw,62px);
+    margin-bottom:12px;
 }
 
-.subtitulo {
-    color: #bdb8d7;
-    max-width: 600px;
-    margin: auto;
-    line-height: 1.6;
+.subtitulo{
+    color:#c3bed5;
+    line-height:1.6;
+    max-width:650px;
+    margin:auto;
 }
 
-.premio-final {
-    margin: 30px auto;
-    max-width: 430px;
-    padding: 25px;
-    border-radius: 22px;
-    background: linear-gradient(135deg, #24194e, #17102f);
-    border: 1px solid #57419c;
-    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+.premio-final{
+    margin:30px auto;
+    max-width:450px;
+    padding:25px;
+    border-radius:22px;
+    background:linear-gradient(135deg,#271953,#130e2d);
+    border:1px solid #5943a0;
 }
 
-.premio-final small {
-    color: #aaa4c5;
+.premio-final small{
+    color:#aaa4c5;
 }
 
-.premio-final strong {
-    display: block;
-    color: #facc15;
-    font-size: 42px;
-    margin-top: 8px;
+.premio-final strong{
+    display:block;
+    color:#facc15;
+    font-size:43px;
+    margin-top:8px;
 }
 
-.btn-principal {
-    border: none;
-    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 17px 35px;
-    border-radius: 15px;
-    cursor: pointer;
-    box-shadow: 0 12px 30px rgba(124,58,237,.35);
-    transition: .2s;
+.btn-principal{
+    border:0;
+    color:white;
+    background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+    padding:17px 30px;
+    border-radius:15px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 12px 35px rgba(124,58,237,.35);
+    transition:.2s;
 }
 
-.btn-principal:hover {
-    transform: translateY(-2px);
+.btn-principal:hover{
+    transform:translateY(-2px);
 }
 
-.regras {
-    margin: 30px auto 0;
-    max-width: 600px;
-    display: grid;
-    gap: 10px;
+.info{
+    display:grid;
+    gap:10px;
+    max-width:600px;
+    margin:30px auto 0;
 }
 
-.regra {
-    background: rgba(255,255,255,.05);
-    padding: 13px;
-    border-radius: 12px;
-    color: #d4d0e5;
+.info div{
+    padding:13px;
+    border-radius:12px;
+    background:rgba(255,255,255,.05);
+    color:#d3cfe0;
 }
 
 /* JOGO */
 
-#jogo {
-    display: none;
+#jogo{
+    display:none;
 }
 
-.topo-jogo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 18px;
+.topo{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
 }
 
-.pergunta-numero {
-    color: #bdb8d7;
-    font-size: 14px;
+.numero{
+    color:#bbb5d0;
+    font-size:14px;
 }
 
-.premio-atual {
-    color: #facc15;
-    font-size: 25px;
-    font-weight: 900;
+.premio{
+    color:#facc15;
+    font-size:25px;
+    font-weight:900;
 }
 
-.barra {
-    width: 100%;
-    height: 8px;
-    background: rgba(255,255,255,.1);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 25px;
+.barra{
+    width:100%;
+    height:8px;
+    border-radius:10px;
+    background:rgba(255,255,255,.1);
+    overflow:hidden;
+    margin-bottom:22px;
 }
 
-.barra div {
-    height: 100%;
-    background: linear-gradient(90deg, #8b5cf6, #c084fc);
-    width: 0%;
-    transition: .4s;
+.barra div{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#8b5cf6,#d8b4fe);
+    transition:.4s;
 }
 
-.categoria {
-    display: inline-block;
-    padding: 7px 12px;
-    background: rgba(167,139,250,.15);
-    color: #c4b5fd;
-    border-radius: 20px;
-    font-size: 12px;
-    margin-bottom: 15px;
+.categoria{
+    display:inline-block;
+    padding:7px 12px;
+    border-radius:20px;
+    background:rgba(167,139,250,.15);
+    color:#c4b5fd;
+    font-size:12px;
+    margin-bottom:14px;
 }
 
-.pergunta-box {
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.1);
-    padding: 28px 20px;
-    border-radius: 22px;
-    margin-bottom: 18px;
+.pergunta-box{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.1);
+    padding:28px 20px;
+    border-radius:22px;
+    margin-bottom:16px;
 }
 
-.pergunta-box h2 {
-    font-size: clamp(21px, 5vw, 30px);
-    line-height: 1.4;
+.pergunta-box h2{
+    font-size:clamp(20px,5vw,29px);
+    line-height:1.45;
 }
 
-.alternativas {
-    display: grid;
-    gap: 12px;
+.alternativas{
+    display:grid;
+    gap:11px;
 }
 
-.alternativa {
-    width: 100%;
-    text-align: left;
-    padding: 18px;
-    border-radius: 15px;
-    border: 1px solid rgba(255,255,255,.12);
-    background: rgba(255,255,255,.06);
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: .2s;
+.alternativa{
+    width:100%;
+    text-align:left;
+    padding:16px;
+    border-radius:15px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.055);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.alternativa:hover:not(:disabled) {
-    background: rgba(139,92,246,.2);
-    border-color: #8b5cf6;
-    transform: translateX(3px);
+.alternativa:hover:not(:disabled){
+    border-color:#8b5cf6;
+    background:rgba(139,92,246,.18);
+    transform:translateX(3px);
 }
 
-.alternativa .letra {
-    display: inline-flex;
-    width: 31px;
-    height: 31px;
-    border-radius: 50%;
-    background: rgba(255,255,255,.1);
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-    font-weight: bold;
+.letra{
+    width:31px;
+    height:31px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:rgba(255,255,255,.1);
+    margin-right:10px;
+    font-weight:bold;
 }
 
-.alternativa.certa {
-    background: rgba(34,197,94,.22);
-    border-color: #22c55e;
+.alternativa.certa{
+    background:rgba(34,197,94,.22);
+    border-color:#22c55e;
 }
 
-.alternativa.errada {
-    background: rgba(239,68,68,.22);
-    border-color: #ef4444;
+.alternativa.errada{
+    background:rgba(239,68,68,.22);
+    border-color:#ef4444;
 }
 
-.alternativa:disabled {
-    cursor: default;
+.alternativa:disabled{
+    cursor:default;
 }
 
-.ajudas {
-    display: flex;
-    gap: 10px;
-    margin-top: 18px;
-    flex-wrap: wrap;
+.ajudas{
+    display:flex;
+    gap:10px;
+    margin-top:17px;
 }
 
-.ajuda {
-    flex: 1;
-    min-width: 130px;
-    border: 1px solid rgba(255,255,255,.12);
-    background: rgba(255,255,255,.06);
-    color: white;
-    padding: 13px;
-    border-radius: 12px;
-    cursor: pointer;
+.ajuda{
+    flex:1;
+    padding:13px 8px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.12);
+    color:white;
+    background:rgba(255,255,255,.06);
+    cursor:pointer;
 }
 
-.ajuda:hover:not(:disabled) {
-    background: rgba(255,255,255,.12);
+.ajuda:hover:not(:disabled){
+    background:rgba(255,255,255,.12);
 }
 
-.ajuda:disabled {
-    opacity: .35;
-    cursor: default;
+.ajuda:disabled{
+    opacity:.3;
+    cursor:default;
 }
 
 /* RESULTADO */
 
-#resultado {
-    display: none;
-    text-align: center;
-    padding-top: 60px;
+#resultado{
+    display:none;
+    text-align:center;
+    padding-top:60px;
 }
 
-.resultado-emoji {
-    font-size: 75px;
+.resultado-emoji{
+    font-size:75px;
 }
 
-.resultado-titulo {
-    font-size: 38px;
-    margin: 15px 0;
+.resultado-titulo{
+    font-size:clamp(30px,7vw,45px);
+    margin:15px 0;
 }
 
-.resultado-premio {
-    color: #facc15;
-    font-size: 48px;
-    font-weight: 900;
-    margin: 20px 0;
+.resultado-premio{
+    color:#facc15;
+    font-size:clamp(38px,9vw,55px);
+    font-weight:900;
+    margin:20px 0;
 }
 
-.resultado-card {
-    max-width: 500px;
-    margin: auto;
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 22px;
-    padding: 25px;
+.resultado-card{
+    max-width:530px;
+    margin:auto;
+    padding:25px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:22px;
 }
 
-.resultado-card p {
-    color: #c6c1d9;
-    line-height: 1.6;
+.resultado-card p{
+    color:#c5c0d5;
+    line-height:1.6;
 }
 
-.btn-novamente {
-    margin-top: 25px;
+.btn-novamente{
+    margin-top:25px;
 }
 
-/* RESPONSIVO */
+@media(max-width:600px){
 
-@media (max-width: 600px) {
-    header {
-        padding: 15px;
+    header{
+        padding:0 13px;
     }
 
-    main {
-        padding: 20px 12px 40px;
+    .recorde{
+        font-size:11px;
     }
 
-    .premio-final strong {
-        font-size: 34px;
+    main{
+        padding:20px 12px 45px;
     }
 
-    .pergunta-box {
-        padding: 22px 16px;
+    .premio{
+        font-size:20px;
     }
 
-    .premio-atual {
-        font-size: 20px;
+    .pergunta-box{
+        padding:22px 16px;
+    }
+
+    .ajudas{
+        flex-wrap:wrap;
+    }
+
+    .ajuda{
+        min-width:30%;
     }
 }
 </style>
@@ -347,10 +352,16 @@ h1 {
 <body>
 
 <header>
-    <div class="logo">🧠 Mente<span>Lab</span></div>
-    <div class="recorde">
-        🏆 Recorde: <strong id="recorde">R$ 0</strong>
-    </div>
+
+<div class="logo">
+🧠 Mente<span>Lab</span>
+</div>
+
+<div class="recorde">
+🏆 Recorde:
+<strong id="recorde">R$ 0</strong>
+</div>
+
 </header>
 
 <main>
@@ -359,31 +370,39 @@ h1 {
 
 <section id="inicio">
 
-    <div class="trofeu">🏆</div>
+<div class="trofeu">🏆</div>
 
-    <h1>Desafio do Milhão</h1>
+<h1>Desafio do Milhão</h1>
 
-    <p class="subtitulo">
-        Teste seus conhecimentos, suba na tabela de prêmios
-        e tente chegar ao grande prêmio de
-        <strong>R$ 1.000.000</strong>.
-    </p>
+<p class="subtitulo">
+Você consegue chegar a <strong>R$ 1 milhão</strong>?
+Responda perguntas, enfrente níveis cada vez mais difíceis
+e tente bater seu recorde.
+</p>
 
-    <div class="premio-final">
-        <small>PRÊMIO MÁXIMO</small>
-        <strong>R$ 1.000.000</strong>
-    </div>
+<div class="premio-final">
 
-    <button class="btn-principal" onclick="iniciarJogo()">
-        🎮 COMEÇAR O DESAFIO
-    </button>
+<small>PRÊMIO MÁXIMO</small>
 
-    <div class="regras">
-        <div class="regra">🧠 Perguntas ficam mais difíceis</div>
-        <div class="regra">💰 Quanto mais acertos, maior o prêmio</div>
-        <div class="regra">🛟 Você possui 3 ajudas</div>
-        <div class="regra">🏆 Tente bater seu recorde</div>
-    </div>
+<strong>R$ 1.000.000</strong>
+
+</div>
+
+<button class="btn-principal" onclick="iniciarJogo()">
+🎮 COMEÇAR O DESAFIO
+</button>
+
+<div class="info">
+
+<div>🎲 Perguntas diferentes a cada partida</div>
+
+<div>🧠 Mais de 80 perguntas disponíveis</div>
+
+<div>🚫 Nenhuma pergunta se repete na mesma partida</div>
+
+<div>🛟 3 ajudas disponíveis</div>
+
+</div>
 
 </section>
 
@@ -392,45 +411,45 @@ h1 {
 
 <section id="jogo">
 
-    <div class="topo-jogo">
-        <div class="pergunta-numero">
-            Pergunta <strong id="numeroPergunta">1</strong> de 15
-        </div>
+<div class="topo">
 
-        <div class="premio-atual" id="premioAtual">
-            R$ 1.000
-        </div>
-    </div>
+<div class="numero">
+Pergunta <strong id="numeroPergunta">1</strong> de 15
+</div>
 
-    <div class="barra">
-        <div id="barraProgresso"></div>
-    </div>
+<div class="premio" id="premioAtual">
+R$ 1.000
+</div>
 
-    <div class="categoria" id="categoria">
-        Conhecimentos Gerais
-    </div>
+</div>
 
-    <div class="pergunta-box">
-        <h2 id="pergunta"></h2>
-    </div>
+<div class="barra">
+<div id="barraProgresso"></div>
+</div>
 
-    <div class="alternativas" id="alternativas"></div>
+<div class="categoria" id="categoria"></div>
 
-    <div class="ajudas">
+<div class="pergunta-box">
+<h2 id="pergunta"></h2>
+</div>
 
-        <button class="ajuda" id="ajuda5050" onclick="usar5050()">
-            ✂️ 50/50
-        </button>
+<div class="alternativas" id="alternativas"></div>
 
-        <button class="ajuda" id="ajudaPular" onclick="pularPergunta()">
-            ⏭️ Pular
-        </button>
+<div class="ajudas">
 
-        <button class="ajuda" id="ajudaDica" onclick="usarDica()">
-            💡 Dica
-        </button>
+<button class="ajuda" id="ajuda5050" onclick="usar5050()">
+✂️ 50/50
+</button>
 
-    </div>
+<button class="ajuda" id="ajudaPular" onclick="pularPergunta()">
+⏭️ Pular
+</button>
+
+<button class="ajuda" id="ajudaDica" onclick="usarDica()">
+💡 Dica
+</button>
+
+</div>
 
 </section>
 
@@ -439,25 +458,27 @@ h1 {
 
 <section id="resultado">
 
-    <div class="resultado-emoji" id="resultadoEmoji">
-        🏆
-    </div>
+<div class="resultado-emoji" id="resultadoEmoji">
+🏆
+</div>
 
-    <h1 class="resultado-titulo" id="resultadoTitulo">
-        Parabéns!
-    </h1>
+<h1 class="resultado-titulo" id="resultadoTitulo">
+Parabéns!
+</h1>
 
-    <div class="resultado-premio" id="resultadoPremio">
-        R$ 0
-    </div>
+<div class="resultado-premio" id="resultadoPremio">
+R$ 0
+</div>
 
-    <div class="resultado-card">
-        <p id="resultadoTexto"></p>
+<div class="resultado-card">
 
-        <button class="btn-principal btn-novamente" onclick="iniciarJogo()">
-            🔄 JOGAR NOVAMENTE
-        </button>
-    </div>
+<p id="resultadoTexto"></p>
+
+<button class="btn-principal btn-novamente" onclick="iniciarJogo()">
+🔄 JOGAR NOVAMENTE
+</button>
+
+</div>
 
 </section>
 
@@ -466,478 +487,1217 @@ h1 {
 
 <script>
 
-/* ============================
-   PERGUNTAS
-============================ */
+/* =====================================================
+   BANCO DE PERGUNTAS
+   80 PERGUNTAS
+===================================================== */
 
-const perguntas = [
+const bancoPerguntas = [
+
+/* FÁCEIS */
 
 {
-    categoria: "🌎 Geografia",
-    pergunta: "Qual é o maior país do mundo em extensão territorial?",
-    respostas: ["Brasil", "Canadá", "Rússia", "China"],
-    correta: 2,
-    dica: "Esse país fica entre a Europa e a Ásia."
+categoria:"🌎 Geografia",
+pergunta:"Qual é a capital do Brasil?",
+respostas:["São Paulo","Brasília","Rio de Janeiro","Belo Horizonte"],
+correta:"Brasília",
+dica:"É uma cidade planejada localizada no Distrito Federal."
 },
 
 {
-    categoria: "🔬 Ciência",
-    pergunta: "Qual planeta é conhecido como Planeta Vermelho?",
-    respostas: ["Marte", "Júpiter", "Saturno", "Vênus"],
-    correta: 0,
-    dica: "É o quarto planeta a partir do Sol."
+categoria:"🔬 Ciência",
+pergunta:"Qual planeta é conhecido como Planeta Vermelho?",
+respostas:["Marte","Vênus","Júpiter","Mercúrio"],
+correta:"Marte",
+dica:"É o quarto planeta a partir do Sol."
 },
 
 {
-    categoria: "📚 História",
-    pergunta: "Quem foi o primeiro imperador do Brasil?",
-    respostas: ["Dom Pedro I", "Dom Pedro II", "Getúlio Vargas", "Tiradentes"],
-    correta: 0,
-    dica: "Foi pai de Dom Pedro II."
+categoria:"🧠 Geral",
+pergunta:"Quantos lados tem um hexágono?",
+respostas:["5","6","7","8"],
+correta:"6",
+dica:"O prefixo 'hexa' ajuda."
 },
 
 {
-    categoria: "🧠 Conhecimentos Gerais",
-    pergunta: "Quantos lados possui um hexágono?",
-    respostas: ["5", "6", "7", "8"],
-    correta: 1,
-    dica: "O prefixo 'hexa' pode ajudar."
+categoria:"📚 História",
+pergunta:"Quem foi o primeiro imperador do Brasil?",
+respostas:["Dom Pedro I","Dom Pedro II","Getúlio Vargas","Tiradentes"],
+correta:"Dom Pedro I",
+dica:"Foi pai de Dom Pedro II."
 },
 
 {
-    categoria: "💻 Tecnologia",
-    pergunta: "O que significa a sigla CPU?",
-    respostas: [
-        "Central Processing Unit",
-        "Computer Personal Unit",
-        "Central Program Utility",
-        "Computer Processing User"
-    ],
-    correta: 0,
-    dica: "É considerada o 'cérebro' do computador."
+categoria:"🔬 Ciência",
+pergunta:"Qual é o símbolo químico do oxigênio?",
+respostas:["O","Ox","X","Og"],
+correta:"O",
+dica:"É uma única letra."
 },
 
 {
-    categoria: "🌎 Geografia",
-    pergunta: "Qual é a capital da Austrália?",
-    respostas: ["Sydney", "Melbourne", "Canberra", "Perth"],
-    correta: 2,
-    dica: "Não é Sydney nem Melbourne."
+categoria:"🎨 Cultura",
+pergunta:"Quem pintou a Mona Lisa?",
+respostas:["Van Gogh","Leonardo da Vinci","Picasso","Michelangelo"],
+correta:"Leonardo da Vinci",
+dica:"Foi um famoso artista e inventor italiano."
 },
 
 {
-    categoria: "🔬 Ciência",
-    pergunta: "Qual é o elemento químico representado pelo símbolo O?",
-    respostas: ["Ouro", "Oxigênio", "Ósmio", "Ozônio"],
-    correta: 1,
-    dica: "É essencial para a respiração humana."
+categoria:"🌎 Geografia",
+pergunta:"Qual é o maior oceano do planeta?",
+respostas:["Atlântico","Índico","Pacífico","Ártico"],
+correta:"Pacífico",
+dica:"Fica entre as Américas e a Ásia/Oceania."
 },
 
 {
-    categoria: "📚 História",
-    pergunta: "Em que ano o homem pisou na Lua pela primeira vez?",
-    respostas: ["1965", "1967", "1969", "1972"],
-    correta: 2,
-    dica: "Foi no final da década de 1960."
+categoria:"💻 Tecnologia",
+pergunta:"Qual empresa desenvolveu o sistema Android?",
+respostas:["Apple","Google","Microsoft","IBM"],
+correta:"Google",
+dica:"É a empresa responsável pelo famoso buscador."
 },
 
 {
-    categoria: "🎨 Cultura",
-    pergunta: "Quem pintou a Mona Lisa?",
-    respostas: [
-        "Michelangelo",
-        "Leonardo da Vinci",
-        "Van Gogh",
-        "Pablo Picasso"
-    ],
-    correta: 1,
-    dica: "Era italiano e também inventor."
+categoria:"🧠 Matemática",
+pergunta:"Quanto é 7 × 8?",
+respostas:["54","56","58","64"],
+correta:"56",
+dica:"Pense em 7 grupos de 8."
 },
 
 {
-    categoria: "🔬 Ciência",
-    pergunta: "Qual é o maior órgão do corpo humano?",
-    respostas: ["Coração", "Fígado", "Pele", "Pulmão"],
-    correta: 2,
-    dica: "Ele reveste todo o corpo."
+categoria:"🌎 Geografia",
+pergunta:"Qual é o maior país do mundo em território?",
+respostas:["Canadá","China","Rússia","Brasil"],
+correta:"Rússia",
+dica:"Seu território se estende pela Europa e Ásia."
 },
 
 {
-    categoria: "🌎 Geografia",
-    pergunta: "Qual é o oceano mais extenso da Terra?",
-    respostas: [
-        "Atlântico",
-        "Índico",
-        "Ártico",
-        "Pacífico"
-    ],
-    correta: 3,
-    dica: "Fica entre a Ásia/Oceania e as Américas."
+categoria:"🔬 Ciência",
+pergunta:"Qual órgão bombeia o sangue pelo corpo?",
+respostas:["Pulmão","Coração","Fígado","Rim"],
+correta:"Coração",
+dica:"Ele bate continuamente."
 },
 
 {
-    categoria: "💻 Tecnologia",
-    pergunta: "Qual empresa criou o sistema operacional Android?",
-    respostas: [
-        "Microsoft",
-        "Google",
-        "Apple",
-        "IBM"
-    ],
-    correta: 1,
-    dica: "A empresa também criou o Google Chrome."
+categoria:"📚 História",
+pergunta:"Em que ano o homem chegou à Lua pela primeira vez?",
+respostas:["1965","1967","1969","1971"],
+correta:"1969",
+dica:"A missão aconteceu no final dos anos 60."
 },
 
 {
-    categoria: "🧠 Conhecimentos Gerais",
-    pergunta: "Qual número vem a seguir: 2, 4, 8, 16, ?",
-    respostas: ["20", "24", "30", "32"],
-    correta: 3,
-    dica: "Observe o que acontece com cada número."
+categoria:"🎵 Música",
+pergunta:"Quantas cordas possui normalmente um violão?",
+respostas:["4","5","6","7"],
+correta:"6",
+dica:"É o número mais comum nos violões."
 },
 
 {
-    categoria: "🔬 Ciência",
-    pergunta: "Qual é a velocidade aproximada da luz no vácuo?",
-    respostas: [
-        "30 mil km/s",
-        "300 mil km/s",
-        "3 milhões km/s",
-        "3 mil km/s"
-    ],
-    correta: 1,
-    dica: "É aproximadamente 300.000 km por segundo."
+categoria:"🧠 Geral",
+pergunta:"Qual animal é conhecido como rei da selva?",
+respostas:["Tigre","Leão","Elefante","Gorila"],
+correta:"Leão",
+dica:"É um grande felino."
 },
 
 {
-    categoria: "🏆 Desafio Final",
-    pergunta: "Qual destes números é um número primo?",
-    respostas: ["21", "27", "29", "33"],
-    correta: 2,
-    dica: "Um número primo possui apenas dois divisores positivos."
+categoria:"🔬 Ciência",
+pergunta:"Qual é o maior órgão do corpo humano?",
+respostas:["Coração","Pele","Fígado","Pulmão"],
+correta:"Pele",
+dica:"É o órgão que reveste externamente o corpo."
+},
+
+{
+categoria:"💻 Tecnologia",
+pergunta:"O que significa a sigla CPU?",
+respostas:[
+"Central Processing Unit",
+"Computer Personal Unit",
+"Central Program Utility",
+"Computer Processing User"
+],
+correta:"Central Processing Unit",
+dica:"É considerada o 'cérebro' do computador."
+},
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual é a capital da Argentina?",
+respostas:["Lima","Buenos Aires","Santiago","Montevidéu"],
+correta:"Buenos Aires",
+dica:"É uma das maiores cidades da América do Sul."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Quem proclamou a Independência do Brasil?",
+respostas:["Dom Pedro I","Dom Pedro II","Tiradentes","Getúlio Vargas"],
+correta:"Dom Pedro I",
+dica:"O famoso grito aconteceu às margens do Ipiranga."
+},
+
+{
+categoria:"🧠 Matemática",
+pergunta:"Quanto é 100 dividido por 4?",
+respostas:["20","25","30","40"],
+correta:"25",
+dica:"4 × 25 = 100."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual gás os seres humanos precisam respirar para sobreviver?",
+respostas:["Hélio","Oxigênio","Nitrogênio","Hidrogênio"],
+correta:"Oxigênio",
+dica:"Está presente no ar que respiramos."
+},
+
+/* MÉDIAS */
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual é a capital da Austrália?",
+respostas:["Sydney","Melbourne","Canberra","Perth"],
+correta:"Canberra",
+dica:"Não é Sydney nem Melbourne."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Qual civilização construiu Machu Picchu?",
+respostas:["Maias","Astecas","Incas","Romanos"],
+correta:"Incas",
+dica:"Essa civilização dominou grande parte dos Andes."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual é o planeta mais próximo do Sol?",
+respostas:["Vênus","Terra","Mercúrio","Marte"],
+correta:"Mercúrio",
+dica:"É o primeiro planeta do Sistema Solar."
+},
+
+{
+categoria:"🎨 Cultura",
+pergunta:"Quem escreveu 'Dom Quixote'?",
+respostas:[
+"William Shakespeare",
+"Machado de Assis",
+"Miguel de Cervantes",
+"Victor Hugo"
+],
+correta:"Miguel de Cervantes",
+dica:"Era um escritor espanhol."
+},
+
+{
+categoria:"🧠 Matemática",
+pergunta:"Qual é a raiz quadrada de 144?",
+respostas:["10","11","12","14"],
+correta:"12",
+dica:"12 × 12."
+},
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual país possui o formato conhecido como 'bota'?",
+respostas:["Espanha","Itália","Grécia","Portugal"],
+correta:"Itália",
+dica:"Fica no sul da Europa."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual é o maior planeta do Sistema Solar?",
+respostas:["Saturno","Júpiter","Netuno","Terra"],
+correta:"Júpiter",
+dica:"É um gigante gasoso."
+},
+
+{
+categoria:"💻 Tecnologia",
+pergunta:"Qual destes é um navegador de internet?",
+respostas:["Chrome","Windows","Linux","Android"],
+correta:"Chrome",
+dica:"É produzido pelo Google."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Quem foi conhecido como o 'Pai da Aviação' no Brasil?",
+respostas:[
+"Santos Dumont",
+"Juscelino Kubitschek",
+"Oswaldo Cruz",
+"Monteiro Lobato"
+],
+correta:"Santos Dumont",
+dica:"Seu nome está ligado ao 14-Bis."
+},
+
+{
+categoria:"🎵 Música",
+pergunta:"Qual instrumento possui teclas pretas e brancas?",
+respostas:["Violino","Piano","Flauta","Trompete"],
+correta:"Piano",
+dica:"É muito usado em música clássica."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual força mantém os planetas em órbita ao redor do Sol?",
+respostas:["Magnetismo","Gravidade","Eletricidade","Atrito"],
+correta:"Gravidade",
+dica:"É a mesma força responsável pela queda dos objetos."
+},
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual é o país mais populoso do mundo?",
+respostas:["Índia","China","Estados Unidos","Brasil"],
+correta:"Índia",
+dica:"Está localizada no sul da Ásia."
+},
+
+{
+categoria:"🧠 Matemática",
+pergunta:"Qual destes números é primo?",
+respostas:["21","27","29","33"],
+correta:"29",
+dica:"Só possui dois divisores positivos."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Em qual país começou a Revolução Industrial?",
+respostas:["França","Alemanha","Inglaterra","Itália"],
+correta:"Inglaterra",
+dica:"O processo começou no Reino Unido."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual é o símbolo químico do ouro?",
+respostas:["Ag","Au","Gd","Go"],
+correta:"Au",
+dica:"Vem do nome latino do ouro."
+},
+
+{
+categoria:"🎨 Cultura",
+pergunta:"Qual artista é famoso por pintar 'A Noite Estrelada'?",
+respostas:[
+"Pablo Picasso",
+"Claude Monet",
+"Vincent van Gogh",
+"Salvador Dalí"
+],
+correta:"Vincent van Gogh",
+dica:"Era um pintor neerlandês."
+},
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual é o rio mais extenso do Brasil?",
+respostas:[
+"Rio São Francisco",
+"Rio Paraná",
+"Rio Amazonas",
+"Rio Tietê"
+],
+correta:"Rio Amazonas",
+dica:"Atravessa a maior floresta tropical do planeta."
+},
+
+{
+categoria:"💻 Tecnologia",
+pergunta:"Qual empresa criou o iPhone?",
+respostas:["Samsung","Apple","Google","Microsoft"],
+correta:"Apple",
+dica:"Seu símbolo é uma maçã."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Quem foi Getúlio Vargas?",
+respostas:[
+"Um imperador",
+"Um presidente brasileiro",
+"Um navegador",
+"Um pintor"
+],
+correta:"Um presidente brasileiro",
+dica:"Governou o Brasil em diferentes períodos."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual vitamina é produzida pelo corpo com ajuda da luz solar?",
+respostas:[
+"Vitamina A",
+"Vitamina B12",
+"Vitamina C",
+"Vitamina D"
+],
+correta:"Vitamina D",
+dica:"A exposição solar ajuda na sua produção."
+},
+
+/* DIFÍCEIS */
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual é a unidade usada para medir a resistência elétrica?",
+respostas:["Volt","Watt","Ohm","Ampere"],
+correta:"Ohm",
+dica:"Seu símbolo é a letra grega ômega."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Qual tratado encerrou oficialmente a Primeira Guerra Mundial?",
+respostas:[
+"Tratado de Roma",
+"Tratado de Versalhes",
+"Tratado de Paris",
+"Tratado de Madrid"
+],
+correta:"Tratado de Versalhes",
+dica:"Foi assinado em 1919."
+},
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual é o país com maior número de ilhas no mundo?",
+respostas:["Indonésia","Suécia","Japão","Filipinas"],
+correta:"Suécia",
+dica:"É um país nórdico."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual partícula possui carga elétrica negativa?",
+respostas:["Próton","Nêutron","Elétron","Fóton"],
+correta:"Elétron",
+dica:"Ela fica ao redor do núcleo atômico."
+},
+
+{
+categoria:"🧠 Matemática",
+pergunta:"Qual é o resultado de 15²?",
+respostas:["125","200","225","250"],
+correta:"225",
+dica:"15 × 15."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Quem escreveu 'A República'?",
+respostas:[
+"Aristóteles",
+"Platão",
+"Sócrates",
+"Descartes"
+],
+correta:"Platão",
+dica:"Foi um filósofo grego discípulo de Sócrates."
+},
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual é o deserto quente mais extenso do mundo?",
+respostas:["Saara","Gobi","Atacama","Kalahari"],
+correta:"Saara",
+dica:"Está localizado no norte da África."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual é aproximadamente a velocidade da luz no vácuo?",
+respostas:[
+"30 mil km/s",
+"300 mil km/s",
+"3 milhões km/s",
+"3 mil km/s"
+],
+correta:"300 mil km/s",
+dica:"É aproximadamente 300.000 quilômetros por segundo."
+},
+
+{
+categoria:"💻 Tecnologia",
+pergunta:"Qual linguagem é usada para estruturar o conteúdo de páginas web?",
+respostas:["CSS","HTML","Python","SQL"],
+correta:"HTML",
+dica:"É uma linguagem de marcação."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Qual império tinha Constantinopla como capital?",
+respostas:[
+"Império Romano do Ocidente",
+"Império Bizantino",
+"Império Persa",
+"Império Mongol"
+],
+correta:"Império Bizantino",
+dica:"Também é chamado de Império Romano do Oriente."
+},
+
+{
+categoria:"🧠 Matemática",
+pergunta:"Qual é o menor número perfeito?",
+respostas:["4","6","8","10"],
+correta:"6",
+dica:"Seus divisores próprios somam o próprio número."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual é o elemento químico de número atômico 1?",
+respostas:["Hélio","Hidrogênio","Oxigênio","Carbono"],
+correta:"Hidrogênio",
+dica:"É o elemento mais leve da tabela periódica."
+},
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual montanha é a mais alta do mundo acima do nível do mar?",
+respostas:[
+"K2",
+"Everest",
+"Monte Fuji",
+"Aconcágua"
+],
+correta:"Everest",
+dica:"Fica na cordilheira do Himalaia."
+},
+
+{
+categoria:"🎨 Cultura",
+pergunta:"Quem compôs a Nona Sinfonia?",
+respostas:[
+"Mozart",
+"Beethoven",
+"Bach",
+"Vivaldi"
+],
+correta:"Beethoven",
+dica:"Foi um compositor alemão."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual fenômeno explica a decomposição da luz branca em várias cores?",
+respostas:[
+"Reflexão",
+"Dispersão",
+"Condução",
+"Convecção"
+],
+correta:"Dispersão",
+dica:"Pode ser observado quando a luz passa por um prisma."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Qual foi a principal cidade do Império Asteca?",
+respostas:[
+"Cuzco",
+"Tenochtitlán",
+"Teotihuacán",
+"Chichén Itzá"
+],
+correta:"Tenochtitlán",
+dica:"Foi construída onde hoje fica a Cidade do México."
+},
+
+{
+categoria:"🧠 Matemática",
+pergunta:"Qual é o valor aproximado de π?",
+respostas:["2,14","3,14","4,14","5,14"],
+correta:"3,14",
+dica:"É usado no cálculo da circunferência."
+},
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual país é conhecido pela forma de um longo e estreito território na costa oeste da América do Sul?",
+respostas:["Chile","Peru","Equador","Bolívia"],
+correta:"Chile",
+dica:"Faz fronteira com o Oceano Pacífico."
+},
+
+{
+categoria:"💻 Tecnologia",
+pergunta:"Qual protocolo é utilizado para transferir páginas da web?",
+respostas:["HTTP","FTP","SMTP","USB"],
+correta:"HTTP",
+dica:"A sigla aparece frequentemente nos endereços de sites."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual é o nome do processo pelo qual as plantas produzem seu alimento?",
+respostas:[
+"Respiração",
+"Fotossíntese",
+"Digestão",
+"Fermentação"
+],
+correta:"Fotossíntese",
+dica:"Utiliza luz para produzir energia química."
+},
+
+/* MUITO DIFÍCEIS */
+
+{
+categoria:"🧠 Desafio",
+pergunta:"Qual número é conhecido como número de Euler?",
+respostas:["π","e","φ","i"],
+correta:"e",
+dica:"Seu valor aproximado é 2,718."
+},
+
+{
+categoria:"🔬 Física",
+pergunta:"Qual é a unidade do Sistema Internacional para frequência?",
+respostas:["Newton","Hertz","Pascal","Joule"],
+correta:"Hertz",
+dica:"É usada para medir ciclos por segundo."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Qual civilização utilizava a escrita cuneiforme?",
+respostas:[
+"Egípcia",
+"Suméria",
+"Romana",
+"Asteca"
+],
+correta:"Suméria",
+dica:"Floresceu na antiga Mesopotâmia."
+},
+
+{
+categoria:"🔬 Química",
+pergunta:"Qual é o elemento químico de símbolo Na?",
+respostas:["Nitrogênio","Sódio","Néon","Níquel"],
+correta:"Sódio",
+dica:"O símbolo vem do nome latino 'natrium'."
+},
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual é o lago de maior área superficial do mundo?",
+respostas:[
+"Lago Baikal",
+"Mar Cáspio",
+"Lago Vitória",
+"Lago Superior"
+],
+correta:"Mar Cáspio",
+dica:"Apesar do nome, é considerado um lago."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Qual povo criou os famosos jardins suspensos associados à antiga Babilônia?",
+respostas:[
+"Persas",
+"Babilônios",
+"Romanos",
+"Fenícios"
+],
+correta:"Babilônios",
+dica:"A resposta está ligada ao próprio nome da cidade."
+},
+
+{
+categoria:"🔬 Ciência",
+pergunta:"Qual é a unidade de força no Sistema Internacional?",
+respostas:["Joule","Newton","Watt","Pascal"],
+correta:"Newton",
+dica:"Recebeu o nome de um famoso físico inglês."
+},
+
+{
+categoria:"🧠 Filosofia",
+pergunta:"Quem é associado à frase 'Penso, logo existo'?",
+respostas:[
+"Platão",
+"Aristóteles",
+"René Descartes",
+"Immanuel Kant"
+],
+correta:"René Descartes",
+dica:"Foi um filósofo e matemático francês."
+},
+
+{
+categoria:"💻 Tecnologia",
+pergunta:"Qual estrutura de dados segue o princípio LIFO?",
+respostas:[
+"Fila",
+"Pilha",
+"Árvore",
+"Lista circular"
+],
+correta:"Pilha",
+dica:"O último elemento colocado é o primeiro a sair."
+},
+
+{
+categoria:"🔬 Astronomia",
+pergunta:"Qual planeta possui o período de rotação mais longo do Sistema Solar?",
+respostas:["Mercúrio","Vênus","Marte","Netuno"],
+correta:"Vênus",
+dica:"Um dia nesse planeta é extremamente longo."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Qual filósofo foi professor de Alexandre, o Grande?",
+respostas:[
+"Platão",
+"Aristóteles",
+"Epicuro",
+"Pitágoras"
+],
+correta:"Aristóteles",
+dica:"Foi discípulo de Platão."
+},
+
+{
+categoria:"🧠 Matemática",
+pergunta:"Qual é o único número primo que é par?",
+respostas:["0","1","2","4"],
+correta:"2",
+dica:"É o menor número primo."
+},
+
+{
+categoria:"🔬 Biologia",
+pergunta:"Qual organela é conhecida como a 'usina de energia' da célula?",
+respostas:[
+"Ribossomo",
+"Mitocôndria",
+"Núcleo",
+"Lisossomo"
+],
+correta:"Mitocôndria",
+dica:"Produz grande parte do ATP celular."
+},
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual país possui a cidade de Timbuktu?",
+respostas:["Mali","Níger","Chade","Sudão"],
+correta:"Mali",
+dica:"É um país da África Ocidental."
+},
+
+{
+categoria:"📚 História",
+pergunta:"Qual evento marcou o início convencional da Idade Média?",
+respostas:[
+"Queda do Império Romano do Ocidente",
+"Revolução Francesa",
+"Descoberta da América",
+"Queda de Constantinopla"
+],
+correta:"Queda do Império Romano do Ocidente",
+dica:"Ocorreu tradicionalmente em 476."
+},
+
+{
+categoria:"🔬 Física",
+pergunta:"Qual princípio afirma que energia não pode ser criada nem destruída?",
+respostas:[
+"Princípio da relatividade",
+"Lei da conservação da energia",
+"Princípio de Pascal",
+"Lei de Coulomb"
+],
+correta:"Lei da conservação da energia",
+dica:"A energia apenas se transforma."
+},
+
+{
+categoria:"🎨 Arte",
+pergunta:"Qual movimento artístico é associado a Salvador Dalí?",
+respostas:[
+"Impressionismo",
+"Surrealismo",
+"Cubismo",
+"Barroco"
+],
+correta:"Surrealismo",
+dica:"É conhecido por imagens de sonhos e do inconsciente."
+},
+
+{
+categoria:"🧠 Filosofia",
+pergunta:"Quem escreveu 'O Príncipe'?",
+respostas:[
+"Maquiavel",
+"Rousseau",
+"Locke",
+"Nietzsche"
+],
+correta:"Maquiavel",
+dica:"O autor era italiano."
+},
+
+{
+categoria:"🔬 Química",
+pergunta:"Qual gás é o mais abundante na atmosfera terrestre?",
+respostas:[
+"Oxigênio",
+"Nitrogênio",
+"Argônio",
+"Carbono"
+],
+correta:"Nitrogênio",
+dica:"Representa cerca de 78% da atmosfera."
+},
+
+{
+categoria:"🌎 Geografia",
+pergunta:"Qual é a capital da Islândia?",
+respostas:[
+"Oslo",
+"Reykjavík",
+"Helsinque",
+"Estocolmo"
+],
+correta:"Reykjavík",
+dica:"É uma capital localizada muito próxima ao Círculo Polar Ártico."
 }
 
 ];
 
 
-/* ============================
-   PRÊMIOS
-============================ */
+/* =====================================================
+   CONFIGURAÇÃO
+===================================================== */
 
-const premios = [
-    1000,
-    2000,
-    5000,
-    10000,
-    20000,
-    30000,
-    50000,
-    100000,
-    150000,
-    200000,
-    300000,
-    400000,
-    500000,
-    750000,
-    1000000
+const premios=[
+1000,
+2000,
+5000,
+10000,
+20000,
+30000,
+50000,
+100000,
+150000,
+200000,
+300000,
+400000,
+500000,
+750000,
+1000000
 ];
 
+let partida=[];
+let indice=0;
+let premio=0;
+let respondeu=false;
 
-/* ============================
-   VARIÁVEIS
-============================ */
+let ajuda5050Usada=false;
+let ajudaPularUsada=false;
+let ajudaDicaUsada=false;
 
-let indice = 0;
-let premio = 0;
-let respondeu = false;
+let recorde=Number(localStorage.getItem("menteLabRecorde"))||0;
 
-let ajuda5050Usada = false;
-let ajudaPularUsada = false;
-let ajudaDicaUsada = false;
-
-let recorde = Number(localStorage.getItem("menteLabRecorde")) || 0;
-
-document.getElementById("recorde").textContent =
-    formatarDinheiro(recorde);
+document.getElementById("recorde").textContent=
+formatarDinheiro(recorde);
 
 
-/* ============================
-   INICIAR
-============================ */
+/* =====================================================
+   EMBARALHAR
+===================================================== */
 
-function iniciarJogo() {
+function embaralhar(array){
 
-    indice = 0;
-    premio = 0;
-    respondeu = false;
+    const novo=[...array];
 
-    ajuda5050Usada = false;
-    ajudaPularUsada = false;
-    ajudaDicaUsada = false;
+    for(let i=novo.length-1;i>0;i--){
 
-    document.getElementById("inicio").style.display = "none";
-    document.getElementById("resultado").style.display = "none";
-    document.getElementById("jogo").style.display = "block";
+        const j=Math.floor(Math.random()*(i+1));
 
-    document.getElementById("ajuda5050").disabled = false;
-    document.getElementById("ajudaPular").disabled = false;
-    document.getElementById("ajudaDica").disabled = false;
+        [novo[i],novo[j]]=
+        [novo[j],novo[i]];
+    }
+
+    return novo;
+}
+
+
+/* =====================================================
+   CRIAR PARTIDA
+===================================================== */
+
+function criarPartida(){
+
+    /*
+    Em cada jogo pegamos perguntas diferentes
+    do banco.
+
+    Elas são separadas por dificuldade:
+    5 fáceis
+    5 médias
+    5 difíceis
+    */
+
+    const faceis=
+        bancoPerguntas.slice(0,20);
+
+    const medias=
+        bancoPerguntas.slice(20,40);
+
+    const dificeis=
+        bancoPerguntas.slice(40,60);
+
+    const muitoDificeis=
+        bancoPerguntas.slice(60);
+
+    partida=[
+        ...embaralhar(faceis).slice(0,5),
+        ...embaralhar(medias).slice(0,5),
+        ...embaralhar([
+            ...dificeis,
+            ...muitoDificeis
+        ]).slice(0,5)
+    ];
+
+    /*
+    Embaralha também as alternativas
+    de cada pergunta.
+    */
+
+    partida=partida.map(q=>{
+
+        const respostas=embaralhar(
+            q.respostas
+        );
+
+        return{
+            ...q,
+            respostas:respostas
+        };
+
+    });
+
+}
+
+
+/* =====================================================
+   INICIAR JOGO
+===================================================== */
+
+function iniciarJogo(){
+
+    criarPartida();
+
+    indice=0;
+    premio=0;
+    respondeu=false;
+
+    ajuda5050Usada=false;
+    ajudaPularUsada=false;
+    ajudaDicaUsada=false;
+
+    document.getElementById("inicio").style.display="none";
+
+    document.getElementById("resultado").style.display="none";
+
+    document.getElementById("jogo").style.display="block";
+
+    document.getElementById("ajuda5050").disabled=false;
+    document.getElementById("ajudaPular").disabled=false;
+    document.getElementById("ajudaDica").disabled=false;
 
     mostrarPergunta();
 }
 
 
-/* ============================
+/* =====================================================
    MOSTRAR PERGUNTA
-============================ */
+===================================================== */
 
-function mostrarPergunta() {
+function mostrarPergunta(){
 
-    respondeu = false;
+    respondeu=false;
 
-    const q = perguntas[indice];
+    const q=partida[indice];
 
-    document.getElementById("numeroPergunta").textContent =
-        indice + 1;
+    document.getElementById("numeroPergunta").textContent=
+        indice+1;
 
-    document.getElementById("premioAtual").textContent =
+    document.getElementById("premioAtual").textContent=
         formatarDinheiro(premios[indice]);
 
-    document.getElementById("categoria").textContent =
+    document.getElementById("categoria").textContent=
         q.categoria;
 
-    document.getElementById("pergunta").textContent =
+    document.getElementById("pergunta").textContent=
         q.pergunta;
 
-    document.getElementById("barraProgresso").style.width =
-        ((indice + 1) / perguntas.length * 100) + "%";
+    document.getElementById("barraProgresso").style.width=
+        ((indice+1)/15*100)+"%";
 
-    const container =
+    const container=
         document.getElementById("alternativas");
 
-    container.innerHTML = "";
+    container.innerHTML="";
 
-    const letras = ["A", "B", "C", "D"];
+    const letras=["A","B","C","D"];
 
-    q.respostas.forEach((resposta, i) => {
+    q.respostas.forEach((resposta,i)=>{
 
-        const botao = document.createElement("button");
+        const botao=
+            document.createElement("button");
 
-        botao.className = "alternativa";
+        botao.className="alternativa";
 
-        botao.innerHTML =
-            `<span class="letra">${letras[i]}</span>${resposta}`;
+        botao.innerHTML=
+        `<span class="letra">${letras[i]}</span>${resposta}`;
 
-        botao.onclick = () => responder(i);
+        botao.onclick=()=>{
+            responder(resposta,botao);
+        };
 
         container.appendChild(botao);
     });
 }
 
 
-/* ============================
+/* =====================================================
    RESPONDER
-============================ */
+===================================================== */
 
-function responder(escolhida) {
+function responder(escolhida,botaoEscolhido){
 
-    if (respondeu) return;
+    if(respondeu)return;
 
-    respondeu = true;
+    respondeu=true;
 
-    const q = perguntas[indice];
+    const q=partida[indice];
 
-    const botoes =
+    const botoes=
         document.querySelectorAll(".alternativa");
 
-    botoes.forEach(botao => {
-        botao.disabled = true;
+    botoes.forEach(b=>{
+        b.disabled=true;
     });
 
-    botoes[q.correta].classList.add("certa");
+    /*
+    Encontramos qual botão contém
+    a resposta correta.
+    */
 
-    if (escolhida !== q.correta) {
+    botoes.forEach(botao=>{
 
-        botoes[escolhida].classList.add("errada");
+        const texto=
+            botao.textContent.substring(1).trim();
 
-        setTimeout(() => {
+        if(texto===q.correta){
+
+            botao.classList.add("certa");
+        }
+    });
+
+    if(escolhida!==q.correta){
+
+        botaoEscolhido.classList.add("errada");
+
+        setTimeout(()=>{
 
             mostrarResultado(
                 "😢",
                 "Fim de jogo!",
                 premio,
-                "Você errou a pergunta. Mas pode tentar novamente e superar seu recorde."
+                "Você errou a pergunta. Tente novamente para aumentar seu recorde!"
             );
 
-        }, 1200);
+        },1200);
 
         return;
     }
 
-    premio = premios[indice];
+    premio=premios[indice];
 
-    if (premio > recorde) {
+    if(premio>recorde){
 
-        recorde = premio;
+        recorde=premio;
 
         localStorage.setItem(
             "menteLabRecorde",
             recorde
         );
 
-        document.getElementById("recorde").textContent =
+        document.getElementById("recorde").textContent=
             formatarDinheiro(recorde);
     }
 
-    if (indice === perguntas.length - 1) {
+    if(indice===14){
 
-        setTimeout(() => {
+        setTimeout(()=>{
 
             mostrarResultado(
                 "🏆",
                 "VOCÊ CHEGOU AO MILHÃO!",
                 1000000,
-                "Incrível! Você respondeu todas as perguntas corretamente e conquistou o maior prêmio."
+                "Você acertou todas as perguntas! Parabéns, você conquistou o prêmio máximo!"
             );
 
-        }, 1200);
+        },1200);
 
         return;
     }
 
-    setTimeout(() => {
+    setTimeout(()=>{
 
         indice++;
+
         mostrarPergunta();
 
-    }, 1000);
+    },1000);
 }
 
 
-/* ============================
-   AJUDA 50/50
-============================ */
+/* =====================================================
+   50/50
+===================================================== */
 
-function usar5050() {
+function usar5050(){
 
-    if (ajuda5050Usada || respondeu) return;
+    if(ajuda5050Usada||respondeu)return;
 
-    ajuda5050Usada = true;
+    ajuda5050Usada=true;
 
-    document.getElementById("ajuda5050").disabled = true;
+    document.getElementById("ajuda5050").disabled=true;
 
-    const q = perguntas[indice];
+    const q=partida[indice];
 
-    const botoes =
-        document.querySelectorAll(".alternativa");
+    const botoes=
+        [...document.querySelectorAll(".alternativa")];
 
-    let removidas = 0;
+    const erradas=botoes.filter(botao=>{
 
-    const opcoes = [0,1,2,3]
-        .filter(i => i !== q.correta)
-        .sort(() => Math.random() - .5);
+        const texto=
+            botao.textContent.substring(1).trim();
 
-    opcoes.forEach(i => {
+        return texto!==q.correta;
+    });
 
-        if (removidas < 2) {
+    embaralhar(erradas)
+    .slice(0,2)
+    .forEach(botao=>{
 
-            botoes[i].style.visibility =
-                "hidden";
-
-            removidas++;
-        }
-
+        botao.style.visibility="hidden";
     });
 }
 
 
-/* ============================
+/* =====================================================
    PULAR
-============================ */
+===================================================== */
 
-function pularPergunta() {
+function pularPergunta(){
 
-    if (ajudaPularUsada || respondeu) return;
+    if(ajudaPularUsada||respondeu)return;
 
-    ajudaPularUsada = true;
+    ajudaPularUsada=true;
 
-    document.getElementById("ajudaPular").disabled = true;
+    document.getElementById("ajudaPular").disabled=true;
 
-    if (indice < perguntas.length - 1) {
+    if(indice<14){
 
         indice++;
 
         mostrarPergunta();
 
-    } else {
-
-        mostrarResultado(
-            "🎮",
-            "Fim do jogo",
-            premio,
-            "Você utilizou sua última oportunidade para avançar."
-        );
     }
 }
 
 
-/* ============================
+/* =====================================================
    DICA
-============================ */
+===================================================== */
 
-function usarDica() {
+function usarDica(){
 
-    if (ajudaDicaUsada || respondeu) return;
+    if(ajudaDicaUsada||respondeu)return;
 
-    ajudaDicaUsada = true;
+    ajudaDicaUsada=true;
 
-    document.getElementById("ajudaDica").disabled = true;
+    document.getElementById("ajudaDica").disabled=true;
 
-    const q = perguntas[indice];
-
-    alert("💡 DICA\n\n" + q.dica);
+    alert(
+        "💡 DICA\n\n"+
+        partida[indice].dica
+    );
 }
 
 
-/* ============================
+/* =====================================================
    RESULTADO
-============================ */
+===================================================== */
 
 function mostrarResultado(
     emoji,
     titulo,
     valor,
     texto
-) {
+){
 
-    document.getElementById("jogo").style.display = "none";
-    document.getElementById("resultado").style.display = "block";
+    document.getElementById("jogo").style.display="none";
 
-    document.getElementById("resultadoEmoji").textContent =
+    document.getElementById("resultado").style.display="block";
+
+    document.getElementById("resultadoEmoji").textContent=
         emoji;
 
-    document.getElementById("resultadoTitulo").textContent =
+    document.getElementById("resultadoTitulo").textContent=
         titulo;
 
-    document.getElementById("resultadoPremio").textContent =
+    document.getElementById("resultadoPremio").textContent=
         formatarDinheiro(valor);
 
-    document.getElementById("resultadoTexto").textContent =
+    document.getElementById("resultadoTexto").textContent=
         texto;
 }
 
 
-/* ============================
-   DINHEIRO
-============================ */
+/* =====================================================
+   FORMATAÇÃO
+===================================================== */
 
-function formatarDinheiro(valor) {
+function formatarDinheiro(valor){
 
-    return valor.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-        maximumFractionDigits: 0
-    });
+    return valor.toLocaleString(
+        "pt-BR",
+        {
+            style:"currency",
+            currency:"BRL",
+            maximumFractionDigits:0
+        }
+    );
 }
 
 </script>
