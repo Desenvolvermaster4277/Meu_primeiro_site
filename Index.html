@@ -1,13 +1,8 @@
-<!-- Vou montar aqui a versão completa corrigida, mantendo as funções existentes
-     e adicionando ranking, amigos, solicitações, chat privado, notificações,
-     presença online/offline, perfil, conquistas, XP, moedas, níveis,
-     desafios, música, jogo de 15 perguntas, modos de jogo e demais funções. -->
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Minha Plataforma</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -17,378 +12,440 @@
 <style>
 *{box-sizing:border-box}
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#090611;
-    color:white;
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(135deg,#090611,#170d2d,#090611);
+ color:#fff;
+ min-height:100vh;
 }
-button,input{
-    font:inherit;
-}
-button{
-    cursor:pointer;
-}
+button,input,select{font:inherit}
+button{cursor:pointer}
 .hidden{display:none!important}
 
-.tela{
-    min-height:100vh;
-    padding:20px;
-}
-
-.card{
-    background:linear-gradient(145deg,#171020,#0f0a16);
-    border:1px solid #38234c;
-    border-radius:20px;
-    padding:20px;
-    box-shadow:0 10px 30px #0008;
-}
-
-h1,h2,h3{margin-top:0}
-
-.logo{
-    font-size:32px;
-    font-weight:900;
-    text-align:center;
-    margin:20px 0;
-}
-
-.sub{
-    color:#bba9c9;
-    text-align:center;
-}
-
-input{
-    width:100%;
-    padding:14px;
-    margin:7px 0;
-    border-radius:12px;
-    border:1px solid #49315e;
-    background:#0d0813;
-    color:white;
-    outline:none;
-}
-
-input:focus{
-    border-color:#9b59ff;
-}
-
-.btn{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:13px;
-    background:#772cff;
-    color:white;
-    font-weight:bold;
-    margin-top:8px;
-}
-
-.btn:hover{filter:brightness(1.12)}
-
-.btn-green{background:#18a957}
-.btn-red{background:#c93450}
-.btn-dark{background:#21162d}
-.btn-gold{background:#d59616}
-
-.row{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-.row>*{
-    flex:1;
-}
-
-.nav{
-    position:sticky;
-    bottom:0;
-    z-index:20;
-    background:#0d0813ee;
-    backdrop-filter:blur(12px);
-    border-top:1px solid #33203f;
-    display:flex;
-    justify-content:space-around;
-    padding:10px 4px;
-}
-
-.nav button{
-    background:none;
-    border:0;
-    color:#bca9c8;
-    font-size:12px;
-}
-
-.nav button.active{
-    color:white;
+#app{
+ max-width:900px;
+ margin:auto;
+ min-height:100vh;
+ padding-bottom:80px;
 }
 
 .top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    margin-bottom:15px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:15px;
+ background:rgba(10,5,20,.9);
+ position:sticky;
+ top:0;
+ z-index:20;
+ border-bottom:1px solid #382052;
+}
+
+.logo{
+ font-size:21px;
+ font-weight:bold;
+ color:#cfa7ff;
 }
 
 .avatar{
-    width:58px;
-    height:58px;
-    border-radius:50%;
-    background:#2b183c;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    border:2px solid #8b43ff;
-    flex-shrink:0;
+ width:44px;
+ height:44px;
+ border-radius:50%;
+ background:#34204c;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ overflow:hidden;
+ font-weight:bold;
 }
 
-.avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+.avatar img{width:100%;height:100%;object-fit:cover}
+
+main{padding:18px}
+
+.card{
+ background:rgba(28,17,47,.9);
+ border:1px solid #40245e;
+ border-radius:18px;
+ padding:18px;
+ margin-bottom:15px;
+ box-shadow:0 8px 30px rgba(0,0,0,.25);
 }
 
-.player{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:12px;
-    margin:8px 0;
-    border-radius:14px;
-    background:#140c1c;
+.title{
+ font-size:27px;
+ font-weight:bold;
+ margin-bottom:8px;
 }
 
-.player-info{
-    flex:1;
+.subtitle{color:#aaa}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+ gap:12px;
 }
 
-.online{
-    font-size:12px;
-    color:#42e68a;
+.game{
+ min-height:150px;
+ display:flex;
+ flex-direction:column;
+ justify-content:space-between;
+ background:linear-gradient(145deg,#261440,#120b20);
+ border:1px solid #563579;
+ border-radius:18px;
+ padding:17px;
 }
 
-.offline{
-    font-size:12px;
-    color:#777;
+.game .emoji{font-size:40px}
+
+.btn{
+ border:0;
+ border-radius:12px;
+ padding:13px 16px;
+ background:#7c3aed;
+ color:#fff;
+ font-weight:bold;
+ margin:4px 0;
 }
 
-.badge{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:20px;
-    background:#322044;
-    color:#d7baff;
-    font-size:12px;
-    margin:3px;
+.btn:hover{filter:brightness(1.12)}
+.btn.green{background:#16a34a}
+.btn.red{background:#dc2626}
+.btn.gray{background:#40334f}
+.btn.gold{background:#c58b18;color:#fff}
+.btn.full{width:100%}
+
+input,select{
+ width:100%;
+ padding:14px;
+ border-radius:12px;
+ border:1px solid #51336e;
+ background:#100a1a;
+ color:#fff;
+ outline:none;
+ margin:6px 0;
 }
 
-.rank{
-    font-size:22px;
-    font-weight:bold;
-    width:35px;
+.auth{
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
 }
 
-.prize{
-    color:#ffd34d;
-    font-weight:bold;
+.authbox{
+ width:100%;
+ max-width:430px;
+ background:rgba(25,14,42,.97);
+ border:1px solid #563579;
+ padding:25px;
+ border-radius:22px;
+ box-shadow:0 20px 60px #000;
 }
 
-.progress{
-    height:9px;
-    border-radius:10px;
-    background:#21162b;
-    overflow:hidden;
-    margin:8px 0;
+.authbox h1{text-align:center;color:#cfa7ff}
+
+.tabs{
+ display:flex;
+ gap:5px;
+ margin-bottom:15px;
 }
 
-.progress div{
-    height:100%;
-    background:#8b43ff;
+.tabs button{
+ flex:1;
+ background:#241534;
+ color:#aaa;
+ border:0;
+ padding:11px;
+ border-radius:10px;
 }
+
+.tabs button.active{
+ background:#7c3aed;
+ color:white;
+}
+
+.nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ background:#0d0716;
+ border-top:1px solid #382052;
+ display:flex;
+ justify-content:center;
+ z-index:30;
+}
+
+.navin{
+ width:900px;
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+}
+
+.nav button{
+ background:none;
+ color:#aaa;
+ border:0;
+ padding:10px 3px;
+ font-size:12px;
+}
+
+.nav button span{
+ display:block;
+ font-size:21px;
+}
+
+.nav button.active{color:#cfa7ff}
+
+.stats{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:8px;
+}
+
+.stat{
+ background:#140c20;
+ padding:13px;
+ border-radius:12px;
+ text-align:center;
+}
+
+.stat b{display:block;font-size:20px;color:#d4aaff}
 
 .question{
-    font-size:22px;
-    font-weight:bold;
-    line-height:1.35;
-    margin:25px 0;
+ font-size:23px;
+ line-height:1.35;
+ margin:25px 0;
+}
+
+.answers{
+ display:grid;
+ gap:10px;
 }
 
 .answer{
-    width:100%;
-    text-align:left;
-    padding:15px;
-    margin:6px 0;
-    border:1px solid #432957;
-    border-radius:13px;
-    background:#160d20;
-    color:white;
+ background:#21122f;
+ border:1px solid #563579;
+ border-radius:13px;
+ padding:15px;
+ color:white;
+ text-align:left;
 }
 
-.answer.correct{
-    background:#126e3c;
-    border-color:#38e58c;
-}
-
-.answer.wrong{
-    background:#762237;
-    border-color:#ff617e;
-}
+.answer.correct{background:#11652d}
+.answer.wrong{background:#7a1717}
 
 .timer{
-    font-size:30px;
-    text-align:center;
-    font-weight:bold;
-    color:#ffd34d;
+ height:9px;
+ background:#24152f;
+ border-radius:20px;
+ overflow:hidden;
+ margin:12px 0;
 }
 
-.toast{
-    position:fixed;
-    left:50%;
-    bottom:90px;
-    transform:translateX(-50%);
-    background:#24152e;
-    border:1px solid #704394;
-    padding:12px 18px;
-    border-radius:13px;
-    z-index:100;
-    box-shadow:0 10px 30px #0008;
+.timer div{
+ height:100%;
+ width:100%;
+ background:#8b5cf6;
+ transition:width 1s linear;
 }
 
-.modal{
-    position:fixed;
-    inset:0;
-    background:#000b;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:90;
+.prize{
+ font-size:25px;
+ color:#ffd65a;
+ font-weight:bold;
+ text-align:center;
 }
 
-.modal-box{
-    width:100%;
-    max-width:500px;
-    max-height:90vh;
-    overflow:auto;
+.rankrow,.friendrow,.chatrow{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ padding:12px;
+ background:#140c20;
+ border-radius:13px;
+ margin:7px 0;
 }
 
-.chat-box{
-    height:55vh;
-    overflow:auto;
-    padding:10px;
-    background:#0b0710;
-    border-radius:15px;
+.ranknum{
+ width:30px;
+ font-weight:bold;
+ color:#ffd65a;
+}
+
+.rowinfo{flex:1}
+.rowinfo b{display:block}
+.rowinfo small{color:#999}
+
+.online{
+ width:10px;
+ height:10px;
+ border-radius:50%;
+ background:#555;
+ display:inline-block;
+}
+
+.online.on{background:#22c55e}
+
+.badges{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:9px;
+}
+
+.badge{
+ padding:12px;
+ background:#181020;
+ border-radius:12px;
+ border:1px solid #392348;
+}
+
+.notification{
+ padding:12px;
+ border-radius:12px;
+ background:#181020;
+ margin:7px 0;
+}
+
+.notification.unread{
+ border-left:4px solid #8b5cf6;
+}
+
+.chatbox{
+ height:390px;
+ overflow-y:auto;
+ padding:10px;
+ background:#0d0714;
+ border-radius:14px;
 }
 
 .msg{
-    max-width:80%;
-    padding:10px 13px;
-    border-radius:14px;
-    margin:7px 0;
+ max-width:78%;
+ padding:10px 13px;
+ border-radius:15px;
+ margin:7px 0;
 }
 
 .msg.me{
-    background:#6e2bd4;
-    margin-left:auto;
+ margin-left:auto;
+ background:#6531a8;
 }
 
 .msg.other{
-    background:#21162d;
+ background:#29202f;
 }
 
-.game-card{
-    padding:20px;
-    border-radius:20px;
-    background:linear-gradient(145deg,#241037,#110817);
-    border:1px solid #5a2c7d;
-    margin-bottom:12px;
+.chatinput{
+ display:flex;
+ gap:7px;
+ margin-top:8px;
 }
 
-.game-card h2{
-    margin-bottom:8px;
+.chatinput input{margin:0}
+
+.preview{
+ text-align:center;
+ margin:10px 0;
 }
 
-.big{
-    font-size:38px;
-    font-weight:900;
+.preview img{
+ width:100px;
+ height:100px;
+ border-radius:50%;
+ object-fit:cover;
 }
 
+.toast{
+ position:fixed;
+ left:50%;
+ bottom:75px;
+ transform:translateX(-50%);
+ background:#111;
+ border:1px solid #65418b;
+ padding:13px 18px;
+ border-radius:13px;
+ z-index:100;
+ box-shadow:0 10px 30px #000;
+}
+
+.small{font-size:12px;color:#999}
 .center{text-align:center}
+hr{border:0;border-top:1px solid #382052;margin:18px 0}
 
-.notice{
-    padding:12px;
-    background:#21152b;
-    border-radius:12px;
-    margin:8px 0;
-}
-
-@media(min-width:700px){
-    .tela{
-        max-width:900px;
-        margin:auto;
-    }
+@media(max-width:500px){
+ main{padding:12px}
+ .question{font-size:20px}
+ .stats{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 
 <body>
 
-<div id="loginTela" class="tela">
-    <div class="logo">Minha Plataforma</div>
-    <p class="sub">Entre para jogar, competir e evoluir.</p>
+<div id="auth">
+ <div class="auth">
+  <div class="authbox">
 
-    <div class="card">
-        <h2>Entrar</h2>
-        <input id="loginEmail" type="email" placeholder="E-mail">
-        <input id="loginPassword" type="password" placeholder="Senha">
-        <button class="btn" onclick="login()">Entrar</button>
-        <button class="btn btn-dark" onclick="mostrarCadastro()">Criar conta</button>
-    </div>
-</div>
+   <h1>🎮 Minha Plataforma</h1>
+   <p class="center subtitle">Jogos, ranking e desafios</p>
 
-<div id="cadastroTela" class="tela hidden">
-    <div class="logo">Criar conta</div>
+   <div class="tabs">
+    <button id="loginTab" class="active" onclick="mostrarLogin()">Entrar</button>
+    <button id="signupTab" onclick="mostrarCadastro()">Criar conta</button>
+   </div>
 
-    <div class="card">
-        <input id="signupName" placeholder="Seu nome">
-        <input id="signupEmail" type="email" placeholder="E-mail">
-        <input id="signupPassword" type="password" placeholder="Senha">
-        <button class="btn" onclick="cadastro()">Criar conta</button>
-        <button class="btn btn-dark" onclick="mostrarLogin()">Voltar</button>
-    </div>
+   <div id="loginBox">
+    <input id="loginEmail" type="email" placeholder="E-mail">
+    <input id="loginPassword" type="password" placeholder="Senha">
+    <button class="btn full" onclick="login()">Entrar</button>
+   </div>
+
+   <div id="signupBox" class="hidden">
+    <input id="signupName" placeholder="Nome de usuário">
+    <input id="signupEmail" type="email" placeholder="E-mail">
+    <input id="signupPassword" type="password" placeholder="Senha">
+    <button class="btn green full" onclick="cadastro()">Criar conta</button>
+   </div>
+
+  </div>
+ </div>
 </div>
 
 <div id="app" class="hidden">
 
-    <main id="conteudo" class="tela"></main>
+ <div class="top">
+  <div class="logo">🎮 Minha Plataforma</div>
+  <button class="btn gray" onclick="abrirPerfil()" id="topUser">👤</button>
+ </div>
 
-    <div class="nav">
-        <button onclick="central()">🏠<br>Início</button>
-        <button onclick="abrirRanking()">🏆<br>Ranking</button>
-        <button onclick="abrirAmigos()">👥<br>Amigos</button>
-        <button onclick="abrirPerfil()">👤<br>Perfil</button>
-        <button onclick="abrirNotificacoes()">🔔<br>Avisos</button>
-    </div>
+ <main id="conteudo"></main>
+
+ <div class="nav">
+  <div class="navin">
+   <button onclick="central()"><span>🏠</span>Início</button>
+   <button onclick="abrirRanking()"><span>🏆</span>Ranking</button>
+   <button onclick="abrirAmigos()"><span>👥</span>Amigos</button>
+   <button onclick="abrirNotificacoes()"><span>🔔</span>Alertas</button>
+   <button onclick="abrirPerfil()"><span>👤</span>Perfil</button>
+  </div>
+ </div>
 
 </div>
-
-<div id="modal" class="modal hidden">
-    <div class="modal-box card" id="modalConteudo"></div>
-</div>
-
-<div id="toast" class="toast hidden"></div>
 
 <script>
+/* ================= FIREBASE ================= */
+
 const firebaseConfig={
-    apiKey:"AIzaSyB-0j37BKkr0jt3B6NCl-fNe3bqeQia08",
-    authDomain:"desafio-do-milhao.firebaseapp.com",
-    projectId:"desafio-do-milhao",
-    storageBucket:"desafio-do-milhao.firebasestorage.app",
-    messagingSenderId:"303629660012",
-    appId:"1:303629660012:web:61bf5af93d9824e8100d49",
-    measurementId:"G-0TZ68JLKJR"
+ apiKey:"AIzaSyB-0j37BKkr0jt3B6NCl6-fNe3bqeQia08",
+ authDomain:"desafio-do-milhao.firebaseapp.com",
+ projectId:"desafio-do-milhao",
+ storageBucket:"desafio-do-milhao.firebasestorage.app",
+ messagingSenderId:"303629660012",
+ appId:"1:303629660012:web:61bf5af93d9824e8100d49",
+ measurementId:"G-0TZ68JLKJR"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -399,15 +456,403 @@ const FV=firebase.firestore.FieldValue;
 
 let usuario=null;
 let perfil=null;
-let telaAtual="central";
-
+let timer=null;
+let perguntaAtual=null;
 let musicaLigada=true;
 let efeitosLigados=true;
 let audioCtx=null;
-let musicTimer=null;
+let chatUnsub=null;
+let notifUnsub=null;
 
-let unsubscribeNotificacoes=null;
-let unsubscribeChat=null;
+/* ================= UTIL ================= */
+
+function toast(t){
+ const x=document.createElement("div");
+ x.className="toast";
+ x.textContent=t;
+ document.body.appendChild(x);
+ setTimeout(()=>x.remove(),2800);
+}
+
+function dinheiro(n){
+ return "R$ "+Number(n||0).toLocaleString("pt-BR");
+}
+
+function esc(s){
+ return String(s||"").replace(/[&<>"']/g,m=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",
+ '"':"&quot;","'":"&#039;"
+ }[m]));
+}
+
+function avatarHtml(data,size="44px"){
+ if(data&&data.avatar){
+  return `<div class="avatar" style="width:${size};height:${size}">
+  <img src="${data.avatar}"></div>`;
+ }
+ return `<div class="avatar" style="width:${size};height:${size}">
+ ${esc((data&&data.nome||"J").charAt(0).toUpperCase())}</div>`;
+}
+
+function getNome(){
+ return perfil?.nome||"Jogador";
+}
+
+/* ================= AUTH ================= */
+
+function mostrarLogin(){
+ loginBox.classList.remove("hidden");
+ signupBox.classList.add("hidden");
+ loginTab.classList.add("active");
+ signupTab.classList.remove("active");
+}
+
+function mostrarCadastro(){
+ loginBox.classList.add("hidden");
+ signupBox.classList.remove("hidden");
+ loginTab.classList.remove("active");
+ signupTab.classList.add("active");
+}
+
+async function cadastro(){
+ try{
+  const nome=signupName.value.trim();
+  const email=signupEmail.value.trim();
+  const senha=signupPassword.value;
+
+  if(!nome||!email||!senha)return toast("Preencha todos os campos.");
+  if(senha.length<6)return toast("A senha precisa ter pelo menos 6 caracteres.");
+
+  const cred=await auth.createUserWithEmailAndPassword(email,senha);
+
+  perfil={
+   nome,
+   nomeBusca:nome.toLowerCase(),
+   email,
+   avatar:"",
+   xp:0,
+   nivel:1,
+   moedas:0,
+   recorde:0,
+   maiorPremio:0,
+   partidas:0,
+   vitorias:0,
+   acertos:0,
+   erros:0,
+   titulo:"Novato",
+   criadoEm:FV.serverTimestamp()
+  };
+
+  await db.collection("Usuarios").doc(cred.user.uid).set(perfil);
+
+  await publicarRanking();
+
+  toast("Conta criada!");
+ }catch(e){
+  toast(traduzirErro(e));
+ }
+}
+
+async function login(){
+ try{
+  await auth.signInWithEmailAndPassword(
+   loginEmail.value.trim(),
+   loginPassword.value
+  );
+ }catch(e){
+  toast(traduzirErro(e));
+ }
+}
+
+function logout(){
+ if(usuario){
+  db.collection("Partidas")
+   .doc("presenca_"+usuario.uid)
+   .set({
+    uid:usuario.uid,
+    nome:getNome(),
+    avatar:perfil?.avatar||"",
+    online:false,
+    ultimaAtividade:FV.serverTimestamp()
+   },{merge:true}).catch(()=>{});
+ }
+ auth.signOut();
+}
+
+function traduzirErro(e){
+ if(e.code==="auth/invalid-credential")return "E-mail ou senha incorretos.";
+ if(e.code==="auth/email-already-in-use")return "Esse e-mail já está cadastrado.";
+ if(e.code==="auth/weak-password")return "A senha é muito fraca.";
+ return e.message||"Ocorreu um erro.";
+}
+
+/* ================= PERFIL ================= */
+
+async function carregarPerfil(){
+ const ref=db.collection("Usuarios").doc(usuario.uid);
+ const snap=await ref.get();
+
+ if(snap.exists){
+  perfil=snap.data();
+ }else{
+  perfil={
+   nome:"Jogador",
+   nomeBusca:"jogador",
+   email:usuario.email,
+   avatar:"",
+   xp:0,nivel:1,moedas:0,
+   recorde:0,maiorPremio:0,
+   partidas:0,vitorias:0,
+   acertos:0,erros:0,
+   titulo:"Novato"
+  };
+  await ref.set(perfil);
+ }
+
+ document.getElementById("topUser").innerHTML=
+  avatarHtml(perfil,"40px");
+
+ await publicarRanking();
+}
+
+async function salvarPerfil(){
+ if(!usuario)return;
+ await db.collection("Usuarios")
+  .doc(usuario.uid)
+  .set(perfil,{merge:true});
+ await publicarRanking();
+}
+
+async function publicarRanking(){
+ if(!usuario||!perfil)return;
+
+ await db.collection("Partidas")
+  .doc("ranking_"+usuario.uid)
+  .set({
+   tipo:"ranking",
+   uid:usuario.uid,
+   nome:perfil.nome||"Jogador",
+   nomeBusca:(perfil.nome||"jogador").toLowerCase(),
+   avatar:perfil.avatar||"",
+   recorde:Number(perfil.recorde||0),
+   maiorPremio:Number(perfil.maiorPremio||0),
+   nivel:Number(perfil.nivel||1),
+   xp:Number(perfil.xp||0),
+   vitorias:Number(perfil.vitorias||0),
+   partidas:Number(perfil.partidas||0),
+   atualizadoEm:FV.serverTimestamp()
+  },{merge:true});
+}
+
+async function salvarPresenca(online=true){
+ if(!usuario)return;
+
+ await db.collection("Partidas")
+ .doc("presenca_"+usuario.uid)
+ .set({
+  tipo:"presenca",
+  uid:usuario.uid,
+  nome:getNome(),
+  avatar:perfil?.avatar||"",
+  online,
+  ultimaAtividade:FV.serverTimestamp()
+ },{merge:true});
+}
+
+/* ================= CENTRAL ================= */
+
+function central(){
+ conteudo.innerHTML=`
+ <div class="card">
+  <div class="title">Olá, ${esc(getNome())}! 👋</div>
+  <div class="subtitle">Escolha um jogo para começar.</div>
+ </div>
+
+ <div class="grid">
+
+  <div class="game">
+   <div>
+    <div class="emoji">💰</div>
+    <h2>Desafio do Milhão</h2>
+    <p class="small">15 perguntas • até R$ 1 milhão</p>
+   </div>
+   <button class="btn" onclick="menuMilhao()">Jogar</button>
+  </div>
+
+  <div class="game">
+   <div>
+    <div class="emoji">🏎️</div>
+    <h2>Corrida do Milhão</h2>
+    <p class="small">Corrida competitiva</p>
+   </div>
+   <button class="btn gold" onclick="corrida()">Jogar</button>
+  </div>
+
+ </div>
+
+ <div class="card">
+  <h3>📅 Desafio diário</h3>
+  <p>Uma pergunta especial todos os dias.</p>
+  <button class="btn full" onclick="desafioDiario()">Começar</button>
+ </div>
+
+ <div class="card">
+  <h3>📊 Sua conta</h3>
+  <div class="stats">
+   <div class="stat"><b>${perfil?.nivel||1}</b>Nível</div>
+   <div class="stat"><b>${perfil?.xp||0}</b>XP</div>
+   <div class="stat"><b>${perfil?.moedas||0}</b>Moedas</div>
+   <div class="stat"><b>${dinheiro(perfil?.recorde)}</b>Recorde</div>
+  </div>
+ </div>
+ `;
+ iniciarMusica("menu");
+}
+
+/* ================= MÚSICA ================= */
+
+function iniciarAudio(){
+ if(audioCtx)return;
+ try{
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+ }catch(e){}
+}
+
+function som(freq,dur=.15){
+ if(!efeitosLigados)return;
+ iniciarAudio();
+ if(!audioCtx)return;
+
+ const o=audioCtx.createOscillator();
+ const g=audioCtx.createGain();
+
+ o.frequency.value=freq;
+ o.type="triangle";
+ g.gain.setValueAtTime(.035,audioCtx.currentTime);
+ g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);
+
+ o.connect(g);
+ g.connect(audioCtx.destination);
+ o.start();
+ o.stop(audioCtx.currentTime+dur);
+}
+
+function tocarMusica(){
+ if(!musicaLigada)return;
+ iniciarAudio();
+ if(!audioCtx)return;
+
+ const notas=[196,247,294,392,294,247,220,294];
+ let i=0;
+
+ clearInterval(window.musicLoop);
+
+ window.musicLoop=setInterval(()=>{
+  if(!musicaLigada)return;
+  somMusical(notas[i%notas.length]);
+  i++;
+ },420);
+}
+
+function somMusical(freq){
+ if(!audioCtx)return;
+
+ const o=audioCtx.createOscillator();
+ const g=audioCtx.createGain();
+
+ o.type="sine";
+ o.frequency.value=freq;
+
+ g.gain.setValueAtTime(.018,audioCtx.currentTime);
+ g.gain.exponentialRampToValueAtTime(
+  .001,audioCtx.currentTime+.38
+ );
+
+ o.connect(g);
+ g.connect(audioCtx.destination);
+ o.start();
+ o.stop(audioCtx.currentTime+.38);
+}
+
+function iniciarMusica(){
+ if(musicaLigada)tocarMusica();
+}
+
+function alternarMusica(){
+ musicaLigada=!musicaLigada;
+
+ if(!musicaLigada){
+  clearInterval(window.musicLoop);
+ }else{
+  tocarMusica();
+ }
+
+ toast(musicaLigada?"🎵 Música ligada":"🔇 Música desligada");
+}
+
+/* ================= PERGUNTAS ================= */
+
+const perguntas={
+
+ ciencia:[
+ ["Qual planeta é conhecido como Planeta Vermelho?","Marte",["Vênus","Júpiter","Saturno"]],
+ ["Qual é o maior órgão do corpo humano?","Pele",["Coração","Fígado","Pulmão"]],
+ ["Qual gás é essencial para a respiração humana?","Oxigênio",["Hélio","Hidrogênio","Neônio"]],
+ ["Quantos ossos tem aproximadamente um adulto?","206",["106","306","406"]],
+ ["Qual é a estrela mais próxima da Terra?","Sol",["Sirius","Lua","Betelgeuse"]]
+ ],
+
+ geografia:[
+ ["Qual é o maior país do mundo em território?","Rússia",["Brasil","China","Canadá"]],
+ ["Qual é a capital do Brasil?","Brasília",["São Paulo","Rio de Janeiro","Salvador"]],
+ ["Qual oceano banha a costa brasileira?","Atlântico",["Pacífico","Índico","Ártico"]],
+ ["Qual é o maior continente?","Ásia",["Europa","África","Oceania"]],
+ ["Qual país é conhecido pelo formato de uma bota?","Itália",["Espanha","Portugal","Grécia"]]
+ ],
+
+ historia:[
+ ["Quem proclamou a Independência do Brasil?","Dom Pedro I",["Tiradentes","Getúlio Vargas","Dom Pedro II"]],
+ ["Em que ano ocorreu a Independência do Brasil?","1822",["1500","1889","1808"]],
+ ["Quem foi o primeiro presidente do Brasil?","Deodoro da Fonseca",["Dom Pedro II","Getúlio Vargas","Juscelino Kubitschek"]],
+ ["Qual civilização construiu Machu Picchu?","Incas",["Romanos","Egípcios","Gregos"]],
+ ["Onde começaram os Jogos Olímpicos antigos?","Grécia",["Roma","Egito","China"]]
+ ],
+
+ tecnologia:[
+ ["O que significa CPU?","Unidade Central de Processamento",["Controle Principal Universal","Central de Programa Único","Código Principal de Usuário"]],
+ ["Qual empresa criou o Android?","Google",["Microsoft","Intel","IBM"]],
+ ["HTML é usado principalmente para quê?","Estruturar páginas web",["Editar fotos","Criar bancos","Compactar arquivos"]],
+ ["CSS é usado principalmente para quê?","Estilizar páginas",["Hospedar sites","Criar senhas","Armazenar vídeos"]],
+ ["Qual linguagem é executada diretamente no navegador?","JavaScript",["C++","Java","Assembly"]]
+ ],
+
+ portugues:[
+ ["Qual é o plural de cidadão?","Cidadãos",["Cidadões","Cidadães","Cidadans"]],
+ ["Qual palavra é um verbo?","Correr",["Casa","Azul","Mesa"]],
+ ["Qual é o antônimo de feliz?","Triste",["Alegre","Contente","Satisfeito"]],
+ ["Qual é o sinônimo de rápido?","Veloz",["Lento","Parado","Fraco"]],
+ ["Qual sinal indica uma pergunta?","?",["!",";","."]]
+ ],
+
+ geral:[
+ ["Quantos dias tem um ano comum?","365",["300","360","400"]],
+ ["Qual é o maior animal do planeta?","Baleia-azul",["Elefante","Girafa","Tubarão-branco"]],
+ ["Qual é a moeda oficial do Brasil?","Real",["Peso","Dólar","Euro"]],
+ ["Quantos lados tem um hexágono?","6",["5","7","8"]],
+ ["Qual é o satélite natural da Terra?","Lua",["Marte","Sol","Vênus"]]
+ ],
+
+ matematica:[
+ ["Quanto é 15 × 4?","60",["45","50","70"]],
+ ["Quanto é 144 ÷ 12?","12",["10","14","16"]],
+ ["Quanto é 25% de 200?","50",["25","40","75"]],
+ ["Quanto é 17 + 28?","45",["35","40","55"]],
+ ["Quanto é 9²?","81",["18","72","90"]]
+ ]
+
+};
+
+/* ================= JOGO ================= */
 
 const premios=[
 1000,2000,5000,10000,20000,
@@ -416,1869 +861,1311 @@ const premios=[
 ];
 
 let jogo={
-    categoria:"geral",
-    perguntas:[],
-    indice:0,
-    premio:0,
-    acertos:0,
-    erros:0,
-    tempo:15,
-    timer:null,
-    respondeu:false,
-    usadas:new Set()
+ categoria:"geral",
+ perguntas:[],
+ indice:0,
+ premio:0,
+ acertos:0,
+ respondida:false,
+ usadas:[],
+ pular:1,
+ dica:1,
+ cinquenta:1
 };
 
-const perguntas={
-ciencia:[
-["Qual planeta é conhecido como planeta vermelho?",["Terra","Marte","Júpiter","Vênus"],1],
-["Qual é o maior órgão do corpo humano?",["Coração","Pulmão","Pele","Fígado"],2],
-["Qual gás as plantas absorvem?",["Oxigênio","Nitrogênio","Gás carbônico","Hélio"],2],
-["Qual é a unidade básica da vida?",["Átomo","Célula","Tecido","Órgão"],1],
-["Qual força nos mantém no chão?",["Magnetismo","Gravidade","Eletricidade","Atrito"],1],
-["Qual planeta é o maior do Sistema Solar?",["Marte","Saturno","Júpiter","Urano"],2],
-["A água ferve aproximadamente a quantos graus Celsius ao nível do mar?",["50","75","100","150"],2],
-["Qual órgão bombeia o sangue?",["Pulmão","Cérebro","Coração","Rim"],2],
-["Qual estrela está no centro do Sistema Solar?",["Lua","Sol","Sirius","Polaris"],1],
-["Qual vitamina é produzida com ajuda da luz solar?",["A","B12","C","D"],3],
-["Qual animal é um mamífero?",["Tubarão","Golfinho","Jacaré","Pinguim"],1],
-["Qual é o símbolo químico do oxigênio?",["O","Ox","X","Og"],0],
-["Qual planeta possui anéis muito conhecidos?",["Mercúrio","Saturno","Terra","Marte"],1],
-["Qual é a velocidade aproximada da luz?",["300 km/s","3.000 km/s","300.000 km/s","3 milhões km/s"],2],
-["Qual parte da planta realiza principalmente fotossíntese?",["Raiz","Folha","Semente","Fruto"],1],
-["Qual é o satélite natural da Terra?",["Sol","Lua","Marte","Vênus"],1],
-["Qual sangue é bombeado pelo coração?",["Somente arterial","Somente venoso","Sangue em circulação","Nenhum"],2],
-["Qual ciência estuda os seres vivos?",["Geologia","Biologia","Astronomia","Física"],1],
-["Qual é o maior animal conhecido?",["Elefante","Baleia-azul","Girafa","Tubarão-branco"],1],
-["Qual elemento químico tem símbolo Fe?",["Ferro","Flúor","Fósforo","Frâncio"],0],
-["Qual planeta é o mais próximo do Sol?",["Mercúrio","Vênus","Terra","Marte"],0],
-["Qual órgão está relacionado à respiração?",["Pulmão","Estômago","Rim","Pâncreas"],0],
-["Qual é o estado da água em forma de gelo?",["Líquido","Gasoso","Sólido","Plasma"],2],
-["Qual é o centro de uma célula eucariótica?",["Núcleo","Parede","Membrana","Citoplasma"],0],
-["Qual ramo estuda os astros?",["Botânica","Astronomia","Ecologia","Anatomia"],1]
-],
+function menuMilhao(){
+ conteudo.innerHTML=`
+ <div class="card">
+  <div class="title">💰 Desafio do Milhão</div>
+  <p>Escolha uma categoria.</p>
 
-geografia:[
-["Qual é o maior país da América do Sul?",["Argentina","Brasil","Chile","Peru"],1],
-["Qual é a capital do Brasil?",["São Paulo","Rio de Janeiro","Brasília","Salvador"],2],
-["Qual é o maior oceano?",["Atlântico","Índico","Pacífico","Ártico"],2],
-["Em qual continente fica o Egito?",["Ásia","África","Europa","Oceania"],1],
-["Qual é o maior continente?",["África","Europa","Ásia","América"],2],
-["Qual é a capital da França?",["Roma","Paris","Madrid","Lisboa"],1],
-["Qual país possui formato conhecido como bota?",["Espanha","Itália","Grécia","Portugal"],1],
-["Qual é o deserto quente famoso do norte da África?",["Saara","Gobi","Atacama","Kalahari"],0],
-["Qual é a capital da Argentina?",["Lima","Buenos Aires","Santiago","Montevidéu"],1],
-["Qual país tem a maior população?",["Brasil","Índia","Canadá","Austrália"],1],
-["Qual é a capital do Japão?",["Osaka","Kyoto","Tóquio","Hiroshima"],2],
-["Qual continente é conhecido como continente gelado?",["Europa","Antártida","África","Ásia"],1],
-["Qual é o maior país do mundo em território?",["China","Canadá","Rússia","EUA"],2],
-["Qual é a capital de Portugal?",["Porto","Lisboa","Braga","Coimbra"],1],
-["Qual rio é tradicionalmente considerado o mais extenso do mundo?",["Nilo","Amazonas","Mississipi","Danúbio"],1],
-["Qual cordilheira fica na América do Sul?",["Alpes","Andes","Himalaia","Rochosas"],1],
-["Qual é a capital do Chile?",["Santiago","Lima","Quito","La Paz"],0],
-["Qual país é famoso pelo formato de uma longa faixa na costa oeste da América do Sul?",["Chile","Paraguai","Uruguai","Bolívia"],0],
-["Qual é a capital do Peru?",["Lima","Cusco","Quito","Bogotá"],0],
-["Qual país possui a cidade de Barcelona?",["Portugal","Espanha","Itália","França"],1],
-["Qual é a capital da Itália?",["Milão","Veneza","Roma","Nápoles"],2],
-["Qual é a capital do Canadá?",["Toronto","Vancouver","Ottawa","Montreal"],2],
-["Qual país é conhecido pela Torre Eiffel?",["França","Alemanha","Bélgica","Suíça"],0],
-["Qual é a capital da Alemanha?",["Berlim","Munique","Hamburgo","Frankfurt"],0],
-["Qual é a capital do México?",["Cancún","Guadalajara","Cidade do México","Monterrey"],2]
-],
+  <select id="categoria">
+   <option value="geral">Conhecimentos Gerais</option>
+   <option value="ciencia">Ciência</option>
+   <option value="geografia">Geografia</option>
+   <option value="historia">História</option>
+   <option value="tecnologia">Tecnologia</option>
+   <option value="portugues">Português</option>
+   <option value="matematica">Matemática</option>
+  </select>
 
-historia:[
-["Quem proclamou a Independência do Brasil?",["Dom Pedro I","Dom Pedro II","Tiradentes","Getúlio Vargas"],0],
-["Em que ano ocorreu a Independência do Brasil?",["1500","1822","1889","1900"],1],
-["Quem foi o primeiro imperador do Brasil?",["Dom Pedro I","Dom Pedro II","João VI","Deodoro"],0],
-["Em que ano ocorreu a Proclamação da República?",["1822","1888","1889","1891"],2],
-["Quem foi conhecido como Tiradentes?",["Joaquim José da Silva Xavier","José Bonifácio","Duque de Caxias","Pedro Álvares Cabral"],0],
-["Qual civilização construiu Machu Picchu?",["Maia","Inca","Romana","Egípcia"],1],
-["Onde surgiram os Jogos Olímpicos antigos?",["Roma","Grécia","Egito","China"],1],
-["Qual evento começou em 1789 na França?",["Revolução Francesa","Revolução Industrial","Guerra Civil","Renascimento"],0],
-["Quem descobriu o Brasil segundo a narrativa tradicional?",["Pedro Álvares Cabral","Cristóvão Colombo","Vasco da Gama","Fernão de Magalhães"],0],
-["Qual lei aboliu a escravidão no Brasil?",["Lei Áurea","Lei do Ventre Livre","Lei Eusébio","Lei Imperial"],0],
-["Quem assinou a Lei Áurea?",["Princesa Isabel","Maria Leopoldina","Dona Teresa","Carlota Joaquina"],0],
-["Qual guerra terminou em 1945?",["Primeira Guerra Mundial","Segunda Guerra Mundial","Guerra Fria","Guerra do Vietnã"],1],
-["Qual povo construiu as pirâmides de Gizé?",["Romanos","Egípcios","Maias","Persas"],1],
-["Qual foi a capital do Império Romano?",["Atenas","Roma","Paris","Cartago"],1],
-["Qual movimento artístico ocorreu na Europa entre os séculos XIV e XVI?",["Renascimento","Barroco","Romantismo","Cubismo"],0],
-["Quem foi Napoleão Bonaparte?",["Imperador e líder militar francês","Rei inglês","Cientista italiano","Filósofo grego"],0],
-["Qual período ficou conhecido como Idade Média?",["Período entre Antiguidade e Modernidade","Século XX","Era pré-histórica","Idade Contemporânea"],0],
-["Qual povo antigo tinha sua cidade em Tenochtitlán?",["Astecas","Incas","Romanos","Gregos"],0],
-["Qual foi o principal conflito entre EUA e URSS após a Segunda Guerra?",["Guerra Fria","Guerra dos Cem Anos","Guerra Civil","Guerra do Golfo"],0],
-["Qual país lançou as bombas atômicas em Hiroshima e Nagasaki?",["Alemanha","EUA","Japão","URSS"],1],
-["Quem foi o primeiro presidente do Brasil?",["Deodoro da Fonseca","Getúlio Vargas","Floriano Peixoto","Juscelino"],0],
-["Em que ano o Brasil foi descoberto segundo a narrativa tradicional?",["1492","1500","1530","1600"],1],
-["Qual império teve Constantinopla como importante centro?",["Bizantino","Asteca","Inca","Mongol"],0],
-["Qual revolução transformou profundamente a indústria a partir do século XVIII?",["Industrial","Francesa","Russa","Gloriosa"],0],
-["Qual país iniciou a expansão marítima portuguesa?",["Portugal","Espanha","França","Inglaterra"],0]
-],
+  <button class="btn full" onclick="iniciarMilhao()">🎮 Começar</button>
 
-tecnologia:[
-["O que significa CPU?",["Unidade Central de Processamento","Controle Principal Universal","Central de Programas","Código de Processamento"],0],
-["Qual empresa criou o Android?",["Google","Microsoft","Nintendo","IBM"],0],
-["Qual linguagem é usada para estruturar páginas web?",["HTML","CSS","SQL","Python"],0],
-["Qual linguagem estiliza páginas web?",["HTML","CSS","Java","C"],1],
-["Qual tecnologia é usada para conectar dispositivos sem fio a curta distância?",["Bluetooth","HDMI","USB","VGA"],0],
-["O que significa Wi-Fi?",["Tecnologia de rede sem fio","Memória rápida","Sistema operacional","Programa gráfico"],0],
-["Qual empresa criou o Windows?",["Apple","Microsoft","Google","Sony"],1],
-["Qual sistema operacional é usado em iPhones?",["Android","Windows","iOS","Linux"],2],
-["O que é um navegador?",["Programa para acessar páginas da internet","Peça do computador","Tipo de cabo","Sistema de áudio"],0],
-["Qual destes é um navegador?",["Chrome","Photoshop","Excel","Discord"],0],
-["O que é armazenamento em nuvem?",["Guardar dados em servidores acessíveis pela internet","Guardar dados somente no teclado","Memória da CPU","Uma placa de vídeo"],0],
-["Qual tecnologia é usada para gerar páginas dinâmicas no navegador?",["JavaScript","HDMI","Bluetooth","USB"],0],
-["O que é IA?",["Inteligência Artificial","Internet Avançada","Interface Analógica","Informação Automática"],0],
-["Qual empresa desenvolve o sistema Android?",["Google","Adobe","Intel","Dell"],0],
-["O que significa URL?",["Endereço de um recurso na internet","Tipo de memória","Código de vídeo","Programa antivírus"],0],
-["Qual dispositivo normalmente distribui internet em uma casa?",["Roteador","Monitor","Teclado","Impressora"],0],
-["O que é um aplicativo?",["Programa desenvolvido para realizar funções","Tipo de cabo","Peça física obrigatória","Arquivo de imagem"],0],
-["Qual tecnologia permite pagamento aproximando o celular?",["NFC","VGA","FTP","RAM"],0],
-["O que é RAM?",["Memória de acesso aleatório","Rede automática","Arquivo remoto","Processador gráfico"],0],
-["Qual empresa criou o PlayStation?",["Sony","Microsoft","Nintendo","Sega"],0],
-["Qual empresa criou o Xbox?",["Microsoft","Sony","Apple","Google"],0],
-["O que é software?",["Conjunto de programas","Peça física","Cabo","Fonte de energia"],0],
-["O que é hardware?",["Componentes físicos","Programas","Internet","Arquivos"],0],
-["O que é programação?",["Processo de criar instruções para computadores","Montagem de computadores apenas","Uso de redes sociais","Criação de imagens"],0],
-["Qual formato é comum para imagens?",["JPG","EXE","HTML","SQL"],0]
-],
+  <hr>
 
-portugues:[
-["Qual é o plural de cidadão?",["Cidadãos","Cidadões","Cidadães","Cidadam"],0],
-["Qual é o contrário de alto?",["Grande","Baixo","Largo","Forte"],1],
-["Qual palavra é um verbo?",["Casa","Correr","Azul","Mesa"],1],
-["Qual palavra é um adjetivo?",["Bonito","Correr","Casa","Rapidamente"],0],
-["Qual é o plural de papel?",["Papéis","Papeis","Papels","Papelões"],0],
-["Qual é o feminino de ator?",["Atriz","Atora","Atorina","Atrizta"],0],
-["Qual é o aumentativo de casa?",["Casinha","Casarão","Caseta","Casal"],1],
-["Qual é o diminutivo de gato?",["Gatão","Gatinho","Gataria","Gatoide"],1],
-["Qual palavra possui acento?",["Cafe","Café","Cafeu","Cafes"],1],
-["Qual é sinônimo de feliz?",["Triste","Alegre","Bravo","Cansado"],1],
-["Qual é antônimo de rápido?",["Lento","Veloz","Forte","Alto"],0],
-["Qual frase está correta?",["Nós fomos ao mercado.","Nós foi ao mercado.","Nós foi mercado.","Nós fomos mercado."],0],
-["Qual é o coletivo de peixes?",["Cardume","Matilha","Alcateia","Manada"],0],
-["Qual é o coletivo de lobos?",["Matilha","Cardume","Bando","Colmeia"],0],
-["Qual palavra é um substantivo?",["Mesa","Correr","Bonito","Rapidamente"],0],
-["Qual é o plural de mão?",["Mãos","Mões","Mães","Mãoses"],0],
-["Qual é o plural de pão?",["Pães","Pãos","Pões","Pãoses"],0],
-["Qual palavra é uma conjunção?",["E","Casa","Azul","Correr"],0],
-["Qual é o sujeito em 'João comprou pão'?",["João","comprou","pão","comprou pão"],0],
-["Qual é o verbo em 'Maria estudou ontem'?",["Maria","estudou","ontem","Maria estudou"],1],
-["Qual é o antônimo de claro?",["Escuro","Branco","Luz","Brilho"],0],
-["Qual é o sinônimo de bonito?",["Belo","Feio","Grande","Rápido"],0],
-["Qual palavra está escrita corretamente?",["Exceção","Excessão","Eceção","Exeção"],0],
-["Qual é o plural de animal?",["Animais","Animals","Animalis","Animãos"],0],
-["Qual é o feminino de príncipe?",["Princesa","Princípa","Princeza","Princesa"],0]
-],
+  <h3>👥 Jogar com amigo</h3>
+  <button class="btn green full" onclick="modoAmigo()">Jogar no mesmo aparelho</button>
 
-geral:[
-["Qual é a capital do Brasil?",["Brasília","São Paulo","Salvador","Recife"],0],
-["Quantos dias tem uma semana?",["5","6","7","8"],2],
-["Quantos meses tem um ano?",["10","11","12","13"],2],
-["Qual é o maior planeta do Sistema Solar?",["Terra","Júpiter","Marte","Vênus"],1],
-["Qual é o idioma oficial do Brasil?",["Português","Espanhol","Inglês","Francês"],0],
-["Qual é o maior animal terrestre?",["Elefante-africano","Girafa","Rinoceronte","Hipopótamo"],0],
-["Quantos lados tem um triângulo?",["2","3","4","5"],1],
-["Qual é a cor formada por azul e amarelo?",["Verde","Roxo","Laranja","Rosa"],0],
-["Qual esporte usa uma bola e uma cesta?",["Futebol","Basquete","Tênis","Vôlei"],1],
-["Qual instrumento possui teclas pretas e brancas?",["Violão","Piano","Flauta","Bateria"],1],
-["Qual é o continente do Brasil?",["Europa","Ásia","América do Sul","África"],2],
-["Qual é o maior oceano?",["Pacífico","Atlântico","Índico","Ártico"],0],
-["Quantas horas tem um dia?",["12","18","24","30"],2],
-["Qual é o resultado de 10 + 10?",["15","20","25","30"],1],
-["Qual é a moeda do Brasil?",["Peso","Real","Dólar","Euro"],1],
-["Qual animal é conhecido por miar?",["Cachorro","Gato","Cavalo","Boi"],1],
-["Qual animal é conhecido por latir?",["Gato","Cachorro","Leão","Peixe"],1],
-["Qual planeta é conhecido como planeta vermelho?",["Marte","Terra","Júpiter","Saturno"],0],
-["Qual é a estrela do nosso sistema?",["Lua","Sol","Sirius","Vênus"],1],
-["Qual é o maior país da América do Sul?",["Brasil","Argentina","Chile","Peru"],0],
-["Qual é o idioma mais falado no Brasil?",["Português","Inglês","Espanhol","Francês"],0],
-["Qual objeto usamos para saber as horas?",["Relógio","Régua","Bússola","Termômetro"],0],
-["Qual é o satélite natural da Terra?",["Lua","Sol","Marte","Vênus"],0],
-["Qual é a estação mais fria do ano?",["Verão","Primavera","Outono","Inverno"],3],
-["Qual é o nome do nosso planeta?",["Terra","Marte","Vênus","Saturno"],0]
-]
-};
-
-for(let i=0;i<500;i++){
-    const a=Math.floor(Math.random()*1000);
-    const b=Math.floor(Math.random()*1000);
-    const op=i%3;
-
-    if(op===0){
-        perguntas.matematica=perguntas.matematica||[];
-        perguntas.matematica.push([
-            `Quanto é ${a} + ${b}?`,
-            [String(a+b),String(a+b+1),String(a+b-1),String(a+b+10)],
-            0
-        ]);
-    }else if(op===1){
-        const maior=Math.max(a,b);
-        const menor=Math.min(a,b);
-        perguntas.matematica=perguntas.matematica||[];
-        perguntas.matematica.push([
-            `Quanto é ${maior} - ${menor}?`,
-            [String(maior-menor),String(maior-menor+2),String(maior-menor+5),String(maior-menor+10)],
-            0
-        ]);
-    }else{
-        perguntas.matematica=perguntas.matematica||[];
-        perguntas.matematica.push([
-            `Quanto é ${a} × ${b}?`,
-            [String(a*b),String(a*b+1),String(a*b-1),String(a*b+10)],
-            0
-        ]);
-    }
+  <h3>🌐 Online</h3>
+  <button class="btn gold full" onclick="criarSala()">Criar partida online</button>
+ </div>
+ `;
 }
 
-function $(id){
-    return document.getElementById(id);
+function embaralhar(a){
+ return a.sort(()=>Math.random()-.5);
 }
 
-function mostrarToast(texto){
-    const t=$("toast");
-    t.textContent=texto;
-    t.classList.remove("hidden");
-    clearTimeout(window.toastTimer);
-    window.toastTimer=setTimeout(()=>t.classList.add("hidden"),2500);
+function prepararPerguntas(cat){
+ let banco=[...(perguntas[cat]||perguntas.geral)];
+
+ while(banco.length<15){
+  banco.push(...(perguntas.geral||[]));
+ }
+
+ return embaralhar(banco).slice(0,15);
 }
 
-function mostrarLogin(){
-    $("loginTela").classList.remove("hidden");
-    $("cadastroTela").classList.add("hidden");
-}
+function iniciarMilhao(){
+ const cat=document.getElementById("categoria")?.value||"geral";
 
-function mostrarCadastro(){
-    $("loginTela").classList.add("hidden");
-    $("cadastroTela").classList.remove("hidden");
-}
+ jogo={
+  categoria:cat,
+  perguntas:prepararPerguntas(cat),
+  indice:0,
+  premio:0,
+  acertos:0,
+  respondida:false,
+  usadas:[],
+  pular:1,
+  dica:1,
+  cinquenta:1
+ };
 
-function mostrarApp(){
-    $("loginTela").classList.add("hidden");
-    $("cadastroTela").classList.add("hidden");
-    $("app").classList.remove("hidden");
-}
-
-function esconderApp(){
-    $("app").classList.add("hidden");
-    $("loginTela").classList.remove("hidden");
-}
-
-function getNome(){
-    return perfil?.nome||"Jogador";
-}
-
-function getAvatar(){
-    if(perfil?.avatar){
-        return `<img src="${perfil.avatar}" alt="avatar">`;
-    }
-
-    return "👤";
-}
-
-async function login(){
-    const email=$("loginEmail").value.trim();
-    const senha=$("loginPassword").value;
-
-    if(!email||!senha){
-        mostrarToast("Preencha todos os campos.");
-        return;
-    }
-
-    try{
-        await auth.signInWithEmailAndPassword(email,senha);
-        mostrarToast("Entrando...");
-    }catch(e){
-        mostrarToast(traduzirErro(e));
-    }
-}
-
-async function cadastro(){
-    try{
-        const nome=$("signupName").value.trim();
-        const email=$("signupEmail").value.trim();
-        const senha=$("signupPassword").value;
-
-        if(!nome||!email||!senha){
-            mostrarToast("Preencha todos os campos.");
-            return;
-        }
-
-        if(senha.length<6){
-            mostrarToast("A senha precisa ter pelo menos 6 caracteres.");
-            return;
-        }
-
-        const cred=await auth.createUserWithEmailAndPassword(email,senha);
-
-        const dados={
-            nome,
-            nomeBusca:nome.toLowerCase(),
-            email,
-            avatar:"",
-            xp:0,
-            nivel:1,
-            moedas:0,
-            recorde:0,
-            maiorPremio:0,
-            partidas:0,
-            vitorias:0,
-            acertos:0,
-            erros:0,
-            titulo:"Novato",
-            criadoEm:FV.serverTimestamp()
-        };
-
-        await db.collection("Usuarios").doc(cred.user.uid).set(dados);
-
-        await salvarRanking();
-
-        mostrarToast("Conta criada!");
-    }catch(e){
-        mostrarToast(traduzirErro(e));
-    }
-}
-
-function traduzirErro(e){
-    const codigo=e?.code||"";
-
-    const erros={
-        "auth/invalid-email":"E-mail inválido.",
-        "auth/user-not-found":"Usuário não encontrado.",
-        "auth/wrong-password":"Senha incorreta.",
-        "auth/invalid-credential":"E-mail ou senha incorretos.",
-        "auth/email-already-in-use":"Este e-mail já está cadastrado.",
-        "auth/weak-password":"A senha é muito fraca."
-    };
-
-    return erros[codigo]||"Ocorreu um erro. Tente novamente.";
-}
-
-async function carregarPerfil(){
-    if(!usuario)return;
-
-    const ref=db.collection("Usuarios").doc(usuario.uid);
-    const snap=await ref.get();
-
-    if(snap.exists){
-        perfil=snap.data();
-    }else{
-        perfil={
-            nome:usuario.email?.split("@")[0]||"Jogador",
-            nomeBusca:(usuario.email||"jogador").split("@")[0].toLowerCase(),
-            email:usuario.email,
-            avatar:"",
-            xp:0,
-            nivel:1,
-            moedas:0,
-            recorde:0,
-            maiorPremio:0,
-            partidas:0,
-            vitorias:0,
-            acertos:0,
-            erros:0,
-            titulo:"Novato"
-        };
-
-        await ref.set(perfil);
-    }
-
-    await salvarRanking();
-}
-
-async function salvarPerfil(dados={}){
-    if(!usuario)return;
-
-    perfil={...perfil,...dados};
-
-    await db.collection("Usuarios")
-        .doc(usuario.uid)
-        .set(perfil,{merge:true});
-
-    await salvarRanking();
-}
-
-async function salvarRanking(){
-    if(!usuario||!perfil)return;
-
-    try{
-        await db.collection("Partidas")
-            .doc("ranking_"+usuario.uid)
-            .set({
-                tipo:"ranking",
-                uid:usuario.uid,
-                nome:getNome(),
-                nomeBusca:getNome().toLowerCase(),
-                avatar:perfil.avatar||"",
-                recorde:perfil.recorde||0,
-                nivel:perfil.nivel||1,
-                xp:perfil.xp||0,
-                moedas:perfil.moedas||0,
-                maiorPremio:perfil.maiorPremio||0,
-                atualizadoEm:FV.serverTimestamp()
-            },{merge:true});
-    }catch(e){
-        console.log(e);
-    }
-}
-
-function central(){
-    telaAtual="central";
-
-    $("conteudo").innerHTML=`
-        <div class="top">
-            <div>
-                <div style="font-size:13px;color:#aa98b8">Bem-vindo</div>
-                <h1>${escapeHtml(getNome())}</h1>
-            </div>
-            <div class="avatar">${getAvatar()}</div>
-        </div>
-
-        <div class="card">
-            <div class="row">
-                <div>
-                    <div style="color:#aa98b8">Nível</div>
-                    <div class="big">${perfil?.nivel||1}</div>
-                </div>
-                <div>
-                    <div style="color:#aa98b8">XP</div>
-                    <div class="big">${perfil?.xp||0}</div>
-                </div>
-                <div>
-                    <div style="color:#aa98b8">Moedas</div>
-                    <div class="big">🪙 ${perfil?.moedas||0}</div>
-                </div>
-            </div>
-        </div>
-
-        <h2 style="margin-top:25px">🎮 Jogos</h2>
-
-        <div class="game-card">
-            <h2>💰 Desafio do Milhão</h2>
-            <p>15 perguntas. 15 segundos. Chegue ao milhão.</p>
-            <button class="btn btn-gold" onclick="abrirMenuMilhao()">Jogar agora</button>
-        </div>
-
-        <div class="game-card">
-            <h2>🏎️ Corrida do Milhão</h2>
-            <p>Prepare-se para uma nova competição.</p>
-            <button class="btn btn-dark" onclick="abrirCorrida()">Em breve</button>
-        </div>
-
-        <div class="card">
-            <h3>📅 Desafio diário</h3>
-            <p>Responda uma pergunta por dia e ganhe XP.</p>
-            <button class="btn" onclick="desafioDiario()">Jogar desafio</button>
-        </div>
-    `;
-
-    iniciarMusica("central");
-}
-
-function abrirMenuMilhao(){
-    abrirModal(`
-        <h2>💰 Desafio do Milhão</h2>
-        <p>Escolha a categoria.</p>
-
-        <button class="btn" onclick="iniciarMilhao('geral')">🌎 Geral</button>
-        <button class="btn" onclick="iniciarMilhao('ciencia')">🔬 Ciência</button>
-        <button class="btn" onclick="iniciarMilhao('geografia')">🌎 Geografia</button>
-        <button class="btn" onclick="iniciarMilhao('historia')">📜 História</button>
-        <button class="btn" onclick="iniciarMilhao('tecnologia')">💻 Tecnologia</button>
-        <button class="btn" onclick="iniciarMilhao('portugues')">📚 Português</button>
-        <button class="btn" onclick="iniciarMilhao('matematica')">➗ Matemática</button>
-
-        <hr style="border-color:#302039">
-
-        <button class="btn btn-dark" onclick="modoLocal()">👥 Jogar com amigo perto</button>
-        <button class="btn btn-dark" onclick="iniciarOnline()">🌐 Jogar online</button>
-
-        <button class="btn btn-red" onclick="fecharModal()">Fechar</button>
-    `);
-}
-
-function nivelPergunta(i){
-    if(i<=2)return "Fácil";
-    if(i<=5)return "Médio";
-    if(i<=8)return "Difícil";
-    if(i<=11)return "Muito difícil";
-    return "Especialista";
-}
-
-function prepararPerguntas(categoria){
-    const banco=[...(perguntas[categoria]||perguntas.geral)];
-
-    banco.sort(()=>Math.random()-0.5);
-
-    const selecionadas=banco.slice(0,15);
-
-    return selecionadas.map(q=>({
-        pergunta:q[0],
-        respostas:[...q[1]],
-        correta:q[2]
-    }));
-}
-
-function iniciarMilhao(categoria){
-    fecharModal();
-
-    jogo={
-        categoria,
-        perguntas:prepararPerguntas(categoria),
-        indice:0,
-        premio:0,
-        acertos:0,
-        erros:0,
-        tempo:15,
-        timer:null,
-        respondeu:false,
-        usadas:new Set()
-    };
-
-    mostrarPergunta();
-    iniciarMusica("game");
+ mostrarPergunta();
+ tocarMusica();
 }
 
 function mostrarPergunta(){
-    clearInterval(jogo.timer);
+ clearInterval(timer);
 
-    const q=jogo.perguntas[jogo.indice];
+ if(jogo.indice>=15){
+  finalizarJogo(true);
+  return;
+ }
 
-    if(!q){
-        finalizarJogo(true);
-        return;
-    }
+ jogo.respondida=false;
 
-    jogo.respondeu=false;
-    jogo.tempo=15;
+ const p=jogo.perguntas[jogo.indice];
+ const correta=p[1];
+ const opcoes=embaralhar([correta,...p[2]]);
 
-    const nivel=nivelPergunta(jogo.indice);
+ perguntaAtual={correta,opcoes};
 
-    $("conteudo").innerHTML=`
-        <div class="top">
-            <button class="btn btn-dark" onclick="sairDoJogo()">← Sair</button>
-            <div class="prize">${formatarDinheiro(premios[jogo.indice])}</div>
-        </div>
+ conteudo.innerHTML=`
+ <div class="card">
 
-        <div class="card">
-            <div class="center">
-                <div>${jogo.indice+1} / 15</div>
-                <div class="badge">${nivel}</div>
-            </div>
+  <div class="prize">${dinheiro(premios[jogo.indice])}</div>
 
-            <div class="progress">
-                <div style="width:${((jogo.indice)/15)*100}%"></div>
-            </div>
+  <div class="small center">
+   Pergunta ${jogo.indice+1} de 15
+  </div>
 
-            <div class="timer" id="timer">${jogo.tempo}</div>
+  <div class="timer"><div id="timerBar"></div></div>
 
-            <div class="question">${escapeHtml(q.pergunta)}</div>
+  <div class="question">${esc(p[0])}</div>
 
-            <div id="respostas">
-                ${q.respostas.map((r,i)=>`
-                    <button class="answer" onclick="responder(${i})">
-                        <b>${String.fromCharCode(65+i)}.</b> ${escapeHtml(r)}
-                    </button>
-                `).join("")}
-            </div>
+  <div class="answers">
+   ${opcoes.map((x,i)=>
+    `<button class="answer" id="a${i}"
+     onclick="responder(${i})">
+     ${String.fromCharCode(65+i)}) ${esc(x)}
+    </button>`
+   ).join("")}
+  </div>
 
-            <div class="row" style="margin-top:12px">
-                <button class="btn btn-dark" onclick="usar5050()">50/50</button>
-                <button class="btn btn-dark" onclick="pularPergunta()">Pular</button>
-                <button class="btn btn-dark" onclick="usarDica()">Dica</button>
-            </div>
-        </div>
-    `;
+  <hr>
 
-    iniciarTimer();
+  <div class="grid">
+   <button class="btn gold" onclick="usar5050()">50/50</button>
+   <button class="btn gray" onclick="pular()">Pular</button>
+   <button class="btn gray" onclick="dica()">💡 Dica</button>
+  </div>
+
+  <p class="center small">
+   Acertos: ${jogo.acertos}
+  </p>
+
+ </div>
+ `;
+
+ let segundos=15;
+
+ timer=setInterval(()=>{
+  segundos--;
+
+  const bar=document.getElementById("timerBar");
+  if(bar)bar.style.width=(segundos/15*100)+"%";
+
+  if(segundos<=0){
+   clearInterval(timer);
+   responder(-1);
+  }
+ },1000);
 }
 
-function iniciarTimer(){
-    jogo.timer=setInterval(()=>{
-        jogo.tempo--;
+function responder(i){
+ if(jogo.respondida)return;
+ jogo.respondida=true;
+ clearInterval(timer);
 
-        const el=$("timer");
-        if(el)el.textContent=jogo.tempo;
+ const correta=perguntaAtual.correta;
+ const escolhido=i>=0?perguntaAtual.opcoes[i]:null;
 
-        if(jogo.tempo<=0){
-            clearInterval(jogo.timer);
-            responder(-1);
-        }
-    },1000);
-}
+ if(i>=0){
+  const b=document.getElementById("a"+i);
+  if(b)b.classList.add(escolhido===correta?"correct":"wrong");
+ }
 
-function responder(indice){
-    if(jogo.respondeu)return;
+ if(escolhido!==correta){
+  perguntaAtual.opcoes.forEach((x,n)=>{
+   if(x===correta){
+    document.getElementById("a"+n)?.classList.add("correct");
+   }
+  });
 
-    jogo.respondeu=true;
-    clearInterval(jogo.timer);
+  jogo.erros=(jogo.erros||0)+1;
+  som(130,.25);
 
-    const q=jogo.perguntas[jogo.indice];
-    const botoes=document.querySelectorAll(".answer");
+  toast(i<0?"⏰ Tempo esgotado!":"❌ Resposta errada!");
 
-    if(indice===q.correta){
-        if(botoes[indice])botoes[indice].classList.add("correct");
+  setTimeout(()=>finalizarJogo(false),1300);
+  return;
+ }
 
-        jogo.acertos++;
-        jogo.premio=premios[jogo.indice];
+ /* SÓ AQUI o jogador recebe ponto/prêmio */
+ jogo.acertos++;
+ jogo.premio=premios[jogo.indice];
 
-        tocarSom("correct");
+ som(600,.18);
+ setTimeout(()=>som(800,.18),100);
 
-        setTimeout(()=>{
-            jogo.indice++;
+ toast("✅ Resposta correta!");
 
-            if(jogo.indice>=15){
-                finalizarJogo(true);
-            }else{
-                mostrarPergunta();
-            }
-        },700);
-
-    }else{
-        if(indice>=0&&botoes[indice]){
-            botoes[indice].classList.add("wrong");
-        }
-
-        if(botoes[q.correta]){
-            botoes[q.correta].classList.add("correct");
-        }
-
-        jogo.erros++;
-        tocarSom("wrong");
-
-        setTimeout(()=>{
-            finalizarJogo(false);
-        },900);
-    }
+ setTimeout(()=>{
+  jogo.indice++;
+  mostrarPergunta();
+ },1000);
 }
 
 function usar5050(){
-    if(jogo.respondeu)return;
+ if(!jogo.cinquenta||jogo.respondida)return;
+ jogo.cinquenta=0;
 
-    const q=jogo.perguntas[jogo.indice];
-    const botoes=document.querySelectorAll(".answer");
+ const erradas=perguntaAtual.opcoes
+  .map((x,i)=>x!==perguntaAtual.correta?i:null)
+  .filter(x=>x!==null);
 
-    let removidas=0;
-
-    [...Array(4).keys()]
-        .sort(()=>Math.random()-0.5)
-        .forEach(i=>{
-            if(i!==q.correta&&removidas<2){
-                botoes[i].style.visibility="hidden";
-                removidas++;
-            }
-        });
-
-    mostrarToast("Duas alternativas foram eliminadas.");
+ embaralhar(erradas).slice(0,2).forEach(i=>{
+  const b=document.getElementById("a"+i);
+  if(b){
+   b.disabled=true;
+   b.style.opacity=".2";
+  }
+ });
 }
 
-function pularPergunta(){
-    if(jogo.respondeu)return;
-
-    clearInterval(jogo.timer);
-
-    jogo.indice++;
-
-    if(jogo.indice>=15){
-        finalizarJogo(true);
-    }else{
-        mostrarPergunta();
-    }
+function pular(){
+ if(!jogo.pular||jogo.respondida)return;
+ jogo.pular=0;
+ clearInterval(timer);
+ jogo.indice++;
+ mostrarPergunta();
 }
 
-function usarDica(){
-    if(jogo.respondeu)return;
-
-    mostrarToast("Dica: pense com calma e elimine as alternativas improváveis.");
+function dica(){
+ if(!jogo.dica||jogo.respondida)return;
+ jogo.dica=0;
+ toast("💡 Dica: pense na alternativa que melhor corresponde ao enunciado.");
 }
 
 async function finalizarJogo(vitoria){
-    clearInterval(jogo.timer);
+ clearInterval(timer);
 
-    const premioFinal=vitoria?jogo.premio:0;
+ const premioFinal=vitoria?1000000:jogo.premio;
 
-    let xpGanho=Math.max(10,jogo.acertos*10);
+ if(vitoria){
+  jogo.premio=1000000;
+ }
 
-    if(vitoria){
-        xpGanho+=100;
-    }
+ const acertos=jogo.acertos;
 
-    const novoXP=(perfil.xp||0)+xpGanho;
-    const novoNivel=Math.floor(novoXP/100)+1;
+ perfil.partidas=(perfil.partidas||0)+1;
+ perfil.acertos=(perfil.acertos||0)+acertos;
+ perfil.erros=(perfil.erros||0)+(15-acertos);
 
-    const maior=Math.max(
-        perfil.maiorPremio||0,
-        premioFinal
-    );
+ /* NÃO soma prêmio em resposta errada */
+ if(vitoria){
+  perfil.vitorias=(perfil.vitorias||0)+1;
+  perfil.maiorPremio=Math.max(
+   perfil.maiorPremio||0,
+   1000000
+  );
+ }
 
-    const recorde=Math.max(
-        perfil.recorde||0,
-        premioFinal
-    );
+ /* Recorde somente baseado em prêmio realmente conquistado */
+ if(premioFinal>(perfil.recorde||0)){
+  perfil.recorde=premioFinal;
+ }
 
-    await salvarPerfil({
-        xp:novoXP,
-        nivel:novoNivel,
-        maiorPremio:maior,
-        recorde,
-        partidas:(perfil.partidas||0)+1,
-        vitorias:(perfil.vitorias||0)+(vitoria?1:0),
-        acertos:(perfil.acertos||0)+jogo.acertos,
-        erros:(perfil.erros||0)+jogo.erros,
-        moedas:(perfil.moedas||0)+(vitoria?50:5)
-    });
+ perfil.xp=(perfil.xp||0)+(acertos*100);
 
-    try{
-        await db.collection("Partidas").add({
-            uid:usuario.uid,
-            nome:getNome(),
-            categoria:jogo.categoria,
-            acertos:jogo.acertos,
-            erros:jogo.erros,
-            premio:premioFinal,
-            venceu:vitoria,
-            criadoEm:FV.serverTimestamp()
-        });
-    }catch(e){
-        console.log(e);
-    }
+ perfil.nivel=Math.floor((perfil.xp||0)/1000)+1;
 
-    iniciarMusica("final");
+ perfil.moedas=(perfil.moedas||0)+acertos*10;
 
-    $("conteudo").innerHTML=`
-        <div class="card center">
-            <div style="font-size:65px">${vitoria?"🏆":"💥"}</div>
+ await salvarPerfil();
 
-            <h1>${vitoria?"Parabéns!":"Fim de jogo"}</h1>
+ conteudo.innerHTML=`
+ <div class="card center">
 
-            <p>${vitoria?
-                "Você completou o Desafio do Milhão!":
-                "Você errou uma pergunta."
-            }</p>
+  <div style="font-size:70px">
+   ${vitoria?"🏆":"🎮"}
+  </div>
 
-            <div class="big prize">
-                ${formatarDinheiro(premioFinal)}
-            </div>
+  <div class="title">
+   ${vitoria?"VOCÊ VENCEU!":"Fim da partida"}
+  </div>
 
-            <p>Acertos: <b>${jogo.acertos}</b></p>
-            <p>XP ganho: <b>+${xpGanho}</b></p>
+  <p>${vitoria?
+   "Parabéns! Você chegou ao milhão!":
+   "Você respondeu uma pergunta incorretamente."
+  }</p>
 
-            <button class="btn" onclick="central()">Voltar ao início</button>
-            <button class="btn btn-dark" onclick="abrirRanking()">Ver ranking</button>
-        </div>
-    `;
+  <div class="prize">${dinheiro(premioFinal)}</div>
+
+  <div class="stats">
+   <div class="stat"><b>${acertos}</b>Acertos</div>
+   <div class="stat"><b>${15-acertos}</b>Erros</div>
+   <div class="stat"><b>${perfil.xp}</b>XP</div>
+  </div>
+
+  <hr>
+
+  <button class="btn full" onclick="menuMilhao()">Jogar novamente</button>
+  <button class="btn gray full" onclick="central()">Voltar</button>
+
+ </div>
+ `;
+
+ iniciarMusica();
 }
 
-function sairDoJogo(){
-    clearInterval(jogo.timer);
-    central();
+/* ================= MODO AMIGO ================= */
+
+let modoLocal={
+ jogadores:[],
+ atual:0,
+ resultados:{}
+};
+
+function modoAmigo(){
+ conteudo.innerHTML=`
+ <div class="card">
+  <div class="title">👥 Jogar com amigo</div>
+  <p>Escolha quantos jogadores vão participar.</p>
+
+  <button class="btn full" onclick="configLocal(2)">2 jogadores</button>
+  <button class="btn full" onclick="configLocal(3)">3 jogadores</button>
+ </div>
+ `;
 }
 
-function formatarDinheiro(valor){
-    return "R$ "+Number(valor||0).toLocaleString("pt-BR");
-}
-
-async function abrirRanking(){
-    telaAtual="ranking";
-
-    $("conteudo").innerHTML=`
-        <div class="top">
-            <h1>🏆 Ranking</h1>
-            <button class="btn btn-dark" onclick="central()">Voltar</button>
-        </div>
-
-        <div class="card">
-            <p>Carregando jogadores...</p>
-        </div>
-    `;
-
-    try{
-        const snap=await db.collection("Partidas")
-            .where("tipo","==","ranking")
-            .limit(100)
-            .get();
-
-        const jogadores=[];
-
-        snap.forEach(doc=>{
-            jogadores.push(doc.data());
-        });
-
-        jogadores.sort((a,b)=>
-            Number(b.recorde||0)-Number(a.recorde||0)
-        );
-
-        $("conteudo").innerHTML=`
-            <div class="top">
-                <h1>🏆 Ranking</h1>
-                <button class="btn btn-dark" onclick="central()">Voltar</button>
-            </div>
-
-            <div class="card">
-                ${
-                    jogadores.length?
-                    jogadores.map((p,i)=>`
-                        <div class="player" onclick="abrirPerfilJogador('${p.uid}')">
-                            <div class="rank">${i+1}º</div>
-                            <div class="avatar">${p.avatar?
-                                `<img src="${p.avatar}">`:
-                                "👤"
-                            }</div>
-                            <div class="player-info">
-                                <b>${escapeHtml(p.nome||"Jogador")}</b>
-                                <div style="color:#aaa">
-                                    Nível ${p.nivel||1} · XP ${p.xp||0}
-                                </div>
-                            </div>
-                            <div class="prize">
-                                ${formatarDinheiro(p.recorde||0)}
-                            </div>
-                        </div>
-                    `).join("")
-                    :
-                    `<div class="center">
-                        <p>Ainda não há jogadores no ranking.</p>
-                    </div>`
-                }
-            </div>
-        `;
-    }catch(e){
-        console.log(e);
-
-        $("conteudo").innerHTML=`
-            <div class="card">
-                <h2>Ranking</h2>
-                <p>Não foi possível carregar o ranking.</p>
-                <button class="btn" onclick="abrirRanking()">Tentar novamente</button>
-            </div>
-        `;
-    }
-}
-
-async function abrirPerfilJogador(uid){
-    if(!uid)return;
-
-    try{
-        const snap=await db.collection("Partidas")
-            .doc("ranking_"+uid)
-            .get();
-
-        if(!snap.exists){
-            mostrarToast("Perfil não encontrado.");
-            return;
-        }
-
-        const p=snap.data();
-
-        abrirModal(`
-            <div class="center">
-                <div class="avatar" style="margin:auto;width:90px;height:90px">
-                    ${p.avatar?
-                        `<img src="${p.avatar}">`:
-                        "👤"
-                    }
-                </div>
-
-                <h2>${escapeHtml(p.nome||"Jogador")}</h2>
-
-                <span class="badge">Nível ${p.nivel||1}</span>
-
-                <p>XP: ${p.xp||0}</p>
-                <p>Recorde: <span class="prize">${formatarDinheiro(p.recorde||0)}</span></p>
-                <p>Maior prêmio: <span class="prize">${formatarDinheiro(p.maiorPremio||0)}</span></p>
-
-                ${
-                    uid!==usuario.uid?
-                    `<button class="btn" onclick="enviarPedidoAmizade('${uid}','${escapeAttr(p.nome||"Jogador")}','${escapeAttr(p.avatar||"")}')">
-                        👥 Adicionar amigo
-                    </button>
-                    <button class="btn btn-dark" onclick="abrirChat('${uid}','${escapeAttr(p.nome||"Jogador")}')">
-                        💬 Conversar
-                    </button>`
-                    :""
-                }
-
-                <button class="btn btn-red" onclick="fecharModal()">Fechar</button>
-            </div>
-        `);
-
-    }catch(e){
-        mostrarToast("Erro ao abrir perfil.");
-    }
-}
-
-function abrirPerfil(){
-    telaAtual="perfil";
-
-    $("conteudo").innerHTML=`
-        <div class="top">
-            <h1>👤 Perfil</h1>
-            <button class="btn btn-dark" onclick="central()">Voltar</button>
-        </div>
-
-        <div class="card center">
-            <div class="avatar" style="width:100px;height:100px;margin:auto">
-                ${getAvatar()}
-            </div>
-
-            <h2>${escapeHtml(getNome())}</h2>
-
-            <span class="badge">${escapeHtml(perfil.titulo||"Novato")}</span>
-
-            <p>Nível ${perfil.nivel||1}</p>
-            <p>XP: ${perfil.xp||0}</p>
-            <p>🪙 Moedas: ${perfil.moedas||0}</p>
-            <p>🏆 Recorde: ${formatarDinheiro(perfil.recorde||0)}</p>
-            <p>💰 Maior prêmio: ${formatarDinheiro(perfil.maiorPremio||0)}</p>
-            <p>🎮 Partidas: ${perfil.partidas||0}</p>
-            <p>✅ Acertos: ${perfil.acertos||0}</p>
-            <p>❌ Erros: ${perfil.erros||0}</p>
-            <p>🏅 Vitórias: ${perfil.vitorias||0}</p>
-        </div>
-
-        <div class="card">
-            <h2>🏅 Conquistas</h2>
-            <span class="badge">🎮 Primeiro jogo</span>
-            ${perfil.partidas>=10?'<span class="badge">🔥 10 partidas</span>':""}
-            ${perfil.acertos>=50?'<span class="badge">🎯 50 acertos</span>':""}
-            ${perfil.recorde>=1000000?'<span class="badge">👑 Milionário</span>':""}
-            ${perfil.vitorias>=5?'<span class="badge">🏆 5 vitórias</span>':""}
-        </div>
-
-        <div class="card">
-            <h2>📷 Foto do perfil</h2>
-            <input id="fotoPerfil" type="file" accept="image/*"
-                onchange="carregarFoto(event)">
-        </div>
-
-        <div class="card">
-            <h2>⚙️ Configurações</h2>
-
-            <button class="btn btn-dark" onclick="alternarMusica()">
-                🎵 Música: ${musicaLigada?"Ligada":"Desligada"}
-            </button>
-
-            <button class="btn btn-dark" onclick="alternarEfeitos()">
-                🔊 Efeitos: ${efeitosLigados?"Ligados":"Desligados"}
-            </button>
-
-            <button class="btn btn-red" onclick="logout()">Sair da conta</button>
-        </div>
-    `;
-}
-
-async function carregarFoto(event){
-    const arquivo=event.target.files?.[0];
-
-    if(!arquivo)return;
-
-    const leitor=new FileReader();
-
-    leitor.onload=function(e){
-        const img=new Image();
-
-        img.onload=async function(){
-            const canvas=document.createElement("canvas");
-            canvas.width=256;
-            canvas.height=256;
-
-            const ctx=canvas.getContext("2d");
-
-            const tamanho=Math.min(img.width,img.height);
-            const x=(img.width-tamanho)/2;
-            const y=(img.height-tamanho)/2;
-
-            ctx.drawImage(
-                img,
-                x,y,tamanho,tamanho,
-                0,0,256,256
-            );
-
-            const base64=canvas.toDataURL("image/jpeg",.7);
-
-            await salvarPerfil({
-                avatar:base64
-            });
-
-            mostrarToast("Foto atualizada!");
-            abrirPerfil();
-        };
-
-        img.src=e.target.result;
-    };
-
-    leitor.readAsDataURL(arquivo);
-}
-
-async function abrirAmigos(){
-    telaAtual="amigos";
-
-    $("conteudo").innerHTML=`
-        <h1>👥 Amigos</h1>
-
-        <div class="card">
-            <input id="buscarJogador"
-                placeholder="Buscar jogador..."
-                oninput="buscarJogadores()">
-
-            <div id="resultadosBusca"></div>
-        </div>
-
-        <div class="card">
-            <h2>Meus amigos</h2>
-            <div id="listaAmigos">Carregando...</div>
-        </div>
-
-        <div class="card">
-            <h2>Solicitações</h2>
-            <div id="pedidosAmizade">Carregando...</div>
-        </div>
-    `;
-
-    carregarListaAmigos();
-    carregarPedidos();
-}
-
-async function buscarJogadores(){
-    const termo=$("buscarJogador")?.value.trim().toLowerCase();
-
-    if(!termo||termo.length<2){
-        $("resultadosBusca").innerHTML="";
-        return;
-    }
-
-    try{
-        const snap=await db.collection("Partidas")
-            .where("tipo","==","ranking")
-            .limit(100)
-            .get();
-
-        const jogadores=[];
-
-        snap.forEach(doc=>{
-            const p=doc.data();
-
-            if(
-                p.uid!==usuario.uid &&
-                String(p.nomeBusca||p.nome||"")
-                    .toLowerCase()
-                    .includes(termo)
-            ){
-                jogadores.push(p);
-            }
-        });
-
-        $("resultadosBusca").innerHTML=jogadores.length?
-            jogadores.map(p=>`
-                <div class="player" onclick="abrirPerfilJogador('${p.uid}')">
-                    <div class="avatar">
-                        ${p.avatar?
-                            `<img src="${p.avatar}">`:
-                            "👤"
-                        }
-                    </div>
-
-                    <div class="player-info">
-                        <b>${escapeHtml(p.nome||"Jogador")}</b>
-                        <div>Nível ${p.nivel||1}</div>
-                    </div>
-
-                    <button class="btn"
-                        onclick="event.stopPropagation();enviarPedidoAmizade('${p.uid}','${escapeAttr(p.nome||"Jogador")}','${escapeAttr(p.avatar||"")}')">
-                        Adicionar
-                    </button>
-                </div>
-            `).join("")
-            :
-            "<p>Nenhum jogador encontrado.</p>";
-
-    }catch(e){
-        console.log(e);
-    }
-}
-
-async function enviarPedidoAmizade(uid,nome,avatar){
-    if(!usuario||uid===usuario.uid)return;
-
-    try{
-        const id=[usuario.uid,uid].sort().join("_");
-        const ref=db.collection("Amizades").doc(id);
-        const snap=await ref.get();
-
-        if(snap.exists){
-            mostrarToast("Essa amizade já existe ou está pendente.");
-            return;
-        }
-
-        await ref.set({
-            usuarios:[usuario.uid,uid],
-            remetente:usuario.uid,
-            destinatario:uid,
-            remetenteNome:getNome(),
-            remetenteAvatar:perfil.avatar||"",
-            destinatarioNome:nome,
-            status:"pendente",
-            criadoEm:FV.serverTimestamp()
-        });
-
-        await criarNotificacao(
-            uid,
-            "amizade",
-            {
-                texto:`${getNome()} enviou uma solicitação de amizade.`
-            }
-        );
-
-        mostrarToast("Solicitação enviada!");
-    }catch(e){
-        console.log(e);
-        mostrarToast("Não foi possível enviar.");
-    }
-}
-
-async function carregarPedidos(){
-    const box=$("pedidosAmizade");
-
-    if(!box)return;
-
-    try{
-        const snap=await db.collection("Amizades")
-            .where("destinatario","==",usuario.uid)
-            .where("status","==","pendente")
-            .get();
-
-        if(snap.empty){
-            box.innerHTML="<p>Nenhuma solicitação.</p>";
-            return;
-        }
-
-        box.innerHTML=snap.docs.map(doc=>{
-            const d=doc.data();
-
-            return `
-                <div class="player">
-                    <div class="avatar">
-                        ${d.remetenteAvatar?
-                            `<img src="${d.remetenteAvatar}">`:
-                            "👤"
-                        }
-                    </div>
-
-                    <div class="player-info">
-                        <b>${escapeHtml(d.remetenteNome||"Jogador")}</b>
-                    </div>
-
-                    <button class="btn btn-green"
-                        onclick="aceitarAmizade('${doc.id}')">
-                        Aceitar
-                    </button>
-
-                    <button class="btn btn-red"
-                        onclick="recusarAmizade('${doc.id}')">
-                        Recusar
-                    </button>
-                </div>
-            `;
-        }).join("");
-
-    }catch(e){
-        console.log(e);
-        box.innerHTML="<p>Não foi possível carregar.</p>";
-    }
-}
-
-async function aceitarAmizade(id){
-    try{
-        const ref=db.collection("Amizades").doc(id);
-        const snap=await ref.get();
-
-        if(!snap.exists)return;
-
-        const d=snap.data();
-
-        await ref.update({
-            status:"aceita",
-            aceitaEm:FV.serverTimestamp()
-        });
-
-        await criarNotificacao(
-            d.remetente,
-            "amizade_aceita",
-            {
-                texto:`${getNome()} aceitou sua solicitação de amizade.`
-            }
-        );
-
-        mostrarToast("Amizade aceita!");
-        abrirAmigos();
-
-    }catch(e){
-        console.log(e);
-    }
-}
-
-async function recusarAmizade(id){
-    try{
-        await db.collection("Amizades").doc(id).delete();
-        mostrarToast("Solicitação recusada.");
-        carregarPedidos();
-    }catch(e){
-        console.log(e);
-    }
-}
-
-async function carregarListaAmigos(){
-    const box=$("listaAmigos");
-
-    if(!box)return;
-
-    try{
-        const snap=await db.collection("Amizades")
-            .where("usuarios","array-contains",usuario.uid)
-            .get();
-
-        const amizades=snap.docs
-            .map(d=>({id:d.id,...d.data()}))
-            .filter(d=>d.status==="aceita");
-
-        if(!amizades.length){
-            box.innerHTML="<p>Você ainda não tem amigos.</p>";
-            return;
-        }
-
-        const html=[];
-
-        for(const amizade of amizades){
-            const outro=amizade.usuarios.find(x=>x!==usuario.uid);
-
-            if(!outro)continue;
-
-            const ranking=await db.collection("Partidas")
-                .doc("ranking_"+outro)
-                .get();
-
-            const p=ranking.exists?ranking.data():{
-                nome:"Jogador",
-                avatar:"",
-                nivel:1
-            };
-
-            html.push(`
-                <div class="player">
-                    <div class="avatar">
-                        ${p.avatar?
-                            `<img src="${p.avatar}">`:
-                            "👤"
-                        }
-                    </div>
-
-                    <div class="player-info">
-                        <b>${escapeHtml(p.nome||"Jogador")}</b>
-                        <div>Nível ${p.nivel||1}</div>
-                        <div id="status_${outro}" class="offline">
-                            Verificando...
-                        </div>
-                    </div>
-
-                    <button class="btn" onclick="abrirChat('${outro}','${escapeAttr(p.nome||"Jogador")}')">
-                        💬
-                    </button>
-
-                    <button class="btn btn-dark" onclick="abrirPerfilJogador('${outro}')">
-                        👤
-                    </button>
-                </div>
-            `);
-
-            verificarPresenca(outro);
-        }
-
-        box.innerHTML=html.join("");
-
-    }catch(e){
-        console.log(e);
-        box.innerHTML="<p>Erro ao carregar amigos.</p>";
-    }
-}
-
-async function verificarPresenca(uid){
-    try{
-        const snap=await db.collection("Partidas")
-            .doc("presenca_"+uid)
-            .get();
-
-        const el=$("status_"+uid);
-
-        if(!el)return;
-
-        if(!snap.exists){
-            el.textContent="Offline";
-            el.className="offline";
-            return;
-        }
-
-        const d=snap.data();
-
-        const tempo=d.ultimaAtividade?.toMillis?.()||0;
-        const online=d.online===true&&
-            Date.now()-tempo<120000;
-
-        el.textContent=online?"● Online":"○ Offline";
-        el.className=online?"online":"offline";
-
-    }catch(e){
-        console.log(e);
-    }
-}
-
-async function registrarPresenca(){
-    if(!usuario)return;
-
-    try{
-        await db.collection("Partidas")
-            .doc("presenca_"+usuario.uid)
-            .set({
-                uid:usuario.uid,
-                nome:getNome(),
-                avatar:perfil.avatar||"",
-                online:true,
-                ultimaAtividade:FV.serverTimestamp()
-            },{merge:true});
-    }catch(e){
-        console.log(e);
-    }
-}
-
-async function marcarOffline(){
-    if(!usuario)return;
-
-    try{
-        await db.collection("Partidas")
-            .doc("presenca_"+usuario.uid)
-            .set({
-                uid:usuario.uid,
-                online:false,
-                ultimaAtividade:FV.serverTimestamp()
-            },{merge:true});
-    }catch(e){
-        console.log(e);
-    }
-}
-
-async function criarNotificacao(destinatario,tipo,dados={}){
-    if(!usuario)return;
-
-    try{
-        await db.collection("Notificacoes").add({
-            destinatario,
-            remetente:usuario.uid,
-            remetenteNome:getNome(),
-            remetenteAvatar:perfil.avatar||"",
-            tipo,
-            ...dados,
-            lida:false,
-            criadoEm:FV.serverTimestamp()
-        });
-    }catch(e){
-        console.log(e);
-    }
-}
-
-function iniciarSistemaSocial(){
-    ouvirNotificacoes();
-}
-
-function ouvirNotificacoes(){
-    if(unsubscribeNotificacoes){
-        unsubscribeNotificacoes();
-    }
-
-    unsubscribeNotificacoes=db.collection("Notificacoes")
-        .where("destinatario","==",usuario.uid)
-        .onSnapshot(snap=>{
-            window.notificacoesCount=snap.docs.filter(
-                d=>!d.data().lida
-            ).length;
-        },e=>console.log(e));
-}
-
-async function abrirNotificacoes(){
-    telaAtual="notificacoes";
-
-    $("conteudo").innerHTML=`
-        <h1>🔔 Notificações</h1>
-        <div class="card" id="notificacoesLista">
-            Carregando...
-        </div>
-    `;
-
-    try{
-        const snap=await db.collection("Notificacoes")
-            .where("destinatario","==",usuario.uid)
-            .get();
-
-        const lista=snap.docs
-            .map(d=>({id:d.id,...d.data()}))
-            .sort((a,b)=>{
-                const aa=a.criadoEm?.toMillis?.()||0;
-                const bb=b.criadoEm?.toMillis?.()||0;
-                return bb-aa;
-            });
-
-        $("notificacoesLista").innerHTML=lista.length?
-            lista.map(n=>`
-                <div class="notice">
-                    <b>${escapeHtml(n.remetenteNome||"Sistema")}</b>
-                    <p>${escapeHtml(n.texto||"Nova notificação.")}</p>
-                    ${!n.lida?
-                        `<button class="btn btn-dark" onclick="marcarNotificacao('${n.id}')">
-                            Marcar como lida
-                        </button>`
-                        :"✓ Lida"
-                    }
-                </div>
-            `).join("")
-            :
-            "<p>Nenhuma notificação.</p>";
-
-    }catch(e){
-        console.log(e);
-    }
-}
-
-async function marcarNotificacao(id){
-    await db.collection("Notificacoes")
-        .doc(id)
-        .update({lida:true});
-
-    abrirNotificacoes();
-}
-
-function criarChatId(a,b){
-    return [a,b].sort().join("_");
-}
-
-async function abrirChat(uid,nome){
-    const chatId=criarChatId(usuario.uid,uid);
-
-    abrirModal(`
-        <h2>💬 ${escapeHtml(nome)}</h2>
-
-        <div id="chatMensagens" class="chat-box">
-            Carregando...
-        </div>
-
-        <div class="row">
-            <input id="mensagemTexto" placeholder="Digite sua mensagem...">
-            <button class="btn" onclick="enviarMensagem('${uid}','${escapeAttr(nome)}')">
-                Enviar
-            </button>
-        </div>
-
-        <button class="btn btn-red" onclick="fecharModal()">Fechar</button>
-    `);
-
-    if(unsubscribeChat){
-        unsubscribeChat();
-    }
-
-    const chatRef=db.collection("Chats").doc(chatId);
-
-    await chatRef.set({
-        participantes:[usuario.uid,uid]
-    },{merge:true});
-
-    unsubscribeChat=chatRef.collection("Mensagens")
-        .orderBy("criadoEm","asc")
-        .onSnapshot(snap=>{
-            const box=$("chatMensagens");
-
-            if(!box)return;
-
-            box.innerHTML=snap.docs.map(doc=>{
-                const m=doc.data();
-
-                return `
-                    <div class="msg ${m.remetente===usuario.uid?"me":"other"}">
-                        ${escapeHtml(m.texto||"")}
-                    </div>
-                `;
-            }).join("");
-
-            box.scrollTop=box.scrollHeight;
-        },e=>console.log(e));
-}
-
-async function enviarMensagem(uid,nome){
-    const input=$("mensagemTexto");
-    const texto=input?.value.trim();
-
-    if(!texto)return;
-
-    const chatId=criarChatId(usuario.uid,uid);
-
-    try{
-        await db.collection("Chats")
-            .doc(chatId)
-            .set({
-                participantes:[usuario.uid,uid],
-                atualizadoEm:FV.serverTimestamp()
-            },{merge:true});
-
-        await db.collection("Chats")
-            .doc(chatId)
-            .collection("Mensagens")
-            .add({
-                remetente:usuario.uid,
-                destinatario:uid,
-                texto,
-                criadoEm:FV.serverTimestamp()
-            });
-
-        await criarNotificacaoParaUsuario(
-            uid,
-            "mensagem",
-            `${getNome()} enviou uma mensagem.`
-        );
-
-        input.value="";
-    }catch(e){
-        console.log(e);
-        mostrarToast("Não foi possível enviar.");
-    }
-}
-
-async function criarNotificacaoParaUsuario(uid,tipo,texto){
-    try{
-        await db.collection("Notificacoes").add({
-            destinatario:uid,
-            remetente:usuario.uid,
-            remetenteNome:getNome(),
-            remetenteAvatar:perfil.avatar||"",
-            tipo,
-            texto,
-            lida:false,
-            criadoEm:FV.serverTimestamp()
-        });
-    }catch(e){
-        console.log(e);
-    }
-}
-
-function abrirModal(html){
-    $("modalConteudo").innerHTML=html;
-    $("modal").classList.remove("hidden");
-}
-
-function fecharModal(){
-    $("modal").classList.add("hidden");
-
-    if(unsubscribeChat){
-        unsubscribeChat();
-        unsubscribeChat=null;
-    }
-}
-
-function modoLocal(){
-    abrirModal(`
-        <h2>👥 Jogar com amigo perto</h2>
-
-        <p>Escolha os jogadores.</p>
-
-        <input id="p1" value="${escapeAttr(getNome())}" placeholder="Jogador 1">
-        <input id="p2" placeholder="Jogador 2">
-        <input id="p3" placeholder="Jogador 3 (opcional)">
-
-        <button class="btn" onclick="iniciarLocal()">Começar</button>
-        <button class="btn btn-red" onclick="fecharModal()">Cancelar</button>
-    `);
+function configLocal(n){
+ modoLocal={
+  jogadores:Array.from({length:n},(_,i)=>"Jogador "+(i+1)),
+  atual:0,
+  resultados:{}
+ };
+
+ conteudo.innerHTML=`
+ <div class="card">
+  <h2>👥 Nomes dos jogadores</h2>
+  ${modoLocal.jogadores.map((x,i)=>
+   `<input id="p${i}" value="${x}">`
+  ).join("")}
+  <button class="btn green full" onclick="iniciarLocal()">Começar</button>
+ </div>
+ `;
 }
 
 function iniciarLocal(){
-    fecharModal();
+ modoLocal.jogadores=modoLocal.jogadores.map((_,i)=>
+  document.getElementById("p"+i).value.trim()||"Jogador "+(i+1)
+ );
 
-    mostrarToast(
-        "Modo local preparado. O jogo será disputado no mesmo aparelho."
-    );
+ modoLocal.atual=0;
+ modoLocal.resultados={};
 
-    iniciarMilhao("geral");
+ rodadaLocal();
 }
 
-async function iniciarOnline(){
-    const codigo=Math.random()
-        .toString(36)
-        .substring(2,7)
-        .toUpperCase();
+function rodadaLocal(){
+ const jogador=modoLocal.jogadores[modoLocal.atual];
 
-    try{
-        await db.collection("Partidas")
-            .doc("online_"+codigo)
-            .set({
-                tipo:"online",
-                codigo,
-                criador:usuario.uid,
-                jogadores:[usuario.uid],
-                status:"aguardando",
-                criadoEm:FV.serverTimestamp()
-            });
+ jogo={
+  categoria:"geral",
+  perguntas:prepararPerguntas("geral"),
+  indice:0,
+  premio:0,
+  acertos:0,
+  respondida:false,
+  pular:0,dica:0,cinquenta:0
+ };
 
-        abrirModal(`
-            <h2>🌐 Sala online</h2>
-
-            <p>Envie este código ao seu amigo:</p>
-
-            <div class="center big">${codigo}</div>
-
-            <p>A sala foi criada. O modo online será conectado a ela.</p>
-
-            <button class="btn" onclick="iniciarMilhao('geral')">
-                Começar
-            </button>
-
-            <button class="btn btn-red" onclick="fecharModal()">
-                Fechar
-            </button>
-        `);
-
-    }catch(e){
-        console.log(e);
-        mostrarToast("Não foi possível criar a sala.");
-    }
+ conteudo.innerHTML=`
+ <div class="card center">
+  <h2>🎮 Vez de ${esc(jogador)}</h2>
+  <p>Prepare-se.</p>
+  <button class="btn full" onclick="mostrarPerguntaLocal()">Começar</button>
+ </div>
+ `;
 }
 
-async function desafioDiario(){
-    const hoje=new Date();
-    const indice=(hoje.getFullYear()+hoje.getMonth()+hoje.getDate())%perguntas.geral.length;
-    const q=perguntas.geral[indice];
-
-    abrirModal(`
-        <h2>📅 Desafio diário</h2>
-
-        <p>${escapeHtml(q[0])}</p>
-
-        ${q[1].map((r,i)=>`
-            <button class="answer"
-                onclick="responderDiario(${i},${q[2]})">
-                ${escapeHtml(r)}
-            </button>
-        `).join("")}
-
-        <button class="btn btn-red" onclick="fecharModal()">Fechar</button>
-    `);
+function mostrarPerguntaLocal(){
+ mostrarPergunta();
 }
 
-async function responderDiario(i,correta){
-    if(i===correta){
-        const xp=(perfil.xp||0)+25;
-
-        await salvarPerfil({
-            xp,
-            nivel:Math.floor(xp/100)+1,
-            moedas:(perfil.moedas||0)+10
-        });
-
-        mostrarToast("Acertou! +25 XP");
-    }else{
-        mostrarToast("Resposta errada.");
-    }
-
-    fecharModal();
-    central();
+function finalizarLocal(){
 }
 
-function abrirCorrida(){
-    abrirModal(`
-        <h2>🏎️ Corrida do Milhão</h2>
-        <p>Este será o próximo grande jogo da plataforma.</p>
-        <p>🏁 Corrida solo</p>
-        <p>👥 2 ou 3 jogadores</p>
-        <p>🌐 Partidas online</p>
-        <p>🏆 Ranking próprio</p>
+/* ================= DESAFIO DIÁRIO ================= */
 
-        <button class="btn btn-red" onclick="fecharModal()">Fechar</button>
-    `);
+function desafioDiario(){
+ const hoje=new Date().toISOString().slice(0,10);
+ const p=perguntas.geral[
+  hoje.split("-").reduce((a,b)=>a+Number(b),0)%perguntas.geral.length
+ ];
+
+ conteudo.innerHTML=`
+ <div class="card">
+  <h2>📅 Desafio diário</h2>
+  <p>${esc(p[0])}</p>
+  ${[p[1],...p[2]].sort(()=>Math.random()-.5).map(x=>
+   `<button class="answer full"
+    onclick="respostaDiaria(this,'${esc(p[1])}')">
+    ${esc(x)}
+   </button>`
+  ).join("")}
+ </div>
+ `;
 }
 
-function alternarMusica(){
-    musicaLigada=!musicaLigada;
+function respostaDiaria(btn,correta){
+ if(btn.textContent.trim()===correta){
+  btn.classList.add("correct");
+  toast("🎉 Acertou!");
+  perfil.xp=(perfil.xp||0)+100;
+  salvarPerfil();
+ }else{
+  btn.classList.add("wrong");
+  toast("❌ Errou!");
+ }
+}
 
-    if(!musicaLigada){
-        pararMusica();
-    }else{
-        iniciarMusica(telaAtual);
-    }
+/* ================= RANKING ================= */
 
+async function abrirRanking(){
+ conteudo.innerHTML=`
+ <div class="card">
+  <div class="title">🏆 Ranking</div>
+  <p class="subtitle">Os melhores jogadores da plataforma</p>
+  <div id="rankingLista">Carregando...</div>
+ </div>
+ `;
+
+ try{
+  const snap=await db.collection("Partidas")
+   .where("tipo","==","ranking")
+   .limit(100)
+   .get();
+
+  let jogadores=[];
+
+  snap.forEach(d=>{
+   const x=d.data();
+   if(x.uid)jogadores.push(x);
+  });
+
+  jogadores.sort((a,b)=>
+   Number(b.recorde||0)-Number(a.recorde||0)
+  );
+
+  if(!jogadores.length){
+   rankingLista.innerHTML="<p>Nenhum jogador encontrado.</p>";
+   return;
+  }
+
+  rankingLista.innerHTML=jogadores.map((x,i)=>`
+   <div class="rankrow"
+    onclick="verPerfilPublico('${x.uid}')">
+
+    <div class="ranknum">#${i+1}</div>
+
+    ${avatarHtml(x,"42px")}
+
+    <div class="rowinfo">
+     <b>${esc(x.nome)}</b>
+     <small>Nível ${x.nivel||1} • ${x.xp||0} XP</small>
+    </div>
+
+    <strong>${dinheiro(x.recorde)}</strong>
+   </div>
+  `).join("");
+
+ }catch(e){
+  rankingLista.innerHTML=
+   "<p>Não foi possível carregar o ranking.</p>";
+ }
+}
+
+async function verPerfilPublico(uid){
+ const snap=await db.collection("Partidas")
+  .doc("ranking_"+uid).get();
+
+ if(!snap.exists)return;
+
+ const x=snap.data();
+
+ conteudo.innerHTML=`
+ <div class="card center">
+
+  ${avatarHtml(x,"90px")}
+
+  <h2>${esc(x.nome)}</h2>
+
+  <p>Nível ${x.nivel||1}</p>
+
+  <div class="stats">
+   <div class="stat"><b>${x.xp||0}</b>XP</div>
+   <div class="stat"><b>${x.partidas||0}</b>Partidas</div>
+   <div class="stat"><b>${x.vitorias||0}</b>Vitórias</div>
+   <div class="stat"><b>${dinheiro(x.recorde)}</b>Recorde</div>
+  </div>
+
+  ${uid!==usuario.uid?
+   `<button class="btn green full"
+    onclick="enviarAmizade('${uid}','${esc(x.nome)}')">
+    🤝 Adicionar amigo
+   </button>`:""
+  }
+
+ </div>
+ `;
+}
+
+/* ================= AMIZADES ================= */
+
+function abrirAmigos(){
+ conteudo.innerHTML=`
+ <div class="card">
+  <div class="title">👥 Amigos</div>
+
+  <input id="busca"
+   placeholder="Pesquisar jogador..."
+   oninput="buscarJogadores()">
+
+  <div id="resultadosBusca"></div>
+ </div>
+
+ <div class="card">
+  <h3>🤝 Meus amigos</h3>
+  <div id="listaAmigos">Carregando...</div>
+ </div>
+
+ <div class="card">
+  <h3>📨 Pedidos recebidos</h3>
+  <div id="pedidos">Carregando...</div>
+ </div>
+ `;
+
+ carregarAmigos();
+ carregarPedidos();
+}
+
+async function buscarJogadores(){
+ const termo=document.getElementById("busca")?.value
+  .trim().toLowerCase();
+
+ if(!termo||termo.length<2){
+  resultadosBusca.innerHTML="";
+  return;
+ }
+
+ try{
+  const snap=await db.collection("Partidas")
+   .where("tipo","==","ranking")
+   .limit(100)
+   .get();
+
+  const arr=[];
+
+  snap.forEach(d=>{
+   const x=d.data();
+
+   if(
+    x.uid!==usuario.uid &&
+    String(x.nomeBusca||x.nome||"")
+     .toLowerCase().includes(termo)
+   ){
+    arr.push(x);
+   }
+  });
+
+  resultadosBusca.innerHTML=arr.map(x=>`
+   <div class="friendrow">
+
+    ${avatarHtml(x,"40px")}
+
+    <div class="rowinfo">
+     <b>${esc(x.nome)}</b>
+     <small>Nível ${x.nivel||1}</small>
+    </div>
+
+    <button class="btn"
+     onclick="enviarAmizade('${x.uid}','${esc(x.nome)}')">
+     + Amigo
+    </button>
+
+   </div>
+  `).join("")||"<p>Nenhum jogador encontrado.</p>";
+
+ }catch(e){
+  resultadosBusca.innerHTML=
+   "<p>Erro ao pesquisar jogadores.</p>";
+ }
+}
+
+async function enviarAmizade(uid,nome){
+ if(uid===usuario.uid)return;
+
+ const id=[usuario.uid,uid].sort().join("_");
+
+ const ref=db.collection("Amizades").doc(id);
+ const snap=await ref.get();
+
+ if(snap.exists){
+  toast("Esse pedido já existe ou vocês já são amigos.");
+  return;
+ }
+
+ await ref.set({
+  usuarios:[usuario.uid,uid],
+  remetente:usuario.uid,
+  remetenteNome:getNome(),
+  remetenteAvatar:perfil.avatar||"",
+  destinatario:uid,
+  status:"pendente",
+  criadoEm:FV.serverTimestamp()
+ });
+
+ await criarNotificacao(uid,"amizade",{
+  texto:`${getNome()} enviou uma solicitação de amizade.`
+ });
+
+ toast("Pedido enviado!");
+}
+
+async function carregarPedidos(){
+ const el=document.getElementById("pedidos");
+ if(!el)return;
+
+ const snap=await db.collection("Amizades")
+  .where("destinatario","==",usuario.uid)
+  .where("status","==","pendente")
+  .get();
+
+ if(snap.empty){
+  el.innerHTML="<p class='small'>Nenhum pedido.</p>";
+  return;
+ }
+
+ el.innerHTML="";
+
+ snap.forEach(d=>{
+  const x=d.data();
+
+  el.innerHTML+=`
+   <div class="friendrow">
+
+    ${avatarHtml({
+     nome:x.remetenteNome,
+     avatar:x.remetenteAvatar
+    },"42px")}
+
+    <div class="rowinfo">
+     <b>${esc(x.remetenteNome)}</b>
+     <small>Quer ser seu amigo</small>
+    </div>
+
+    <button class="btn green"
+     onclick="responderAmizade('${d.id}',true)">
+     ✓
+    </button>
+
+    <button class="btn red"
+     onclick="responderAmizade('${d.id}',false)">
+     ✕
+    </button>
+
+   </div>
+  `;
+ });
+}
+
+async function responderAmizade(id,aceitar){
+ const ref=db.collection("Amizades").doc(id);
+ const snap=await ref.get();
+
+ if(!snap.exists)return;
+
+ const x=snap.data();
+
+ if(aceitar){
+  await ref.update({
+   status:"aceita",
+   aceitoEm:FV.serverTimestamp()
+  });
+
+  await criarNotificacao(
+   x.remetente,
+   "amizade_aceita",
+   {texto:`${getNome()} aceitou sua solicitação de amizade.`}
+  );
+
+  toast("Amizade aceita!");
+ }else{
+  await ref.update({status:"recusada"});
+  toast("Pedido recusado.");
+ }
+
+ carregarPedidos();
+ carregarAmigos();
+}
+
+async function carregarAmigos(){
+ const el=document.getElementById("listaAmigos");
+ if(!el)return;
+
+ const snap=await db.collection("Amizades")
+  .where("usuarios","array-contains",usuario.uid)
+  .get();
+
+ const amigos=snap.docs
+  .map(d=>({id:d.id,...d.data()}))
+  .filter(x=>x.status==="aceita");
+
+ if(!amigos.length){
+  el.innerHTML="<p class='small'>Você ainda não possui amigos.</p>";
+  return;
+ }
+
+ el.innerHTML="";
+
+ for(const a of amigos){
+  const uid=a.usuarios.find(x=>x!==usuario.uid);
+
+  const r=await db.collection("Partidas")
+   .doc("ranking_"+uid).get();
+
+  const p=await db.collection("Partidas")
+   .doc("presenca_"+uid).get();
+
+  const x=r.exists?r.data():{
+   nome:"Jogador",
+   avatar:""
+  };
+
+  const online=p.exists&&p.data().online;
+
+  el.innerHTML+=`
+   <div class="friendrow">
+
+    ${avatarHtml(x,"43px")}
+
+    <div class="rowinfo">
+     <b>${esc(x.nome)}</b>
+     <small>
+      <span class="online ${online?"on":""}"></span>
+      ${online?" Online":" Offline"}
+     </small>
+    </div>
+
+    <button class="btn"
+     onclick="abrirChat('${uid}','${esc(x.nome)}')">
+     💬
+    </button>
+
+    <button class="btn gray"
+     onclick="verPerfilPublico('${uid}')">
+     👤
+    </button>
+
+   </div>
+  `;
+ }
+}
+
+/* ================= CHAT PRIVADO ================= */
+
+function chatId(a,b){
+ return [a,b].sort().join("_");
+}
+
+async function abrirChat(uid,nome){
+ const id=chatId(usuario.uid,uid);
+
+ conteudo.innerHTML=`
+ <div class="card">
+
+  <div class="title">💬 ${esc(nome)}</div>
+
+  <div id="mensagens" class="chatbox">
+   Carregando mensagens...
+  </div>
+
+  <div class="chatinput">
+   <input id="textoChat"
+    placeholder="Digite sua mensagem..."
+    onkeydown="if(event.key==='Enter')enviarMensagem('${uid}')">
+   <button class="btn" onclick="enviarMensagem('${uid}')">➤</button>
+  </div>
+
+ </div>
+ `;
+
+ if(chatUnsub)chatUnsub();
+
+ chatUnsub=db.collection("Chats")
+  .doc(id)
+  .collection("Mensagens")
+  .orderBy("criadoEm","asc")
+  .onSnapshot(snap=>{
+
+   const el=document.getElementById("mensagens");
+   if(!el)return;
+
+   el.innerHTML="";
+
+   snap.forEach(d=>{
+    const x=d.data();
+
+    el.innerHTML+=`
+     <div class="msg ${x.remetente===usuario.uid?"me":"other"}">
+      ${esc(x.texto)}
+     </div>
+    `;
+   });
+
+   el.scrollTop=el.scrollHeight;
+  },()=>{});
+}
+
+async function enviarMensagem(uid){
+ const input=document.getElementById("textoChat");
+ if(!input)return;
+
+ const texto=input.value.trim();
+ if(!texto)return;
+
+ const id=chatId(usuario.uid,uid);
+
+ await db.collection("Chats").doc(id).set({
+  participantes:[usuario.uid,uid]
+ },{merge:true});
+
+ await db.collection("Chats")
+  .doc(id)
+  .collection("Mensagens")
+  .add({
+   remetente:usuario.uid,
+   destinatario:uid,
+   texto,
+   criadoEm:FV.serverTimestamp()
+  });
+
+ await criarNotificacao(uid,"mensagem",{
+  texto:`${getNome()} enviou uma mensagem.`
+ });
+
+ input.value="";
+}
+
+/* ================= NOTIFICAÇÕES ================= */
+
+async function criarNotificacao(destinatario,tipo,dados={}){
+ if(!usuario||!destinatario)return;
+
+ await db.collection("Notificacoes").add({
+  destinatario,
+  remetente:usuario.uid,
+  remetenteNome:getNome(),
+  remetenteAvatar:perfil.avatar||"",
+  tipo,
+  ...dados,
+  lida:false,
+  criadoEm:FV.serverTimestamp()
+ });
+}
+
+async function abrirNotificacoes(){
+ conteudo.innerHTML=`
+ <div class="card">
+  <div class="title">🔔 Notificações</div>
+  <div id="notificacoes">Carregando...</div>
+ </div>
+ `;
+
+ const snap=await db.collection("Notificacoes")
+  .where("destinatario","==",usuario.uid)
+  .limit(50)
+  .get();
+
+ const arr=snap.docs.map(d=>({
+  id:d.id,...d.data()
+ }));
+
+ arr.sort((a,b)=>{
+  const aa=a.criadoEm?.seconds||0;
+  const bb=b.criadoEm?.seconds||0;
+  return bb-aa;
+ });
+
+ if(!arr.length){
+  notificacoes.innerHTML="<p>Nenhuma notificação.</p>";
+  return;
+ }
+
+ notificacoes.innerHTML=arr.map(x=>`
+  <div class="notification ${x.lida?"":"unread"}">
+   <b>${esc(x.remetenteNome||"Sistema")}</b>
+   <p>${esc(x.texto||"Nova notificação")}</p>
+  </div>
+ `).join("");
+
+ for(const x of arr){
+  if(!x.lida){
+   db.collection("Notificacoes")
+    .doc(x.id)
+    .update({lida:true})
+    .catch(()=>{});
+  }
+ }
+}
+
+/* ================= PERFIL ================= */
+
+function abrirPerfil(){
+ conteudo.innerHTML=`
+ <div class="card center">
+
+  ${avatarHtml(perfil,"90px")}
+
+  <h2>${esc(getNome())}</h2>
+  <p class="subtitle">${esc(perfil.titulo||"Novato")}</p>
+
+  <div class="stats">
+   <div class="stat"><b>${perfil.nivel||1}</b>Nível</div>
+   <div class="stat"><b>${perfil.xp||0}</b>XP</div>
+   <div class="stat"><b>${perfil.moedas||0}</b>Moedas</div>
+   <div class="stat"><b>${perfil.partidas||0}</b>Partidas</div>
+   <div class="stat"><b>${perfil.vitorias||0}</b>Vitórias</div>
+   <div class="stat"><b>${dinheiro(perfil.recorde)}</b>Recorde</div>
+  </div>
+
+ </div>
+
+ <div class="card">
+  <h3>📸 Foto de perfil</h3>
+
+  <input type="file"
+   accept="image/*"
+   onchange="trocarFoto(event)">
+
+  <p class="small">
+   A foto será reduzida para não ocupar muito espaço.
+  </p>
+ </div>
+
+ <div class="card">
+  <h3>🏅 Conquistas</h3>
+
+  <div class="badges">
+   <div class="badge">🎮 Primeiro jogo</div>
+   <div class="badge">⭐ 100 XP</div>
+   <div class="badge">💰 Primeiro prêmio</div>
+   <div class="badge">🏆 Subiu no ranking</div>
+   <div class="badge">🔥 Jogador ativo</div>
+   <div class="badge">👥 Primeiro amigo</div>
+  </div>
+ </div>
+
+ <div class="card">
+  <h3>⚙️ Configurações</h3>
+
+  <button class="btn gray full" onclick="alternarMusica()">
+   🎵 Música: ${musicaLigada?"Ligada":"Desligada"}
+  </button>
+
+  <button class="btn red full" onclick="logout()">
+   Sair da conta
+  </button>
+ </div>
+ `;
+}
+
+function trocarFoto(event){
+ const file=event.target.files[0];
+ if(!file)return;
+
+ const reader=new FileReader();
+
+ reader.onload=e=>{
+  const img=new Image();
+
+  img.onload=()=>{
+   const canvas=document.createElement("canvas");
+   canvas.width=256;
+   canvas.height=256;
+
+   const c=canvas.getContext("2d");
+
+   const escala=Math.max(
+    256/img.width,
+    256/img.height
+   );
+
+   const w=img.width*escala;
+   const h=img.height*escala;
+
+   c.drawImage(
+    img,
+    (256-w)/2,
+    (256-h)/2,
+    w,h
+   );
+
+   perfil.avatar=canvas.toDataURL(
+    "image/jpeg",.7
+   );
+
+   salvarPerfil().then(()=>{
+    document.getElementById("topUser").innerHTML=
+     avatarHtml(perfil,"40px");
+
+    toast("Foto atualizada!");
     abrirPerfil();
+   });
+  };
+
+  img.src=e.target.result;
+ };
+
+ reader.readAsDataURL(file);
 }
 
-function alternarEfeitos(){
-    efeitosLigados=!efeitosLigados;
-    abrirPerfil();
+/* ================= CORRIDA ================= */
+
+function corrida(){
+ conteudo.innerHTML=`
+ <div class="card center">
+
+  <div style="font-size:70px">🏎️</div>
+
+  <h1>Corrida do Milhão</h1>
+
+  <p>
+   Jogo de corrida competitivo da plataforma.
+  </p>
+
+  <div class="card">
+   🏁 Velocidade<br>
+   💰 Moedas<br>
+   🏆 Ranking<br>
+   👥 Amigos
+  </div>
+
+  <button class="btn full"
+   onclick="iniciarCorrida()">
+   🏎️ Começar corrida
+  </button>
+
+ </div>
+ `;
 }
 
-function iniciarMusica(track){
-    if(!musicaLigada)return;
+function iniciarCorrida(){
+ let progresso=0;
+ let moedas=0;
 
-    try{
-        if(!audioCtx){
-            audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-        }
+ conteudo.innerHTML=`
+ <div class="card center">
+  <h2>🏎️ Corrida do Milhão</h2>
+  <div style="font-size:70px">🚗</div>
+  <div class="timer">
+   <div id="corridaBar"></div>
+  </div>
+  <p>Toque rapidamente para acelerar!</p>
+  <button class="btn green"
+   style="font-size:25px;width:100%"
+   onclick="acelerar()">
+   🚀 ACELERAR
+  </button>
+  <h2 id="corridaValor">0%</h2>
+ </div>
+ `;
 
-        if(audioCtx.state==="suspended"){
-            audioCtx.resume();
-        }
+ window.corridaDados={
+  progresso:0,
+  moedas:0,
+  inicio:Date.now()
+ };
+}
 
-        pararMusica();
+function acelerar(){
+ if(!window.corridaDados)return;
 
-        let notas;
+ window.corridaDados.progresso+=
+  Math.floor(Math.random()*8)+3;
 
-        if(track==="game"){
-            notas=[220,277,330,440,330,277];
-        }else if(track==="final"){
-            notas=[262,330,392,523,659];
-        }else{
-            notas=[196,247,294,392,294,247];
-        }
+ window.corridaDados.moedas+=
+  Math.floor(Math.random()*5)+1;
 
-        let i=0;
+ const p=Math.min(
+  100,
+  window.corridaDados.progresso
+ );
 
-        musicTimer=setInterval(()=>{
-            if(!musicaLigada)return;
+ corridaBar.style.width=p+"%";
+ corridaValor.textContent=p+"%";
 
-            const osc=audioCtx.createOscillator();
-            const gain=audioCtx.createGain();
+ som(400+p*3,.08);
 
-            osc.type="sine";
-            osc.frequency.value=notas[i%notas.length];
+ if(p>=100){
+  finalizarCorrida();
+ }
+}
 
-            gain.gain.setValueAtTime(.0001,audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(
-                .025,
-                audioCtx.currentTime+.03
-            );
-            gain.gain.exponentialRampToValueAtTime(
-                .0001,
-                audioCtx.currentTime+.25
-            );
+async function finalizarCorrida(){
+ const moedas=window.corridaDados.moedas;
 
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
+ perfil.moedas=(perfil.moedas||0)+moedas;
+ perfil.xp=(perfil.xp||0)+200;
 
-            osc.start();
-            osc.stop(audioCtx.currentTime+.26);
+ await salvarPerfil();
 
-            i++;
-        },320);
+ conteudo.innerHTML=`
+ <div class="card center">
+  <div style="font-size:70px">🏆</div>
+  <h1>Você terminou!</h1>
+  <p>Moedas ganhas</p>
+  <div class="prize">🪙 ${moedas}</div>
+  <button class="btn full" onclick="central()">Continuar</button>
+ </div>
+ `;
 
-    }catch(e){
-        console.log(e);
+ window.corridaDados=null;
+}
+
+/* ================= SALA ONLINE ================= */
+
+async function criarSala(){
+ if(!usuario)return;
+
+ const codigo=Math.random()
+  .toString(36)
+  .substring(2,7)
+  .toUpperCase();
+
+ await db.collection("Partidas")
+  .doc("sala_"+codigo)
+  .set({
+   tipo:"sala",
+   codigo,
+   criador:usuario.uid,
+   jogadores:[{
+    uid:usuario.uid,
+    nome:getNome()
+   }],
+   status:"aguardando",
+   criadoEm:FV.serverTimestamp()
+  });
+
+ conteudo.innerHTML=`
+ <div class="card center">
+
+  <div style="font-size:60px">🌐</div>
+
+  <h2>Sala criada!</h2>
+
+  <p>Envie este código para seu amigo:</p>
+
+  <div class="prize">${codigo}</div>
+
+  <button class="btn green full"
+   onclick="navigator.share?
+   navigator.share({text:'Entre na minha partida: '+codigo}):
+   navigator.clipboard.writeText('${codigo}')">
+   📤 Compartilhar código
+  </button>
+
+  <hr>
+
+  <input id="entrarCodigo"
+   placeholder="Ou digite código de outra sala">
+
+  <button class="btn full"
+   onclick="entrarSala()">
+   Entrar em uma sala
+  </button>
+
+  <p class="small">
+   Quando o amigo entrar, a partida poderá ser iniciada.
+  </p>
+
+ </div>
+ `;
+
+ ouvirSala(codigo);
+}
+
+async function entrarSala(){
+ const codigo=document.getElementById("entrarCodigo")
+  ?.value.trim().toUpperCase();
+
+ if(!codigo)return toast("Digite o código.");
+
+ const ref=db.collection("Partidas")
+  .doc("sala_"+codigo);
+
+ const snap=await ref.get();
+
+ if(!snap.exists)return toast("Sala não encontrada.");
+
+ const sala=snap.data();
+
+ if((sala.jogadores||[]).some(x=>x.uid===usuario.uid))
+  return toast("Você já está nessa sala.");
+
+ if((sala.jogadores||[]).length>=3)
+  return toast("Sala cheia.");
+
+ await ref.update({
+  jogadores:FV.arrayUnion({
+   uid:usuario.uid,
+   nome:getNome()
+  })
+ });
+
+ toast("Você entrou na sala!");
+
+ ouvirSala(codigo);
+}
+
+function ouvirSala(codigo){
+ const ref=db.collection("Partidas")
+  .doc("sala_"+codigo);
+
+ if(window.salaUnsub)window.salaUnsub();
+
+ window.salaUnsub=ref.onSnapshot(snap=>{
+  if(!snap.exists)return;
+
+  const sala=snap.data();
+
+  conteudo.innerHTML=`
+   <div class="card center">
+
+    <h2>🌐 Sala ${codigo}</h2>
+
+    <h3>Jogadores</h3>
+
+    ${(sala.jogadores||[]).map(x=>
+     `<div class="friendrow">
+      <div class="rowinfo">
+       <b>${esc(x.nome)}</b>
+      </div>
+     </div>`
+    ).join("")}
+
+    ${sala.criador===usuario.uid?
+     `<button class="btn green full"
+      onclick="iniciarSala('${codigo}')">
+      🎮 Iniciar partida
+     </button>`:
+     `<p>Esperando o criador iniciar...</p>`
     }
+
+   </div>
+  `;
+ });
 }
 
-function pararMusica(){
-    if(musicTimer){
-        clearInterval(musicTimer);
-        musicTimer=null;
-    }
+async function iniciarSala(codigo){
+ await db.collection("Partidas")
+  .doc("sala_"+codigo)
+  .update({
+   status:"iniciada",
+   iniciadaEm:FV.serverTimestamp()
+  });
+
+ iniciarMilhao();
 }
 
-function tocarSom(tipo){
-    if(!efeitosLigados)return;
-
-    try{
-        if(!audioCtx){
-            audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-        }
-
-        const osc=audioCtx.createOscillator();
-        const gain=audioCtx.createGain();
-
-        osc.type="triangle";
-
-        if(tipo==="correct"){
-            osc.frequency.value=660;
-        }else if(tipo==="wrong"){
-            osc.frequency.value=150;
-        }else{
-            osc.frequency.value=440;
-        }
-
-        gain.gain.value=.06;
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        osc.start();
-        osc.stop(audioCtx.currentTime+.18);
-    }catch(e){}
-}
-
-function escapeHtml(text){
-    return String(text||"")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-}
-
-function escapeAttr(text){
-    return escapeHtml(text);
-}
-
-async function logout(){
-    await marcarOffline();
-    pararMusica();
-    await auth.signOut();
-}
-
-auth.onAuthStateChanged(async user=>{
-    usuario=user;
-
-    if(!user){
-        perfil=null;
-        pararMusica();
-        esconderApp();
-        return;
-    }
-
-    try{
-        await carregarPerfil();
-        mostrarApp();
-        await registrarPresenca();
-        iniciarSistemaSocial();
-        central();
-    }catch(e){
-        console.log(e);
-        mostrarToast("Erro ao carregar seu perfil.");
-    }
-});
+/* ================= PRESENÇA ================= */
 
 setInterval(()=>{
-    if(usuario){
-        registrarPresenca();
-        salvarRanking();
-    }
+ if(usuario)salvarPresenca(true).catch(()=>{});
 },60000);
 
 document.addEventListener("visibilitychange",()=>{
-    if(!usuario)return;
-
-    if(document.hidden){
-        marcarOffline();
-    }else{
-        registrarPresenca();
-    }
+ if(usuario){
+  salvarPresenca(!document.hidden).catch(()=>{});
+ }
 });
+
+/* ================= AUTH STATE ================= */
+
+auth.onAuthStateChanged(async user=>{
+ usuario=user;
+
+ if(!user){
+  document.getElementById("auth").classList.remove("hidden");
+  document.getElementById("app").classList.add("hidden");
+  return;
+ }
+
+ try{
+  await carregarPerfil();
+  await salvarPresenca(true);
+
+  document.getElementById("auth").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  central();
+  iniciarAudio();
+  tocarMusica();
+
+ }catch(e){
+  console.error(e);
+  toast("Erro ao carregar seu perfil.");
+ }
+});
+
+/* ================= PRIMEIRO TOQUE NO IPHONE ================= */
+
+document.addEventListener("touchstart",()=>{
+ iniciarAudio();
+ if(musicaLigada)tocarMusica();
+},{once:true});
 
 document.addEventListener("click",()=>{
-    if(audioCtx&&audioCtx.state==="suspended"){
-        audioCtx.resume();
-    }
-},{once:false});
+ iniciarAudio();
+ if(audioCtx&&audioCtx.state==="suspended"){
+  audioCtx.resume();
+ }
+},{once:true});
 
-window.addEventListener("beforeunload",()=>{
-    marcarOffline();
-});
 </script>
-
 </body>
 </html>
